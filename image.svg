@@ -6,6 +6,28 @@
      xml:space="preserve">
   <script type="text/javascript">
     <![CDATA[
+	var star = 1
+	function id_display(id, display) {
+	    document.getElementById(id).style.display = display
+	}
+	function star_display(state, display) { id_display('star'+star+state, display) }
+	function star_eye(show) {
+	    if(show) id_display('eye_open', '')
+	    else {
+		id_display('eye_open', 'none')
+		id_display('eye_close', 'none')
+	    }
+	}
+	function set_star(n) {
+	    if(star != n) {
+		star_display('on', 'none')
+		star_display('off', '')
+		star = n
+		star_display('off', 'none')
+		star_display('on', '')
+		star_eye(star == 1)
+	    }
+	}
 	function close_eye() {
 	    document.getElementById('eye_open').style.display = 'none'
 	    document.getElementById('eye_close').style.display = ''
@@ -17,6 +39,7 @@
 	var wink_started = false
 	function wink() {
 	    if(wink_started) return
+	    if(star == 1) {
 	    wink_started = true
 	    var t = 300
 	    open_eye()
@@ -33,6 +56,7 @@
 		    }, t)
 		}, t)
 	    }, t)
+	    }
 	}
     ]]>
   </script>
@@ -89,15 +113,15 @@
          <path fill="none" stroke="rgb(27,25,24)" stroke-width="75" stroke-linejoin="miter" d="M 8229,6318 L 8055,6518"/>
       </g>
   <g id="stars">
-      <g id="star1">
+      <g id="star1" onclick="set_star(1)">
        <path id="star1off" style="display:none" fill="rgb(255,255,107)" stroke="none" d="M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z"/>
        <path id="star1on" fill="rgb(255,255,0)" stroke="none" d="M 2403,5592 L 3103,5433 3253,4691 3404,5433 4105,5592 3404,5750 3253,6492 3103,5750 2403,5592 Z"/>
       </g>
-      <g id="star2">
+      <g id="star2" onclick="set_star(2)">
        <path id="star2off" fill="rgb(255,255,107)" stroke="none" d="M 3143,3072 L 3703,2944 3823,2350 3944,2944 4505,3072 3944,3198 3823,3793 3703,3198 3143,3072 Z"/>
        <path id="star2on" style="display:none" fill="rgb(255,255,0)" stroke="none" d="M 2973,3072 L 3673,2913 3823,2171 3974,2913 4675,3072 3974,3230 3823,3972 3673,3230 2973,3072 Z"/>
       </g>
-      <g id="star3">
+      <g id="star3" onclick="set_star(3)">
        <path id="star3off" fill="rgb(255,255,107)" stroke="none" d="M 5573,1551 L 6133,1423 6253,829 6374,1423 6935,1551 6374,1677 6253,2272 6133,1677 5573,1551 Z"/>
        <path id="star3on" style="display:none" fill="rgb(255,255,0)" stroke="none" d="M 5403,1551 L 6103,1392 6253,650 6404,1392 7105,1551 6404,1709 6253,2451 6103,1709 5403,1551 Z"/>
       </g>
