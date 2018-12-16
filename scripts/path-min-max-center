@@ -1,0 +1,48 @@
+#!/usr/bin/perl -w
+# Автор: Юрий Решетников <reshu@mail.ru>
+
+use strict;
+use warnings;
+use Reshu::Utils;
+
+my $path = shift @ARGV;
+die eval dw qw($path \@ARGV) unless $path && !@ARGV;
+
+my($minx,$miny,$maxx,$maxy);
+$path =~ s/(\d+),(\d+)/ add($1,$2) /ge;
+
+my $cx = ($minx + $maxx) / 2;
+my $cy = ($miny + $maxy) / 2;
+print "min:$minx,$miny max:$maxx,$maxy center:$cx,$cy\n";
+
+sub add {
+    my $x = shift;
+    my $y = shift;
+    $minx = $x if !defined($minx) || $minx > $x;
+    $maxx = $x if !defined($maxx) || $maxx < $x;
+    $miny = $y if !defined($miny) || $miny > $y;
+    $maxy = $y if !defined($maxy) || $maxy < $y;
+    return "$x,$y";
+}
+
+__END__
+
+scripts/path-min-max-center 'M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z'
+min:2573,4870 max:3935,6313 center:3254,5591.5
+scripts/path-min-max-center 'M 2973,3072 L 3673,2913 3823,2171 3974,2913 4675,3072 3974,3230 3823,3972 3673,3230 2973,3072 Z'
+min:2973,2171 max:4675,3972 center:3824,3071.5
+scripts/path-min-max-center 'M 5573,1551 L 6133,1423 6253,829 6374,1423 6935,1551 6374,1677 6253,2272 6133,1677 5573,1551 Z'
+min:5573,829 max:6935,2272 center:6254,1550.5
+
+570,-2520
+3000,-4041
+
+scripts/path-add '570,-2520' 'M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z'
+scripts/path-add '-570,2520' 'M 2973,3072 L 3673,2913 3823,2171 3974,2913 4675,3072 3974,3230 3823,3972 3673,3230 2973,3072 Z'
+scripts/path-add '3000,-4041' 'M 2403,5592 L 3103,5433 3253,4691 3404,5433 4105,5592 3404,5750 3253,6492 3103,5750 2403,5592 Z'
+
+# Local Variables:
+# mode: perl
+# coding: utf-8-unix
+# tab-width: 8
+# End:
