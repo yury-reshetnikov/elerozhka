@@ -36,26 +36,26 @@
 	    document.getElementById('eye_open').style.display = ''
 	    document.getElementById('eye_close').style.display = 'none'
 	}
+	function animate(timeout,finish,count,...steps) {
+	    var pos = 0
+	    var call = function iterate() {
+		steps[pos]()
+		if(!--count) finish()
+		else {
+		    if(++pos >= steps.length) pos = 0
+		    setTimeout(iterate, timeout)
+		}
+	    }
+	    call()
+	}
 	var wink_started = false
 	function wink() {
 	    if(wink_started) return
 	    if(star == 1) {
-	    wink_started = true
-	    var t = 300
-	    open_eye()
-	    setTimeout(function() {
-		close_eye()
-		setTimeout(function() {
-		    open_eye()
-		    setTimeout(function() {
-			close_eye()
-			setTimeout(function() {
-			    open_eye()
-			    wink_started = false
-			}, t)
-		    }, t)
-		}, t)
-	    }, t)
+		wink_started = true
+		animate(300, function() { wink_started = false }, 5,
+			function() { open_eye() },
+			function() { close_eye() })
 	    }
 	}
     ]]>
