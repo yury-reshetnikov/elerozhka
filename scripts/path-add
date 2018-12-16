@@ -1,0 +1,39 @@
+#!/usr/bin/perl -w
+# Автор: Юрий Решетников <reshu@mail.ru>
+
+use strict;
+use warnings;
+use Reshu::Utils;
+
+my $add = shift @ARGV;
+my $path = shift @ARGV;
+die eval dw qw($add $path \@ARGV) unless $add && $path && !@ARGV;
+
+die eval dw qw($add) unless $add =~ /\A(-?\d+),(-?\d+)\z/;
+my($dx,$dy) = ($1,$2);
+
+$path =~ s/(\d+),(\d+)/ add($1,$2) /ge;
+print $path, "\n";
+
+sub add {
+    my $x = shift;
+    my $y = shift;
+    $x += $dx;
+    $y += $dy;
+    return "$x,$y";
+}
+
+__END__
+
+M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z
+M 5573,1551 L 6133,1423 6253,829 6374,1423 6935,1551 6374,1677 6253,2272 6133,1677 5573,1551 Z
+
+perl -we 'print 1551-5592'
+scripts/path-add '3000,-4041' 'M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z'
+M 5573,1551 L 6133,1423 6253,829 6374,1423 6935,1551 6374,1677 6253,2272 6133,1677 5573,1551 Z
+
+# Local Variables:
+# mode: perl
+# coding: utf-8-unix
+# tab-width: 8
+# End:

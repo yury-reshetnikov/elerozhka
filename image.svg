@@ -88,4 +88,18 @@
          <path fill="none" stroke="rgb(27,25,24)" stroke-width="75" stroke-linejoin="miter" d="M 8515,6401 L 8531,6666"/>
          <path fill="none" stroke="rgb(27,25,24)" stroke-width="75" stroke-linejoin="miter" d="M 8229,6318 L 8055,6518"/>
       </g>
+  <g id="stars">
+      <g id="star1">
+       <path fill="rgb(255,255,107)" stroke="none" d="M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z"/>
+      </g>
+      <g id="star2">
+       <path fill="rgb(255,255,0)" stroke="none" d="M 2973,3072 L 3673,2913 3823,2171 3974,2913 4675,3072 3974,3230 3823,3972 3673,3230 2973,3072 Z"/>
+      </g>
+      <g id="star3">
+       <path fill="rgb(255,255,107)" stroke="none" d="M 5573,1551 L 6133,1423 6253,829 6374,1423 6935,1551 6374,1677 6253,2272 6133,1677 5573,1551 Z"/>
+      </g>
+  </g>
+      <g id="mouth">
+       <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 6501,8002 C 6868,7969 7302,8002 7502,7801"/>
+      </g>
 </svg>
