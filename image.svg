@@ -47,7 +47,7 @@
 	    document.getElementById('eye_close').style.display = 'none'
 	}
 	function open_eye2(eye) {
-	    ['eye2_open','eye2_almost_open_1','eye2_almost_open_2','eye2_almost_close_1',"eye2_almost_close_2"].forEach(function(item) {
+	    ['eye2_open','eye2_almost_open_1','eye2_almost_open_2','eye2_almost_close_1',"eye2_almost_close_2","eye2_close"].forEach(function(item) {
 		id_display(item, eye == item ? '' : 'none')
 	    })
 	}
@@ -74,11 +74,13 @@
 	    }
 	    else if(star == 2) {
 		wink_started = true
-		animate(150, function() { wink_started = false }, 1+3*8,
+		animate(150, function() { wink_started = false }, 1+3*10,
 			function() { open_eye2('eye2_open') },
 			function() { open_eye2('eye2_almost_open_1') },
 			function() { open_eye2('eye2_almost_open_2') },
 			function() { open_eye2('eye2_almost_close_1') },
+			function() { open_eye2('eye2_almost_close_2') },
+			function() { open_eye2('eye2_close') },
 			function() { open_eye2('eye2_almost_close_2') },
 			function() { open_eye2('eye2_almost_close_1') },
 			function() { open_eye2('eye2_almost_open_2') },
@@ -214,6 +216,12 @@
          <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 8154,6253 L 8077,6467"/>
          <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 8573,6473 L 8577,6738"/>
          <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 8995,6236 L 9104,6416"/>
+      </g>
+      <g class="Group" id="eye2_close" style="display:none">
+         <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 8201,6500 L 7978,6766"/>
+         <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 8578,7066 L 8578,6666"/>
+         <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 9001,6500 L 9178,6766"/>
+         <path fill="none" stroke="rgb(0,0,0)" stroke-width="70" stroke-linejoin="round" d="M 9201,6092 C 9201,6095 9201,6097 9201,6100 9201,6210 9176,6304 9121,6400 9065,6496 8997,6564 8901,6620 8805,6675 8711,6700 8601,6700 8491,6700 8397,6675 8301,6620 8205,6564 8137,6496 8081,6400 8027,6306 8002,6215 8001,6107"/>
       </g>
   <script type="text/javascript">
     <![CDATA[
