@@ -4,6 +4,11 @@
      preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
      xmlns="http://www.w3.org/2000/svg"
      xml:space="preserve">
+<!--  <script href="http://reshu.org/js/jquery-1.7.2.min.js"></script> -->
+  <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--  <script href="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+  <script href="http://reshu.org/js/jquery.reshu.pagegen.js"></script>
+  <script href="svg-editor.js"></script>
   <script type="text/javascript">
     <![CDATA[
 	var star = 1
@@ -79,6 +84,13 @@
 			function() { almost_open_1_eye2() })
 	    }
 	}
+
+	function main_keyup(e) {
+	    // console.log(e)
+	    if(e.key == 'e') jQuery.reshu.svgeditor(document.children[0])
+	}
+	window.onkeyup = main_keyup
+
     ]]>
   </script>
         <path fill="none" stroke="rgb(27,25,24)" stroke-width="75" stroke-linejoin="miter" d="M 8682,4253 L 7837,5080 7495,5554 7037,5861 6516,6253 6185,6611 6109,7312 6235,7706 6442,7955 6885,8155 7414,8140 7639,8092 8267,8066 9324,8307 9683,8245 10151,8079 10341,7834 10134,8342 10022,8763 9822,9277 9757,9691 9719,9905 9677,10222 9644,10624 9773,10912 10073,11037 10570,11132 11213,11148 11870,11122 12434,11031 13008,10901 13245,7808 13171,6655 12925,5537 12455,4635 11922,4009 11254,3769 10229,3695 9526,3750 8682,4253 Z"/>
