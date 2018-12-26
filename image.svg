@@ -6,6 +6,7 @@
      xml:space="preserve">
   <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script href="http://reshu.org/js/jquery.reshu.pagegen.js"></script>
+  <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
   <script type="text/javascript">
     <![CDATA[
