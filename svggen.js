@@ -64,8 +64,8 @@
 		}
 	    }
 	    else if(def instanceof Function) def(p)
-	    // +++ else p.add(jQuery(document.createTextNode(def)));
-	    else throw new Error('Элемент не поддерживается: ' + def)
+	    else p.add(document.createTextNode(def))
+	    // else throw new Error('Элемент не поддерживается: ' + def)
 	}
 	return p.list
     }
