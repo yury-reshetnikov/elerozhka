@@ -71,10 +71,10 @@
     }
 
     plugin.attr = function(tag, attr) {
+	var style
 	for(var k in attr) {
-	    if(k == 'style') {
-		// +++ for(var s in attr['style']) tag.css(s, attr['style'][s]);
-		throw new Error('Элемент не поддерживается: ' + attr['style'])
+	    if(k == 'style' && attr[k] instanceof Object) {
+		for(var s in attr['style']) tag.style[s] = attr['style'][s]
 	    }
 	    // +++ else if(k.substr(0, 2) == 'on' && attr[k] instanceof Function) tag.bind(k.substr(2), attr[k]);
 	    else tag.setAttribute(k, attr[k]);
