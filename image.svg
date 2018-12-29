@@ -88,11 +88,7 @@
 	    }
 	}
 
-	function main_keyup(e) {
-	    // console.log(e)
-	    if(e.key == 'e') svgeditor(document.children[0])
-	}
-	window.onkeyup = main_keyup
+	window.onkeyup = svgeditor
 
     ]]>
   </script>
