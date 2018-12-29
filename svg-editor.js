@@ -16,7 +16,14 @@
     }
 
     var text_children = function(root, text_top) {
-	for(let item of root.children) {
+	if(root.nodeName == 'path') {
+	    root.attributes.d.value.split(/\s+/).forEach(function(item) {
+		text_top += text_height
+		text_node({nodeName: item}, text_top)
+		// +++ if(text_top >= svg.viewBox.baseVal.height) break
+	    })
+	}
+	else for(let item of root.children) {
 	    if(item.nodeName == 'script') ;
 	    else if(item.nodeName == 'g' && item.id == 'svg-editor-group') ;
 	    else {
@@ -62,15 +69,24 @@
 	selection.y.baseVal.value = text_line + selno * text_height
 	selection.style.display = ''
 	if(bbox) bbox.remove()
-	var p = text.children[selno].editor_data.getBBox()
-	if(p.width < 100) { p.x -= (100 - p.width) / 2; p.width = 100; }
-	if(p.height < 100) { p.y -= (100 - p.height) / 2; p.height = 100; }
-	bbox = svggen(edgroup, ['rect', {
-	    fill:"rgb(250,250,250)", 'fill-opacity':.8,
-	    stroke: 'black', 'stroke-dasharray': '1 3',
-	    x: p.x - p.width / 10, y: p.y - p.height / 10,
-	    width: p.width * 1.2, height: p.height * 1.2
-	}])[0]
+	var node = text.children[selno].editor_data
+	if(node.getBBox) {
+	    var p = node.getBBox()
+	    if(p.width < 100) { p.x -= (100 - p.width) / 2; p.width = 100; }
+	    if(p.height < 100) { p.y -= (100 - p.height) / 2; p.height = 100; }
+	    bbox = svggen(edgroup, ['rect', {
+		fill:"rgb(250,250,250)", 'fill-opacity':.8,
+		stroke: 'black', 'stroke-dasharray': '1 3',
+		x: p.x - p.width / 10, y: p.y - p.height / 10,
+		width: p.width * 1.2, height: p.height * 1.2
+	    }])[0]
+	}
+	else {
+	    var m = node.nodeName.match(/(\d+),(\d+)/)
+	    if(m) {
+		console.log(m)
+	    }
+	}
     }
 
     plugin = window.svgeditor = function(e) {
@@ -162,6 +178,9 @@
 	    }
 	}
 	// else console.log(e)
+	// else return;
+	// e.preventDefault()
+	// console.log(e)
     }
 
 })();
