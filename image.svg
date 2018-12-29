@@ -74,8 +74,10 @@
 	    }
 	    else if(star == 2) {
 		wink_started = true
-		animate(150, function() { wink_started = false }, 1+3*10,
+		animate(150, function() { wink_started = false }, 1+1*12,
 			function() { open_eye2('eye2_open') },
+			function() { open_eye2('eye2_right') },
+			function() { open_eye2('eye2_right') },
 			function() { open_eye2('eye2_almost_open_1') },
 			function() { open_eye2('eye2_almost_open_2') },
 			function() { open_eye2('eye2_almost_close_1') },
