@@ -4,8 +4,7 @@
      preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
      xmlns="http://www.w3.org/2000/svg"
      xml:space="preserve">
-  <script href="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script href="http://reshu.org/js/jquery.reshu.pagegen.js"></script>
+  <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
   <script type="text/javascript">
     <![CDATA[
@@ -91,11 +90,7 @@
 	    }
 	}
 
-	function main_keyup(e) {
-	    // console.log(e)
-	    if(e.key == 'e') jQuery.reshu.svgeditor(document.children[0])
-	}
-	window.onkeyup = main_keyup
+	window.onkeyup = svgeditor
 
     ]]>
   </script>
