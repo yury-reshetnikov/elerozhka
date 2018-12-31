@@ -84,7 +84,13 @@
 	else {
 	    var m = node.nodeName.match(/(\d+),(\d+)/)
 	    if(m) {
-		console.log(m)
+		var d = 500
+		var x = m[1] - d/2, y = m[2] - d/2, r = x + d, b = y + d
+		bbox = svggen(edgroup, ['g', ['rect', {
+		    fill:"rgb(250,250,250)", 'fill-opacity':.8,
+		    stroke: 'none', x: x, y: y, width: d, height: d
+		}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
+		    ['path', { stroke: 'black', d: 'M '+x+','+b+' L '+r+','+y }]])[0]
 	    }
 	}
     }
