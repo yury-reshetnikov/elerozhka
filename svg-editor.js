@@ -1,6 +1,6 @@
 (function() {
     var text_left, text_height = 400, text_line = 100
-    var edgroup, text, selection, selno = false, bbox, root, rootsel = []
+    var showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = []
 
     var plugin
 
@@ -24,13 +24,9 @@
 	    })
 	}
 	else for(let item of root.children) {
-	    if(item.nodeName == 'script') ;
-	    else if(item.nodeName == 'g' && item.id == 'svg-editor-group') ;
-	    else {
-		text_top += text_height
-		text_node(item, text_top)
-		if(text_top >= svg.viewBox.baseVal.height) break
-	    }
+	    text_top += text_height
+	    text_node(item, text_top)
+	    if(text_top >= svg.viewBox.baseVal.height) break
 	}
     }
 
@@ -49,6 +45,7 @@
 	    svg.height.baseVal.value = svg.clientHeight
 	    svg.viewBox.baseVal.height = svg.height.baseVal.valueInSpecifiedUnits * 100
 	}
+	showgroup = svggen(svg, ['g', {id: 'svg-show-group'}])[0]
 	edgroup = svggen(svg, ['g', {id: 'svg-editor-group'}])[0]
 	svggen(edgroup, ['rect', {
 	    fill:"rgb(250,250,250)", 'fill-opacity':.8,
@@ -62,7 +59,15 @@
 	    style: { display: 'none' }
 	}])[0]
 	text = svggen(edgroup, ['text', {'font-size': text_height}])[0]
-	text_children(svg, 0)
+	var list = []
+	for(let item of svg.children) {
+	    if(item.nodeName == 'script') ;
+	    else if(item.nodeName == 'g' && (
+		item.id == 'svg-show-group' || item.id == 'svg-editor-group')) ;
+	    else list.push(item)
+	}
+	list.forEach(function(item) { showgroup.appendChild(item) })
+	text_children(showgroup, 0)
     }
 
     var show_selection = function() {
@@ -74,7 +79,7 @@
 	    var p = node.getBBox()
 	    if(p.width < 100) { p.x -= (100 - p.width) / 2; p.width = 100; }
 	    if(p.height < 100) { p.y -= (100 - p.height) / 2; p.height = 100; }
-	    bbox = svggen(edgroup, ['rect', {
+	    bbox = svggen(showgroup, ['rect', {
 		fill:"rgb(250,250,250)", 'fill-opacity':.8,
 		stroke: 'black', 'stroke-dasharray': '1 3',
 		x: p.x - p.width / 10, y: p.y - p.height / 10,
@@ -86,7 +91,7 @@
 	    if(m) {
 		var d = 500
 		var x = m[1] - d/2, y = m[2] - d/2, r = x + d, b = y + d
-		bbox = svggen(edgroup, ['g', ['rect', {
+		bbox = svggen(showgroup, ['g', ['rect', {
 		    fill:"rgb(250,250,250)", 'fill-opacity':.8,
 		    stroke: 'none', x: x, y: y, width: d, height: d
 		}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
@@ -174,7 +179,8 @@
 		    selno = 0
 		}
 		while(text.firstChild) text.removeChild(text.firstChild)
-		if(root.nodeName == 'svg')
+		if(bbox) bbox.remove()
+		if(root.nodeName == 'svg' || (root.id == 'svg-show-group'))
 		    text_children(root, 0)
 		else {
 		    text_node(root, text_height)
@@ -182,6 +188,10 @@
 		}
 		show_selection()
 	    }
+	}
+	else if(e.key == '+') {
+	    showgroup.setAttribute('transform', 'scale(2)')
+	    console.log(showgroup)
 	}
 	// else console.log(e)
 	// else return;
