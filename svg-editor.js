@@ -36,7 +36,8 @@
 		y += d.y
 		var n = text.children[selno]
 		n.textContent = ''+x+','+y
-		n.editor_data = {nodeName: n.textContent}
+		n.editor_data.nodeName = n.textContent
+		root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
 	    }
 	}
     }
@@ -53,16 +54,21 @@
 	t.editor_data = item
 	if(item.id) svggen(t, ['tspan', '#'+item.id])
 	if(item.nodeName == 'path') {
-	    svggen(t, ['tspan', ' '+item.attributes['d'].value])
+	    svggen(t, ['tspan', ' '+item.attributes.d.value])
 	}
     }
 
     var text_children = function(root, text_top) {
 	if(root.nodeName == 'path') {
+	    var before = '', after = []
 	    root.attributes.d.value.split(/\s+/).forEach(function(item) {
 		text_top += text_height
-		text_node({nodeName: item}, text_top)
-		// +++ if(text_top >= svg.viewBox.baseVal.height) break
+		var n = {nodeName: item, before: before, after: ''}
+		text_node(n, text_top)
+		// +++ if(text_top >= svg.viewBox.baseVal.height) break // +++ доработать after
+		after.forEach(function(n) { n.after += ' ' + item })
+		before += item + ' '
+		after.push(n)
 	    })
 	}
 	else for(let item of root.children) {
