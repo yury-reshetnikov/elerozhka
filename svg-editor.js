@@ -1,6 +1,7 @@
 (function() {
     var text_left, text_height = 400, text_line = 100
-    var showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = []
+    var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = []
+    var scale = 1
 
     var plugin
 
@@ -30,7 +31,7 @@
 	}
     }
 
-    var create = function(svg) {
+    var create = function() {
 	window.svg = svg
 	text_left = svg.viewBox.baseVal.width
 	if(svg.width.baseVal.value < svg.clientWidth) {
@@ -102,7 +103,7 @@
 
     plugin = window.svgeditor = function(e) {
 	if(e.key == 'e') {
-	    if(!edgroup) create(document.children[0])
+	    if(!edgroup) { svg = document.children[0]; create(svg); }
 	    else edgroup.style.display = ''
 	}
 	else if(!edgroup) ;
@@ -190,8 +191,23 @@
 	    }
 	}
 	else if(e.key == '+') {
-	    showgroup.setAttribute('transform', 'scale(2)')
-	    console.log(showgroup)
+	    scale *= 2
+	    var tx = 0, ty = 0
+	    if(bbox) {
+		tx = ((text_left - bbox.width.baseVal.value*scale)/2 -
+		      bbox.x.baseVal.value*scale) / scale
+		if(tx > 0) tx = 0
+		ty = ((svg.viewBox.baseVal.height - bbox.height.baseVal.value*scale)/2 -
+		      bbox.y.baseVal.value*scale) / scale
+		if(ty > 0) ty = 0
+	    }
+	    showgroup.setAttribute('transform', 'scale('+scale+') translate('+tx+','+ty+')')
+	    window.show = showgroup
+	    window.bbox = bbox
+	}
+	else if(e.key == '-') {
+	    scale /= 2
+	    showgroup.setAttribute('transform', 'scale('+scale+')')
 	}
 	// else console.log(e)
 	// else return;
