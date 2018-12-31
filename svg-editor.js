@@ -2,8 +2,49 @@
     var text_left, text_height = 400, text_line = 100
     var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = []
     var scale = 1
+    var point_drag = {}
 
     var plugin
+
+    var get_mouse_position = function(e) {
+	var CTM = svg.getScreenCTM()
+	return {
+	    x: (e.clientX - CTM.e) / CTM.a,
+	    y: (e.clientY - CTM.f) / CTM.d
+	}
+    }
+
+    point_drag.start = function(e) {
+	if(bbox && bbox._reshu_draggable) {
+	    var o = bbox._reshu_draggable.offset = get_mouse_position(e)
+	    var m = bbox._reshu_draggable.translate.matrix
+	    o.x -= m.e * scale
+	    o.y -= m.f * scale
+	}
+    }
+
+    point_drag.drag = function(e) {
+	if(bbox && bbox._reshu_draggable) {
+	    var d = bbox._reshu_draggable
+	    var o = d.offset
+	    if(o) {
+		e.preventDefault()
+		var c = get_mouse_position(e)
+		var x = Math.trunc((c.x - o.x) / scale), y = Math.trunc((c.y - o.y) / scale)
+		d.translate.setTranslate(x, y)
+		x += d.x
+		y += d.y
+		var n = text.children[selno]
+		n.textContent = ''+x+','+y
+		n.editor_data = {nodeName: n.textContent}
+	    }
+	}
+    }
+
+    point_drag.end = function(e) {
+	if(bbox && bbox._reshu_draggable && bbox._reshu_draggable.offset)
+	    bbox._reshu_draggable.offset = false
+    }
 
     var text_node = function(item, text_top) {
 	var t = svggen(text, ['tspan', {
@@ -93,10 +134,22 @@
 		var d = 500
 		var x = m[1] - d/2, y = m[2] - d/2, r = x + d, b = y + d
 		bbox = svggen(showgroup, ['g', ['rect', {
-		    fill:"rgb(250,250,250)", 'fill-opacity':.8,
-		    stroke: 'none', x: x, y: y, width: d, height: d
+		    fill:"rgb(250,250,250)", 'fill-opacity':.8, stroke: 'none',
+		    style: { cursor: 'move' },
+		    x: x, y: y, width: d, height: d,
 		}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
 		    ['path', { stroke: 'black', d: 'M '+x+','+b+' L '+r+','+y }]])[0]
+		bbox.onmousedown = point_drag.start
+		bbox.onmousemove = point_drag.drag
+		bbox.onmouseup = point_drag.end
+		bbox.onmouseleave = point_drag.end
+		var t = svg.createSVGTransform()
+		t.setTranslate(0, 0)
+		bbox.transform.baseVal.appendItem(t)
+		bbox._reshu_draggable = {
+		    translate: t,
+		    x: parseInt(m[1]), y: parseInt(m[2]),
+		}
 	    }
 	}
     }
@@ -201,8 +254,6 @@
 		if(ty > 0) ty = 0
 	    }
 	    showgroup.setAttribute('transform', 'scale('+scale+') translate('+tx+','+ty+')')
-	    window.show = showgroup
-	    window.bbox = bbox
 	}
 	else if(e.key == '-') {
 	    scale /= 2
