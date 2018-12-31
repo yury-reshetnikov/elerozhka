@@ -194,11 +194,10 @@
 	    scale *= 2
 	    var tx = 0, ty = 0
 	    if(bbox) {
-		tx = ((text_left - bbox.width.baseVal.value*scale)/2 -
-		      bbox.x.baseVal.value*scale) / scale
+		var p = bbox.getBBox()
+		tx = ((text_left - p.width*scale)/2 - p.x*scale) / scale
 		if(tx > 0) tx = 0
-		ty = ((svg.viewBox.baseVal.height - bbox.height.baseVal.value*scale)/2 -
-		      bbox.y.baseVal.value*scale) / scale
+		ty = ((svg.viewBox.baseVal.height - p.height*scale)/2 - p.y*scale) / scale
 		if(ty > 0) ty = 0
 	    }
 	    showgroup.setAttribute('transform', 'scale('+scale+') translate('+tx+','+ty+')')
@@ -208,6 +207,10 @@
 	else if(e.key == '-') {
 	    scale /= 2
 	    showgroup.setAttribute('transform', 'scale('+scale+')')
+	}
+	else if(e.key == '*') {
+	    scale = 1
+	    showgroup.setAttribute('transform', '')
 	}
 	// else console.log(e)
 	// else return;
