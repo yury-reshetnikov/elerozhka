@@ -38,6 +38,7 @@
 		n.textContent = ''+x+','+y
 		n.editor_data.nodeName = n.textContent
 		root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
+		d.changed = true
 	    }
 	}
     }
@@ -121,7 +122,14 @@
     var show_selection = function() {
 	selection.y.baseVal.value = text_line + selno * text_height
 	selection.style.display = ''
-	if(bbox) bbox.remove()
+	if(bbox) {
+	    bbox.remove()
+	    if(bbox._reshu_draggable && bbox._reshu_draggable.changed) {
+		while(text.firstChild) text.removeChild(text.firstChild)
+		text_node(root, text_height)
+		text_children(root, text_height)
+	    }
+	}
 	var node = text.children[selno].editor_data
 	if(node.getBBox) {
 	    var p = node.getBBox()
@@ -233,6 +241,7 @@
 		    root = text.children[selno].editor_data.parentNode
 		    selno = rootsel.pop()
 		}
+		else if(!text.children[selno].editor_data.parentNode) return
 		else {
 		    root = text.children[selno].editor_data
 		    rootsel.push(selno)
