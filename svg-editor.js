@@ -111,6 +111,7 @@
 	var list = []
 	for(let item of svg.children) {
 	    if(item.nodeName == 'script') ;
+	    else if(item.nodeName == 'style') ;
 	    else if(item.nodeName == 'g' && (
 		item.id == 'svg-show-group' || item.id == 'svg-editor-group')) ;
 	    else list.push(item)
@@ -173,7 +174,7 @@
 	    if(!edgroup) { svg = document.children[0]; create(svg); }
 	    else edgroup.style.display = ''
 	}
-	else if(!edgroup) ;
+	else if(!edgroup || edgroup.style.display == 'none') ;
 	else if(e.key == 'Escape') {
 	    if(selection.style.display == '') {
 		selection.style.display = 'none'
@@ -277,6 +278,9 @@
 	else if(e.key == '*') {
 	    scale = 1
 	    showgroup.setAttribute('transform', '')
+	}
+	else if(e.key == 'd') {
+	    if(root && root.nodeName == 'path') prompt('', root.attributes.d.value)
 	}
 	// else console.log(e)
 	// else return;
