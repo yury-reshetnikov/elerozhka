@@ -259,6 +259,22 @@
 		show_selection()
 	    }
 	}
+	else if(e.key == 'Backspace') {
+	    if(selno === false) ;
+	    else if(rootsel.length) {
+		root = root.parentNode
+		selno = rootsel.pop()
+		while(text.firstChild) text.removeChild(text.firstChild)
+		if(bbox) bbox.remove()
+		if(root.nodeName == 'svg' || (root.id == 'svg-show-group'))
+		    text_children(root, 0)
+		else {
+		    text_node(root, text_height)
+		    text_children(root, text_height)
+		}
+		show_selection()
+	    }
+	}
 	else if(e.key == '+') {
 	    scale *= 2
 	    var tx = 0, ty = 0
