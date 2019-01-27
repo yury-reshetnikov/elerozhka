@@ -298,6 +298,12 @@
 	else if(e.key == 'd') {
 	    if(root && root.nodeName == 'path') prompt('', root.attributes.d.value)
 	}
+	else if(e.key == 'p') {
+	    if(root && root.nodeName == 'path') {
+		if(selno === false) ;
+		else prompt('', text.children[selno].textContent)
+	    }
+	}
 	// else console.log(e)
 	// else return;
 	// e.preventDefault()
