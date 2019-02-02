@@ -14,6 +14,29 @@
 	}
     }
 
+    point_drag.create = function(x1,y1,drag) {
+	var d = 500
+	var x = x1 - d/2, y = y1 - d/2, r = x + d, b = y + d
+	bbox = svggen(showgroup, ['g', ['rect', {
+	    fill:"rgb(250,250,250)", 'fill-opacity':.8, stroke: 'none',
+	    style: { cursor: 'move' },
+	    x: x, y: y, width: d, height: d,
+	}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
+	    ['path', { stroke: 'black', d: 'M '+x+','+b+' L '+r+','+y }]])[0]
+	bbox.onmousedown = point_drag.start
+	bbox.onmousemove = point_drag.drag
+	bbox.onmouseup = point_drag.end
+	bbox.onmouseleave = point_drag.end
+	var t = svg.createSVGTransform()
+	t.setTranslate(0, 0)
+	bbox.transform.baseVal.appendItem(t)
+	bbox._reshu_draggable = {
+	    translate: t,
+	    x: x1, y: y1,
+	    drag: drag,
+	}
+    }
+
     point_drag.start = function(e) {
 	if(bbox && bbox._reshu_draggable) {
 	    var o = bbox._reshu_draggable.offset = get_mouse_position(e)
@@ -21,6 +44,13 @@
 	    o.x -= m.e * scale
 	    o.y -= m.f * scale
 	}
+    }
+
+    point_drag.path_point = function(x,y) {
+	var n = text.children[selno]
+	n.textContent = ''+x+','+y
+	n.editor_data.nodeName = n.textContent
+	root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
     }
 
     point_drag.drag = function(e) {
@@ -34,10 +64,7 @@
 		d.translate.setTranslate(x, y)
 		x += d.x
 		y += d.y
-		var n = text.children[selno]
-		n.textContent = ''+x+','+y
-		n.editor_data.nodeName = n.textContent
-		root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
+		d.drag(x,y)
 		d.changed = true
 	    }
 	}
@@ -145,26 +172,7 @@
 	}
 	else {
 	    var m = node.nodeName.match(/(\d+),(\d+)/)
-	    if(m) {
-		var d = 500
-		var x = m[1] - d/2, y = m[2] - d/2, r = x + d, b = y + d
-		bbox = svggen(showgroup, ['g', ['rect', {
-		    fill:"rgb(250,250,250)", 'fill-opacity':.8, stroke: 'none',
-		    style: { cursor: 'move' },
-		    x: x, y: y, width: d, height: d,
-		}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
-		    ['path', { stroke: 'black', d: 'M '+x+','+b+' L '+r+','+y }]])[0]
-		bbox.onmousedown = point_drag.start
-		bbox.onmousemove = point_drag.drag
-		bbox.onmouseup = point_drag.end
-		bbox.onmouseleave = point_drag.end
-		var t = svg.createSVGTransform()
-		t.setTranslate(0, 0)
-		bbox.transform.baseVal.appendItem(t)
-		bbox._reshu_draggable = {
-		    translate: t,
-		    x: parseInt(m[1]), y: parseInt(m[2]),
-		}
+	    if(m) {point_drag.create(parseInt(m[1]), parseInt(m[2]), point_drag.path_point)
 	    }
 	}
     }
@@ -302,6 +310,12 @@
 	    if(root && root.nodeName == 'path') {
 		if(selno === false) ;
 		else prompt('', text.children[selno].textContent)
+	    }
+	}
+	else if(e.key == 'r') {
+	    if(root && root.nodeName == 'path') {
+		var p = root.getBBox()
+		console.log(p)
 	    }
 	}
 	// else console.log(e)
