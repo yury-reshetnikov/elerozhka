@@ -1,6 +1,7 @@
 (function() {
     var text_left, text_height = 400, text_line = 100
-    var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = []
+    var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = [],
+	rotate
     var scale = 1
     var point_drag = {}
 
@@ -17,6 +18,7 @@
     point_drag.create = function(x1,y1,drag) {
 	var d = 500
 	var x = x1 - d/2, y = y1 - d/2, r = x + d, b = y + d
+	if(bbox) bbox.remove()
 	bbox = svggen(showgroup, ['g', ['rect', {
 	    fill:"rgb(250,250,250)", 'fill-opacity':.8, stroke: 'none',
 	    style: { cursor: 'move' },
@@ -51,6 +53,10 @@
 	n.textContent = ''+x+','+y
 	n.editor_data.nodeName = n.textContent
 	root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
+    }
+
+    point_drag.rotate_point = function(x,y) {
+	rotate.root = {x:x, y:y}
     }
 
     point_drag.drag = function(e) {
@@ -157,6 +163,7 @@
 		text_node(root, text_height)
 		text_children(root, text_height)
 	    }
+	    bbox = false
 	}
 	var node = text.children[selno].editor_data
 	if(node.getBBox) {
@@ -172,8 +179,7 @@
 	}
 	else {
 	    var m = node.nodeName.match(/(\d+),(\d+)/)
-	    if(m) {point_drag.create(parseInt(m[1]), parseInt(m[2]), point_drag.path_point)
-	    }
+	    if(m) point_drag.create(parseInt(m[1]), parseInt(m[2]), point_drag.path_point)
 	}
     }
 
@@ -184,13 +190,12 @@
 	}
 	else if(!edgroup || edgroup.style.display == 'none') ;
 	else if(e.key == 'Escape') {
-	    if(selection.style.display == '') {
-		selection.style.display = 'none'
-		if(bbox) {
-		    bbox.remove()
-		    bbox = false
-		}
+	    if(bbox) {
+		bbox.remove()
+		bbox = false
 	    }
+	    if(rotate) rotate = false
+	    else if(selection.style.display == '') selection.style.display = 'none'
 	    else edgroup.style.display = 'none'
 	}
 	else if(e.key == 'ArrowDown') {
@@ -245,6 +250,12 @@
 	}
 	else if(e.key == 'Enter') {
 	    if(selno === false) ;
+	    else if(rotate && !rotate.corner) {
+		if(root && root.nodeName == 'path') {
+		    var p = root.getBBox()
+		    // +++
+		}
+	    }
 	    else {
 		if(root == text.children[selno].editor_data) {
 		    root = text.children[selno].editor_data.parentNode
@@ -315,7 +326,8 @@
 	else if(e.key == 'r') {
 	    if(root && root.nodeName == 'path') {
 		var p = root.getBBox()
-		console.log(p)
+		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
+		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_point)
 	    }
 	}
 	// else console.log(e)
