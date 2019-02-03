@@ -15,6 +15,12 @@
 	}
     }
 
+    var for_each_path
+    for_each_path = function(node, cb) {
+	if(node.nodeName == 'path') cb(node)
+	else for(let item of node.children) for_each_path(item, cb)
+    }
+
     point_drag.create = function(x1,y1,drag) {
 	var d = 500
 	var x = x1 - d/2, y = y1 - d/2, r = x + d, b = y + d
@@ -64,18 +70,15 @@
 	    ' L '+rotate.root.x+','+rotate.root.y+' '+x+','+y
 	if(debug) console.log([rotate.root.x,x,x-rotate.root.x,rotate.root.y,y,rotate.root.y-y])
 	var edit = function(cb) {
-	    root.attributes.d.value = root._reshu_origin_d.split(/\s+/).map(function(item) {
-		var m = item.match(/(\d+),(\d+)/)
-		if(m) return cb(parseInt(m[1]), parseInt(m[2]))
-		else return item
-	    }).join(' ')
+	    for_each_path(root, function(item) {
+		item.attributes.d.value = item._reshu_origin_d.split(/\s+/).map(function(item) {
+		    var m = item.match(/(\d+),(\d+)/)
+		    if(m) return cb(parseInt(m[1]), parseInt(m[2]))
+		    else return item
+		}).join(' ')
+	    })
 	}
 	var atan = function(x,y) {
-	    var c = Math.atan((rotate.root.y - y) / (x - rotate.root.x))
-	    if(x < rotate.root.x) c += Math.PI
-	    return c
-	}
-	var atan2 = function(x,y) {
 	    if(x == rotate.root.x) { // тангенс равен бесконечности
 		if(y <= rotate.root.y) return Math.PI / 2
 		else return -Math.PI / 2
@@ -86,45 +89,25 @@
 		return c
 	    }
 	}
-	// var asin = function(x,y) {
-	//     var x1 = x - rotate.root.x
-	//     var y1 = y - rotate.root.y
-	//     var c = Math.asin(x1 / Math.sqrt(x1*x1 + y1*y1))
-	//     if(x > rotate.root.x) c += Math.PI
-	//     return c
-	// }
-	if(y == rotate.root.y) { // тангенс равен бесконечности
-	    if(x <= rotate.root.x) root.attributes.d.value = root._reshu_origin_d
-	    else edit(function(x,y) {
-		if(debug) console.log([x,y])
-		x += x - rotate.root.x
-		y += y - rotate.root.y
-		if(debug) console.log(['r',x,y])
-		return ''+x+','+y
-	    })
-	}
-	else {
-	    var cr = atan(x,y)
-	    if(debug) console.log(['rotate for', cr, Math.round(cr * 180 / Math.PI)])
-	    edit(function(x,y) {
-		// var cd = cr + asin(x,y)
-		if(debug) console.log(['point',x,y])
-		var x1 = x - rotate.root.x
-		var y1 = rotate.root.y - y
-		var g = Math.sqrt(x1*x1 + y1*y1)
-		if(debug) console.log([x1,y1,g])
-		var c = Math.asin(y1 / g)
-		if(x < rotate.root.x) c = Math.PI - c
-		if(debug) {
-		    var c2 = atan2(x,y)
-		    console.log(['point corner', c, Math.round(c * 180 / Math.PI), c2, Math.round(c2 * 180 / Math.PI)])
-		}
-		var cd = cr + c
-		x = Math.round(rotate.root.x + g * Math.cos(cd))
-		y = Math.round(rotate.root.y - g * Math.sin(cd))
-		return ''+x+','+y
-	    })
-	}
+	var cr = atan(x,y)
+	if(debug) console.log(['rotate for', cr, Math.round(cr * 180 / Math.PI)])
+	edit(function(x,y) {
+	    if(debug) console.log(['point',x,y])
+	    var x1 = x - rotate.root.x
+	    var y1 = rotate.root.y - y
+	    var g = Math.sqrt(x1*x1 + y1*y1)
+	    if(debug) console.log([x1,y1,g])
+	    var c = Math.asin(y1 / g)
+	    if(x < rotate.root.x) c = Math.PI - c
+	    if(debug) {
+		var c2 = atan(x,y)
+		console.log(['point corner', c, Math.round(c * 180 / Math.PI), c2, Math.round(c2 * 180 / Math.PI)])
+	    }
+	    var cd = cr + c
+	    x = Math.round(rotate.root.x + g * Math.cos(cd))
+	    y = Math.round(rotate.root.y - g * Math.sin(cd))
+	    return ''+x+','+y
+	})
 	show_path_points()
     }
 
@@ -334,8 +317,10 @@
 		    rotate = false
 		}
 		else {
-		    if(root && root.nodeName == 'path') {
-			root._reshu_origin_d = root.attributes.d.value
+		    if(root && root.getBBox) {
+			for_each_path(root, function(item) {
+			    item._reshu_origin_d = item.attributes.d.value
+			})
 			var p = root.getBBox()
 			var d = Math.max(p.width, p.height)
 			if(d > rotate.root.y) d = rotate.root.y
@@ -416,7 +401,7 @@
 	    }
 	}
 	else if(e.key == 'r') {
-	    if(root && root.nodeName == 'path') {
+	    if(root && root.getBBox) {
 		var p = root.getBBox()
 		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
 		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_root_point)
