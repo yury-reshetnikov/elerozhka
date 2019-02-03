@@ -26,9 +26,8 @@
 	}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
 	    ['path', { stroke: 'black', d: 'M '+x+','+b+' L '+r+','+y }]])[0]
 	bbox.onmousedown = point_drag.start
-	bbox.onmousemove = point_drag.drag
-	bbox.onmouseup = point_drag.end
-	bbox.onmouseleave = point_drag.end
+	window.onmousemove = point_drag.drag
+	window.onmouseup = point_drag.end
 	var t = svg.createSVGTransform()
 	t.setTranslate(0, 0)
 	bbox.transform.baseVal.appendItem(t)
@@ -55,8 +54,13 @@
 	root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
     }
 
-    point_drag.rotate_point = function(x,y) {
+    point_drag.rotate_root_point = function(x,y) {
 	rotate.root = {x:x, y:y}
+    }
+
+    point_drag.rotate_corner_point = function(x,y) {
+	rotate.corner.attributes.d.value = 'M '+rotate.root.x+','+(rotate.root.y - rotate.d)+
+	    ' L '+rotate.root.x+','+rotate.root.y+' '+x+','+y
     }
 
     point_drag.drag = function(e) {
@@ -253,7 +257,14 @@
 	    else if(rotate && !rotate.corner) {
 		if(root && root.nodeName == 'path') {
 		    var p = root.getBBox()
-		    // +++
+		    var d = Math.max(p.width, p.height)
+		    if(d > rotate.root.y) d = rotate.root.y
+		    rotate.d = d
+		    rotate.corner = svggen(showgroup, ['path', {
+			stroke: 'red', fill: 'none', d: 'M '+rotate.root.x+','+(rotate.root.y - d)+
+			    ' L '+rotate.root.x+','+rotate.root.y }])[0]
+		    point_drag.create(rotate.root.x, rotate.root.y - d,
+				      point_drag.rotate_corner_point)
 		}
 	    }
 	    else {
@@ -327,7 +338,7 @@
 	    if(root && root.nodeName == 'path') {
 		var p = root.getBBox()
 		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
-		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_point)
+		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_root_point)
 	    }
 	}
 	// else console.log(e)
