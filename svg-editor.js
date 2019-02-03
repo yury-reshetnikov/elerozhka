@@ -61,6 +61,48 @@
     point_drag.rotate_corner_point = function(x,y) {
 	rotate.corner.attributes.d.value = 'M '+rotate.root.x+','+(rotate.root.y - rotate.d)+
 	    ' L '+rotate.root.x+','+rotate.root.y+' '+x+','+y
+	var edit = function(cb) {
+	    root.attributes.d.value = root._reshu_origin_d.split(/\s+/).map(function(item) {
+		var m = item.match(/(\d+),(\d+)/)
+		if(m) return cb(parseInt(m[1]), parseInt(m[2]))
+		else return item
+	    }).join(' ')
+	}
+	var atan = function(x,y) {
+	    var c = Math.atan((x - rotate.root.x) / (rotate.root.y - y))
+	    if(x > rotate.root.x) c += Math.PI
+	    return c
+	}
+	// var asin = function(x,y) {
+	//     var x1 = x - rotate.root.x
+	//     var y1 = y - rotate.root.y
+	//     var c = Math.asin(x1 / Math.sqrt(x1*x1 + y1*y1))
+	//     if(x > rotate.root.x) c += Math.PI
+	//     return c
+	// }
+	if(y == rotate.root.y) { // тангенс равен бесконечности
+	    if(x <= rotate.root.x) root.attributes.d.value = root._reshu_origin_d
+	    else edit(function(x,y) {
+		x += x - rotate.root.x
+		y += y - rotate.root.y
+		return ''+x+','+y
+	    })
+	}
+	else {
+	    var cr = atan(x,y)
+	    edit(function(x,y) {
+		// var cd = cr + asin(x,y)
+		var x1 = x - rotate.root.x
+		var y1 = y - rotate.root.y
+		var g = Math.sqrt(x1*x1 + y1*y1)
+		var c = Math.asin(x1 / g)
+		if(x > rotate.root.x) c += Math.PI
+		var cd = cr + c
+		x = Math.round(rotate.root.x + g / Math.sin(cd))
+		y = Math.round(rotate.root.y + g / Math.cos(cd))
+		return ''+x+','+y
+	    })
+	}
     }
 
     point_drag.drag = function(e) {
@@ -256,6 +298,7 @@
 	    if(selno === false) ;
 	    else if(rotate && !rotate.corner) {
 		if(root && root.nodeName == 'path') {
+		    root._reshu_origin_d = root.attributes.d.value
 		    var p = root.getBBox()
 		    var d = Math.max(p.width, p.height)
 		    if(d > rotate.root.y) d = rotate.root.y
@@ -339,6 +382,18 @@
 		var p = root.getBBox()
 		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
 		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_root_point)
+	    }
+	}
+	else if(e.key == 't') {
+	    var i
+	    for(i = 0; i <= 360; i += 30) {
+		var r = i * Math.PI / 180
+		// var t = Math.tan(r)
+		// var r2 = Math.atan(t)
+		var t = Math.sin(r)
+		var r2 = Math.asin(t)
+		var i2 = r2 * 180 / Math.PI
+		console.log([i,r,t,r2,Math.round(i2)])
 	    }
 	}
 	// else console.log(e)
