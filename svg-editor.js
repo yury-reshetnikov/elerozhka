@@ -60,7 +60,7 @@
 
     point_drag.rotate_corner_point = function(x,y,debug) {
 	rotate.corner_point = {x:x, y:y} // for debug only (t key)
-	rotate.corner.attributes.d.value = 'M '+rotate.root.x+','+(rotate.root.y - rotate.d)+
+	rotate.corner.attributes.d.value = 'M '+(rotate.root.x+rotate.d)+','+rotate.root.y+
 	    ' L '+rotate.root.x+','+rotate.root.y+' '+x+','+y
 	if(debug) console.log([rotate.root.x,x,x-rotate.root.x,rotate.root.y,y,rotate.root.y-y])
 	var edit = function(cb) {
@@ -71,17 +71,17 @@
 	    }).join(' ')
 	}
 	var atan = function(x,y) {
-	    var c = Math.atan((x - rotate.root.x) / (rotate.root.y - y))
+	    var c = Math.atan((rotate.root.y - y) / (x - rotate.root.x))
 	    if(x < rotate.root.x) c += Math.PI
 	    return c
 	}
 	var atan2 = function(x,y) {
-	    if(y == rotate.root.y) { // тангенс равен бесконечности
-		if(x <= rotate.root.x) return 0
-		else return Math.PI
+	    if(x == rotate.root.x) { // тангенс равен бесконечности
+		if(y <= rotate.root.y) return Math.PI / 2
+		else return -Math.PI / 2
 	    }
 	    else {
-		var c = Math.atan((x - rotate.root.x) / (rotate.root.y - y))
+		var c = Math.atan((rotate.root.y - y) / (x - rotate.root.x))
 		if(x < rotate.root.x) c += Math.PI
 		return c
 	    }
@@ -113,15 +113,15 @@
 		var y1 = rotate.root.y - y
 		var g = Math.sqrt(x1*x1 + y1*y1)
 		if(debug) console.log([x1,y1,g])
-		var c = Math.asin(x1 / g)
-		if(x < rotate.root.x) c += Math.PI
+		var c = Math.asin(y1 / g)
+		if(x < rotate.root.x) c = Math.PI - c
 		if(debug) {
 		    var c2 = atan2(x,y)
 		    console.log(['point corner', c, Math.round(c * 180 / Math.PI), c2, Math.round(c2 * 180 / Math.PI)])
 		}
 		var cd = cr + c
-		x = Math.round(rotate.root.x + g / Math.sin(cd))
-		y = Math.round(rotate.root.y - g / Math.cos(cd))
+		x = Math.round(rotate.root.x + g * Math.cos(cd))
+		y = Math.round(rotate.root.y - g * Math.sin(cd))
 		return ''+x+','+y
 	    })
 	}
@@ -341,9 +341,9 @@
 			if(d > rotate.root.y) d = rotate.root.y
 			rotate.d = d
 			rotate.corner = svggen(showgroup, ['path', {
-			    stroke: 'red', fill: 'none', d: 'M '+rotate.root.x+','+(rotate.root.y - d)+
+			    stroke: 'red', fill: 'none', d: 'M '+(rotate.root.x+d)+','+rotate.root.y+
 				' L '+rotate.root.x+','+rotate.root.y }])[0]
-			point_drag.create(rotate.root.x, rotate.root.y - d,
+			point_drag.create(rotate.root.x + d, rotate.root.y,
 					  point_drag.rotate_corner_point)
 		    }
 		}
