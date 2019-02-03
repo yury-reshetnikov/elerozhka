@@ -58,9 +58,11 @@
 	rotate.root = {x:x, y:y}
     }
 
-    point_drag.rotate_corner_point = function(x,y) {
+    point_drag.rotate_corner_point = function(x,y,debug) {
+	rotate.corner_point = {x:x, y:y} // for debug only (t key)
 	rotate.corner.attributes.d.value = 'M '+rotate.root.x+','+(rotate.root.y - rotate.d)+
 	    ' L '+rotate.root.x+','+rotate.root.y+' '+x+','+y
+	if(debug) console.log([rotate.root.x,x,x-rotate.root.x,rotate.root.y,y,rotate.root.y-y])
 	var edit = function(cb) {
 	    root.attributes.d.value = root._reshu_origin_d.split(/\s+/).map(function(item) {
 		var m = item.match(/(\d+),(\d+)/)
@@ -70,8 +72,19 @@
 	}
 	var atan = function(x,y) {
 	    var c = Math.atan((x - rotate.root.x) / (rotate.root.y - y))
-	    if(x > rotate.root.x) c += Math.PI
+	    if(x < rotate.root.x) c += Math.PI
 	    return c
+	}
+	var atan2 = function(x,y) {
+	    if(y == rotate.root.y) { // тангенс равен бесконечности
+		if(x <= rotate.root.x) return 0
+		else return Math.PI
+	    }
+	    else {
+		var c = Math.atan((x - rotate.root.x) / (rotate.root.y - y))
+		if(x < rotate.root.x) c += Math.PI
+		return c
+	    }
 	}
 	// var asin = function(x,y) {
 	//     var x1 = x - rotate.root.x
@@ -83,26 +96,36 @@
 	if(y == rotate.root.y) { // тангенс равен бесконечности
 	    if(x <= rotate.root.x) root.attributes.d.value = root._reshu_origin_d
 	    else edit(function(x,y) {
+		if(debug) console.log([x,y])
 		x += x - rotate.root.x
 		y += y - rotate.root.y
+		if(debug) console.log(['r',x,y])
 		return ''+x+','+y
 	    })
 	}
 	else {
 	    var cr = atan(x,y)
+	    if(debug) console.log(['rotate for', cr, Math.round(cr * 180 / Math.PI)])
 	    edit(function(x,y) {
 		// var cd = cr + asin(x,y)
+		if(debug) console.log(['point',x,y])
 		var x1 = x - rotate.root.x
-		var y1 = y - rotate.root.y
+		var y1 = rotate.root.y - y
 		var g = Math.sqrt(x1*x1 + y1*y1)
+		if(debug) console.log([x1,y1,g])
 		var c = Math.asin(x1 / g)
-		if(x > rotate.root.x) c += Math.PI
+		if(x < rotate.root.x) c += Math.PI
+		if(debug) {
+		    var c2 = atan2(x,y)
+		    console.log(['point corner', c, Math.round(c * 180 / Math.PI), c2, Math.round(c2 * 180 / Math.PI)])
+		}
 		var cd = cr + c
 		x = Math.round(rotate.root.x + g / Math.sin(cd))
-		y = Math.round(rotate.root.y + g / Math.cos(cd))
+		y = Math.round(rotate.root.y - g / Math.cos(cd))
 		return ''+x+','+y
 	    })
 	}
+	show_path_points()
     }
 
     point_drag.drag = function(e) {
@@ -199,16 +222,18 @@
 	text_children(showgroup, 0)
     }
 
+    var show_path_points = function() {
+	while(text.firstChild) text.removeChild(text.firstChild)
+	text_node(root, text_height)
+	text_children(root, text_height)
+    }
+
     var show_selection = function() {
 	selection.y.baseVal.value = text_line + selno * text_height
 	selection.style.display = ''
 	if(bbox) {
 	    bbox.remove()
-	    if(bbox._reshu_draggable && bbox._reshu_draggable.changed) {
-		while(text.firstChild) text.removeChild(text.firstChild)
-		text_node(root, text_height)
-		text_children(root, text_height)
-	    }
+	    if(bbox._reshu_draggable && bbox._reshu_draggable.changed) show_path_points()
 	    bbox = false
 	}
 	var node = text.children[selno].editor_data
@@ -240,7 +265,10 @@
 		bbox.remove()
 		bbox = false
 	    }
-	    if(rotate) rotate = false
+	    if(rotate) {
+		if(rotate.corner) rotate.corner.remove()
+		rotate = false
+	    }
 	    else if(selection.style.display == '') selection.style.display = 'none'
 	    else edgroup.style.display = 'none'
 	}
@@ -296,18 +324,28 @@
 	}
 	else if(e.key == 'Enter') {
 	    if(selno === false) ;
-	    else if(rotate && !rotate.corner) {
-		if(root && root.nodeName == 'path') {
-		    root._reshu_origin_d = root.attributes.d.value
-		    var p = root.getBBox()
-		    var d = Math.max(p.width, p.height)
-		    if(d > rotate.root.y) d = rotate.root.y
-		    rotate.d = d
-		    rotate.corner = svggen(showgroup, ['path', {
-			stroke: 'red', fill: 'none', d: 'M '+rotate.root.x+','+(rotate.root.y - d)+
-			    ' L '+rotate.root.x+','+rotate.root.y }])[0]
-		    point_drag.create(rotate.root.x, rotate.root.y - d,
-				      point_drag.rotate_corner_point)
+	    else if(rotate) {
+		if(rotate.corner) {
+		    if(bbox) {
+			bbox.remove()
+			bbox = false
+		    }
+		    rotate.corner.remove()
+		    rotate = false
+		}
+		else {
+		    if(root && root.nodeName == 'path') {
+			root._reshu_origin_d = root.attributes.d.value
+			var p = root.getBBox()
+			var d = Math.max(p.width, p.height)
+			if(d > rotate.root.y) d = rotate.root.y
+			rotate.d = d
+			rotate.corner = svggen(showgroup, ['path', {
+			    stroke: 'red', fill: 'none', d: 'M '+rotate.root.x+','+(rotate.root.y - d)+
+				' L '+rotate.root.x+','+rotate.root.y }])[0]
+			point_drag.create(rotate.root.x, rotate.root.y - d,
+					  point_drag.rotate_corner_point)
+		    }
 		}
 	    }
 	    else {
@@ -385,15 +423,19 @@
 	    }
 	}
 	else if(e.key == 't') {
-	    var i
-	    for(i = 0; i <= 360; i += 30) {
-		var r = i * Math.PI / 180
-		// var t = Math.tan(r)
-		// var r2 = Math.atan(t)
-		var t = Math.sin(r)
-		var r2 = Math.asin(t)
-		var i2 = r2 * 180 / Math.PI
-		console.log([i,r,t,r2,Math.round(i2)])
+	    if(rotate && rotate.corner_point)
+		point_drag.rotate_corner_point(rotate.corner_point.x, rotate.corner_point.y, true)
+	    else {
+		var i
+		for(i = 0; i <= 360; i += 30) {
+		    var r = i * Math.PI / 180
+		    // var t = Math.tan(r)
+		    // var r2 = Math.atan(t)
+		    var t = Math.sin(r)
+		    var r2 = Math.asin(t)
+		    var i2 = r2 * 180 / Math.PI
+		    console.log([i,r,t,r2,Math.round(i2)])
+		}
 	    }
 	}
 	// else console.log(e)
