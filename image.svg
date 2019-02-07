@@ -127,9 +127,7 @@
 	    stomp_started = true
 	    animate2(200, function() { stomp_started = false }, 2, [
 		'raised_hoof_1', 'raised_hoof_2', 'raised_hoof_3', 'raised_hoof_2',
-		['raised_hoof_1', 'hit3'], ['raised_hoof_1', 'hit3', 'hit2'],
-		['raised_hoof_1', 'hit3', 'hit2', 'hit1'],
-		['raised_hoof_1', 'hit2', 'hit1'], ['raised_hoof_1', 'hit1'],
+		['raised_hoof_1', 'hit3'], ['raised_hoof_1', 'hit2'], ['raised_hoof_1', 'hit1'],
 	    ]);
 	}
 
