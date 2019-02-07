@@ -20,6 +20,20 @@
 	if(node.nodeName == 'path') cb(node)
 	else for(let item of node.children) for_each_path(item, cb)
     }
+    var save_pathes = function(node) {
+	for_each_path(node, function(item) {
+	    item._reshu_origin_d = item.attributes.d.value
+	})
+    }
+    var edit_pathes = function(node, cb) {
+	for_each_path(node, function(item) {
+	    item.attributes.d.value = item._reshu_origin_d.split(/\s+/).map(function(item) {
+		var m = item.match(/(\d+),(\d+)/)
+		if(m) return cb(parseInt(m[1]), parseInt(m[2]))
+		else return item
+	    }).join(' ')
+	})
+    }
 
     point_drag.create = function(x1,y1,drag) {
 	var d = 500
@@ -69,15 +83,6 @@
 	rotate.corner.attributes.d.value = 'M '+(rotate.root.x+rotate.d)+','+rotate.root.y+
 	    ' L '+rotate.root.x+','+rotate.root.y+' '+x+','+y
 	if(debug) console.log([rotate.root.x,x,x-rotate.root.x,rotate.root.y,y,rotate.root.y-y])
-	var edit = function(cb) {
-	    for_each_path(root, function(item) {
-		item.attributes.d.value = item._reshu_origin_d.split(/\s+/).map(function(item) {
-		    var m = item.match(/(\d+),(\d+)/)
-		    if(m) return cb(parseInt(m[1]), parseInt(m[2]))
-		    else return item
-		}).join(' ')
-	    })
-	}
 	var atan = function(x,y) {
 	    if(x == rotate.root.x) { // тангенс равен бесконечности
 		if(y <= rotate.root.y) return Math.PI / 2
@@ -91,7 +96,7 @@
 	}
 	var cr = atan(x,y)
 	if(debug) console.log(['rotate for', cr, Math.round(cr * 180 / Math.PI)])
-	edit(function(x,y) {
+	edit_pathes(root, function(x,y) {
 	    if(debug) console.log(['point',x,y])
 	    var x1 = x - rotate.root.x
 	    var y1 = rotate.root.y - y
@@ -109,6 +114,10 @@
 	    return ''+x+','+y
 	})
 	show_path_points()
+    }
+
+    point_drag.move_point = function(x,y) {
+	// rotate.root = {x:x, y:y}
     }
 
     point_drag.drag = function(e) {
@@ -318,9 +327,7 @@
 		}
 		else {
 		    if(root && root.getBBox) {
-			for_each_path(root, function(item) {
-			    item._reshu_origin_d = item.attributes.d.value
-			})
+			save_pathes(root)
 			var p = root.getBBox()
 			var d = Math.max(p.width, p.height)
 			if(d > rotate.root.y) d = rotate.root.y
@@ -405,6 +412,18 @@
 		var p = root.getBBox()
 		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
 		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_root_point)
+	    }
+	}
+	else if(e.key == 'm') {
+	    if(root && root.getBBox) {
+		var p = root.getBBox()
+		var x = p.x + p.width / 2, y = p.y + p.height / 2
+		save_pathes(root)
+		point_drag.create(x, y, function(x1,y1) {
+		    edit_pathes(root, function(x2,y2) {
+			return ''+(x2+x1-x)+','+(y2+y1-y)
+		    })
+		})
 	    }
 	}
 	else if(e.key == 't') {
