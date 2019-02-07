@@ -127,14 +127,6 @@
 	    stomp_started = true
 	    animate2(200, function() { stomp_started = false }, 2, [
 		'raised_hoof_1', 'raised_hoof_2', 'raised_hoof_3', 'raised_hoof_2',
-		['raised_hoof_1', 'hit3'], ['raised_hoof_1', 'hit2'], ['raised_hoof_1', 'hit1'],
-	    ]);
-	}
-	function stomp2() {
-	    if(stomp_started) return
-	    stomp_started = true
-	    animate2(200, function() { stomp_started = false }, 2, [
-		'raised_hoof_1', 'raised_hoof_2', 'raised_hoof_3', 'raised_hoof_2',
 		['raised_hoof_1', 'hit3'], ['raised_hoof_1', 'hit3', 'hit2'],
 		['raised_hoof_1', 'hit3', 'hit2', 'hit1'],
 		['raised_hoof_1', 'hit2', 'hit1'], ['raised_hoof_1', 'hit1'],
@@ -229,7 +221,7 @@
           <path id="tail_3" onmouseover="wag()" class="fill" d="M 17477,11333 C 17550,10859 18028,10705 18490,10694 19755,10894 18825,12613 20387,13732 18109,13492 17857,12373 17477,11333 Z"/>
   <g id="raised_hoof_1">
           <path class="line" d="M 9597,12723 C 9484,12865 8531,16415 8405,16772 8509,16863 8958,16947 9331,16865 9363,16436 9331,17056 9359,16403"/>
-          <path id="hoof_top_right" onmouseover="stomp2()" class="fill" d="M 9359,16866 C 9386,16721 9379,16825 9388,16349 9388,16349 9139,16461 8490,16292 8478,16467 8364,16732 8364,16732 8364,16732 8671,17002 9359,16866 Z"/>
+          <path id="hoof_top_right" class="fill" d="M 9359,16866 C 9386,16721 9379,16825 9388,16349 9388,16349 9139,16461 8490,16292 8478,16467 8364,16732 8364,16732 8364,16732 8671,17002 9359,16866 Z"/>
           <path id="hoof_1" onmouseover="stomp()" class="fill" d="M 11640,17287 C 11652,17140 11668,16811 11655,16693 11531,16705 10694,17009 9377,16653 9384,16830 9360,17313 9360,17313 9360,17313 10664,17619 11640,17287 Z"/>
           <path class="line" d="M 9590,12732 C 9580,13022 9387,17028 9388,17328 11052,17465 10909,17465 11626,17274 11588,15914 11549,14555 11495,13097"/>
   </g>
