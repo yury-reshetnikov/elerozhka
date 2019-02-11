@@ -91,7 +91,7 @@
 	}
 	var wink_started = false
 	function wink() {
-	    if(wink_started) return
+	    if(wink_started || sneeze_started) return
 	    if(star == 1) {
 		wink_started = true
 		animate(300, function() { wink_started = false }, 5,
@@ -151,7 +151,7 @@
 
         var sneeze_started = false
         function sneeze() {
-                if(sneeze_started) return
+                if(sneeze_started || wink_started) return
                 sneeze_started = true
                 animate2(500, function() { sneeze_started = false }, 2, [
                 'head', 'head_up2', 'head_up1', 'head', 'head_down'
