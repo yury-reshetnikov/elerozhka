@@ -137,7 +137,6 @@
               wag_started = true
               animate2(150, function() { wag_started = false }, 3, [
                 'tail_3', 'tail_2', 'tail_1', 'tail_2'
-
               ])
         }
 
@@ -147,8 +146,16 @@
               smile_started = true
               animate2(150, function() { smile_started = false }, 2, [
                 'jowl_2', 'jowl_1'
-
               ])
+        }
+
+        var sneeze_started = false
+        function sneeze() {
+                if(sneeze_started) return
+                sneeze_started = true
+                animate2(500, function() { sneeze_started = false }, 2, [
+                'head', 'head_up2', 'head_up1', 'head', 'head_down'
+                ])
         }
 
 	window.onkeyup = svgeditor
@@ -242,7 +249,7 @@
         <path class="fill" d="M 12312,6887 C 12312,6887 11704,10921 14217,9866 14217,9866 12961,10064 13238,8591 Z"/>
         <path class="fill" d="M 11465,3794 C 12985,4275 13609,5523 13496,6905 13457,7645 13679,8497 14684,8193 14551,8917 12939,9270 12333,7030 12049,6047 12038,5456 11580,4820 Z"/>
       </g>
-      <g class="Group" id="horn">
+      <g class="Group" id="horn" onmouseover="sneeze()">
          <path fill="rgb(255,47,0)" stroke="none" d="M 8254,2675 C 8368,2641 8403,2417 8344,2303 L 8256,2182 C 8183,2092 8216,2051 8102,2022 L 8072,2110 C 8067,2175 8107,2323 8127,2385 8158,2483 8173,2625 8254,2675 Z"/>
          <path fill="none" stroke="rgb(0,0,0)" stroke-width="50" stroke-linejoin="miter" d="M 8254,2675 C 8368,2641 8403,2417 8344,2303 L 8256,2182 C 8183,2092 8216,2051 8102,2022 L 8072,2110 C 8067,2175 8107,2323 8127,2385 8158,2483 8173,2625 8254,2675 Z"/>
          <path fill="rgb(255,153,0)" stroke="none" d="M 8336,3016 C 8538,3024 8656,3021 8657,2802 8658,2724 8637,2663 8610,2613 L 8530,2520 C 8523,2515 8482,2487 8482,2487 8222,2554 8271,2793 8336,3016 Z"/>
