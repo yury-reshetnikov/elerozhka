@@ -18,6 +18,24 @@ var point_light = new THREE.PointLight(0xffffff, 5)
 point_light.position.set( 50, 10, 30 )
 scene.add(point_light)
 
+
+scene.add( new THREE.PointLightHelper( point_light, 15 ) )
+
+scene.add( new THREE.AxesHelper( 500 ) )
+
+var gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 )
+gridHelper.position.y = - 150
+gridHelper.position.x = - 150
+scene.add( gridHelper )
+
+/*
+var polarGridHelper = new THREE.PolarGridHelper( 200, 16, 8, 64, 0x0000ff, 0x808080 )
+polarGridHelper.position.y = - 150
+polarGridHelper.position.x = 200
+scene.add( polarGridHelper )
+*/
+
+
 // var geometry = new THREE.BoxGeometry( 1, 1, 1 )
 var material = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
 // var cube = new THREE.Mesh( geometry, material )
