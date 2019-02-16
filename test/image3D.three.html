@@ -40,6 +40,33 @@ object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI/2, Math.P
 object.position.set( 259, 60, 60 )
 scene.add( object )
 
+/*
+  //cylynder_holder
+  cylynder_holder = new THREE.Mesh(geometry, material);
+  cylynder_holder.scale.set(4, 10, 4);
+  cylynder_holder.position.set(0, 0, 0);
+  cylynder_holder.rotation.set(90 * Math.PI / 180, 0, 0);
+  scene.add(cylynder_holder);
+  // cylynder_needle
+  cylynder_needle = new THREE.Mesh(geometry, material);
+  cylynder_needle.scale.set(1, 25, 1);
+  cylynder_needle.position.set(0, -10, 0);
+  cylynder_needle.rotation.set(0, 0, 0);
+  scene.add(cylynder_needle);
+  // grouping
+  group = new THREE.Group(); // You can also use THREE.Mesh();
+  group.add(cylynder_holder);
+  group.add(cylynder_needle);
+  // you can now change the position of this group to move the entire module.
+  group.position.set(0, 0, 0);
+  // initial rotation set to z:-45.
+  group.rotation.set(0, 0, -45 * Math.PI / 180);
+  // scale it bigger altogether.
+  group.scale.set(1, 1, 1);
+  scene.add(group);
+*/
+
+
 camera.position.z = 600
 var controls = new THREE.OrbitControls( camera, renderer.domElement )
 function animate() {
