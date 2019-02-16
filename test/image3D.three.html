@@ -19,41 +19,25 @@ point_light.position.set( 500, 100, 300 )
 scene.add(point_light)
 
 
-scene.add( new THREE.PointLightHelper( point_light, 15 ) )
-
-scene.add( new THREE.AxesHelper( 500 ) )
-
-var gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 )
-gridHelper.position.y = - 150
-gridHelper.position.x = - 150
-scene.add( gridHelper )
-
-/*
-var polarGridHelper = new THREE.PolarGridHelper( 200, 16, 8, 64, 0x0000ff, 0x808080 )
-polarGridHelper.position.y = - 150
-polarGridHelper.position.x = 200
-scene.add( polarGridHelper )
-*/
-
-
-// var geometry = new THREE.BoxGeometry( 1, 1, 1 )
 var material = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-// var cube = new THREE.Mesh( geometry, material )
-// scene.add( cube )
 
 var object
 
+// Голова
 object = new THREE.Mesh( new THREE.SphereGeometry( 75, 32, 32 ), material )
-object.position.set( -100, 10, 10 )
+object.position.set( -10, 140, 60 )
 scene.add( object )
 
+// Туловище
 object = new THREE.Mesh(new THREE.TubeGeometry(
     new THREE.LineCurve3(new THREE.Vector3(60, 60, 60), new THREE.Vector3(260, 60, 60)),
     32, 50, 32, false), material)
 scene.add( object )
-
+object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI*1.5, Math.PI ), material )
+object.position.set( 60, 60, 60 )
+scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI/2, Math.PI ), material )
-object.position.set( 300, 60, 60 )
+object.position.set( 259, 60, 60 )
 scene.add( object )
 
 camera.position.z = 600
