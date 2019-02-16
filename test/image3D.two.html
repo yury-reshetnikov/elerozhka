@@ -15,7 +15,7 @@ renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
 document.body.appendChild( renderer.domElement )
 scene.add(new THREE.AmbientLight(0xffffff, 0.5))
 var point_light = new THREE.PointLight(0xffffff, 5)
-point_light.position.set( 50, 10, 30 )
+point_light.position.set( 500, 100, 300 )
 scene.add(point_light)
 
 
@@ -47,7 +47,12 @@ object = new THREE.Mesh( new THREE.SphereBufferGeometry( 75, 32, 32 ), material 
 object.position.set( -100, 10, 10 )
 scene.add( object )
 
-camera.position.y = 400
+object = new THREE.Mesh(new THREE.TubeGeometry(
+    new THREE.LineCurve3(new THREE.Vector3(10, 10, 10), new THREE.Vector3(200, 10, 10)),
+    32, 50, 32, false), material)
+scene.add( object )
+
+camera.position.z = 600
 var controls = new THREE.OrbitControls( camera, renderer.domElement )
 function animate() {
     requestAnimationFrame( animate )
