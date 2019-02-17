@@ -15,17 +15,39 @@ renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
 document.body.appendChild( renderer.domElement )
 scene.add(new THREE.AmbientLight(0xffffff, 0.5))
 var point_light = new THREE.PointLight(0xffffff, 5)
-point_light.position.set( 500, 100, 300 )
+// var point_light = new THREE.DirectionalLight(0xffffff, 5)
+point_light.position.set( -500, 700, 300 )
+// point_light.castShadow = true
 scene.add(point_light)
 
 
-var material = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+var material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
+var material_eye = new THREE.MeshStandardMaterial({ color: 0x009900 })
+var material_nose = new THREE.MeshStandardMaterial({ color: 0x1a0d00 })
 
 var object
 
 // Голова
 object = new THREE.Mesh( new THREE.SphereGeometry( 75, 32, 32 ), material )
 object.position.set( -10, 140, 60 )
+scene.add( object )
+function ear(x,y,z) {
+    object = new THREE.Mesh( new THREE.ConeGeometry(20, 40, 16), material )
+    object.position.set(x, y, z)
+    scene.add( object )
+}
+ear(-10, 216, 90)
+ear(-10, 216, 30)
+function eye(x,y,z) {
+    object = new THREE.Mesh( new THREE.SphereGeometry( 20, 16, 16 ), material_eye )
+    object.position.set(x,y,z)
+    scene.add( object )
+}
+eye(-60,170,90)
+eye(-60,170,30)
+object = new THREE.Mesh( new THREE.ConeGeometry(10, 20, 8), material_nose )
+object.position.set(-90, 140, 60)
+object.rotateZ(Math.PI/2 + 0.2)
 scene.add( object )
 
 // Туловище
@@ -34,11 +56,46 @@ object = new THREE.Mesh(new THREE.TubeGeometry(
     32, 50, 32, false), material)
 scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI*1.5, Math.PI ), material )
-object.position.set( 60, 60, 60 )
+object.position.set( 61, 60, 60 )
 scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI/2, Math.PI ), material )
 object.position.set( 259, 60, 60 )
 scene.add( object )
+
+// Лапы
+
+function leg(x,y,z) {
+    object = new THREE.Mesh(new THREE.TubeGeometry(
+	new THREE.LineCurve3(new THREE.Vector3(x, y-60, z), new THREE.Vector3(x, y, z)),
+	8, 10, 8, false), material)
+    scene.add( object )
+    object = new THREE.Mesh( new THREE.SphereGeometry( 10, 8, 8, 0, Math.PI*2, 0, Math.PI ),
+			     material )
+    object.position.set( x, y-59, z )
+    scene.add( object )
+}
+
+leg(60, 30, 90)
+leg(60, 30, 30)
+leg(260, 30, 90)
+leg(260, 30, 30)
+
+
+// Хвост
+
+object = new THREE.Mesh(new THREE.TubeGeometry(
+    new THREE.CatmullRomCurve3( [
+	new THREE.Vector3( 295, 90, 60 ),
+	new THREE.Vector3( 315, 90, 60 ),
+	new THREE.Vector3( 325, 120, 60 ),
+	new THREE.Vector3( 350, 120, 60 )
+    ] ),
+    8, 5, 32, false), material)
+scene.add( object )
+object = new THREE.Mesh( new THREE.SphereGeometry( 5, 4, 4, Math.PI/2, Math.PI ), material )
+object.position.set( 349, 120, 60 )
+scene.add( object )
+
 
 /*
   //cylynder_holder

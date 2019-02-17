@@ -56,6 +56,28 @@ object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI/2, Math.P
 object.position.set( 300, 60, 60 )
 scene.add( object )
 
+object = new THREE.Mesh(new THREE.TubeGeometry(
+    new THREE.CatmullRomCurve3( [
+	new THREE.Vector3( -10, 0, 10 ),
+	new THREE.Vector3( -5, 5, 5 ),
+	new THREE.Vector3( 0, 0, 0 ),
+	new THREE.Vector3( 5, -5, 5 ),
+	new THREE.Vector3( 10, 0, 10 )
+    ] ),
+    8, 5, 32, false), material)
+scene.add( object )
+
+object = new THREE.Mesh(new THREE.TubeGeometry(
+    new THREE.CatmullRomCurve3( [
+	new THREE.Vector3( 100, 200, 100 ),
+	new THREE.Vector3( 130, 250, 100 ),
+	new THREE.Vector3( 150, 200, 100 ),
+	new THREE.Vector3( 170, 250, 100 ),
+	new THREE.Vector3( 200, 200, 100 )
+    ] ),
+    8, 5, 32, false), material)
+scene.add( object )
+
 camera.position.z = 600
 var controls = new THREE.OrbitControls( camera, renderer.domElement )
 function animate() {
