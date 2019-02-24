@@ -154,7 +154,7 @@
                 if(sneeze_started || wink_started) return
                 sneeze_started = true
                 animate2(300, function() { sneeze_started = false }, 2, [
-                'head', 'head_up1', 'head_up2', 'head_up1_eye', 'head_up', 'head_down'
+                ['head','tail_3'], ['head_up1','tail_3'], ['head_up2','tail_3'], ['head_up1_eye','tail_3'], ['head_up','tail_3'], ['head_down', 'tail_sneeze']
                 ])
         }
 
@@ -224,6 +224,7 @@
           <path id="tail_1" style="display:none" class="fill" d="M 17475,11332 C 17548,10858 18025,10704 18488,10692 19753,10892 20175,12453 18223,14555 18403,12292 17855,12372 17475,11332 Z"/>
           <path id="tail_2" style="display:none" class="fill" d="M 17476,11333 C 17550,10858 18026,10705 18489,10694 19754,10893 19163,12373 19332,14532 17855,13173 17856,12374 17476,11333 Z"/>
           <path id="tail_3" onmouseover="wag()" class="fill" d="M 17477,11333 C 17550,10859 18028,10705 18490,10694 19755,10894 18825,12613 20387,13732 18109,13492 17857,12373 17477,11333 Z"/>
+          <path id="tail_sneeze" style="display:none" class="fill" d="M 17477,11333 C 17550,10859 18028,10705 18490,10694 19755,10894 19962,11343 21709,11562 18610,13202 17857,12373 17477,11333 Z"/>
   <g id="raised_hoof_1">
           <path class="line" d="M 9597,12723 C 9484,12865 8531,16415 8405,16772 8509,16863 8958,16947 9331,16865 9363,16436 9331,17056 9359,16403"/>
           <path id="hoof_top_right" class="fill" d="M 9359,16866 C 9386,16721 9379,16825 9388,16349 9388,16349 9139,16461 8490,16292 8478,16467 8364,16732 8364,16732 8364,16732 8671,17002 9359,16866 Z"/>
