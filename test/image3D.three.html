@@ -45,9 +45,13 @@ function eye(x,y,z) {
 }
 eye(-60,170,90)
 eye(-60,170,30)
+/*
 object = new THREE.Mesh( new THREE.ConeGeometry(10, 20, 8), material_nose )
 object.position.set(-90, 140, 60)
 object.rotateZ(Math.PI/2 + 0.2)
+*/
+object = new THREE.Mesh( new THREE.SphereGeometry( 30, 16, 16 ), material )
+object.position.set( -90, 140, 60 )
 scene.add( object )
 
 // Туловище
