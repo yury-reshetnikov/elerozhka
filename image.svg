@@ -133,7 +133,7 @@
 
         var wag_started = false
         function wag() {
-              if(wag_started) return
+              if(wag_started || sneeze_started) return
               wag_started = true
               animate2(150, function() { wag_started = false }, 3, [
                 'tail_3', 'tail_2', 'tail_1', 'tail_2'
@@ -151,7 +151,7 @@
 
         var sneeze_started = false
         function sneeze() {
-                if(sneeze_started || wink_started) return
+                if(sneeze_started || wink_started || wag_started) return
                 sneeze_started = true
                 animate2(300, function() { sneeze_started = false }, 2, [
                 ['head','tail_3'], ['head_up1','tail_3'], ['head_up2','tail_3'], ['head_up1_eye','tail_3'], ['head_up','tail_3'], ['head_down', 'tail_sneeze']
