@@ -17,6 +17,7 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.5))
 var point_light = new THREE.PointLight(0xffffff, 5)
 // var point_light = new THREE.DirectionalLight(0xffffff, 5)
 point_light.position.set( -500, 700, 300 )
+point_light.castShadow = true
 // point_light.castShadow = true
 scene.add(point_light)
 
@@ -30,6 +31,8 @@ var object
 // Голова
 object = new THREE.Mesh( new THREE.SphereGeometry( 75, 32, 32 ), material )
 object.position.set( -10, 140, 60 )
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 function ear(x,y,z) {
     object = new THREE.Mesh( new THREE.ConeGeometry(20, 40, 16), material )
@@ -58,12 +61,18 @@ scene.add( object )
 object = new THREE.Mesh(new THREE.TubeGeometry(
     new THREE.LineCurve3(new THREE.Vector3(60, 60, 60), new THREE.Vector3(260, 60, 60)),
     32, 50, 32, false), material)
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI*1.5, Math.PI ), material )
 object.position.set( 61, 60, 60 )
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 50, 32, 32, Math.PI/2, Math.PI ), material )
 object.position.set( 259, 60, 60 )
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 
 // Лапы

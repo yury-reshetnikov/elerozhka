@@ -153,8 +153,14 @@
         function sneeze() {
                 if(sneeze_started || wink_started || wag_started) return
                 sneeze_started = true
-                animate2(300, function() { sneeze_started = false }, 2, [
-                ['head','tail_3'], ['head_up1','tail_3'], ['head_up2','tail_3'], ['head_up1_eye','tail_3'], ['head_up','tail_3'], ['head_down', 'tail_sneeze']
+                animate2(300, function() { sneeze_started = false }, 1, [
+                ['head','tail_3'], ['head_up1','tail_3'], ['head_up2','tail_3'],
+		['head_up1_eye','tail_3'], ['head_up','tail_3'],
+		['head_down', 'tail_sneeze'],
+                ['head','tail_3','germs2'], ['head_up1','tail_3'], ['head_up2','tail_3'],
+		['head_up1_eye','tail_3'], ['head_up','tail_3'],
+		['head_down', 'tail_sneeze'],
+		['head','tail_3','germs2']
                 ])
         }
 
@@ -650,6 +656,11 @@
 	 <path class="germ" d="M 4992,10070 C 4774,10275 4847,10325 4703,10427 4538,10525 4444,10447 4592,10307 4740,10163 4810,10205 4992,10070"/>
        </g>
     </g>
+       <g id="germs2" style="display:none">
+	 <path class="germ" d="M 4013,10784 C 3795,10989 3868,11039 3724,11141 3559,11239 3465,11161 3613,11021 3761,10877 3831,10919 4013,10784"/>
+	 <path class="germ" d="M 3075,10783 C 2857,10988 2930,11038 2786,11140 2621,11238 2527,11160 2675,11020 2823,10876 2893,10918 3075,10783"/>
+	 <path class="germ" d="M 2929,11683 C 2711,11888 2784,11938 2640,12040 2475,12138 2381,12060 2529,11920 2677,11776 2747,11818 2929,11683"/>
+       </g>
 <script type="text/javascript">
   set_star(2)
 </script>
