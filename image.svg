@@ -6,6 +6,7 @@
      xml:space="preserve">
   <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
+  <script href="svg-animate.js"></script>
   <script type="text/javascript">
     <![CDATA[
 	var star = 1
