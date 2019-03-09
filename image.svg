@@ -283,7 +283,7 @@ transform="matrix(2.1169438081370817,0.3576047954311102,-0.3576047954311102,1.47
     <path id="contour" class="line" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <path id="contour_t0" class="line" style="display:none" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <path id="contour_t1" class="line" style="display:none" d="M 7306,9719 C 8682,10181 9055,10676 9590,12732"/>
-    <path id="back" class="line" d="M 13196,9053 L 13196,9053 13196,9053"/>
+    <path id="back" class="line" d="M 13196,9053 C 13196,9053 13196,9053"/>
     <path id="back_t0" class="line" style="display:none" d="M 13196,9053 L 13196,9053 13196,9053"/>
     <path id="back_t1" class="line" style="display:none" d="M 13196,9053 L 11848,8789 8487,7096"/>
     <g id="head_without_neck" transform-origin="10807 12015">
