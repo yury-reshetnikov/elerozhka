@@ -174,6 +174,8 @@
 	    a.rotate('head_without_neck', -50, 0, 1300, 2300)
 	    a.path('contour', 'contour_t0', 'contour_t1', 0, 1000)
 	    a.path('contour', 'contour_t1', 'contour_t0', 1300, 2300)
+	    // a.path_rotate('contour', 'contour_t0', 10807, 12015, [1,2,3], 0, -50, 0, 1000)
+	    // a.path_rotate('contour', 'contour_t0', 10807, 12015, [1,2,3], -50, 0, 1300, 2300)
 	    a.path('back', 'back_t0', 'back_t1', 0, 1000)
 	    a.path('back', 'back_t1', 'back_t0', 1300, 2300)
 	    a.finish(function() { eating_started = false })

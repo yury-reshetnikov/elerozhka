@@ -1,45 +1,44 @@
 function Animate3() {
-    function Rotate(id, angle_from, angle_to, time_from, time_to) {
-	// this.id = id
-	// this.angle = angle
-	// this.time = time
-	this.draw = function(t) {
+    function gen_draw(time_from, time_to, cb) {
+	return function(t) {
 	    if(t > time_to) return false
 	    else if(t < time_from) return true
 	    else {
-		var a = angle_from + (angle_to - angle_from) * (t - time_from) / (time_to - time_from)
-		document.getElementById(id).setAttribute('transform', 'rotate('+a+')')
+		cb((t - time_from) / (time_to - time_from))
 		return true
 	    }
 	}
     }
+    function Rotate(id, angle_from, angle_to, time_from, time_to) {
+	// this.id = id
+	// this.angle = angle
+	// this.time = time
+	this.draw = gen_draw(time_from, time_to, function(k) {
+	    var a = angle_from + (angle_to - angle_from) * k
+	    document.getElementById(id).setAttribute('transform', 'rotate('+a+')')
+	})
+    }
     function Path(id, pattern_from, pattern_to, time_from, time_to) {
-	this.draw = function(t) {
-	    if(t > time_to) return false
-	    else if(t < time_from) return true
-	    else {
-		var d = []
-		var d0 = document.getElementById(pattern_from).attributes.d.value.split(/\s+/)
-		var d1 = document.getElementById(pattern_to).attributes.d.value.split(/\s+/)
-		while(d0.length && d1.length) {
-		    var v0 = d0.shift()
-		    var v1 = d1.shift()
-		    var m0 = v0.match(/(\d+),(\d+)/)
-		    var m1 = v1.match(/(\d+),(\d+)/)
-		    if(m0 && m1) {
-			var x0 = parseInt(m0[1])
-			var y0 = parseInt(m0[2])
-			var x1 = parseInt(m1[1])
-			var y1 = parseInt(m1[2])
-			var k = (t - time_from) / (time_to - time_from)
-			d.push(''+(x0 + (x1 - x0) * k)+','+(y0 + (y1 - y0) * k))
-		    }
-		    else d.push(v1)
+	this.draw = gen_draw(time_from, time_to, function(k) {
+	    var d = []
+	    var d0 = document.getElementById(pattern_from).attributes.d.value.split(/\s+/)
+	    var d1 = document.getElementById(pattern_to).attributes.d.value.split(/\s+/)
+	    while(d0.length && d1.length) {
+		var v0 = d0.shift()
+		var v1 = d1.shift()
+		var m0 = v0.match(/(\d+),(\d+)/)
+		var m1 = v1.match(/(\d+),(\d+)/)
+		if(m0 && m1) {
+		    var x0 = parseInt(m0[1])
+		    var y0 = parseInt(m0[2])
+		    var x1 = parseInt(m1[1])
+		    var y1 = parseInt(m1[2])
+		    d.push(''+(x0 + (x1 - x0) * k)+','+(y0 + (y1 - y0) * k))
 		}
-		document.getElementById(id).attributes.d.value = d.join(' ')
-		return true
+		else d.push(v1)
 	    }
-	}
+	    document.getElementById(id).attributes.d.value = d.join(' ')
+	})
     }
     // this.actions = []
     var actions = []

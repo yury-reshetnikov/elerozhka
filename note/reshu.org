@@ -1,0 +1,10 @@
+ssh reshu.org 'ls -al /usr/local/www/apache22/data/'
+scp svggen.js svg-editor.js svg-animate.js root@reshu.org:/usr/local/www/apache22/data/
+scp image.svg root@reshu.org:/usr/local/www/apache22/data/elerozhka.svg
+
+
+# Local Variables:
+# mode: sh
+# coding: utf-8-unix
+# tab-width: 8
+# End:
