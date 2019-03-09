@@ -40,6 +40,32 @@ function Animate3() {
 	    document.getElementById(id).attributes.d.value = d.join(' ')
 	})
     }
+    function PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to) {
+	this.draw = gen_draw(time_from, time_to, function(k) {
+	    var n = -1
+	    var p = points.slice()
+	    document.getElementById(id).attributes.d.value = document.getElementById(pattern).
+		attributes.d.value.split(/\s+/).map(function(item) {
+		    var m = item.match(/(\d+),(\d+)/)
+		    if(m) {
+			++n
+			if(!p.length || n < p[0]) return item
+			p.shift()
+			var x = parseInt(m[1])
+			var y = parseInt(m[2])
+			var a = (angle_from + (angle_to - angle_from) * k) * Math.PI / 180
+			var x1 = x - cx
+			var y1 = y - cy
+			var g = Math.sqrt(x1*x1 + y1*y1)
+			var a0 = Math.asin(y1 / g)
+			if(x < cx) a0 = Math.PI - a0
+			var a1 = a + a0
+			return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
+		    }
+		    else return item
+		}).join(' ')
+	})
+    }
     // this.actions = []
     var actions = []
     var finalization = []
@@ -66,6 +92,9 @@ function Animate3() {
     }
     this.path = function(id, pattern_from, pattern_to, time_from, time_to) {
 	actions.push(new Path(id, pattern_from, pattern_to, time_from, time_to))
+    }
+    this.path_rotate = function(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to) {
+	actions.push(new PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to))
     }
     this.finish = function(cb) { finalization.push(cb) }
 }
