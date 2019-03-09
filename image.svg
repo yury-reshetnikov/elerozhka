@@ -168,6 +168,12 @@
 	var eating_started = false
 	function eating() {
 	    if(eating_started || sneeze_started || wink_started) return
+	    eating_started = true
+	    var a = new Animate3
+	    a.rotate('head_without_neck', 0, -50, 0, 1000)
+	    a.rotate('head_without_neck', -50, 0, 1300, 2300)
+	    a.finish(function() { eating_started = false })
+	    a.start()
 	}
 
 	function rotate_head(r) {
@@ -693,6 +699,6 @@ transform="matrix(2.1169438081370817,0.3576047954311102,-0.3576047954311102,1.47
        </g>
 <script type="text/javascript">
   set_star(2)
-  rotate_head(-50)
+  // rotate_head(-50)
 </script>
 </svg>
