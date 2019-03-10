@@ -18,6 +18,13 @@ function Animate3() {
 	    document.getElementById(id).setAttribute('transform', 'rotate('+a+')')
 	})
     }
+    function Translate(id, x_from, y_from, x_to, y_to, time_from, time_to) {
+	this.draw = gen_draw(time_from, time_to, function(k) {
+	    var x = x_from + (x_to - x_from) * k
+	    var y = y_from + (y_to - y_from) * k
+	    document.getElementById(id).setAttribute('transform', 'translate('+x+','+y+')')
+	})
+    }
     function Path(id, pattern_from, pattern_to, time_from, time_to) {
 	this.draw = gen_draw(time_from, time_to, function(k) {
 	    var d = []
@@ -101,6 +108,9 @@ function Animate3() {
     }
     this.rotate = function(id, angle_from, angle_to, time_from, time_to) {
 	actions.push(new Rotate(id, angle_from, angle_to, time_from, time_to))
+    }
+    this.translate = function(id, x_from, y_from, x_to, y_to, time_from, time_to) {
+	actions.push(new Translate(id, x_from, y_from, x_to, y_to, time_from, time_to))
     }
     this.path = function(id, pattern_from, pattern_to, time_from, time_to) {
 	actions.push(new Path(id, pattern_from, pattern_to, time_from, time_to))

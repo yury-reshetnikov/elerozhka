@@ -181,8 +181,18 @@ function eating() {
 	a.rotate('head_without_neck', -50, 0, 1300, 2300)
 	a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -50, 0, 1300, 2300)
 	a.path('back', 'back_t1', 'back_t0', 1300, 2300)
-	a.rotate('jowl', 0, -15, 2300, 2500)
-	a.rotate('eated_2', -160, 0, 2300, 2500)
+	a.translate('eated_3', 0, 0, 2000, -500, 2300, 3300)
+	a.rotate('jowl', 0, -15, 2300, 2500);
+	[0,1].forEach(function(i) {
+	    var t = 2500+i*400
+	    a.rotate('jowl', -15, 0, t, t+200)
+	    a.rotate('jowl', 0, -15, t+200, t+2*200)
+	})
+	a.display('eated_3', false, 3300)
+	a.rotate('eated_2', -160, 0, 3300, 3500) // +++ перенести возврат в finish
+	a.translate('eated_3', 2000, -500, 0, 0, 3300, 3500)
+	a.display('eated_no', true, 3500)
+	a.display('eated', false, 3500)
     }
     a.finish(function() { eating_started = false })
     a.start()
