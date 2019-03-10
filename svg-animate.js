@@ -66,6 +66,18 @@ function Animate3() {
 		}).join(' ')
 	})
     }
+    function Display(id, show, time) {
+	var done = false
+	this.draw = function(t) {
+	    if(done) return false
+	    else if(t >= time) {
+		done = true
+		document.getElementById(id).style.display = show ? '' : 'none'
+		return true
+	    }
+	    else return true
+	}
+    }
     // this.actions = []
     var actions = []
     var finalization = []
@@ -95,6 +107,9 @@ function Animate3() {
     }
     this.path_rotate = function(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to) {
 	actions.push(new PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to))
+    }
+    this.display = function(id, show, time) {
+	actions.push(new Display(id, show, time))
     }
     this.finish = function(cb) { finalization.push(cb) }
 }

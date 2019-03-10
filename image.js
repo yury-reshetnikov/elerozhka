@@ -161,7 +161,7 @@ function sneeze() {
                 ])
 }
 
-var eating_started = true
+var eating_started = false
 function eating() {
     if(eating_started || sneeze_started || wink_started) return
     eating_started = true
@@ -171,7 +171,12 @@ function eating() {
     a.path('back', 'back_t0', 'back_t1', 0, 1000)
     a.rotate('jowl', -15, -30, 800, 1000)
     a.rotate('jowl', -30, 0, 1000, 1300)
+    a.display('eated_no', false, 1200)
+    a.display('eated', true, 1200)
+    a.display('eated_2', true, 1200)
     a.rotate('eated_2', 0, -150, 1200, 1300)
+    a.display('eated_2', false, 1300)
+    a.display('eated_3', true, 1300)
     if(true) { // up
 	a.rotate('head_without_neck', -50, 0, 1300, 2300)
 	a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -50, 0, 1300, 2300)
