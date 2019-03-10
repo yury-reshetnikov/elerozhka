@@ -134,9 +134,16 @@ var smile_started = false
 function smile() {
     if(smile_started) return
     smile_started = true
-    animate2(150, function() { smile_started = false }, 2, [
-                'jowl_2', 'jowl_1'
-              ])
+    // animate2(150, function() { smile_started = false }, 2, [
+    //             'jowl_2', 'jowl_1'
+    //           ])
+    var a = new Animate3
+    a.rotate('jowl', -15, 0, 0, 200)
+    a.rotate('jowl', 0, -15, 200,400)
+    a.rotate('jowl', -15, 0, 400, 600)
+    a.rotate('jowl', 0, -15, 600, 800)
+    a.finish(function() { smile_started = false })
+    a.start()
 }
 
 var sneeze_started = false
@@ -171,6 +178,12 @@ function eating() {
 
 function rotate_head(r) {
     document.getElementById('head_without_neck').setAttribute('transform', 'rotate('+r+')')
+}
+
+function open_mouth() {
+    var a = new Animate3
+    a.rotate('jowl', 0, -30, 0, 1000)
+    a.start()
 }
 
 window.onkeyup = svgeditor
