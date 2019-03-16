@@ -1,7 +1,27 @@
 function Animate3() {
-    function gen_draw(time_from, time_to, cb) {
+    function gen_draw(time_from, time_to, time_finish, cb) {
+	var done = false
 	return function(t) {
-	    if(t > time_to) return false
+	    if(t > time_to) {
+		if(time_finish === true) {
+		    if(!done) {
+			done = true
+			cb(1)
+		    }
+		    return false
+		}
+		else if(time_finish) {
+		    if(t > time_finish) return false
+		    else {
+			if(!done) {
+			    done = true
+			    cb(1)
+			}
+			return true
+		    }
+		}
+		else return false
+	    }
 	    else if(t < time_from) return true
 	    else {
 		cb((t - time_from) / (time_to - time_from))
@@ -9,24 +29,24 @@ function Animate3() {
 	    }
 	}
     }
-    function Rotate(id, angle_from, angle_to, time_from, time_to) {
+    function Rotate(id, angle_from, angle_to, time_from, time_to, time_finish) {
 	// this.id = id
 	// this.angle = angle
 	// this.time = time
-	this.draw = gen_draw(time_from, time_to, function(k) {
+	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var a = angle_from + (angle_to - angle_from) * k
 	    document.getElementById(id).setAttribute('transform', 'rotate('+a+')')
 	})
     }
-    function Translate(id, x_from, y_from, x_to, y_to, time_from, time_to) {
-	this.draw = gen_draw(time_from, time_to, function(k) {
+    function Translate(id, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
+	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var x = x_from + (x_to - x_from) * k
 	    var y = y_from + (y_to - y_from) * k
 	    document.getElementById(id).setAttribute('transform', 'translate('+x+','+y+')')
 	})
     }
-    function Path(id, pattern_from, pattern_to, time_from, time_to) {
-	this.draw = gen_draw(time_from, time_to, function(k) {
+    function Path(id, pattern_from, pattern_to, time_from, time_to, time_finish) {
+	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var d = []
 	    var d0 = document.getElementById(pattern_from).attributes.d.value.split(/\s+/)
 	    var d1 = document.getElementById(pattern_to).attributes.d.value.split(/\s+/)
@@ -47,8 +67,8 @@ function Animate3() {
 	    document.getElementById(id).attributes.d.value = d.join(' ')
 	})
     }
-    function PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to) {
-	this.draw = gen_draw(time_from, time_to, function(k) {
+    function PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish) {
+	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var n = -1
 	    var p = points.slice()
 	    document.getElementById(id).attributes.d.value = document.getElementById(pattern).
@@ -106,17 +126,23 @@ function Animate3() {
 	    finalization = []
 	}
     }
-    this.rotate = function(id, angle_from, angle_to, time_from, time_to) {
-	actions.push(new Rotate(id, angle_from, angle_to, time_from, time_to))
+    this.rotate = function(id, angle_from, angle_to, time_from, time_to, time_finish) {
+	actions.push(new Rotate(id, angle_from, angle_to, time_from, time_to, time_finish))
     }
-    this.translate = function(id, x_from, y_from, x_to, y_to, time_from, time_to) {
-	actions.push(new Translate(id, x_from, y_from, x_to, y_to, time_from, time_to))
+    this.translate = function(id, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
+	actions.push(new Translate(id, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
     }
-    this.path = function(id, pattern_from, pattern_to, time_from, time_to) {
-	actions.push(new Path(id, pattern_from, pattern_to, time_from, time_to))
+    this.path = function(id, pattern_from, pattern_to, time_from, time_to, time_finish) {
+	actions.push(new Path(id, pattern_from, pattern_to, time_from, time_to, time_finish))
     }
-    this.path_rotate = function(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to) {
-	actions.push(new PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to))
+    this.path_rotate = function(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish) {
+	actions.push(new PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish))
+    }
+    this.path_restore = function(id, pattern) {
+	document.getElementById(id).attributes.d.value = document.getElementById(pattern).attributes.d.value
+    }
+    this.transform_restore = function(id) {
+	    document.getElementById(id).setAttribute('transform', '')
     }
     this.display = function(id, show, time) {
 	actions.push(new Display(id, show, time))
