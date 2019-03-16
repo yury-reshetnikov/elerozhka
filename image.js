@@ -189,13 +189,13 @@ function eating() {
 	    a.rotate('jowl', 0, -15, t+200, t+2*200)
 	})
 	a.display('eated_3', false, 3300)
-	a.rotate('eated_2', -160, 0, 3300, 3500) // +++ перенести возврат в finish
-	a.path('eated', 'eated_t0', 'eated_t1', 3500, 5500, 6000)
-	a.display('eated_no', true, 6000)
-	a.display('eated', false, 6000)
+	a.path('eated', 'eated_t0', 'eated_t1', 3500, 5500)
+	a.display('eated_no', true, 5500)
+	a.display('eated', false, 5500)
     }
     a.finish(function() {
 	a.path_restore('eated', 'eated_t0')
+	a.transform_restore('eated_2')
 	a.transform_restore('eated_3')
 	eating_started = false
     })
