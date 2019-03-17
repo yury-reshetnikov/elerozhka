@@ -163,9 +163,13 @@ function sneeze() {
 
 var eating_started = false
 function eating() {
-    if(eating_started || sneeze_started || wink_started) return
+    if(eating_started || sneeze_started || wink_started || smell_started) return
     eating_started = true
     var a = new Animate3
+    a.display('flower', false, 0)
+    a.path_restore('petal_left', 'petal_left_t1')
+    a.path_restore('petal_right', 'petal_right_t1')
+    a.scale('flower', 0.01, 0.01, 0, 0, true)
     a.rotate('head_without_neck', 0, -50, 0, 1000)
     a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -50, 0, 1000)
     a.path('back', 'back_t0', 'back_t1', 0, 1000)
@@ -192,6 +196,10 @@ function eating() {
 	a.path('eated', 'eated_t0', 'eated_t1', 3500, 5500)
 	a.display('eated_no', true, 5500)
 	a.display('eated', false, 5500)
+        a.display('flower', true, 5500)
+	a.scale('flower', 0.1, 1, 5500, 7500)
+	a.path('petal_left', 'petal_left_t1', 'petal_left_t2', 6500, 7500)
+        a.path('petal_right', 'petal_right_t1', 'petal_right_t2', 6500, 7500)
     }
     a.finish(function() {
 	a.path_restore('eated', 'eated_t0')
@@ -209,6 +217,34 @@ function rotate_head(r) {
 function open_mouth() {
     var a = new Animate3
     a.rotate('jowl', 0, -30, 0, 1000)
+    a.start()
+}
+
+var bud_open_started = false
+function bud_open() {
+    if(bud_open_started) return
+    bud_open_started = true
+    var a = new Animate3
+    a.path('petal_left', 'petal_left_t1', 'petal_left_t2', 0, 1000)
+    a.path('petal_right', 'petal_right_t1', 'petal_right_t2', 0, 1000)
+    a.finish(function() {
+        bud_open_started=false
+    })
+    a.start()
+}
+
+var smell_started = false
+function smell() {
+    if(eating_started || sneeze_started || wink_started || smell_started) return
+    smell_started = true
+    var a = new Animate3
+    a.rotate('jowl', -15, 0, 0, 200)
+    a.rotate('head_without_neck', 0, -23, 0, 1000)
+    a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -23, 0, 1000)
+    a.rotate('flower', 0, 30, 500, 1000)
+    a.finish(function() {
+        smell_started = false
+    })
     a.start()
 }
 

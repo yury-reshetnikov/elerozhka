@@ -45,6 +45,12 @@ function Animate3() {
 	    document.getElementById(id).setAttribute('transform', 'translate('+x+','+y+')')
 	})
     }
+    function Scale(id, scale_from, scale_to, time_from, time_to, time_finish) {
+	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
+	    var scale = scale_from + (scale_to - scale_from) * k
+	    document.getElementById(id).setAttribute('transform', 'scale('+scale+')')
+	})
+    }
     function Path(id, pattern_from, pattern_to, time_from, time_to, time_finish) {
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var d = []
@@ -131,6 +137,9 @@ function Animate3() {
     }
     this.translate = function(id, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	actions.push(new Translate(id, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
+    }
+    this.scale = function(id, scale_from, scale_to, time_from, time_to, time_finish) {
+        actions.push(new Scale(id, scale_from, scale_to, time_from, time_to, time_finish))
     }
     this.path = function(id, pattern_from, pattern_to, time_from, time_to, time_finish) {
 	actions.push(new Path(id, pattern_from, pattern_to, time_from, time_to, time_finish))
