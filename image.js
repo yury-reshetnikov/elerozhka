@@ -148,7 +148,7 @@ function smile() {
 
 var sneeze_started = false
 function sneeze() {
-    if(sneeze_started || wink_started || wag_started) return
+    if(sneeze_started || wink_started || wag_started || smell_started) return
     sneeze_started = true
     animate2(300, function() { sneeze_started = false }, 1, [
                 ['head','tail_3'], ['head_up1','tail_3'], ['head_up2','tail_3'],
@@ -242,6 +242,12 @@ function smell() {
     a.rotate('head_without_neck', 0, -23, 0, 1000)
     a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -23, 0, 1000)
     a.rotate('flower', 0, 30, 500, 1000)
+    if(true) {
+        a.rotate('jowl', 0, -15, 2300, 2500)
+        a.rotate('head_without_neck', -23, 0, 1500, 2500)
+        a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -23, 0, 1500, 2500)
+        a.rotate('flower', 30, 0, 1500, 2000)
+    }
     a.finish(function() {
         smell_started = false
     })
