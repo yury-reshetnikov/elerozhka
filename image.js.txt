@@ -254,4 +254,13 @@ function smell() {
     a.start()
 }
 
+var eye_started = false
+function eye() {
+   if(eating_started || sneeze_started || wink_started || smell_started) return
+   eye_started = true
+   var a = new Animate3
+   a.path('eye2_open', 'eye2_close', 'eye2_open', 0, 1000)
+   a.start()
+}
+
 window.onkeyup = svgeditor
