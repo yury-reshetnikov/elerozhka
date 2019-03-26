@@ -161,6 +161,14 @@ function sneeze() {
                 ])
 }
 
+var sneeze_t_started = false
+function sneeze_t() {
+    if(sneeze_started || wink_started || wag_started || smell_started) return
+    sneeze_t_started = true
+    var a = new Animate3
+
+}
+
 var eating_started = false
 function eating() {
     if(eating_started || sneeze_started || wink_started || smell_started) return
