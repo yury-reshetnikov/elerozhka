@@ -174,10 +174,10 @@ function eating() {
     if(eating_started || sneeze_started || wink_started || smell_started) return
     eating_started = true
     var a = new Animate3
-    a.display('flower', false, 0)
-    a.path_restore('petal_left', 'petal_left_t1')
-    a.path_restore('petal_right', 'petal_right_t1')
-    a.scale('flower', 0.01, 0.01, 0, 0, true)
+    // a.display('flower', false, 0)
+    // a.path_restore('petal_left', 'petal_left_t1')
+    // a.path_restore('petal_right', 'petal_right_t1')
+    // a.scale('flower', 0.01, 0.01, 0, 0, true)
     a.rotate('head_without_neck', 0, -50, 0, 1000)
     a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -50, 0, 1000)
     a.path('back', 'back_t0', 'back_t1', 0, 1000)
@@ -186,9 +186,11 @@ function eating() {
     a.display('eated_no', false, 1200)
     a.display('eated', true, 1200)
     a.display('eated_2', true, 1200)
-    a.rotate('eated_2', 0, -150, 1200, 1300)
+    a.rotate('eated_and_flower', 0, -150, 1200, 1300)
     a.display('eated_2', false, 1300)
     a.display('eated_3', true, 1300)
+    a.translate('flower_down', 0, 0, 0, 2000, 1300, 2300)
+    a.translate('flower_down', 0, 2000, 0, 0, 3300, 3500)
     if(true) { // up
 	a.rotate('head_without_neck', -50, 0, 1300, 2300)
 	a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -50, 0, 1300, 2300)
@@ -201,6 +203,8 @@ function eating() {
 	    a.rotate('jowl', 0, -15, t+200, t+2*200)
 	})
 	a.display('eated_3', false, 3300)
+	a.display('flower', false, 3300)
+	a.rotate('eated_and_flower', -150, 0, 3300, 3500)
 	a.path('eated', 'eated_t0', 'eated_t1', 3500, 5500)
 	a.display('eated_no', true, 5500)
 	a.display('eated', false, 5500)
@@ -213,6 +217,7 @@ function eating() {
 	a.path_restore('eated', 'eated_t0')
 	a.transform_restore('eated_2')
 	a.transform_restore('eated_3')
+	a.transform_restore('flower_down')
 	eating_started = false
     })
     a.start()
