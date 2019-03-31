@@ -267,7 +267,11 @@ function eye() {
    if(eating_started || sneeze_started || wink_started || smell_started) return
    eye_started = true
    var a = new Animate3
-   a.path('eye2', 'eye2_t1', 'eye2_t2', 0, 1000)
+   var time_eye_close = 5000
+   a.path('eye2', 'eye2_t1', 'eye2_t2', 0, time_eye_close)
+   a.path('eyelash1', 'eyelash1_t1', 'eyelash1_t2', 0, time_eye_close)
+   a.path('eyelash2', 'eyelash2_t1', 'eyelash2_t2', 0, time_eye_close)
+   a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', 0, time_eye_close)
    a.start()
 }
 
