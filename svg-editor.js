@@ -81,12 +81,8 @@
 
     point_drag.circle_radius = function(x,y) {
 	var n = text.children[selno]
-	// var a,b,c,d,e
-	// var r = Math.round(a = Math.sqrt((b = Math.pow(c = x - root.attributes.cx.value, 2)) + (d = Math.pow(e = y - root.attributes.cy.value, 2))))
-	// console.log({x:x,y:y,cx:root.attributes.cx.value,cy:root.attributes.cy.value,a:a,b:b,c:c,d:d,e:e,r:r})
 	var r = Math.round(Math.sqrt(Math.pow(x - root.attributes.cx.value, 2) +
 				     Math.pow(y - root.attributes.cy.value, 2)))
-	// console.log({x:x,y:y,r:r})
 	n.textContent = r
 	n.editor_data.nodeName = n.textContent
 	root.attributes.r.value = r
