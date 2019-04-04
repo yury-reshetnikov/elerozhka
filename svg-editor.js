@@ -71,7 +71,25 @@
 	var n = text.children[selno]
 	n.textContent = ''+x+','+y
 	n.editor_data.nodeName = n.textContent
-	root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
+	if(root.nodeName == 'path')
+	    root.attributes.d.value = n.editor_data.before + n.textContent + n.editor_data.after
+	else if(root.nodeName == 'circle') {
+	    root.attributes.cx.value = x
+	    root.attributes.cy.value = y
+	}
+    }
+
+    point_drag.circle_radius = function(x,y) {
+	var n = text.children[selno]
+	// var a,b,c,d,e
+	// var r = Math.round(a = Math.sqrt((b = Math.pow(c = x - root.attributes.cx.value, 2)) + (d = Math.pow(e = y - root.attributes.cy.value, 2))))
+	// console.log({x:x,y:y,cx:root.attributes.cx.value,cy:root.attributes.cy.value,a:a,b:b,c:c,d:d,e:e,r:r})
+	var r = Math.round(Math.sqrt(Math.pow(x - root.attributes.cx.value, 2) +
+				     Math.pow(y - root.attributes.cy.value, 2)))
+	// console.log({x:x,y:y,r:r})
+	n.textContent = r
+	n.editor_data.nodeName = n.textContent
+	root.attributes.r.value = r
     }
 
     point_drag.rotate_root_point = function(x,y) {
@@ -166,6 +184,12 @@
 		after.push(n)
 	    })
 	}
+	else if(root.nodeName == 'circle') {
+	    text_top += text_height
+	    text_node({nodeName: root.attributes.cx.value+','+root.attributes.cy.value}, text_top)
+	    text_top += text_height
+	    text_node({nodeName: root.attributes.r.value, radius: true}, text_top)
+	}
 	else for(let item of root.children) {
 	    text_top += text_height
 	    text_node(item, text_top)
@@ -240,6 +264,9 @@
 		width: p.width * 1.2, height: p.height * 1.2
 	    }])[0]
 	}
+	else if(root.nodeName == 'circle' && node.radius)
+	    point_drag.create(parseInt(root.attributes.cx.value) - parseInt(root.attributes.r.value),
+			      parseInt(root.attributes.cy.value), point_drag.circle_radius)
 	else {
 	    var m = node.nodeName.match(/(\d+),(\d+)/)
 	    if(m) point_drag.create(parseInt(m[1]), parseInt(m[2]), point_drag.path_point)
@@ -399,10 +426,15 @@
 	    showgroup.setAttribute('transform', '')
 	}
 	else if(e.key == 'd') {
-	    if(root && root.nodeName == 'path') prompt('', root.attributes.d.value)
+	    if(root) {
+		if(root.nodeName == 'path') prompt('', root.attributes.d.value)
+		else if(root.nodeName == 'circle')
+		    prompt('', 'cx="'+root.attributes.cx.value+'" cy="'+root.attributes.cy.value+
+			   '" r="'+root.attributes.r.value+'"')
+	    }
 	}
 	else if(e.key == 'p') {
-	    if(root && root.nodeName == 'path') {
+	    if(root && (root.nodeName == 'path' || root.nodeName == 'circle')) {
 		if(selno === false) ;
 		else prompt('', text.children[selno].textContent)
 	    }

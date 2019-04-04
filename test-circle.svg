@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="250mm" height="200mm" viewBox="0 0 25000 20000"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xml:space="preserve">
+  <script href="svggen.js"></script>
+  <script href="svg-editor.js"></script>
+  <script href="svg-animate.js"></script>
+  <script href="image.js.txt"></script>
+  <style>
+    path.eye2 {
+        fill:rgb(142,248,245);
+        stroke:rgb(0,0,0);
+        stroke-width:50;
+        stroke-linejoin:round;
+    }
+    .dl {
+	fill:none;
+	stroke:red;
+	stroke-width:20;
+	stroke-linejoin:round;
+    }
+  </style>
+         <path id="eye2" class="eye2" d="M 8573,5462 C 8913,5462 9173,5722 9173,6062 9173,6402 8913,6662 8573,6662 8233,6662 7973,6402 7973,6062 7973,5722 8233,5462 8573,5462 Z"/>
+	 <circle class="dl" cx="8431" cy="5562" r="350" />
+</svg>
