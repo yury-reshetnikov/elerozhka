@@ -148,7 +148,7 @@ function smile() {
 
 var sneeze_started = false
 function sneeze() {
-    if(sneeze_started || wink_started || wag_started || smell_started) return
+    if(sneeze_started || wink_started || wag_started || smell_started || eye_started) return
     sneeze_started = true
     animate2(300, function() { sneeze_started = false }, 1, [
                 ['head','tail_3'], ['head_up1','tail_3'], ['head_up2','tail_3'],
@@ -171,12 +171,12 @@ function sneeze_t() {
 
 var eating_started = false
 function eating() {
-    if(eating_started || sneeze_started || wink_started || smell_started) return
+    if(eating_started || sneeze_started || wink_started || smell_started || eye_started) return
     eating_started = true
     var flower_start_slow = 5500
     var flower_start = flower_start_slow + 1000
-    var petal_start = flower_start + 1000
-    var flower_finish = flower_start + 2000
+    var petal_start = flower_start + 2000
+    var flower_finish = flower_start + 4000
     var a = new Animate3
     a.rotate('head_without_neck', 0, -50, 0, 1000)
     a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -50, 0, 1000)
@@ -256,7 +256,7 @@ function bud_open() {
 
 var smell_started = false
 function smell() {
-    if(eating_started || sneeze_started || wink_started || smell_started) return
+    if(eating_started || sneeze_started || wink_started || smell_started || eye_started) return
     smell_started = true
     var a = new Animate3
     a.rotate('jowl', -15, 0, 0, 200)
@@ -277,7 +277,7 @@ function smell() {
 
 var eye_started = false
 function eye() {
-   if(eating_started || sneeze_started || wink_started || smell_started) return
+   if(eye_started || eating_started || sneeze_started || wink_started || smell_started) return
    eye_started = true
    var a = new Animate3
    var time_eye_close = 5000
@@ -287,6 +287,9 @@ function eye() {
    a.path('eyelash2', 'eyelash2_t1', 'eyelash2_t2', 0, time_eye_close)
    a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', 0, time_eye_close)
    // a.path('t0', 't1', )
+   a.finish(function() {
+        eye_started = false
+   })
    a.start()
 }
 
