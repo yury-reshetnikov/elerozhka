@@ -186,7 +186,7 @@ function eating() {
     a.display('eated_no', false, 1200)
     a.display('eated', true, 1200)
     a.display('eated_2', true, 1200)
-    a.rotate('eated_and_flower', 0, -150, 1200, 1300)
+    a.rotate('eated_and_flower', 0, -150, 1200, 1300, true)
     a.display('eated_2', false, 1300)
     a.display('eated_3', true, 1300)
     a.translate('flower_down', 0, 0, 0, 2000, 1300, 2300)
@@ -202,8 +202,12 @@ function eating() {
 	    a.rotate('jowl', 0, -15, t+200, t+2*200)
 	})
 	a.display('eated_3', false, 3300)
-	a.display('flower', false, 3300)
 	a.sleep(3300, function() {
+	    var flower = document.getElementById('flower')
+	    if(flower.style.display == '') {
+		flower.style.display = 'none'
+		document.getElementById('flower_down_2').style.display = ''
+	    }
 	    a.transform_restore('eated_and_flower')
 	    a.transform_restore('flower_down')
 	    a.path_restore('petal_left', 'petal_left_t1')
