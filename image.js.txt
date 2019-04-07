@@ -147,7 +147,7 @@ function smile() {
 }
 
 var sneeze_started = false
-function sneeze() {
+function sneeze_old() {
     if(sneeze_started || wink_started || wag_started || smell_started || eye_started) return
     sneeze_started = true
     animate2(300, function() { sneeze_started = false }, 1, [
@@ -161,12 +161,23 @@ function sneeze() {
                 ])
 }
 
-var sneeze_t_started = false
-function sneeze_t() {
-    if(sneeze_started || wink_started || wag_started || smell_started) return
-    sneeze_t_started = true
+function sneeze() {
+    if(sneeze_started || wink_started || wag_started || smell_started || eye_started) return
+    sneeze_started = true
+    var head_without_neck = document.getElementById('head_without_neck')
+    head_without_neck.attributes['transform-origin'].value = '11796 8072'
     var a = new Animate3
-
+    var head_up_start = 0
+    var head_up_done = head_up_start + 1000
+    var head_down = head_up_done + 1000
+    a.rotate('head_without_neck', 0, 15, head_up_start, head_up_done)
+    a.rotate('head_without_neck', 15, 0, head_up_done, head_down)
+    a.start()
+    a.finish(function() {
+        sneeze_started = false
+	head_without_neck.attributes['transform'].value = ''
+	head_without_neck.attributes['transform-origin'].value = '10807 12015'
+    })
 }
 
 var eating_started = false
