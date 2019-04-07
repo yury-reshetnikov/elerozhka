@@ -283,6 +283,7 @@ function eye() {
    var time_eye_close = 5000
    a.path('eye2fill', 'eye2_t1', 'eye2_t2', 0, time_eye_close)
    a.path('eye2contour', 'eye2_t1', 'eye2_t2', 0, time_eye_close)
+   a.path('eye2clear', 'eye2_t3', 'eye2_t1', 0, time_eye_close)
    a.path('eyelash1', 'eyelash1_t1', 'eyelash1_t2', 0, time_eye_close)
    a.path('eyelash2', 'eyelash2_t1', 'eyelash2_t2', 0, time_eye_close)
    a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', 0, time_eye_close)
