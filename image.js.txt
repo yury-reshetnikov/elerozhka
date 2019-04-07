@@ -173,11 +173,11 @@ var eating_started = false
 function eating() {
     if(eating_started || sneeze_started || wink_started || smell_started) return
     eating_started = true
+    var flower_start_slow = 5500
+    var flower_start = flower_start_slow + 1000
+    var petal_start = flower_start + 1000
+    var flower_finish = flower_start + 2000
     var a = new Animate3
-    // a.display('flower', false, 0)
-    // a.path_restore('petal_left', 'petal_left_t1')
-    // a.path_restore('petal_right', 'petal_right_t1')
-    // a.scale('flower', 0.01, 0.01, 0, 0, true)
     a.rotate('head_without_neck', 0, -50, 0, 1000)
     a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -50, 0, 1000)
     a.path('back', 'back_t0', 'back_t1', 0, 1000)
@@ -186,11 +186,10 @@ function eating() {
     a.display('eated_no', false, 1200)
     a.display('eated', true, 1200)
     a.display('eated_2', true, 1200)
-    a.rotate('eated_and_flower', 0, -150, 1200, 1300)
+    a.rotate('eated_and_flower', 0, -150, 1200, 1300, true)
     a.display('eated_2', false, 1300)
     a.display('eated_3', true, 1300)
     a.translate('flower_down', 0, 0, 0, 2000, 1300, 2300)
-    a.translate('flower_down', 0, 2000, 0, 0, 3300, 3500)
     if(true) { // up
 	a.rotate('head_without_neck', -50, 0, 1300, 2300)
 	a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -50, 0, 1300, 2300)
@@ -203,21 +202,30 @@ function eating() {
 	    a.rotate('jowl', 0, -15, t+200, t+2*200)
 	})
 	a.display('eated_3', false, 3300)
-	a.display('flower', false, 3300)
-	a.rotate('eated_and_flower', -150, 0, 3300, 3500)
-	a.path('eated', 'eated_t0', 'eated_t1', 3500, 5500)
-	a.display('eated_no', true, 5500)
-	a.display('eated', false, 5500)
-        a.display('flower', true, 5500)
-	a.scale('flower', 0.1, 1, 5500, 7500)
-	a.path('petal_left', 'petal_left_t1', 'petal_left_t2', 6500, 7500)
-        a.path('petal_right', 'petal_right_t1', 'petal_right_t2', 6500, 7500)
+	a.sleep(3300, function() {
+	    var flower = document.getElementById('flower')
+	    if(flower.style.display == '') {
+		flower.style.display = 'none'
+		document.getElementById('flower_down_2').style.display = ''
+	    }
+	    a.transform_restore('eated_and_flower')
+	    a.transform_restore('flower_down')
+	    a.path_restore('petal_left', 'petal_left_t1')
+	    a.path_restore('petal_right', 'petal_right_t1')
+	})
+	a.path('eated', 'eated_t0', 'eated_t1', 3500, flower_start_slow)
+	a.display('eated_no', true, flower_start_slow)
+	a.display('eated', false, flower_start_slow)
+	a.display('flower', true, flower_start_slow)
+	a.scale('flower', 0.01, 0.1, flower_start_slow - 100, flower_start)
+	a.scale('flower', 0.1, 1, flower_start, flower_finish)
+	a.path('petal_left', 'petal_left_t1', 'petal_left_t2', petal_start, flower_finish)
+	a.path('petal_right', 'petal_right_t1', 'petal_right_t2', petal_start, flower_finish)
     }
     a.finish(function() {
 	a.path_restore('eated', 'eated_t0')
 	a.transform_restore('eated_2')
 	a.transform_restore('eated_3')
-	a.transform_restore('flower_down')
 	eating_started = false
     })
     a.start()

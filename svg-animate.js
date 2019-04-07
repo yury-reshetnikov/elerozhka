@@ -111,6 +111,18 @@ function Animate3() {
 	    else return true
 	}
     }
+    function Sleep(time, cb) {
+	var done = false
+	this.draw = function(t) {
+	    if(done) return false
+	    else if(t >= time) {
+		done = true
+		cb()
+		return true
+	    }
+	    else return true
+	}
+    }
     // this.actions = []
     var actions = []
     var finalization = []
@@ -155,6 +167,9 @@ function Animate3() {
     }
     this.display = function(id, show, time) {
 	actions.push(new Display(id, show, time))
+    }
+    this.sleep = function(id, cb) {
+	actions.push(new Sleep(id, cb))
     }
     this.finish = function(cb) { finalization.push(cb) }
 }
