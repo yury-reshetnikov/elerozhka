@@ -280,13 +280,21 @@ function eye() {
    if(eye_started || eating_started || sneeze_started || wink_started || smell_started) return
    eye_started = true
    var a = new Animate3
-   var time_eye_close = 5000
-   a.path('eye2fill', 'eye2_t1', 'eye2_t2', 0, time_eye_close)
-   a.path('eye2contour', 'eye2_t1', 'eye2_t2', 0, time_eye_close)
-   a.path('eye2clear', 'eye2_t3', 'eye2_t1', 0, time_eye_close)
-   a.path('eyelash1', 'eyelash1_t1', 'eyelash1_t2', 0, time_eye_close)
-   a.path('eyelash2', 'eyelash2_t1', 'eyelash2_t2', 0, time_eye_close)
-   a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', 0, time_eye_close)
+   var see_direct = 0
+   var see_left = 1000
+   var see_right = see_left + 2000
+   var see_direct2 = see_right + 2000
+   var time_eye_start = see_direct2
+   var time_eye_close = time_eye_start + 5000
+   a.translate('eyeball', 0, 0, -50, 0, see_direct, see_left)
+   a.translate('eyeball', -50, 0, 320, 0, see_left, see_right)
+   a.translate('eyeball', 320, 0, 0, 0, see_right, see_direct2)
+   a.path('eye2fill', 'eye2_t1', 'eye2_t2', time_eye_start, time_eye_close)
+   a.path('eye2contour', 'eye2_t1', 'eye2_t2', time_eye_start, time_eye_close)
+   a.path('eye2clear', 'eye2_t3', 'eye2_t1', time_eye_start, time_eye_close)
+   a.path('eyelash1', 'eyelash1_t1', 'eyelash1_t2', time_eye_start, time_eye_close)
+   a.path('eyelash2', 'eyelash2_t1', 'eyelash2_t2', time_eye_start, time_eye_close)
+   a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', time_eye_start, time_eye_close)
    // a.path('t0', 't1', )
    a.finish(function() {
         eye_started = false

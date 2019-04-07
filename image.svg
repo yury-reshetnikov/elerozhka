@@ -176,9 +176,11 @@
       </g>
       <g id="eye2_open">
          <path id="eye2fill" class="eye2" d="M 8573,5462 C 8913,5462 9173,5722 9173,6062 9173,6402 8913,6662 8573,6662 8233,6662 7973,6402 7973,6062 7973,5722 8233,5462 8573,5462 Z"/>
-         <circle id="eyeball" class="eyeball" cx="8431" cy="5925" r="353" />
-         <circle id="glare1" class="glare" cx="8299" cy="5770" r="90" />
-         <circle id="glare2" class="glare" cx="8572" cy="5852" r="90" />
+	 <g id="eyeball">
+           <circle id="eyeball0" class="eyeball" cx="8431" cy="5925" r="353" />
+           <circle id="glare1" class="glare" cx="8299" cy="5770" r="90" />
+           <circle id="glare2" class="glare" cx="8572" cy="5852" r="90" />
+	 </g>
          <path id="eye2clear" class="clear" d="M 8573,5462 C 8913,5462 9173,5722 9173,6062 9173,5722 8913,5462 8573,5462 8233,5462 7973,5722 7973,6062 7973,5722 8233,5462 8573,5462 Z"/>
          <path id="eye2contour" class="eyeline" d="M 8573,5462 C 8913,5462 9173,5722 9173,6062 9173,6402 8913,6662 8573,6662 8233,6662 7973,6402 7973,6062 7973,5722 8233,5462 8573,5462 Z"/>
          <path id="eyelash1" class="line" d="M 8154,5620 L 7981,5362"/>
