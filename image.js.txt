@@ -173,6 +173,10 @@ var eating_started = false
 function eating() {
     if(eating_started || sneeze_started || wink_started || smell_started) return
     eating_started = true
+    var flower_start_slow = 5500
+    var flower_start = flower_start_slow + 1000
+    var petal_start = flower_start + 1000
+    var flower_finish = flower_start + 2000
     var a = new Animate3
     // a.display('flower', false, 0)
     // a.path_restore('petal_left', 'petal_left_t1')
@@ -209,13 +213,14 @@ function eating() {
 	    a.path_restore('petal_left', 'petal_left_t1')
 	    a.path_restore('petal_right', 'petal_right_t1')
 	})
-	a.path('eated', 'eated_t0', 'eated_t1', 3500, 5500)
-	a.display('eated_no', true, 5500)
-	a.display('eated', false, 5500)
-        a.display('flower', true, 5500)
-	a.scale('flower', 0.1, 1, 5500, 7500)
-	a.path('petal_left', 'petal_left_t1', 'petal_left_t2', 6500, 7500)
-        a.path('petal_right', 'petal_right_t1', 'petal_right_t2', 6500, 7500)
+	a.path('eated', 'eated_t0', 'eated_t1', 3500, flower_start_slow)
+	a.display('eated_no', true, flower_start_slow)
+	a.display('eated', false, flower_start_slow)
+	a.display('flower', true, flower_start_slow)
+	a.scale('flower', 0.01, 0.1, flower_start_slow - 100, flower_start)
+	a.scale('flower', 0.1, 1, flower_start, flower_finish)
+	a.path('petal_left', 'petal_left_t1', 'petal_left_t2', petal_start, flower_finish)
+	a.path('petal_right', 'petal_right_t1', 'petal_right_t2', petal_start, flower_finish)
     }
     a.finish(function() {
 	a.path_restore('eated', 'eated_t0')
