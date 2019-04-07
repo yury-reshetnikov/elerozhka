@@ -277,6 +277,7 @@ function eye() {
    a.path('eyelash1', 'eyelash1_t1', 'eyelash1_t2', 0, time_eye_close)
    a.path('eyelash2', 'eyelash2_t1', 'eyelash2_t2', 0, time_eye_close)
    a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', 0, time_eye_close)
+   a.path('')
    a.start()
 }
 
