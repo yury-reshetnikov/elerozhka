@@ -270,15 +270,20 @@ function smell() {
     if(eating_started || sneeze_started || wink_started || smell_started || eye_started) return
     smell_started = true
     var a = new Animate3
-    a.rotate('jowl', -15, 0, 0, 200)
-    a.rotate('head_without_neck', 0, -23, 0, 1000)
-    a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -23, 0, 1000)
-    a.rotate('flower', 0, 30, 500, 1000)
+    //var look_directly = 0
+    //var look_down = look_directly + 500
+    //var jowl_down = look_down + 200
+    a.translate('eyeball', 0, 0, -50, 300, 0, 300)
+    a.rotate('jowl', -15, 0, 300, 500)
+    a.rotate('head_without_neck', 0, -23, 300, 1300)
+    a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -23, 300, 1300)
+    a.rotate('flower', 0, 30, 800, 1300)
     if(true) {
-        a.rotate('jowl', 0, -15, 2300, 2500)
-        a.rotate('head_without_neck', -23, 0, 1500, 2500)
-        a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -23, 0, 1500, 2500)
-        a.rotate('flower', 30, 0, 1500, 2000)
+        a.rotate('jowl', 0, -15, 2600, 2800)
+        a.rotate('head_without_neck', -23, 0, 1800, 2800)
+        a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -23, 0, 1800, 2800)
+        a.rotate('flower', 30, 0, 1800, 2300)
+        a.translate('eyeball', -50, 300, 0, 0, 2800, 3300)
     }
     a.finish(function() {
         smell_started = false
