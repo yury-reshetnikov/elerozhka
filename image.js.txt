@@ -132,11 +132,8 @@ function wag() {
 
 var smile_started = false
 function smile() {
-    if(smile_started) return
+    if(eating_started || sneeze_started || wink_started || smell_started || smile_started) return
     smile_started = true
-    // animate2(150, function() { smile_started = false }, 2, [
-    //             'jowl_2', 'jowl_1'
-    //           ])
     var a = new Animate3
     a.rotate('jowl', -15, 0, 0, 200)
     a.rotate('jowl', 0, -15, 200,400)
@@ -155,13 +152,22 @@ function eye_close(a, time_eye_start, time_eye_close) {
    a.path('eyelash3', 'eyelash3_t1', 'eyelash3_t2', time_eye_start, time_eye_close)
 }
 
-function eye_open(a, time_eye_close, time_eye_open) {
-   a.path('eye2fill', 'eye2_t2', 'eye2_t1', time_eye_close, time_eye_open)
-   a.path('eye2contour', 'eye2_t2', 'eye2_t1', time_eye_close, time_eye_open)
-   a.path('eye2clear', 'eye2_t1', 'eye2_t3', time_eye_close, time_eye_open)
-   a.path('eyelash1', 'eyelash1_t2', 'eyelash1_t1', time_eye_close, time_eye_open)
-   a.path('eyelash2', 'eyelash2_t2', 'eyelash2_t1', time_eye_close, time_eye_open)
-   a.path('eyelash3', 'eyelash3_t2', 'eyelash3_t1', time_eye_close, time_eye_open)
+function eye_open(a, time_eye_close, time_eye_open, time_finish) {
+   a.path('eye2fill', 'eye2_t2', 'eye2_t1', time_eye_close, time_eye_open, time_finish)
+   a.path('eye2contour', 'eye2_t2', 'eye2_t1', time_eye_close, time_eye_open, time_finish)
+   a.path('eye2clear', 'eye2_t1', 'eye2_t3', time_eye_close, time_eye_open, time_finish)
+   a.path('eyelash1', 'eyelash1_t2', 'eyelash1_t1', time_eye_close, time_eye_open, time_finish)
+   a.path('eyelash2', 'eyelash2_t2', 'eyelash2_t1', time_eye_close, time_eye_open, time_finish)
+   a.path('eyelash3', 'eyelash3_t2', 'eyelash3_t1', time_eye_close, time_eye_open, time_finish)
+}
+
+function eye_restore(a) {
+   a.path_restore('eye2fill', 'eye2_t1')
+   a.path_restore('eye2contour', 'eye2_t1')
+   a.path_restore('eye2clear', 'eye2_t3')
+   a.path_restore('eyelash1', 'eyelash1_t1')
+   a.path_restore('eyelash2', 'eyelash2_t1')
+   a.path_restore('eyelash3', 'eyelash3_t1')
 }
 
 var sneeze_started = false
@@ -180,7 +186,7 @@ function sneeze_old() {
 }
 
 function sneeze() {
-    if(sneeze_started || wink_started || wag_started || smell_started || eye_started) return
+    if(sneeze_started || wink_started || wag_started || smell_started || eye_started || smile_started) return
     sneeze_started = true
     var head_without_neck = document.getElementById('head_without_neck')
     head_without_neck.attributes['transform-origin'].value = '11796 8072'
@@ -196,26 +202,37 @@ function sneeze() {
         a.path_rotate('contour', 'contour_t0', 11796, 8072, [0], angle_from, angle_to, time_from, time_to)
     }
     rotate_head(0, 15, start, head_up)
+    a.rotate('jowl', -15, -30, start, head_up)
     rotate_head(15, -10, head_up, head_down)
     eye_close(a, head_up, head_down)
+    a.rotate('jowl', -30, 0, head_up, head_up + 400)
+    a.rotate('jowl', 0, -30, head_up + 400, head_down)
+    // чихнули первый раз, подымаем голову для второго чиха
     rotate_head(-10, 15, head_down, head_up_2)
-    eye_open(a, head_down, head_down + 100)
+    eye_open(a, head_down, head_down + 100, head_up_2)
+    a.rotate('jowl', -30, 0, head_down, head_down + 100)
+    a.rotate('jowl', 0, -30, head_down + 100, head_up_2)
     rotate_head(15, -10, head_up_2, head_down_2)
     eye_close(a, head_up_2, head_down_2)
+    a.rotate('jowl', -30, 0, head_up_2, head_up_2 + 400)
+    a.rotate('jowl', 0, -30, head_up_2 + 400, head_down_2)
     rotate_head(-10, 0, head_down_2, head_back)
-    eye_open(a, head_down_2, head_down_2 + 100)
+    eye_open(a, head_down_2, head_down_2 + 100, true)
+    a.rotate('jowl', -30, 0, head_down_2, head_down_2 + 100)
+    a.rotate('jowl', 0, -15, head_back, head_back + 100)
     a.start()
     a.finish(function() {
         sneeze_started = false
 	head_without_neck.attributes['transform'].value = ''
 	head_without_neck.attributes['transform-origin'].value = '10807 12015'
 	a.transform_restore('contour')
+	eye_restore(a)
     })
 }
 
 var eating_started = false
 function eating() {
-    if(eating_started || sneeze_started || wink_started || smell_started || eye_started) return
+    if(eating_started || sneeze_started || wink_started || smell_started || eye_started || smile_started) return
     eating_started = true
     var flower_start_slow = 5500
     var flower_start = flower_start_slow + 1000
@@ -300,7 +317,7 @@ function bud_open() {
 
 var smell_started = false
 function smell() {
-    if(eating_started || sneeze_started || wink_started || smell_started || eye_started) return
+    if(eating_started || sneeze_started || wink_started || smell_started || eye_started || smile_started) return
     smell_started = true
     var a = new Animate3
     //var look_directly = 0
