@@ -187,18 +187,26 @@ function sneeze() {
         a.rotate('head_without_neck', angle_from, angle_to, time_from, time_to)
         a.path_rotate('contour', 'contour_t0', 11796, 8072, [0], angle_from, angle_to, time_from, time_to)
     }
+    var tail = function(time) {
+        a.path('tail_3', 'tail_3_t', 'tail_sneeze', time - 100, time, time + 200)
+        a.path('tail_3', 'tail_sneeze', 'tail_3_t', time + 200, time + 300, true)
+    }
+    var germs = function(time) {
+        a.translate('germ1', 0, 0, -10000, 6000, time, time + 1000)
+        a.translate('germ2', 0, 0, -10000, 4000, time, time + 1000)
+        a.translate('germ3', 0, 0, -8000, 6000, time, time + 1000)
+    }
     rotate_head(0, 15, start, head_up)
     a.rotate('jowl', -15, -30, start, head_up)
     rotate_head(15, -10, head_up, head_down)
     eye_close(a, head_up, head_down)
     a.rotate('jowl', -30, 0, head_up, head_up + 400)
     a.rotate('jowl', 0, -30, head_up + 400, head_down)
+    tail(head_down)
     a.display('germ1', true, head_down)
     a.display('germ2', true, head_down)
     a.display('germ3', true, head_down)
-    a.translate('germ1', 0, 0, -10000, 6000, head_down, head_down + 1000)
-    a.translate('germ2', 0, 0, -10000, 4000, head_down, head_down + 1000)
-    a.translate('germ3', 0, 0, -8000, 6000, head_down, head_down + 1000)
+    germs(head_down)
     // чихнули первый раз, подымаем голову для второго чиха
     rotate_head(-10, 15, head_down, head_up_2)
     eye_open(a, head_down, head_down + 100, head_up_2)
@@ -208,14 +216,13 @@ function sneeze() {
     eye_close(a, head_up_2, head_down_2)
     a.rotate('jowl', -30, 0, head_up_2, head_up_2 + 400)
     a.rotate('jowl', 0, -30, head_up_2 + 400, head_down_2)
+    tail(head_down_2)
     a.sleep(head_down_2, function() {
         a.transform_restore('germ1')
         a.transform_restore('germ2')
         a.transform_restore('germ3')
     })
-    a.translate('germ1', 0, 0, -10000, 6000, head_down_2, head_down_2 + 1000)
-    a.translate('germ2', 0, 0, -10000, 4000, head_down_2, head_down_2 + 1000)
-    a.translate('germ3', 0, 0, -8000, 6000, head_down_2, head_down_2 + 1000)
+    germs(head_down_2)
     // чихнули второй раз
     rotate_head(-10, 0, head_down_2, head_back)
     eye_open(a, head_down_2, head_down_2 + 100, true)
