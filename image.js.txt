@@ -210,16 +210,15 @@ function sneeze() {
     // чихнули первый раз, подымаем голову для второго чиха
     rotate_head(-10, 15, head_down, head_up_2)
     eye_open(a, head_down, head_down + 100, head_up_2)
-    a.rotate('jowl', -30, 0, head_down, head_down + 100)
-    a.rotate('jowl', 0, -30, head_down + 100, head_up_2)
+    a.rotate('jowl', -30, -10, head_down, head_down + 200)
+    a.rotate('jowl', -10, -30, head_down + 200, head_up_2)
     rotate_head(15, -10, head_up_2, head_down_2)
     eye_close(a, head_up_2, head_down_2)
     a.rotate('jowl', -30, 0, head_up_2, head_up_2 + 400)
     a.rotate('jowl', 0, -30, head_up_2 + 400, head_down_2)
     rotate_head(-10, 0, head_down_2, head_back)
     eye_open(a, head_down_2, head_down_2 + 100, true)
-    a.rotate('jowl', -30, 0, head_down_2, head_down_2 + 100)
-    a.rotate('jowl', 0, -15, head_back, head_back + 100)
+    a.rotate('jowl', -30, -15, head_down_2, head_back)
     a.start()
     a.finish(function() {
         sneeze_started = false
