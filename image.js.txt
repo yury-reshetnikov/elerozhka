@@ -241,36 +241,38 @@ var eating_started = false
 function eating() {
     if(eating_started || sneeze_started || wink_started || smell_started || eye_started || smile_started) return
     eating_started = true
-    var flower_start_slow = 5500
+    var flower_start_slow = 5800
     var flower_start = flower_start_slow + 1000
     var petal_start = flower_start + 2000
     var flower_finish = flower_start + 4000
     var a = new Animate3
-    a.rotate('head_without_neck', 0, -50, 0, 1000)
-    a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -50, 0, 1000)
-    a.path('back', 'back_t0', 'back_t1', 0, 1000)
-    a.rotate('jowl', -15, -30, 800, 1000)
+    a.translate('eyeball', 0, 0, -40, 250, 0, 300)
+    a.rotate('head_without_neck', 0, -50, 300, 1300)
+    a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -50, 300, 1300)
+    a.path('back', 'back_t0', 'back_t1', 300, 1300)
+    a.rotate('jowl', -15, -30, 1100, 1300)
     a.rotate('jowl', -30, 0, 1000, 1300)
-    a.display('eated_no', false, 1200)
-    a.display('eated', true, 1200)
-    a.display('eated_2', true, 1200)
-    a.rotate('eated_and_flower', 0, -150, 1200, 1300, true)
-    a.display('eated_2', false, 1300)
-    a.display('eated_3', true, 1300)
-    a.translate('flower_down', 0, 0, 0, 2000, 1300, 2300)
+    a.display('eated_no', false, 1500)
+    a.display('eated', true, 1500)
+    a.display('eated_2', true, 1500)
+    a.rotate('eated_and_flower', 0, -150, 1500, 1600, true)
+    a.display('eated_2', false, 1600)
+    a.display('eated_3', true, 1600)
+    a.translate('flower_down', 0, 0, 0, 2000, 1600, 2600)
     if(true) { // up
-	a.rotate('head_without_neck', -50, 0, 1300, 2300)
-	a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -50, 0, 1300, 2300)
-	a.path('back', 'back_t1', 'back_t0', 1300, 2300)
-	a.translate('eated_3', 0, 0, 2000, -500, 2300, 3300)
-	a.rotate('jowl', 0, -15, 2300, 2500);
+	a.rotate('head_without_neck', -50, 0, 1600, 2600)
+	a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], -50, 0, 1600, 2600)
+	a.path('back', 'back_t1', 'back_t0', 1600, 2600)
+	a.translate('eated_3', 0, 0, 2000, -500, 2600, 3600)
+	a.rotate('jowl', 0, -15, 2600, 2800);
 	[0,1].forEach(function(i) {
 	    var t = 2500+i*400
 	    a.rotate('jowl', -15, 0, t, t+200)
 	    a.rotate('jowl', 0, -15, t+200, t+2*200)
+        a.translate('eyeball', -50, 300, 0, 0, 2500, 2800)
 	})
-	a.display('eated_3', false, 3300)
-	a.sleep(3300, function() {
+	a.display('eated_3', false, 3600)
+	a.sleep(3600, function() {
 	    var flower = document.getElementById('flower')
 	    if(flower.style.display == '') {
 		flower.style.display = 'none'
@@ -330,7 +332,7 @@ function smell() {
     //var look_directly = 0
     //var look_down = look_directly + 500
     //var jowl_down = look_down + 200
-    a.translate('eyeball', 0, 0, -50, 300, 0, 300)
+    a.translate('eyeball', 0, 0, -40, 250, 0, 300)
     a.rotate('jowl', -15, 0, 300, 500)
     a.rotate('head_without_neck', 0, -23, 300, 1300)
     a.path_rotate('contour', 'contour_t0', 10807, 12015, [0,2], 0, -23, 300, 1300)
@@ -369,6 +371,14 @@ function eye() {
         eye_started = false
    })
    a.start()
+}
+
+var tail_started = false
+function tail() {
+   tail_started = true
+   var a = new Animate3
+   a.path('tail_3', 'tail_3_t', 'tail_1', 0, 1000)
+a.start
 }
 
 window.onkeyup = svgeditor
