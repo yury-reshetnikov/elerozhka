@@ -386,4 +386,21 @@ function tail() {
    a.start()
 }
 
+var prance_started = false
+function prance() {
+   if(prance_started) return
+   prance_started = true
+   var a = new Animate3
+   var reared_up = 1000
+   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 45, 0, reared_up)
+   a.rotate('tail_3', 0, 45, 0, reared_up)
+   a.translate('head', 0, 0, 3200, -1800, 0, reared_up)
+   a.rotate('raised_hoof_1', 0, 45, 0, reared_up)
+   a.path('contour', 'contour_t0', 'contour_t1', 0, reared_up)
+   a.finish(function() {
+        prance_started = false
+   })
+   a.start()
+}
+
 window.onkeyup = svgeditor
