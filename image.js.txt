@@ -1,3 +1,4 @@
+var ess_started = false // ess === eating smile smell
 var star = 1
 function id_display(id, display) {
     document.getElementById(id).style.display = display
@@ -130,16 +131,15 @@ function wag() {
               ])
 }
 
-var smile_started = false
 function smile() {
-    if(eating_started || sneeze_started || wink_started || smell_started || smile_started) return
-    smile_started = true
+    if(ess_started || sneeze_started) return
+    ess_started = true
     var a = new Animate3
     a.rotate('jowl', -15, 0, 0, 200)
     a.rotate('jowl', 0, -15, 200,400)
     a.rotate('jowl', -15, 0, 400, 600)
     a.rotate('jowl', 0, -15, 600, 800)
-    a.finish(function() { smile_started = false })
+    a.finish(function() { ess_started = false })
     a.start()
 }
 
@@ -172,7 +172,7 @@ function eye_restore(a) {
 
 var sneeze_started = false
 function sneeze() {
-    if(sneeze_started || wink_started || wag_started || smell_started || eye_started || smile_started) return
+    if(sneeze_started || tail_started || ess_started || eye_started) return
     sneeze_started = true
     var head_without_neck = document.getElementById('head_without_neck')
     head_without_neck.attributes['transform-origin'].value = '11796 8072'
@@ -237,10 +237,9 @@ function sneeze() {
     })
 }
 
-var eating_started = false
 function eating() {
-    if(eating_started || sneeze_started || wink_started || smell_started || eye_started || smile_started) return
-    eating_started = true
+    if(ess_started || sneeze_started) return
+    ess_started = true
     var flower_start_slow = 5800
     var flower_start = flower_start_slow + 1000
     var petal_start = flower_start + 2000
@@ -296,7 +295,7 @@ function eating() {
 	a.path_restore('eated', 'eated_t0')
 	a.transform_restore('eated_2')
 	a.transform_restore('eated_3')
-	eating_started = false
+	ess_started = false
     })
     a.start()
 }
@@ -324,10 +323,9 @@ function bud_open() {
     a.start()
 }
 
-var smell_started = false
 function smell() {
-    if(eating_started || sneeze_started || wink_started || smell_started || eye_started || smile_started) return
-    smell_started = true
+    if(ess_started || sneeze_started) return
+    ess_started = true
     var a = new Animate3
     //var look_directly = 0
     //var look_down = look_directly + 500
@@ -345,14 +343,14 @@ function smell() {
         a.translate('eyeball', -50, 300, 0, 0, 2800, 3300)
     }
     a.finish(function() {
-        smell_started = false
+        ess_started = false
     })
     a.start()
 }
 
 var eye_started = false
 function eye() {
-   if(eye_started || eating_started || sneeze_started || wink_started || smell_started) return
+   if(eye_started || sneeze_started) return
    eye_started = true
    var a = new Animate3
    var see_direct = 0
@@ -375,10 +373,17 @@ function eye() {
 
 var tail_started = false
 function tail() {
+   if(tail_started || sneeze_started) return
    tail_started = true
-   var a = new Animate3
-   a.path('tail_3', 'tail_3_t', 'tail_1', 0, 1000)
-a.start
+   var a = new Animate3;
+   [0, 600].forEach(function(t) {
+      a.path('tail_3', 'tail_3_t', 'tail_1', t + 0, t + 300)
+      a.path('tail_3', 'tail_1', 'tail_3_t', t + 300, t + 600)
+   })
+   a.finish(function() {
+        tail_started = false
+   })
+   a.start()
 }
 
 window.onkeyup = svgeditor
