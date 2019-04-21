@@ -1,4 +1,6 @@
 var ess_started = false // ess === eating smile smell
+var sneeze_started = false
+
 var star = 1
 function id_display(id, display) {
     document.getElementById(id).style.display = display
@@ -170,7 +172,6 @@ function eye_restore(a) {
    a.path_restore('eyelash3', 'eyelash3_t1')
 }
 
-var sneeze_started = false
 function sneeze() {
     if(sneeze_started || tail_started || ess_started || eye_started) return
     sneeze_started = true
@@ -396,7 +397,7 @@ function prance() {
    a.rotate('tail_3', 0, 45, 0, reared_up)
    a.translate('head', 0, 0, 3200, -1800, 0, reared_up)
    a.rotate('raised_hoof_1', 0, 45, 0, reared_up)
-   a.path('contour', 'contour_t0', 'contour_t1', 0, reared_up)
+   // a.path('contour', 'contour_t0', 'contour_t1', 0, reared_up)
    a.finish(function() {
         prance_started = false
    })

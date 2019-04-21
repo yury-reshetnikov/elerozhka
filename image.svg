@@ -131,7 +131,7 @@
   <g id="head">
     <path id="contour" class="line" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <path id="contour_t0" class="line" style="display:none" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
-    <path id="contour_t1" class="line" style="display:none" d="M 10305,7838 C 10216,7986 10028,8703 8585,10510"/>
+    <!-- <path id="contour_t1" class="line" style="display:none" d="M 10305,7838 C 10216,7986 10028,8703 8585,10510"/> -->
     <path id="back" class="line" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
     <path id="back_t0" class="line" style="display:none" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
     <path id="back_t1" class="line" style="display:none" d="M 12376,8868 C 10212,8420 9665,8261 9301,7627"/>
