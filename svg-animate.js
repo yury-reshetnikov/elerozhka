@@ -77,26 +77,50 @@ function Animate3() {
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var n = -1
 	    var p = points.slice()
-	    document.getElementById(id).attributes.d.value = document.getElementById(pattern).
-		attributes.d.value.split(/\s+/).map(function(item) {
-		    var m = item.match(/(\d+),(\d+)/)
-		    if(m) {
-			++n
-			if(!p.length || n < p[0]) return item
-			p.shift()
-			var x = parseInt(m[1])
-			var y = parseInt(m[2])
-			var a = (angle_from + (angle_to - angle_from) * k) * Math.PI / 180
-			var x1 = x - cx
-			var y1 = y - cy
-			var g = Math.sqrt(x1*x1 + y1*y1)
-			var a0 = Math.asin(y1 / g)
-			if(x < cx) a0 = Math.PI - a0
-			var a1 = a + a0
-			return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
-		    }
-		    else return item
-		}).join(' ')
+	    var d = document.getElementById(id).attributes.d
+	    var v = d.value.split(/\s+/)
+	    d.value = document.getElementById(pattern).attributes.d.value.split(/\s+/).map(function(item) {
+		var cur = v.shift()
+		var m = item.match(/(\d+),(\d+)/)
+		if(m) {
+		    ++n
+		    if(!p.length || n < p[0]) return cur
+		    p.shift()
+		    var x = parseInt(m[1])
+		    var y = parseInt(m[2])
+		    var a = (angle_from + (angle_to - angle_from) * k) * Math.PI / 180
+		    var x1 = x - cx
+		    var y1 = y - cy
+		    var g = Math.sqrt(x1*x1 + y1*y1)
+		    var a0 = Math.asin(y1 / g)
+		    if(x < cx) a0 = Math.PI - a0
+		    var a1 = a + a0
+		    return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
+		}
+		else return cur
+	    }).join(' ')
+	})
+    }
+    function PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
+	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
+	    var n = -1
+	    var p = points.slice()
+	    var d = document.getElementById(id).attributes.d
+	    var v = d.value.split(/\s+/)
+	    d.value = document.getElementById(pattern).attributes.d.value.split(/\s+/).map(function(item) {
+		var cur = v.shift()
+		var m = item.match(/(\d+),(\d+)/)
+		if(m) {
+		    ++n
+		    if(!p.length || n < p[0]) return cur
+		    p.shift()
+		    var x = parseInt(m[1])
+		    var y = parseInt(m[2])
+		    return ''+Math.round(x + x_from + (x_to - x_from) * k)+
+			','+Math.round(y + y_from + (y_to - y_from) * k)
+		}
+		else return cur
+	    }).join(' ')
 	})
     }
     function Display(id, show, time) {
@@ -158,6 +182,9 @@ function Animate3() {
     }
     this.path_rotate = function(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish) {
 	actions.push(new PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish))
+    }
+    this.path_translate = function(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
+	actions.push(new PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
     }
     this.path_restore = function(id, pattern) {
 	document.getElementById(id).attributes.d.value = document.getElementById(pattern).attributes.d.value
