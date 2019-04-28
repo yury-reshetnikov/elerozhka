@@ -272,7 +272,7 @@ function stomp() {
 }
 
 function prance() {
-   if(prance_started) return
+   if(prance_started || ess_started || sneeze_started || eye_started || tail_started || hoof_started) return
    prance_started = true
    var a = new Animate3
    var reared_up = 1000
@@ -289,10 +289,11 @@ function prance() {
 }
 
 function hoof() {
-   if (hoof_started) return
+   if (hoof_started || prance_started) return
    hoof_started = true
    var a = new Animate3
    a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', 0, 1000)
+   a.path('hoof_1', 'hoof_1_t', 'hoof_1_t_end', 0, 1000)
    a.start()
 }
 
