@@ -264,17 +264,37 @@ function tail() {
    a.start()
 }
 
+function hoof_wave(a, ta, b, c) {
+   a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', ta, b)
+   a.path('hoof_left', 'hoof_left_t', 'hoof_left_t_end', ta, b)
+   a.path('hoof_left_line', 'hoof_left_line_3', 'hoof_left_line_2', b, c)
+   a.path('hoof_left', 'hoof_left_t_end', 'hoof_left_t', b, c)
+}
+
 function prance() {
    if(prance_started || ess_started || sneeze_started || eye_started || tail_started || hoof_started) return
    prance_started = true
    var a = new Animate3
    var reared_up = 1000
+   var hoof_wave_time = 400
+   var hoof_done = reared_up + hoof_wave_time * 2 * 3
+   var reared_down = hoof_done + 1000
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 45, 0, reared_up)
    a.rotate('tail_3', 0, 45, 0, reared_up)
    a.translate('head_without_neck', 0, 0, 3200, -1800, 0, reared_up)
-   a.rotate('raised_hoof_1', 0, 45, 0, reared_up)
+   a.rotate('front_hoofs', 0, 45, 0, reared_up)
    a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 45, 0, reared_up)
-   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, 0, reared_up)
+   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, 0, reared_up);
+   [0, 1, 2].forEach(function(n){
+      var s = reared_up + n * hoof_wave_time * 2
+      hoof_wave(a, s, s + hoof_wave_time, s + hoof_wave_time * 2)
+   })
+   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 45, 0, hoof_done, reared_down)
+   a.rotate('tail_3', 45, 0, hoof_done, reared_down)
+   a.translate('head_without_neck', 3200, -1800, 0, 0, hoof_done, reared_down)
+   a.rotate('front_hoofs', 45, 0, hoof_done, reared_down)
+   a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 45, 0, hoof_done, reared_down)
+   a.path_translate('contour', 'contour_t0', [0, 1], 3200, -1800, 0, 0, hoof_done, reared_down)
    a.finish(function() {
         prance_started = false
    })
@@ -285,10 +305,7 @@ function hoof() {
    if (hoof_started || prance_started) return
    hoof_started = true
    var a = new Animate3
-   a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', 0, 700)
-   a.path('hoof_left', 'hoof_left_t', 'hoof_left_t_end', 0, 700)
-   a.path('hoof_left_line', 'hoof_left_line_3', 'hoof_left_line_2', 700, 1400)
-   a.path('hoof_left', 'hoof_left_t_end', 'hoof_left_t', 700, 1400)
+   hoof_wave(a, 0, 700, 1400)
    a.display('hit', true, 1400)
    a.path('hit', 'hit_t', 'hit1', 1400, 2000)
    a.display('hit', false, 2000)
