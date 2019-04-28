@@ -264,13 +264,6 @@ function tail() {
    a.start()
 }
 
-function stomp() {
-   if(stomp_started || prance_started) return
-   stomp_started = true
-   var a = new Animate3
-   a. path('raised_hoof_1', 'raised_hoof_1_t', 'raised_hoof_3', 0, 1000)
-}
-
 function prance() {
    if(prance_started || ess_started || sneeze_started || eye_started || tail_started || hoof_started) return
    prance_started = true
@@ -296,6 +289,9 @@ function hoof() {
    a.path('hoof_left', 'hoof_left_t', 'hoof_left_t_end', 0, 700)
    a.path('hoof_left_line', 'hoof_left_line_3', 'hoof_left_line_2', 700, 1400)
    a.path('hoof_left', 'hoof_left_t_end', 'hoof_left_t', 700, 1400)
+   a.display('hit', true, 1400)
+   a.path('hit', 'hit_t', 'hit1', 1400, 2000)
+   a.display('hit', false, 2000)
    a.finish(function() {
         hoof_started = false
    })

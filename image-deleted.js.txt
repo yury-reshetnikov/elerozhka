@@ -143,3 +143,10 @@ function stomp() {
     ]);
 }
 
+function stomp() {
+   if(stomp_started || prance_started) return
+   stomp_started = true
+   var a = new Animate3
+   a. path('raised_hoof_1', 'raised_hoof_1_t', 'raised_hoof_3', 0, 1000)
+}
+
