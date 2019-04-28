@@ -292,8 +292,13 @@ function hoof() {
    if (hoof_started || prance_started) return
    hoof_started = true
    var a = new Animate3
-   a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', 0, 1000)
-   a.path('hoof_1', 'hoof_1_t', 'hoof_1_t_end', 0, 1000)
+   a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', 0, 700)
+   a.path('hoof_left', 'hoof_left_t', 'hoof_left_t_end', 0, 700)
+   a.path('hoof_left_line', 'hoof_left_line_3', 'hoof_left_line_2', 700, 1400)
+   a.path('hoof_left', 'hoof_left_t_end', 'hoof_left_t', 700, 1400)
+   a.finish(function() {
+        hoof_started = false
+   })
    a.start()
 }
 
