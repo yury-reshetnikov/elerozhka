@@ -2,8 +2,8 @@ var ess_started = false // ess === eating smile smell
 var sneeze_started = false
 var eye_started = false
 var tail_started = false
-var stomp_started = false
 var prance_started = false
+var hoof_started = false
 
 var star = 1
 function id_display(id, display) {
@@ -285,6 +285,14 @@ function prance() {
    a.finish(function() {
         prance_started = false
    })
+   a.start()
+}
+
+function hoof() {
+   if (hoof_started) return
+   hoof_started = true
+   var a = new Animate3
+   a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', 0, 1000)
    a.start()
 }
 
