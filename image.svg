@@ -225,6 +225,11 @@
 	<path id="eated_2_t0" class="grass" style="display:none" d="M 4967,12690 C 5013,12686 5053,12694 5119,12683 5168,12685 5214,12678 5268,12673 Z"/>
 	<path id="eated_2_t1" class="grass" style="display:none" d="M 4967,12690 C 4961,12376 4938,11841 4842,10706 5030,11501 5142,12020 5268,12673 Z"/>
        </g>
+       <g id="butterfly">
+        <path class="dl" d="M 20664,1115 C 20898,1007 21107,914 21167,670 21167,670 20905,284 20570,748 20239,482 20014,722 20305,951 Z"/>
+        <path class="dl" d="M 20664,1115 21060,1106"/>
+        <path class="dl" d="M 20664,1115 21087,1019"/>
+       </g>
 <script type="text/javascript">
   set_star(2)
 // rotate_head(-50)
