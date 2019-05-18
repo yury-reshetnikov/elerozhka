@@ -4,6 +4,7 @@ var eye_started = false
 var tail_started = false
 var prance_started = false
 var hoof_started = false
+var butterfly_started = false
 
 var star = 1
 function id_display(id, display) {
@@ -302,7 +303,7 @@ function prance() {
 }
 
 function hoof() {
-   if (hoof_started || prance_started) return
+   if(hoof_started || prance_started) return
    hoof_started = true
    var a = new Animate3
    hoof_wave(a, 0, 700, 1400)
@@ -313,6 +314,13 @@ function hoof() {
         hoof_started = false
    })
    a.start()
+}
+
+function butterfly() {
+   if(butterfly_started) return
+   butterfly_started = true
+   var a = new Animate3
+   a.translate('butterfly', )
 }
 
 window.onkeyup = svgeditor
