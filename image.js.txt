@@ -319,8 +319,21 @@ function hoof() {
 function butterfly() {
    if(butterfly_started) return
    butterfly_started = true
-   var a = new Animate3
-   a.translate('butterfly', )
+   var a = new Animate3;
+   //a.translate('butterfly', )
+   [0,1,2,3].forEach(function(n){
+      var t0 = n * 1000
+      var t1 = n * 1000 + 500
+      var t2 = n * 1000 + 1000
+   a.path('near_wing', 'near_wing_t', 'near_wing_down', t0, t1)
+   a.path('far_wing', 'far_wing_t', 'far_wing_down', t0, t1)
+   a.path('near_wing','near_wing_down', 'near_wing_t', t1, t2)
+   a.path('far_wing', 'far_wing_down', 'far_wing_t', t1, t2)
+   })
+   a.finish(function() {
+        butterfly_started = false
+   })
+   a.start()
 }
 
 window.onkeyup = svgeditor
