@@ -97,7 +97,7 @@
        <path id="star1off" style="display:none" fill="rgb(255,255,107)" stroke="rgb(52,101,164)" d="M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z"/>
        <path id="star1on" fill="rgb(255,255,0)" stroke="rgb(52,101,164)" d="M 2403,5592 L 3103,5433 3253,4691 3404,5433 4105,5592 3404,5750 3253,6492 3103,5750 2403,5592 Z"/>
       </g>
-      <g id="star2" onclick="set_star(2)">
+      <g id="star2" onclick="set_star(2); butterfly()">
        <path id="star2off" fill="rgb(255,255,107)" stroke="rgb(52,101,164)" d="M 3143,3072 L 3703,2944 3823,2350 3944,2944 4505,3072 3944,3198 3823,3793 3703,3198 3143,3072 Z"/>
        <path id="star2on" style="display:none" fill="rgb(255,255,0)" stroke="rgb(52,101,164)" d="M 2973,3072 L 3673,2913 3823,2171 3974,2913 4675,3072 3974,3230 3823,3972 3673,3230 2973,3072 Z"/>
       </g>
@@ -241,7 +241,7 @@
 	<path id="eated_2_t0" class="grass" style="display:none" d="M 4967,12690 C 5013,12686 5053,12694 5119,12683 5168,12685 5214,12678 5268,12673 Z"/>
 	<path id="eated_2_t1" class="grass" style="display:none" d="M 4967,12690 C 4961,12376 4938,11841 4842,10706 5030,11501 5142,12020 5268,12673 Z"/>
        </g>
-       <g id="butterfly" onmouseover="butterfly()">
+       <g id="butterfly" transform="translate(-2000,0)">
         <path id="far_wing" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>
         <path id="near_wing" class="butterfly" d="M 1651,10156 C 1720,9885 1758,9681 1671,9590 1548,9440 1231,9527 1394,9877 960,9751 955,10168 1257,10181 Z"/>
         <path id="lower_whisker" class="butterfly" d="M 1651,10156 1995,9960"/>

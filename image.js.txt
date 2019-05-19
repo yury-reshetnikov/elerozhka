@@ -319,8 +319,8 @@ function hoof() {
 function butterfly() {
    if(butterfly_started) return
    butterfly_started = true
-   var a = new Animate3;
-   //a.translate('butterfly', )
+   var a = new Animate3
+   a.translate('butterfly', -2000, 0, 5000, -4000, 0, 4000);
    [0,1,2,3].forEach(function(n){
       var t0 = n * 1000
       var t1 = n * 1000 + 500
