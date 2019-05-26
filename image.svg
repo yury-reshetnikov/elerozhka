@@ -91,6 +91,12 @@
         fill:rgb(185,150,255);
         stroke:none;
     }
+    path.bbody {
+        fill:rgb(65,15,0);
+        stroke:rgb(0,0,0);
+        stroke-width:15;
+        stroke-linejoin:miter;
+    }
   </style>
   <g id="stars">
       <g id="star1" onclick="set_star(2); prance()">
@@ -241,20 +247,21 @@
 	<path id="eated_2_t0" class="grass" style="display:none" d="M 4967,12690 C 5013,12686 5053,12694 5119,12683 5168,12685 5214,12678 5268,12673 Z"/>
 	<path id="eated_2_t1" class="grass" style="display:none" d="M 4967,12690 C 4961,12376 4938,11841 4842,10706 5030,11501 5142,12020 5268,12673 Z"/>
        </g>
-       <g id="butterfly" transform="translate(-2000,0)">
+       <g id="butterfly">
         <path id="far_wing" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>
         <path id="near_wing" class="butterfly" d="M 1651,10156 C 1720,9885 1758,9681 1671,9590 1548,9440 1231,9527 1394,9877 960,9751 955,10168 1257,10181 Z"/>
         <path id="lower_whisker" class="butterfly" d="M 1651,10156 1995,9960"/>
         <path id="upper_whisker" class="butterfly" d="M 1651,10156 1978,9871"/>
         <circle id="bcircle" class="bcircle" style="display:none" cx="1550" cy="9637" r="40"/>
         <path id="bline" class="bline" style="display:none" d="M 1659,9604 C 1549,9476 1248,9529 1430,9907 1006,9764 959,10141 1270,10157"/>
+        <path id="bbody" class="bbody" d="M 1648,10119 C 1669,10196 1376,10282 Z"/>
        </g>
        <g id="butterfly_down" style="display:none">
         <path id="far_wing_down" class="butterfly" d="M 1651,10156 C 1758,10175 1966,10367 1929,10657 1725,10727 1536,10645 1420,10485 1091,10630 938,10303 1257,10181 Z"/>
         <path id="near_wing_down" class="butterfly" d="M 1651,10156 C 1819,10483 1841,10653 1674,10711 1496,10756 1449,10529 1420,10485 1091,10630 938,10303 1257,10181 Z"/>
         <path id="far_wing_t" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>
         <path id="near_wing_t" class="butterfly" d="M 1651,10156 C 1720,9885 1758,9681 1671,9590 1548,9440 1231,9527 1394,9877 960,9751 955,10168 1257,10181 Z"/>
-       </g>
+        </g>
 <script type="text/javascript">
   set_star(2)
 // rotate_head(-50)
