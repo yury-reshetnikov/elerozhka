@@ -90,6 +90,12 @@ function germs(a, time) {
 }
 
 function sneeze_one(a, start) {
+    var head_without_neck = document.getElementById('head_without_neck')
+    head_without_neck.attributes['transform-origin'].value = '11796 8072'
+    a.finish(function() {
+		head_without_neck.attributes['transform'].value = ''
+		head_without_neck.attributes['transform-origin'].value = '10807 12015'
+    })
     var head_up = start + 700
     var head_down = head_up + 500
     rotate_head(a, 0, 15, start, head_up)
@@ -108,8 +114,6 @@ function sneeze_one(a, start) {
 function sneeze() {
     if(sneeze_started || tail_started || ess_started || eye_started || prance_started) return
     sneeze_started = true
-    var head_without_neck = document.getElementById('head_without_neck')
-    head_without_neck.attributes['transform-origin'].value = '11796 8072'
     var a = new Animate3
     var start = 0
     var head_up = start + 700
@@ -141,8 +145,6 @@ function sneeze() {
     a.start()
     a.finish(function() {
         sneeze_started = false
-		head_without_neck.attributes['transform'].value = ''
-		head_without_neck.attributes['transform-origin'].value = '10807 12015'
 		a.transform_restore('contour')
 		eye_restore(a)
     })
