@@ -75,6 +75,36 @@ function eye_restore(a) {
    a.path_restore('eyelash3', 'eyelash3_t1')
 }
 
+function rotate_head(a, angle_from, angle_to, time_from, time_to) {
+    a.rotate('head_without_neck', angle_from, angle_to, time_from, time_to)
+    a.path_rotate('contour', 'contour_t0', 11796, 8072, [0], angle_from, angle_to, time_from, time_to)
+}
+function sneeze_tail(a, time) {
+    a.path('tail_3', 'tail_3_t', 'tail_sneeze', time - 100, time, time + 200)
+    a.path('tail_3', 'tail_sneeze', 'tail_3_t', time + 200, time + 300, true)
+}
+function germs(a, time) {
+    a.translate('germ1', 0, 0, -10000, 6000, time, time + 1000)
+    a.translate('germ2', 0, 0, -10000, 4000, time, time + 1000)
+    a.translate('germ3', 0, 0, -8000, 6000, time, time + 1000)
+}
+
+function sneeze_one(a, start) {
+    var head_up = start + 700
+    var head_down = head_up + 500
+    rotate_head(a, 0, 15, start, head_up)
+    a.rotate('jowl', -15, -30, start, head_up)
+    rotate_head(a, 15, -10, head_up, head_down)
+    eye_close(a, head_up, head_down)
+    a.rotate('jowl', -30, 0, head_up, head_up + 400)
+    a.rotate('jowl', 0, -30, head_up + 400, head_down)
+    sneeze_tail(a, head_down)
+    a.display('germ1', true, head_down)
+    a.display('germ2', true, head_down)
+    a.display('germ3', true, head_down)
+    germs(a, head_down)
+}
+
 function sneeze() {
     if(sneeze_started || tail_started || ess_started || eye_started || prance_started) return
     sneeze_started = true
@@ -87,57 +117,34 @@ function sneeze() {
     var head_up_2 = head_down + 1000
     var head_down_2 = head_up_2 + 500
     var head_back = head_down_2 + 300
-    var rotate_head = function(angle_from, angle_to, time_from, time_to) {
-        a.rotate('head_without_neck', angle_from, angle_to, time_from, time_to)
-        a.path_rotate('contour', 'contour_t0', 11796, 8072, [0], angle_from, angle_to, time_from, time_to)
-    }
-    var tail = function(time) {
-        a.path('tail_3', 'tail_3_t', 'tail_sneeze', time - 100, time, time + 200)
-        a.path('tail_3', 'tail_sneeze', 'tail_3_t', time + 200, time + 300, true)
-    }
-    var germs = function(time) {
-        a.translate('germ1', 0, 0, -10000, 6000, time, time + 1000)
-        a.translate('germ2', 0, 0, -10000, 4000, time, time + 1000)
-        a.translate('germ3', 0, 0, -8000, 6000, time, time + 1000)
-    }
-    rotate_head(0, 15, start, head_up)
-    a.rotate('jowl', -15, -30, start, head_up)
-    rotate_head(15, -10, head_up, head_down)
-    eye_close(a, head_up, head_down)
-    a.rotate('jowl', -30, 0, head_up, head_up + 400)
-    a.rotate('jowl', 0, -30, head_up + 400, head_down)
-    tail(head_down)
-    a.display('germ1', true, head_down)
-    a.display('germ2', true, head_down)
-    a.display('germ3', true, head_down)
-    germs(head_down)
+	sneeze_one(a, start)
     // чихнули первый раз, подымаем голову для второго чиха
-    rotate_head(-10, 15, head_down, head_up_2)
+    rotate_head(a, -10, 15, head_down, head_up_2)
     eye_open(a, head_down, head_down + 100, head_up_2)
     a.rotate('jowl', -30, -10, head_down, head_down + 200)
     a.rotate('jowl', -10, -30, head_down + 200, head_up_2)
-    rotate_head(15, -10, head_up_2, head_down_2)
+    rotate_head(a, 15, -10, head_up_2, head_down_2)
     eye_close(a, head_up_2, head_down_2)
     a.rotate('jowl', -30, 0, head_up_2, head_up_2 + 400)
     a.rotate('jowl', 0, -30, head_up_2 + 400, head_down_2)
-    tail(head_down_2)
+    sneeze_tail(a, head_down_2)
     a.sleep(head_down_2, function() {
         a.transform_restore('germ1')
         a.transform_restore('germ2')
         a.transform_restore('germ3')
     })
-    germs(head_down_2)
+    germs(a, head_down_2)
     // чихнули второй раз
-    rotate_head(-10, 0, head_down_2, head_back)
+    rotate_head(a, -10, 0, head_down_2, head_back)
     eye_open(a, head_down_2, head_down_2 + 100, true)
     a.rotate('jowl', -30, -15, head_down_2, head_back)
     a.start()
     a.finish(function() {
         sneeze_started = false
-	head_without_neck.attributes['transform'].value = ''
-	head_without_neck.attributes['transform-origin'].value = '10807 12015'
-	a.transform_restore('contour')
-	eye_restore(a)
+		head_without_neck.attributes['transform'].value = ''
+		head_without_neck.attributes['transform-origin'].value = '10807 12015'
+		a.transform_restore('contour')
+		eye_restore(a)
     })
 }
 
@@ -333,6 +340,7 @@ function butterfly() {
    a.path('near_wing','near_wing_down', 'near_wing_t', t1, t2)
    a.path('far_wing', 'far_wing_down', 'far_wing_t', t1, t2)
    })
+   sneeze_one(a, 4000)
 
    a.finish(function() {
         butterfly_started = false
