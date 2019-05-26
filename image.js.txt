@@ -333,6 +333,7 @@ function butterfly() {
    a.path('near_wing','near_wing_down', 'near_wing_t', t1, t2)
    a.path('far_wing', 'far_wing_down', 'far_wing_t', t1, t2)
    })
+
    a.finish(function() {
         butterfly_started = false
    })
