@@ -111,6 +111,13 @@ function sneeze_one(a, start) {
     germs(a, head_down)
 }
 
+function sneeze_done(a, head_down_2) {
+    var head_back = head_down_2 + 300
+    rotate_head(a, -10, 0, head_down_2, head_back)
+    eye_open(a, head_down_2, head_down_2 + 100, true)
+    a.rotate('jowl', -30, -15, head_down_2, head_back)
+}
+
 function sneeze() {
     if(sneeze_started || tail_started || ess_started || eye_started || prance_started) return
     sneeze_started = true
@@ -120,7 +127,6 @@ function sneeze() {
     var head_down = head_up + 500
     var head_up_2 = head_down + 1000
     var head_down_2 = head_up_2 + 500
-    var head_back = head_down_2 + 300
 	sneeze_one(a, start)
     // чихнули первый раз, подымаем голову для второго чиха
     rotate_head(a, -10, 15, head_down, head_up_2)
@@ -139,9 +145,7 @@ function sneeze() {
     })
     germs(a, head_down_2)
     // чихнули второй раз
-    rotate_head(a, -10, 0, head_down_2, head_back)
-    eye_open(a, head_down_2, head_down_2 + 100, true)
-    a.rotate('jowl', -30, -15, head_down_2, head_back)
+	sneeze_done(a, head_down_2)
     a.start()
     a.finish(function() {
         sneeze_started = false
@@ -343,7 +347,7 @@ function butterfly() {
    a.path('far_wing', 'far_wing_down', 'far_wing_t', t1, t2)
    })
    sneeze_one(a, 4000)
-
+   sneeze_done(a, 5200)
    a.finish(function() {
         butterfly_started = false
    })
