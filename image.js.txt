@@ -348,6 +348,12 @@ function butterfly() {
    })
    sneeze_one(a, 4000)
    sneeze_done(a, 5200)
+   a.translate('butterfly', 5000, -4000, 5000, -5000, 4000, 4300);
+   a.path('near_wing', 'near_wing_t', 'near_wing_turn', 4000, 4300)
+   a.path('bbody', 'bbody_t', 'bbody_turn', 4000, 4300)
+   a.path('far_wing', 'far_wing_t', 'far_wing_turn', 4000, 4300)
+   a.path('lower_whisker', 'lower_whisker_t', 'lower_whisker_turn', 4000, 4300)
+   a.path('upper_whisker', 'upper_whisker_t', 'upper_whisker_turn', 4000, 4300)
    a.finish(function() {
         butterfly_started = false
    })
