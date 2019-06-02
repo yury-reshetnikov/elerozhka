@@ -262,13 +262,8 @@
         <path id="far_wing_t" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>
         <path id="bbody_t" d="M 1647,10103 L 1675,10162 1376,10282 Z"/>
         <path id="near_wing_t" class="butterfly" d="M 1651,10156 C 1720,9885 1758,9681 1671,9590 1548,9440 1231,9527 1394,9877 960,9751 955,10168 1257,10181 Z"/>
-	<path id="far_wing_turn" d="M 1651,10156 C 1744,9950 1841,9756 1883,9525 1883,9525 1841,9667 1794,9839 1735,9972 1735,10023 1700,10061 Z"/>
-	<path id="bbody_turn" d="M 1618,10126 L 1675,10118 1648,10243 Z"/>
-	<path id="near_wing_turn" d="M 1651,10156 C 1567,9893 1492,9765 1359,9572 1355,9577 1368,9589 1465,9735 1522,9832 1570,9967 1614,10025 Z"/>
         <path id="lower_whisker_t" d="M 1651,10156 1995,9960"/>
         <path id="upper_whisker_t" d="M 1651,10156 1978,9871"/>
-	<path id="lower_whisker_turn" d="M 1651,10156 1701,9835"/>
-	<path id="upper_whisker_turn" d="M 1651,10156 1603,9827"/>
        </g>
        <g id="butterfly_turn" style="display:none">
         <path id="m_bbody_turn" d="M 1618,10126 L 1675,10118 1648,10243 Z"/>
@@ -284,14 +279,12 @@
         <path id="m_lower_whisker" class="butterfly" d="M 1651,10156 1307,9960"/>
         <path id="m_upper_whisker" class="butterfly" d="M 1651,10156 1324,9871"/>
        </g>
-       <g id="m_butterfly_down" style="display:none">
-        <path id="far_wing_down" class="butterfly" d="M 1651,10156 C 1544,10175 1336,10367 1376,10657 1577,10727 1766,10645 1882,10485 2211,10630 364,10303 2045,10181 Z"/>
-        <path id="near_wing_down" class="butterfly" d="M 1651,10156 C 1483,10483 1461,10653 1628,10711 1806,10756 1853,10529 1882,10485 2211,10630 364,10303 2045,10181 Z"/>
-        <path id="m_far_wing_t" class="butterfly" d="M 1651,10156 C 1544,10175 1336,10367 1376,10657 1577,10727 1766,10645 1882,10485 2211,10630 364,10303 2045,10181 Z"/>
-        <path id="m_near_wing_t" class="butterfly" d="M 1651,10156 C 1483,10483 1461,10653 1628,10711 1806,10756 1853,10529 1882,10485 2211,10630 364,10303 2045,10181 Z"/>
-	?<path id="m_bbody_t" d="M 1647,10103 L 1675,10162 1376,10282 Z"/>
-        ?<path id="m_lower_whisker_t" d="M 1651,10156 1995,9960"/>
-        ?<path id="m_upper_whisker_t" d="M 1651,10156 1978,9871"/>
+       <g id="m_butterfly_down">
+        <path id="far_wing_down" class="butterfly" d="M 1651,10156 C 1544,10175 1336,10367 1376,10657 1577,10727 1766,10645 1882,10485 2342,10630 2347,10303 2045,10181 Z"/>
+        <path id="near_wing_down" class="butterfly" d="M 1651,10156 C 1483,10483 1461,10653 1628,10711 1806,10756 1853,10529 1882,10485 2342,10630 2347,10303 2045,10181 Z"/>
+        <path id="m_bbody_t" d="M 1655,10103 L 1627,10162 1926,10282 Z"/>
+        <path id="m_lower_whisker_t" d="M 1651,10156 1307,9960"/>
+        <path id="m_upper_whisker_t" d="M 1651,10156 1324,9871"/>
        </g>
 <script type="text/javascript">
   set_star(2)
