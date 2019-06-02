@@ -280,8 +280,8 @@
         <path id="m_upper_whisker" class="butterfly" d="M 1651,10156 1324,9871"/>
        </g>
        <g id="m_butterfly_down" style="display:none">
-        <path id="far_wing_down" class="butterfly" d="M 1651,10156 C 1544,10175 1336,10367 1376,10657 1577,10727 1766,10645 1882,10485 2342,10630 2347,10303 2045,10181 Z"/>
-        <path id="near_wing_down" class="butterfly" d="M 1651,10156 C 1483,10483 1461,10653 1628,10711 1806,10756 1853,10529 1882,10485 2342,10630 2347,10303 2045,10181 Z"/>
+        <path id="m_far_wing_down" class="butterfly" d="M 1651,10156 C 1544,10175 1336,10367 1376,10657 1577,10727 1766,10645 1882,10485 2342,10630 2347,10303 2045,10181 Z"/>
+        <path id="m_near_wing_down" class="butterfly" d="M 1651,10156 C 1483,10483 1461,10653 1628,10711 1806,10756 1853,10529 1882,10485 2342,10630 2347,10303 2045,10181 Z"/>
         <path id="m_bbody_t" d="M 1655,10103 L 1627,10162 1926,10282 Z"/>
         <path id="m_lower_whisker_t" d="M 1651,10156 1307,9960"/>
         <path id="m_upper_whisker_t" d="M 1651,10156 1324,9871"/>

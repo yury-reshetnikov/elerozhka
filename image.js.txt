@@ -366,18 +366,18 @@ function butterfly() {
    a.path('lower_whisker', 'lower_whisker_turn', 'm_lower_whisker', 4300, 4600)
    a.path('upper_whisker', 'upper_whisker_turn', 'm_upper_whisker', 4300, 4600)
    //
-   a.translate('butterfly', 5000, -4000, 5000, -5000, 4600, 4900);
-   a.translate('butterfly', 5000, -5000, 3000, -2000, 4900, 6100);
+   a.translate('butterfly', 5000, -5000, 5000, -4000, 4600, 4900);
+   a.translate('butterfly', 5000, -4000, 3000, -2000, 4900, 6100);
    a.translate('butterfly', 3000, -2000, 1000, -4000, 6100, 7000);
-   a.translate('butterfly', 1000, -4000, -2000, 0, 7000, 8600);
+   a.translate('butterfly', 1000, -4000, -3000, 0, 7000, 8600);
    [0,1,2,3].forEach(function(n){
-      var t0 = n * 1000 + 8600
-      var t1 = n * 1000 + 8600 + 500
-      var t2 = n * 1000 + 8600 + 1000
-   a.path('near_wing', 'm_near_wing_t', 'm_near_wing_down', t0, t1)
-   a.path('far_wing', 'm_far_wing_t', 'm_far_wing_down', t0, t1)
-   a.path('near_wing','m_near_wing_down', 'm_near_wing_t', t1, t2)
-   a.path('far_wing', 'm_far_wing_down', 'm_far_wing_t', t1, t2)
+      var t0 = n * 1000 + 4600
+      var t1 = t0 + 500
+      var t2 = t0 + 1000
+   a.path('near_wing', 'm_near_wing', 'm_near_wing_down', t0, t1)
+   a.path('far_wing', 'm_far_wing', 'm_far_wing_down', t0, t1)
+   a.path('near_wing','m_near_wing_down', 'm_near_wing', t1, t2)
+   a.path('far_wing', 'm_far_wing_down', 'm_far_wing', t1, t2)
    })
    a.translate('eyeball', -70, 0, 0, 0, 4600, 4900)
    a.translate('eyeball', 0, 0, 0, 100, 4900, 6100)
@@ -385,6 +385,10 @@ function butterfly() {
    a.translate('eyeball', 0, 0, 0, 100, 7000, 8600)
    a.finish(function() {
         butterfly_started = false
+        a.exchange('near_wing', 'far_wing')
+        document.getElementById('bbody').attributes.d.value = document.getElementById('bbody_t').attributes.d.value
+        document.getElementById('lower_whisker').attributes.d.value = document.getElementById('lower_whisker_t').attributes.d.value
+        document.getElementById('upper_whisker').attributes.d.value = document.getElementById('upper_whisker_t').attributes.d.value
    })
    a.start()
 }
