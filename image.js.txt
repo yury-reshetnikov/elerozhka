@@ -359,6 +359,7 @@ function butterfly() {
    a.path('lower_whisker', 'lower_whisker_t', 'lower_whisker_turn', 4000, 4300)
    a.path('upper_whisker', 'upper_whisker_t', 'upper_whisker_turn', 4000, 4300)
    //
+   a.sleep(4300, function() { a.exchange('near_wing', 'far_wing') })
    a.path('near_wing', 'near_wing_turn', 'm_far_wing', 4300, 14600)
    a.path('bbody', 'bbody_turn', 'm_bbody', 4300, 14600)
    a.path('far_wing', 'far_wing_turn', 'm_near_wing', 4300, 14600)

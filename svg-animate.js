@@ -207,4 +207,17 @@ function Animate3() {
 	actions.push(new Sleep(id, cb))
     }
     this.finish = function(cb) { finalization.push(cb) }
+    this.exchange = function(aId,bId) {
+	// +++ нельзя менять соседей, для соседей надо отдельную функцию
+	// +++ предусмотреть ситуацию !b.nextSibling
+	var a = document.getElementById(aId)
+	var b = document.getElementById(bId)
+	var p = a.parentNode
+	var as = a.nextSibling
+	var bs = b.nextSibling
+	p.removeChild(a)
+	p.insertBefore(a, bs)
+	p.removeChild(b)
+	p.insertBefore(b, as)
+    }
 }
