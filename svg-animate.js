@@ -53,9 +53,17 @@ function Animate3() {
     }
     function Path(id, pattern_from, pattern_to, time_from, time_to, time_finish) {
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
+	    var get = function(id) {
+		var e = document.getElementById(id)
+		if(!e) {
+		    console.log('unknown id '+id)
+		    return []
+		}
+		return e.attributes.d.value.split(/\s+/)
+	    }
 	    var d = []
-	    var d0 = document.getElementById(pattern_from).attributes.d.value.split(/\s+/)
-	    var d1 = document.getElementById(pattern_to).attributes.d.value.split(/\s+/)
+	    var d0 = get(pattern_from)
+	    var d1 = get(pattern_to)
 	    while(d0.length && d1.length) {
 		var v0 = d0.shift()
 		var v1 = d1.shift()
