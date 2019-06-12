@@ -398,12 +398,13 @@ function go() {
    if(go_started) return
    go_started = true
    var a = new Animate3
-   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 45, 0)
-   a.rotate('tail_3', 0, 45, 0)
-   a.translate('head_without_neck', 0, 0, 3200, -1800, 0)
-   a.rotate('front_hoofs', 0, 45, 0)
-   a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 45, 0)
-   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, 0)
+   var reared_up = 1000
+   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 45, 0, reared_up)
+   a.rotate('tail_3', 0, 45, 0, reared_up)
+   a.translate('head_without_neck', 0, 0, 3200, -1800, 0, reared_up)
+   a.rotate('front_hoofs', 0, 45, 0, reared_up)
+   a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 45, 0, reared_up)
+   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, 0, reared_up)
    a.start()
 
 }
