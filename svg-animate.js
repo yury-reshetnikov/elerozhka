@@ -24,6 +24,10 @@ function Animate3() {
 	    }
 	    else if(t < time_from) return true
 	    else {
+		if(isNaN(t) || isNaN(time_from) || isNaN(time_to)) {
+		    console.log({t:t,time_from:time_from,time_to:time_to})
+		    return false
+		}
 		cb((t - time_from) / (time_to - time_from))
 		return true
 	    }
@@ -85,9 +89,13 @@ function Animate3() {
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
 	    var n = -1
 	    var p = points.slice()
-	    var d = document.getElementById(id).attributes.d
+	    var de = document.getElementById(id)
+	    if(!de) { console.log('unknown id '+id); return }
+	    var d = de.attributes.d
 	    var v = d.value.split(/\s+/)
-	    d.value = document.getElementById(pattern).attributes.d.value.split(/\s+/).map(function(item) {
+	    var pe = document.getElementById(pattern)
+	    if(!pe) { console.log('unknown pattern '+pattern); return }
+	    d.value = pe.attributes.d.value.split(/\s+/).map(function(item) {
 		var cur = v.shift()
 		var m = item.match(/(\d+),(\d+)/)
 		if(m) {
@@ -103,6 +111,10 @@ function Animate3() {
 		    var a0 = Math.asin(y1 / g)
 		    if(x < cx) a0 = Math.PI - a0
 		    var a1 = a + a0
+		    if(isNaN(cx) || isNaN(cy) || isNaN(g) || isNaN(a1) || isNaN(Math.cos(a1)) || isNaN(Math.sin(a1))) {
+			console.log({cx:cx,cy:cy,g:g,a1:a1,a:a,a0:a0,angle_from:angle_from,angle_to:angle_to,k:k})
+			return cur
+		    }
 		    return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
 		}
 		else return cur
