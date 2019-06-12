@@ -5,6 +5,7 @@ var tail_started = false
 var prance_started = false
 var hoof_started = false
 var butterfly_started = false
+var go_started = false
 
 var star = 1
 function id_display(id, display) {
@@ -391,6 +392,20 @@ function butterfly() {
         document.getElementById('upper_whisker').attributes.d.value = document.getElementById('upper_whisker_t').attributes.d.value
    })
    a.start()
+}
+
+function go() {
+   if(go_started) return
+   go_started = true
+   var a = new Animate3
+   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 45, 0)
+   a.rotate('tail_3', 0, 45, 0)
+   a.translate('head_without_neck', 0, 0, 3200, -1800, 0)
+   a.rotate('front_hoofs', 0, 45, 0)
+   a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 45, 0)
+   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, 0)
+   a.start()
+
 }
 
 window.onkeyup = svgeditor
