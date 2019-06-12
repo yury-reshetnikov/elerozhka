@@ -401,14 +401,14 @@ function gallop(a, go_time) {
 	var jump_b = go_time + 600
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a)
    a.rotate('tail_3', 0, 15, go_time, jump_a)
-   a.translate('head_without_neck', 0, 0, 3200, -1800, go_time, reared_up)
+   a.translate('head_without_neck', 0, 0, 1066, -600, go_time, jump_a)
    a.rotate('front_hoofs', 0, 15, go_time, jump_a)
    a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 15, go_time, jump_a)
-   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, go_time, reared_up)
+   a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 1066, -600, go_time, jump_a)
    a.translate('body', 0, 0, 0, -1000, jump_a, jump_b)
    a.translate('head', 0, 0, 0, -1000, jump_a, jump_b)
-   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18\], 0, -15, jump_a, jump_b)
-
+   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 0, -15, jump_a, jump_b)
+   a.rotate('back_hoof', 0, -15, jump_a, jump_b)
 }
 
 function go() {
