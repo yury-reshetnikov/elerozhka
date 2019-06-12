@@ -6,6 +6,7 @@ var prance_started = false
 var hoof_started = false
 var butterfly_started = false
 var go_started = false
+var gallop_started = false
 
 var star = 1
 function id_display(id, display) {
@@ -394,7 +395,7 @@ function butterfly() {
    a.start()
 }
 
-function go_only(a, go_time) {
+function gallop(a, go_time) {
    var reared_up = go_time + 1000
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 45, go_time, reared_up)
    a.rotate('tail_3', 0, 45, go_time, reared_up)
@@ -402,13 +403,15 @@ function go_only(a, go_time) {
    a.rotate('front_hoofs', 0, 45, go_time, reared_up)
    a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 45, go_time, reared_up)
    a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 3200, -1800, go_time, reared_up)
+   a.translate('body', 0, 0, 0, -1000, go_time + 400, go_time + 500)
+   a.translate('head', 0, 0, 0, -1000, go_time + 400, go_time + 500)
 }
 
 function go() {
    if(go_started) return
    go_started = true
    var a = new Animate3
-   go_only(a, 0)
+   gallop(a, 0)
    a.start()
 }
 
