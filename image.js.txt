@@ -416,6 +416,7 @@ function gallop(a, go_time) {
     a.display('hoof_right_line', false, jump_a + 100)
     a.display('hoof_right', false, jump_a + 100)
 	a.rotate('body', 0, -45, jump_b, jump_c)
+	a.translate('head_without_neck', 1066, -600, -1000, 1600, jump_b, jump_c)
 }
 
 function go() {
