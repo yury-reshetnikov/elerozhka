@@ -396,9 +396,11 @@ function butterfly() {
 }
 
 function gallop(a, go_time) {
-	var reared_up = go_time + 1000
-	var jump_a = go_time + 300
-	var jump_b = go_time + 600
+	// var reared_up = go_time + 1000
+	var jump_a = go_time + 300 // подняли корпус, приготовились к прыжку
+	var jump_b = go_time + 600 // прыгнули и растянули ноги
+	var jump_c = jump_b + 600 // перевесили передние ноги
+	var jump_d = jump_c + 300 // приземлились на передние ноги
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a)
    a.rotate('tail_3', 0, 15, go_time, jump_a)
    a.translate('head_without_neck', 0, 0, 1066, -600, go_time, jump_a)
@@ -408,9 +410,13 @@ function gallop(a, go_time) {
    a.translate('body', 0, 0, 0, -1000, jump_a, jump_b)
    a.translate('head', 0, 0, 0, -1000, jump_a, jump_b)
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 0, -15, jump_a, jump_b)
-   a.rotate('back_hoof', 0, -15, jump_a, jump_b)
-   a.path_rotate('hoof_left_line', 'front_left_line_1', 0, 0, 0, 15, jump_a, jump_b)
-   a.path('hoof_left', 'front_left_1', jump_a, jump_b)
+	a.rotate('back_hoof', 0, -15, jump_a, jump_b)
+	// a.path('hoof_left_line', 'hoof_left_line_2', 'front_left_line_1', jump_a, jump_b)
+	a.path_rotate('hoof_left_line', 'hoof_left_line_2', 10542,12970, [2,3,4,5,6,7,8,9,10,11,12,13,14], 0, 45, jump_a, jump_b)
+	a.rotate('hoof_left', 0, 45, jump_a, jump_b)
+    a.display('hoof_right_line', false, jump_a + 100)
+    a.display('hoof_right', false, jump_a + 100)
+	a.rotate('body', 0, -45, jump_b, jump_c)
 }
 
 function go() {
