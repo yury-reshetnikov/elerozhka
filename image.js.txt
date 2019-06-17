@@ -399,6 +399,7 @@ function gallop(a, go_time) {
 	var jump_a = go_time + 300 // подняли корпус, приготовились к прыжку
 	var jump_b = go_time + 600 // прыгнули и растянули ноги
 	var jump_c = jump_b + 600 // приземлились на передние ноги
+	var jump_d = jump_c + 300 // подтянули задние ноги
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a)
    a.rotate('tail_3', 0, 15, go_time, jump_a)
    a.translate('head_without_neck', 0, 0, 1066, -600, go_time, jump_a)
@@ -415,6 +416,12 @@ function gallop(a, go_time) {
     a.display('hoof_right', false, jump_a + 100)
 	a.rotate('body', 0, -45, jump_b, jump_c)
 	a.translate('head_without_neck', 1066, -600, -1000, 1600, jump_b, jump_c)
+	a.rotate('body', -45, 0, jump_c, jump_d)
+	a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 15, 0, jump_c, jump_d)
+	a.rotate('tail_3', 15, 0, jump_c, jump_d)
+	a.rotate('front_hoofs', 15, 0, jump_c, jump_d)
+	a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 45, -15, jump_c, jump_d)
+	a.rotate('hoof_left', 45, -15, jump_c, jump_d)
 }
 
 function go() {
