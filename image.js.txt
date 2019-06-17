@@ -409,6 +409,8 @@ function gallop(a, go_time) {
    a.translate('head', 0, 0, 0, -1000, jump_a, jump_b)
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 0, -15, jump_a, jump_b)
    a.rotate('back_hoof', 0, -15, jump_a, jump_b)
+   a.path_rotate('hoof_left_line', 'front_left_line_1', 0, 0, 0, 15, jump_a, jump_b)
+   a.path('hoof_left', 'front_left_1', jump_a, jump_b)
 }
 
 function go() {
