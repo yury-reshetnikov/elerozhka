@@ -385,6 +385,8 @@ function butterfly() {
    a.translate('eyeball', 0, 0, 0, -100, 4900, 6100)
    a.translate('eyeball', 0, -100, 0, 200, 6100, 8600)
    a.translate('eyeball', 0, 200, 0, 0, 8600, 8900, true)
+   gallop(a, 7000)
+	a.translate('grass', 0, 0, 30000, 0, 7000, 10000)
    a.finish(function() {
         butterfly_started = false
         a.exchange('near_wing', 'far_wing')
