@@ -57,10 +57,10 @@ function Animate3() {
     }
     function Path(id, pattern_from, pattern_to, time_from, time_to, time_finish) {
 	var element = document.getElementById(id)
-	if(!element) { console.log('unknown id '+id); return }
+	if(!element) { console.log('unknown id '+id); this.draw = function() {}; return }
 	var base_path
 	{   var e = document.getElementById(pattern_from)
-	    if(!e) { console.log('unknown pattern_from '+pattern_from); return }
+	    if(!e) { console.log('unknown pattern_from '+pattern_from); this.draw = function() {}; return }
 	    base_path = e.attributes.d.value.split(/\s+/)
 	}
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
@@ -94,12 +94,12 @@ function Animate3() {
     }
     function PathRotate(id, pattern, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish) {
 	var element = document.getElementById(id)
-	if(!element) { console.log('unknown id '+id); return }
+	if(!element) { console.log('unknown id '+id); this.draw = function() {}; return }
 	var base_path
 	if(Array.isArray(pattern)) base_path = pattern.slice()
 	else {
 	    var e = document.getElementById(pattern)
-	    if(!e) { console.log('unknown pattern '+pattern+' type:'+typeof(pattern)); return }
+	    if(!e) { console.log('unknown pattern '+pattern+' type:'+typeof(pattern)); this.draw = function() {}; return }
 	    base_path = e.attributes.d.value.split(/\s+/)
 	}
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
@@ -135,10 +135,10 @@ function Animate3() {
     }
     function PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	var element = document.getElementById(id)
-	if(!element) { console.log('unknown id '+id); return }
+	if(!element) { console.log('unknown id '+id); console.trace(); this.draw = function() {}; return }
 	var base_path
 	{   var e = document.getElementById(pattern)
-	    if(!e) { console.log('unknown pattern '+pattern); return }
+	    if(!e) { console.log('unknown pattern '+pattern); this.draw = function() {}; return }
 	    base_path = e.attributes.d.value.split(/\s+/)
 	}
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
@@ -256,8 +256,8 @@ function Animate3() {
     this.path_translate = function(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	actions.push(new PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
     }
-    this.path_translate_2 = function(id, id, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
-	actions.push(new PathTranslate(id, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
+    this.path_translate_2 = function(id, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
+	actions.push(new PathTranslate(id, id, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
     }
     this.path_restore = function(id, pattern) {
 	document.getElementById(id).attributes.d.value = document.getElementById(pattern).attributes.d.value
