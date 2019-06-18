@@ -418,10 +418,15 @@ function gallop(a, go_time) {
 	a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b)
     a.display('hoof_right_line', false, jump_a + 100)
     a.display('hoof_right', false, jump_a + 100)
-	if(0) {
+	// jump_b
 	a.rotate('body-rotate', 0, -45, jump_b, jump_c)
 	a.translate('head_without_neck', 1066, -600, -1000, 1600, jump_b, jump_c)
+	a.path_translate('contour', 'contour_t0', [0, 1], 1066, -600, -1000, 1600, jump_b, jump_c)
+	a.path_rotate('contour', a.path_rotate_calc('contour', 15530, 13400, 25),
+				  13994, 11279, [2, 3], 0, -45, jump_b, jump_c)
 	a.translate('body', 0, -1000, 0, 0, jump_b, jump_c)
+	if(0) {
+	// jump_c
 	a.rotate('body-rotate', -45, 0, jump_c, jump_d)
 	a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 15, 0, jump_c, jump_d)
 	a.rotate('tail_3', 15, 0, jump_c, jump_d)

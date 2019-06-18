@@ -96,8 +96,10 @@ function Animate3() {
 	var element = document.getElementById(id)
 	if(!element) { console.log('unknown id '+id); return }
 	var base_path
-	{   var e = document.getElementById(pattern)
-	    if(!e) { console.log('unknown pattern '+pattern); return }
+	if(Array.isArray(pattern)) base_path = pattern.slice()
+	else {
+	    var e = document.getElementById(pattern)
+	    if(!e) { console.log('unknown pattern '+pattern+' type:'+typeof(pattern)); return }
 	    base_path = e.attributes.d.value.split(/\s+/)
 	}
 	this.draw = gen_draw(time_from, time_to, time_finish, function(k) {
@@ -227,6 +229,29 @@ function Animate3() {
     }
     this.path_rotate_2 = function(id, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish) {
 	actions.push(new PathRotate(id, id, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish))
+    }
+    this.path_rotate_calc = function(id, cx, cy, angle) {
+	var element = document.getElementById(id)
+	if(!element) { console.log('unknown id '+id); return }
+	return element.attributes.d.value.split(/\s+/).map(function(item) {
+	    var m = item.match(/(\d+),(\d+)/)
+	    if(m) {
+		var x = parseInt(m[1])
+		var y = parseInt(m[2])
+		var x1 = x - cx
+		var y1 = y - cy
+		var g = Math.sqrt(x1*x1 + y1*y1)
+		var a0 = Math.asin(y1 / g)
+		if(x < cx) a0 = Math.PI - a0
+		var a1 = angle * Math.PI / 180 + a0
+		if(isNaN(cx) || isNaN(cy) || isNaN(g) || isNaN(a1) || isNaN(Math.cos(a1)) || isNaN(Math.sin(a1))) {
+		    console.log({cx:cx,cy:cy,g:g,a1:a1,a0:a0,angle:angle})
+		    return item
+		}
+		return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
+	    }
+	    else return item
+	})
     }
     this.path_translate = function(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	actions.push(new PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
