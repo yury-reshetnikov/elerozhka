@@ -414,6 +414,8 @@ function gallop(a, go_time) {
 	a.rotate('back_hoof', 0, -15, jump_a, jump_b)
 	a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 0, 45, jump_a, jump_b)
 	a.rotate('hoof_left', 0, 45, jump_a, jump_b)
+	a.path_rotate_2('contour', 15530, 13400, [2, 3], 15, 25, jump_a, jump_b)
+	a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b)
     a.display('hoof_right_line', false, jump_a + 100)
     a.display('hoof_right', false, jump_a + 100)
 	if(0) {
