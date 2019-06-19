@@ -1,7 +1,7 @@
 (function() {
     var text_left, text_height = 400, text_line = 100
     var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = [],
-	rotate
+	rotate, scalepoints
     var scale = 1
     var point_drag = {}
 
@@ -128,6 +128,40 @@
 	    return ''+x+','+y
 	})
 	show_path_points()
+    }
+
+    point_drag.scalepoints_root_point = function(x,y) {
+	scalepoints.root = {x:x, y:y}
+    }
+
+    point_drag.scalepoints_corner_point = function(x,y,debug) {
+	scalepoints.corner_point = {x:x, y:y} // for debug only (t key)
+	var base_x = scalepoints.root.x+scalepoints.d
+	scalepoints.corner.attributes.d.value = 'M '+base_x+','+scalepoints.root.y+
+	    ' L '+scalepoints.root.x+','+scalepoints.root.y+' '+x+','+y
+	if(debug) console.log([scalepoints.root.x,x,x-scalepoints.root.x,scalepoints.root.y,y,scalepoints.root.y-y])
+	var delta = (x - base_x) + (y - scalepoints.root.y) * 5
+	// console.log(delta, root.getBBox(), scalepoints.box)
+	var base = (scalepoints.box.width + scalepoints.box.height) / 2
+	var s = (base + delta) / base
+	console.log(delta,base,s)
+	var n = 0, first
+	if(scalepoints.origin) first = false
+	else {
+	    first = true
+	    scalepoints.origin = []
+	}
+	edit_pathes(root, function(x,y) {
+	    if(first) scalepoints.origin[n] = [x,y]
+	    else {
+		x = scalepoints.origin[n][0]
+		y = scalepoints.origin[n][1]
+	    }
+	    ++n
+	    x = Math.round(scalepoints.root.x + (x - scalepoints.root.x) * s)
+	    y = Math.round(scalepoints.root.y + (y - scalepoints.root.y) * s)
+	    return ''+x+','+y
+	})
     }
 
     point_drag.move_point = function(x,y) {
@@ -280,9 +314,15 @@
 		bbox.remove()
 		bbox = false
 	    }
-	    if(rotate) {
-		if(rotate.corner) rotate.corner.remove()
-		rotate = false
+	    if(rotate || scalepoints) {
+		if(rotate) {
+		    if(rotate.corner) rotate.corner.remove()
+		    rotate = false
+		}
+		if(scalepoints) {
+		    if(scalepoints.corner) scalepoints.corner.remove()
+		    scalepoints = false
+		}
 	    }
 	    else if(selection.style.display == '') selection.style.display = 'none'
 	    else edgroup.style.display = 'none'
@@ -339,8 +379,9 @@
 	}
 	else if(e.key == 'Enter') {
 	    if(selno === false) ;
-	    else if(rotate) {
-		if(rotate.corner) {
+	    else if(rotate || scalepoints) {
+		if(!rotate) ;
+		else if(rotate.corner) {
 		    if(bbox) {
 			bbox.remove()
 			bbox = false
@@ -360,6 +401,30 @@
 				' L '+rotate.root.x+','+rotate.root.y }])[0]
 			point_drag.create(rotate.root.x + d, rotate.root.y,
 					  point_drag.rotate_corner_point)
+		    }
+		}
+		if(!scalepoints) ;
+		else if(scalepoints.corner) {
+		    if(bbox) {
+			bbox.remove()
+			bbox = false
+		    }
+		    scalepoints.corner.remove()
+		    scalepoints = false
+		}
+		else {
+		    if(root && root.getBBox) {
+			save_pathes(root)
+			var p = root.getBBox()
+			var d = Math.max(p.width, p.height)
+			if(d > scalepoints.root.y) d = scalepoints.root.y
+			scalepoints.d = d
+			scalepoints.corner = svggen(showgroup, ['path', {
+			    stroke: 'red', fill: 'none',
+			    d: 'M '+(scalepoints.root.x+d)+','+scalepoints.root.y+
+				' L '+scalepoints.root.x+','+scalepoints.root.y }])[0]
+			point_drag.create(scalepoints.root.x + d, scalepoints.root.y,
+					  point_drag.scalepoints_corner_point)
 		    }
 		}
 	    }
@@ -435,14 +500,14 @@
 		else prompt('', text.children[selno].textContent)
 	    }
 	}
-	else if(e.key == 'r') {
+	else if(e.key == 'r') { // rotate
 	    if(root && root.getBBox) {
 		var p = root.getBBox()
 		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
 		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_root_point)
 	    }
 	}
-	else if(e.key == 'm') {
+	else if(e.key == 'm') { // move
 	    if(root && root.getBBox) {
 		var p = root.getBBox()
 		var x = p.x + p.width / 2, y = p.y + p.height / 2
@@ -454,6 +519,7 @@
 		})
 	    }
 	}
+	/*
 	else if(e.key == 't') {
 	    if(rotate && rotate.corner_point)
 		point_drag.rotate_corner_point(rotate.corner_point.x, rotate.corner_point.y, true)
@@ -468,6 +534,22 @@
 		    var i2 = r2 * 180 / Math.PI
 		    console.log([i,r,t,r2,Math.round(i2)])
 		}
+	    }
+	}
+	*/
+	else if(e.key == 's') { // scalepoints
+	    /* Масштабирование одного объекта (меняем точки, в противовес + и -, которые масштабируют
+	     * всю картинку, не меняя точек) - выбрать объект (группа или линия) и нажать "s".
+	     * Далее мышкой переместить
+	     * крестик в точку, которая останется на месте при масштабировании (центр масштабирования) и
+	     * нажать Enter. А теперь за новый крестик мышью таскаем размер. Влево-вправо плавное
+	     * уменьшение-увеличение. Вверх-вниз резкое уменьшение-увеличение.
+	     * Выход из режима масштабирования как обычно кнопкой Esc или Enter.
+	     */
+	    if(root && root.getBBox) {
+		var p = root.getBBox()
+		scalepoints = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2}, box: p }
+		point_drag.create(scalepoints.root.x, scalepoints.root.y, point_drag.scalepoints_root_point)
 	    }
 	}
 	// else console.log(e)

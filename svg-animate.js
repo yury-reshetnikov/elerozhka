@@ -33,6 +33,20 @@ function Animate3() {
 	    }
 	}
     }
+    function rotate_point(cx, cy, angle_from, angle_to, k, x, y) {
+	var a = (angle_from + (angle_to - angle_from) * k) * Math.PI / 180
+	var x1 = x - cx
+	var y1 = y - cy
+	var g = Math.sqrt(x1*x1 + y1*y1)
+	var a0 = Math.asin(y1 / g)
+	if(x < cx) a0 = Math.PI - a0
+	var a1 = a + a0
+	if(isNaN(cx) || isNaN(cy) || isNaN(g) || isNaN(a1) || isNaN(Math.cos(a1)) || isNaN(Math.sin(a1))) {
+	    console.log({cx:cx,cy:cy,g:g,a1:a1,a:a,a0:a0,angle_from:angle_from,angle_to:angle_to,k:k})
+	    return [x, y]
+	}
+	return [cx + g * Math.cos(a1), cy + g * Math.sin(a1)]
+    }
     function Rotate(id, angle_from, angle_to, time_from, time_to, time_finish) {
 	// this.id = id
 	// this.angle = angle
@@ -121,18 +135,44 @@ function Animate3() {
 		    p.shift()
 		    var x = parseInt(m[1])
 		    var y = parseInt(m[2])
-		    var a = (angle_from + (angle_to - angle_from) * k) * Math.PI / 180
-		    var x1 = x - cx
-		    var y1 = y - cy
-		    var g = Math.sqrt(x1*x1 + y1*y1)
-		    var a0 = Math.asin(y1 / g)
-		    if(x < cx) a0 = Math.PI - a0
-		    var a1 = a + a0
-		    if(isNaN(cx) || isNaN(cy) || isNaN(g) || isNaN(a1) || isNaN(Math.cos(a1)) || isNaN(Math.sin(a1))) {
-			console.log({cx:cx,cy:cy,g:g,a1:a1,a:a,a0:a0,angle_from:angle_from,angle_to:angle_to,k:k})
-			return cur
-		    }
-		    return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
+		    var [xa,ya] = rotate_point(cx, cy, angle_from, angle_to, k, x, y)
+		    return ''+Math.round(xa)+','+Math.round(ya)
+		}
+		else return cur
+	    }).join(' ')
+	})
+    }
+    function PathRotate3(id, points, time_from, time_to, ...corners) {
+	var time_finish
+	if(corners.length && !Array.isArray(corners[0])) time_finish = corners.shift
+	if(!PathBase.call(this, id, id)) return
+	var rot = function(x,y,k) { return [x,y] }
+	corners.forEach(function(c) {
+	    var [cx, cy, angle_from, angle_to] = c
+	    // +++ ??? local_time_from, local_time_to, local_time_finish
+	    var prev = rot
+	    rot = function(x,y,k) {
+		var [cx2,cy2] = prev(cx,cy,k)
+		var [x2,y2] = prev(x,y,k)
+		return rotate_point(cx2, cy2, angle_from, angle_to, k, x2, y2)
+	    }
+	})
+	this.draw = gen_draw(time_from, time_to, time_finish, this, function(k) {
+	    var n = -1
+	    var p = points.slice()
+	    var d = this.element.attributes.d
+	    var v = d.value.split(/\s+/)
+	    d.value = this.base_path.map(function(item) {
+		var cur = v.shift()
+		var m = item.match(/(\d+),(\d+)/)
+		if(m) {
+		    ++n
+		    if(!p.length || n < p[0]) return cur
+		    p.shift()
+		    var x = parseInt(m[1])
+		    var y = parseInt(m[2])
+		    var [xa,ya] = rot(x,y,k)
+		    return ''+Math.round(xa)+','+Math.round(ya)
 		}
 		else return cur
 	    }).join(' ')
@@ -237,20 +277,14 @@ function Animate3() {
 	    if(m) {
 		var x = parseInt(m[1])
 		var y = parseInt(m[2])
-		var x1 = x - cx
-		var y1 = y - cy
-		var g = Math.sqrt(x1*x1 + y1*y1)
-		var a0 = Math.asin(y1 / g)
-		if(x < cx) a0 = Math.PI - a0
-		var a1 = angle * Math.PI / 180 + a0
-		if(isNaN(cx) || isNaN(cy) || isNaN(g) || isNaN(a1) || isNaN(Math.cos(a1)) || isNaN(Math.sin(a1))) {
-		    console.log({cx:cx,cy:cy,g:g,a1:a1,a0:a0,angle:angle})
-		    return item
-		}
-		return ''+Math.round(cx + g * Math.cos(a1))+','+Math.round(cy + g * Math.sin(a1))
+		var [xa,ya] = rotate_point(cx, cy, 0, angle, 1, x, y)
+		return ''+Math.round(xa)+','+Math.round(ya)
 	    }
 	    else return item
 	})
+    }
+    this.path_rotate_3 = function(id, points, time_from, time_to, ...corners) {
+	actions.push(new PathRotate3(id, points, time_from, time_to, ...corners))
     }
     this.path_translate = function(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	actions.push(new PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
