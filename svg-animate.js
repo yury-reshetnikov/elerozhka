@@ -138,6 +138,35 @@ function Animate3() {
 	    }).join(' ')
 	})
     }
+    function PathRotate3(id, points, time_from, time_to, ...corners) {
+	var time_finish
+	if(corners.length && !Array.isArray(corners[0])) time_finish = corners.shift
+	if(!PathBase.call(this, id, id)) return
+	this.draw = gen_draw(time_from, time_to, time_finish, this, function(k) {
+	    var n = -1
+	    var p = points.slice()
+	    var d = this.element.attributes.d
+	    var v = d.value.split(/\s+/)
+	    d.value = this.base_path.map(function(item) {
+		var cur = v.shift()
+		var m = item.match(/(\d+),(\d+)/)
+		if(m) {
+		    ++n
+		    if(!p.length || n < p[0]) return cur
+		    p.shift()
+		    var x = parseInt(m[1])
+		    var y = parseInt(m[2])
+		    // +++
+		    corners.forEach(function(c) {
+			var [cx, cy, angle_from, angle_to] = c
+			// +++ ??? local_time_from, local_time_to, local_time_finish
+		    })
+		    return cur
+		}
+		else return cur
+	    }).join(' ')
+	})
+    }
     function PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	if(!PathBase.call(this, id, pattern)) return
 	this.draw = gen_draw(time_from, time_to, time_finish, this, function(k) {
@@ -251,6 +280,9 @@ function Animate3() {
 	    }
 	    else return item
 	})
+    }
+    this.path_rotate_3 = function(id, points, time_from, time_to, ...corners) {
+	actions.push(new PathRotate3(id, points, time_from, time_to, ...corners))
     }
     this.path_translate = function(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	actions.push(new PathTranslate(id, pattern, points, x_from, y_from, x_to, y_to, time_from, time_to, time_finish))
