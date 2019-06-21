@@ -3,6 +3,7 @@
 <svg version="1.2" width="250mm" height="200mm" viewBox="0 0 25000 20000"
      preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
      xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
      xml:space="preserve">
   <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
@@ -278,6 +279,7 @@
         <path id="trunk" class="trunk" d="M 5365,9407 C 5203,11452 5706,13938 4700,17000 L 7700,17000 C 6986,14540 6714,12501 6900,10068 Z"/>
         <path id="branch_1" class="trunk" d="M 5348,11637 C 5203,11452 5203,11452 4092,9356 L 4265,9382 C 4754,10287 4806,10420 5335,10975"/>
        </g>
+       <use xlink:href="#tree" transform="translate(10000 0) scale(0.1)" transform-origin="10000 10000" />
        </g>
        <g id="butterfly" transform="translate(-2000,0)">
         <path id="far_wing" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>
