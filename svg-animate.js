@@ -246,6 +246,9 @@ function Animate3() {
 	    finalization = []
 	}
     }
+    this.draw_one_time = function(t) {
+	actions.forEach(function(item) { item.draw(t) })
+    }
     this.rotate = function(id, angle_from, angle_to, time_from, time_to, time_finish) {
 	actions.push(new Rotate(id, angle_from, angle_to, time_from, time_to, time_finish))
     }

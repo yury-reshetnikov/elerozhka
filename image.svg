@@ -14,6 +14,14 @@
 	stroke:rgb(0,0,0);
 	stroke-width:75;
 	stroke-linejoin:round;
+	stroke-linecap:round;
+    }
+    path.line-butt {
+	fill:none;
+	stroke:rgb(0,0,0);
+	stroke-width:75;
+	stroke-linejoin:round;
+	stroke-linecap:butt;
     }
     path.line_white_fill {
 	fill:rgb(255,255,255);
@@ -150,9 +158,9 @@
     <path id="contour" class="line" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <path id="contour_t0" class="line" style="display:none" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <!-- <path id="contour_t1" class="line" style="display:none" d="M 10305,7838 C 10216,7986 10028,8703 8585,10510"/> -->
-    <path id="back" class="line" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
-    <path id="back_t0" class="line" style="display:none" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
-    <path id="back_t1" class="line" style="display:none" d="M 12376,8868 C 10212,8420 9665,8261 9301,7627"/>
+    <path id="back" class="line-butt" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
+    <path id="back_t0" style="display:none" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
+    <path id="back_t1" style="display:none" d="M 12376,8868 C 10212,8420 9665,8261 9301,7627"/>
     <g id="head_without_neck" transform-origin="10807 12015">
     <g id="hcontour">
       <path class="line" d="M 7837,5080 L 7495,5554 7024,5913"/>
