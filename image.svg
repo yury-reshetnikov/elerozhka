@@ -3,6 +3,7 @@
 <svg version="1.2" width="250mm" height="200mm" viewBox="0 0 25000 20000"
      preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
      xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
      xml:space="preserve">
   <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
@@ -14,6 +15,14 @@
 	stroke:rgb(0,0,0);
 	stroke-width:75;
 	stroke-linejoin:round;
+	stroke-linecap:round;
+    }
+    path.line-butt {
+	fill:none;
+	stroke:rgb(0,0,0);
+	stroke-width:75;
+	stroke-linejoin:round;
+	stroke-linecap:butt;
     }
     path.line_white_fill {
 	fill:rgb(255,255,255);
@@ -150,9 +159,9 @@
     <path id="contour" class="line" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <path id="contour_t0" class="line" style="display:none" d="M 10341,7834 C 9502,9441 9557,11390 9590,12732"/>
     <!-- <path id="contour_t1" class="line" style="display:none" d="M 10305,7838 C 10216,7986 10028,8703 8585,10510"/> -->
-    <path id="back" class="line" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
-    <path id="back_t0" class="line" style="display:none" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
-    <path id="back_t1" class="line" style="display:none" d="M 12376,8868 C 10212,8420 9665,8261 9301,7627"/>
+    <path id="back" class="line-butt" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
+    <path id="back_t0" style="display:none" d="M 12376,8868 C 12376,8868 12376,8868 12376,8868"/>
+    <path id="back_t1" style="display:none" d="M 12376,8868 C 10212,8420 9665,8261 9301,7627"/>
     <g id="head_without_neck" transform-origin="10807 12015">
     <g id="hcontour">
       <path class="line" d="M 7837,5080 L 7495,5554 7024,5913"/>
@@ -272,6 +281,7 @@
         <path id="trunk" class="trunk" d="M 5365,10809 C 5203,12854 5706,15340 4700,18402 L 7700,18402 C 6986,15942 6714,13903 6900,11470 Z"/>
         <path id="branch" class="trunk" d="M 5348,13039 C 5203,12854 5203,12854 4092,10758 L 4265,10784 C 4754,11689 4806,11822 5335,12377"/>
        </g>
+       <use xlink:href="#tree" transform="translate(10000 0) scale(0.1)" transform-origin="10000 10000" />
        </g>
        <g id="butterfly" transform="translate(-2000,0)">
         <path id="far_wing" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>

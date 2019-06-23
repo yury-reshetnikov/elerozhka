@@ -402,20 +402,20 @@ function gallop(a, go_time) {
 	var jump_b = go_time + 600 // прыгнули и растянули ноги
 	var jump_c = jump_b + 600 // приземлились на передние ноги
 	var jump_d = jump_c + 300 // подтянули задние ноги
-   a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a)
-   a.rotate('tail_3', 0, 15, go_time, jump_a)
+	a.path_rotate_2('body_contour', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a, jump_c)
+   a.rotate('tail_3', 0, 15, go_time, jump_a, jump_c)
    a.translate('head_without_neck', 0, 0, 1066, -600, go_time, jump_a)
-   a.rotate('front_hoofs', 0, 15, go_time, jump_a)
+	a.rotate('front_hoofs', 0, 15, go_time, jump_a, jump_c)
    a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 15, go_time, jump_a)
    a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 1066, -600, go_time, jump_a)
    a.translate('body', 0, 0, 0, -1000, jump_a, jump_b)
    a.translate('head', 0, 0, 0, -1000, jump_a, jump_b)
    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 0, -15, jump_a, jump_b)
 	a.rotate('back_hoof', 0, -15, jump_a, jump_b)
-	a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 0, 45, jump_a, jump_b)
-	a.rotate('hoof_left', 0, 45, jump_a, jump_b)
-	a.path_rotate_2('contour', 15530, 13400, [2, 3], 15, 25, jump_a, jump_b)
-	a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b)
+	a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 0, 45, jump_a, jump_b, jump_c)
+	a.rotate('hoof_left', 0, 45, jump_a, jump_b, jump_c)
+	a.path_rotate_2('contour', 15530, 13400, [2, 3], 15, 25, jump_a, jump_b, jump_c)
+	a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b, jump_c)
     a.display('hoof_right_line', false, jump_a + 100)
     a.display('hoof_right', false, jump_a + 100)
 	// jump_b
@@ -449,6 +449,12 @@ function go() {
    var a = new Animate3
    gallop(a, 0)
    a.start()
+	// a.draw_one_time(200)
+	// // a.draw_one_time(300)
+	// a.draw_one_time(400)
+	// // a.draw_one_time(600)
+	// a.draw_one_time(700)
+	// // console.log(document.getElementById('body_contour').attributes.d.value)
 }
 
 window.onkeyup = svgeditor
