@@ -399,11 +399,8 @@ function butterfly() {
 
 function gallop(a, go_time) {
 	var jump_a = go_time + 300 // подняли корпус, приготовились к прыжку
-	var jump_b = go_time + 600 // прыгнули и растянули ноги
+	var jump_b = jump_a + 300 // прыгнули и растянули ноги
 	var jump_c = jump_b + 600 // приземлились на передние ноги
-	var jump_d = jump_c + 300 // подтянули задние ноги
-	var jump_e = jump_d + 300 // jump_a
-    var jump_f = jump_e + 600 // jump_b !без почти!
 	a.path_rotate_2('body_contour', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a, jump_c)
     a.rotate('tail_3', 0, 15, go_time, jump_a, jump_c)
     a.translate('head_without_neck', 0, 0, 1066, -600, go_time, jump_a)
@@ -414,48 +411,63 @@ function gallop(a, go_time) {
     a.display('hoof_right_line', false, jump_a + 100)
     a.display('hoof_right', false, jump_a + 100)
 	// jump_a + 100
-    a.translate('body', 0, 0, 0, -1000, jump_a, jump_b)
-    a.translate('head', 0, 0, 0, -1000, jump_a, jump_b)
-    a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 0, -15, jump_a, jump_b)
-	a.rotate('back_hoof', 0, -15, jump_a, jump_b)
-	a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 0, 45, jump_a, jump_b, jump_c)
-	a.rotate('hoof_left', 0, 45, jump_a, jump_b, jump_c)
-	a.path_rotate_2('contour', 15530, 13400, [2, 3], 15, 25, jump_a, jump_b, jump_c)
-	a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b, jump_c)
-    // jump_b
-	a.rotate('body-rotate', 0, -45, jump_b, jump_c)
-	a.translate('head_without_neck', 1066, -600, -1000, 600, jump_b, jump_c)
-	a.path_translate('contour', 'contour_t0', [0, 1], 1066, -600, -1000, 600, jump_b, jump_c)
-	a.path_rotate('contour', a.path_rotate_calc('contour', 15530, 13400, 25),
-				  13994, 11279, [2, 3], 0, -45, jump_b, jump_c)
-	a.translate('body', 0, -1000, 0, 0, jump_b, jump_c)
-	a.translate('head', 0, -1000, 0, 0, jump_b, jump_c)
-	// jump_c
-	a.rotate('body-rotate', -45, 0, jump_c, jump_d)
-	a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 15, 0, jump_c, jump_d)
-	a.rotate('tail_3', 15, 0, jump_c, jump_d)
-	a.rotate('front_hoofs', 15, 0, jump_c, jump_d)
-	a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 10, 0, jump_c, jump_d)
-	a.path_rotate_2('hoof_left_line', 11495, 13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 45, -15, jump_c, jump_d)
-	a.rotate('hoof_left', 45, -15, jump_c, jump_d)
-	a.translate('head_without_neck', -1000, 600, 0, 0, jump_c, jump_d)
-	a.path_translate_2('contour', [0, 1], -1000, 600, 0, 0, jump_c, jump_d)
-	a.path_rotate_3('contour', [2, 3], jump_c, jump_d,
-					[13994, 11279, -45, 0],
-					[15530, 13400, 25, 0])
-	a.path_rotate_2('body_contour', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], -15, 15, jump_c, jump_d)
-	a.rotate('back_hoof', -15, 15, jump_c, jump_d)
-	// jump_d
-	a.path_rotate_2('body_contour', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, jump_d, jump_e, jump_f)
-    a.rotate('tail_3', 0, 15, jump_d, jump_e, jump_f)
-    a.translate('head_without_neck', 0, 0, 1066, -600, jump_d, jump_e)
-	a.rotate('front_hoofs', 0, 15, jump_d, jump_e, jump_f)
-    a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 15, jump_d, jump_e)
-    a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 1066, -600, jump_d, jump_e)
-    a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], -15, 0, jump_d, jump_e, jump_f)
-	a.rotate('hoof_left', -15, 0, jump_d, jump_e, jump_f)
-	a.path_rotate_2('body_contour', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 15, 0, jump_d, jump_e)
-	a.rotate('back_hoof', 15, 0, jump_d, jump_e)
+	var jump_one = function(jump_a) {
+		var jump_b = jump_a + 300 // прыгнули и растянули ноги
+		var jump_c = jump_b + 600 // приземлились на передние ноги
+		var jump_d = jump_c + 300 // подтянули задние ноги
+		var jump_e = jump_d + 300 // снова jump_a
+		var jump_f = jump_e + 300
+		a.translate('body', 0, 0, 0, -1000, jump_a, jump_b)
+		a.translate('head', 0, 0, 0, -1000, jump_a, jump_b)
+		a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], 0, -15, jump_a, jump_b)
+		a.rotate('back_hoof', 0, -15, jump_a, jump_b)
+		a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 0, 45, jump_a, jump_b, jump_c)
+		a.rotate('hoof_left', 0, 45, jump_a, jump_b, jump_c)
+		a.path_rotate_2('contour', 15530, 13400, [2, 3], 15, 25, jump_a, jump_b, jump_c)
+		a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b, jump_c)
+		// jump_b
+		a.rotate('body-rotate', 0, -45, jump_b, jump_c)
+		a.translate('head_without_neck', 1066, -600, -1000, 600, jump_b, jump_c)
+		a.path_translate('contour', 'contour_t0', [0, 1], 1066, -600, -1000, 600, jump_b, jump_c)
+		a.path_rotate('contour', a.path_rotate_calc('contour', 15530, 13400, 25),
+					  13994, 11279, [2, 3], 0, -45, jump_b, jump_c)
+		a.translate('body', 0, -1000, 0, 0, jump_b, jump_c)
+		a.translate('head', 0, -1000, 0, 0, jump_b, jump_c)
+		// jump_c
+		a.rotate('body-rotate', -45, 0, jump_c, jump_d, jump_e)
+		a.path_rotate('body_contour', 'body_contour_t', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 15, 0, jump_c, jump_d, jump_e)
+		a.rotate('tail_3', 15, 0, jump_c, jump_d, jump_e)
+		a.rotate('front_hoofs', 15, 0, jump_c, jump_d, jump_e)
+		a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 10, 0, jump_c, jump_d, jump_e)
+		a.path_rotate_2('hoof_left_line', 11495, 13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], 45, -15, jump_c, jump_d, jump_e)
+		a.rotate('hoof_left', 45, -15, jump_c, jump_d, jump_e)
+		a.translate('head_without_neck', -1000, 600, 0, 0, jump_c, jump_d, jump_e)
+		a.path_translate_2('contour', [0, 1], -1000, 600, 0, 0, jump_c, jump_d, jump_e)
+		a.path_rotate_3('contour', [2, 3], jump_c, jump_d,
+						[13994, 11279, -45, 0],
+						[15530, 13400, 25, 0])
+		a.path_rotate_2('body_contour', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18], -15, 15, jump_c, jump_d)
+		a.rotate('back_hoof', -15, 15, jump_c, jump_d, jump_e)
+		// jump_d
+		a.path_rotate_2('body_contour', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, jump_d, jump_e, jump_f)
+		a.rotate('tail_3', 0, 15, jump_d, jump_e, jump_f)
+		a.translate('head_without_neck', 0, 0, 1066, -600, jump_d, jump_e, jump_f)
+		a.rotate('front_hoofs', 0, 15, jump_d, jump_e, jump_f)
+		a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 15, jump_d, jump_e, jump_f)
+		a.path_translate('contour', 'contour_t0', [0, 1], 0, 0, 1066, -600, jump_d, jump_e, jump_f)
+		a.path_rotate('hoof_left_line', 'hoof_left_line_2', 11495,13097, [2,3,4,5,6,7,8,9,10,11,12,13,14], -15, 0, jump_d, jump_e, jump_f)
+		a.rotate('hoof_left', -15, 0, jump_d, jump_e, jump_f)
+		a.path_rotate_2('body_contour', 15530, 13400, [ 10, 11, 12, 13, 14, 15, 16, 17, 18],
+						15, 0, jump_d, jump_e, jump_f)
+		a.rotate('back_hoof', 15, 0, jump_d, jump_e, jump_f)
+		return jump_e
+	}
+	function jump_series(jump_a, count) {
+		var n
+		for(n = 0; n < count; ++n) jump_a = jump_one(jump_a)
+		return jump_a
+	}
+	var jump_f = jump_series(jump_a, 3)
 }
 
 function go() {
