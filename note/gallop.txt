@@ -1,0 +1,10 @@
+Прыжок из 5 в 2 - jump_d jump_e jump_f
+
+body
+- body-rotate - не участвует, нужен только при опускании
+head
+body_contour
+contour - шея
+back_hoof - заднее копыто, задняя нога в body_contour
+hoof_left_line
+hoof_left
