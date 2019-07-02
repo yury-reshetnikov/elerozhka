@@ -233,7 +233,7 @@
 	 <path id="germ3" style="display:none" class="germ" d="M 7213,8855 C 6995,9060 7068,9110 6924,9212 6759,9310 6665,9232 6813,9092 6961,8948 7031,8990 7213,8855"/>
        </g>
        <g id="plants">
-        <g id="grass" onmouseover="eating()" style="display:none">
+        <g id="grass" onmouseover="eating()">
          <path class="grass" d="M 5118,17311 C 5117,16843 5814,14349 7352,11224 6442,13886 6044,17251 6044,17251 L 5110,17337 5118,17311 Z"/>
          <path class="grass" d="M 4667,17205 C 4668,16737 4121,14291 2271,11179 3360,13842 3741,17145 3741,17145 L 4675,17231 4667,17205 Z"/>
          <path class="grass" d="M 5992,17268 C 5991,16800 6538,14354 8388,11242 7299,13905 6918,17208 6918,17208 L 5984,17294 5992,17268 Z"/>
@@ -267,7 +267,7 @@
 	<path id="eated_2_t0" class="grass" style="display:none" d="M 4967,12690 C 5013,12686 5053,12694 5119,12683 5168,12685 5214,12678 5268,12673 Z"/>
 	<path id="eated_2_t1" class="grass" style="display:none" d="M 4967,12690 C 4961,12376 4938,11841 4842,10706 5030,11501 5142,12020 5268,12673 Z"/>
        </g>
-       <g id="meadow">
+       <g id="meadow" transform="translate(-10000,1500)">
         <g id="tuft_of_grass">
          <path class="grass" d="M 3785,14989 C 3785,14867 3642,14227 3159,13414 3443,14110 3543,14973 3543,14973 L 3787,14996 3785,14989 Z"/>
          <path class="grass" d="M 4378,14950 C 4378,14849 4228,14311 3896,13637 4092,14211 4178,14938 4178,14938 L 4380,14956 4378,14950 Z"/>
@@ -275,14 +275,33 @@
          <path class="grass" d="M 3826,14989 C 3826,14912 3941,14503 4193,13990 4044,14427 3978,14979 3978,14979 L 3825,14993 3826,14989 Z"/>
          <path class="grass" d="M 4704,15028 C 4704,14906 4847,14265 5332,13449 5047,14147 4947,15012 4947,15012 L 4702,15035 4704,15028 Z"/>
         </g>
-        <use xlink:href="#tuft_of_grass" transform="translate(500 1000)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(1500 0)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(-1500 0)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(3300 750)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(1800 750)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(300 750)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(-1200 750)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(-2700 750)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(2500 1500)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(1000 1500)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(-500 1500)"/>
+        <use xlink:href="#tuft_of_grass" transform="translate(-2000 1500)"/>
        </g>
-       <g id="tree" style="display:none">
+       <g id="tree" transform="translate(-11000,0)">
         <path id="leaves" class="grass" d="M 5365,10809 C 1423,10994 631,8138 3140,7979 2878,5516 5365,4591 6873,5861 8751,4406 10973,6099 8936,8559 12059,8083 11318,14353 6900,11470 Z"/>
         <path id="trunk" class="trunk" d="M 5365,10809 C 5203,12854 5706,15340 4700,18402 L 7700,18402 C 6986,15942 6714,13903 6900,11470 Z"/>
         <path id="branch" class="trunk" d="M 5348,13039 C 5203,12854 5203,12854 4092,10758 L 4265,10784 C 4754,11689 4806,11822 5335,12377"/>
        </g>
-       <path id="bush" class="grass" style="display:none" d="M 3725,17396 C 2984,17091 2929,16339 3209,16179 2692,15623 2999,15253 3487,14975 3090,14276 3712,13812 4466,13813 4730,12897 5565,12818 6174,13467 7389,13268 7310,13943 7126,14537 7428,14630 8169,15490 6874,16152 7310,16774 6808,17422 5843,17422 Z"/>
+       <g id="bush" transform="translate(-8000,0)">
+        <path id="bush_0" class="grass" d="M 3725,17396 C 2984,17091 2929,16339 3209,16179 2692,15623 2999,15253 3487,14975 3090,14276 3712,13812 4466,13813 4730,12897 5565,12818 6174,13467 7389,13268 7310,13943 7126,14537 7428,14630 8169,15490 6874,16152 7310,16774 6808,17422 5843,17422 Z"/>
+        <path id="branch_1" class="trunk" d="M 4941,17500 C 4894,17351 4465,17099 3752,16709 4698,17113 4961,17357 5060,17500 Z"/>
+        <path id="branch_2" class="trunk" d="M 4941,17500 C 3936,16524 3963,16326 3619,15823 4280,16802 4809,17133 5060,17500 Z"/>
+        <path id="branch_3" class="trunk" d="M 4941,17500 C 5179,15215 4862,15373 4267,14672 4889,15281 5285,15095 5060,17500 Z"/>
+        <path id="branch_4" class="trunk" d="M 4941,17500 C 5113,15532 5218,14434 5338,13799 5218,15439 5086,16775 5060,17500 Z"/>
+        <path id="branch_5" class="trunk" d="M 4941,17500 C 5086,16100 5007,14235 6422,14235 5431,14393 5180,15215 5060,17500 Z"/>
+        <path id="branch_6" class="trunk" d="M 4941,17500 C 5430,16392 5496,15717 6753,15373 5893,15678 5470,16273 5060,17500 Z"/>
+        <path id="branch_7" class="trunk" d="M 4941,17500 C 5377,17159 5873,17059 6317,16762 5933,17133 5523,17199 5060,17500 Z"/>
+       </g>
        </g>
        <g id="butterfly" transform="translate(-2000,0)">
         <path id="far_wing" class="butterfly" d="M 1651,10156 C 1806,9950 1946,9769 1883,9525 1883,9525 1469,9310 1394,9877 960,9751 955,10168 1257,10181 Z"/>

@@ -39,7 +39,7 @@ function set_star(n) {
 }
 
 function smile() {
-    if(ess_started || sneeze_started || prance_started) return
+    if(ess_started || sneeze_started || prance_started || butterfly_started || go_started || gallop_started) return
     ess_started = true
     var a = new Animate3
     a.rotate('jowl', -15, 0, 0, 200)
@@ -121,7 +121,7 @@ function sneeze_done(a, head_down_2) {
 }
 
 function sneeze() {
-    if(sneeze_started || tail_started || ess_started || eye_started || prance_started) return
+    if(sneeze_started || tail_started || ess_started || eye_started || prance_started || butterfly_started || go_started || gallop_started) return
     sneeze_started = true
     var a = new Animate3
     var start = 0
@@ -157,7 +157,7 @@ function sneeze() {
 }
 
 function eating() {
-    if(ess_started || sneeze_started || prance_started) return
+    if(ess_started || sneeze_started || prance_started || butterfly_started || go_started || gallop_started) return
     ess_started = true
     var flower_start_slow = 5800
     var flower_start = flower_start_slow + 1000
@@ -220,7 +220,7 @@ function eating() {
 }
 
 function smell() {
-    if(ess_started || sneeze_started || prance_started) return
+    if(ess_started || sneeze_started || prance_started || butterfly_started || go_started || gallop_started) return
     ess_started = true
     var a = new Animate3
     //var look_directly = 0
@@ -245,7 +245,7 @@ function smell() {
 }
 
 function eye() {
-   if(eye_started || sneeze_started || prance_started) return
+   if(eye_started || sneeze_started || prance_started || butterfly_started || go_started || gallop_started) return
    eye_started = true
    var a = new Animate3
    var see_direct = 0
@@ -267,7 +267,7 @@ function eye() {
 }
 
 function tail() {
-   if(tail_started || sneeze_started || prance_started) return
+   if(tail_started || sneeze_started || prance_started || butterfly_started || go_started || gallop_started) return
    tail_started = true
    var a = new Animate3;
    [0, 600].forEach(function(t) {
@@ -288,7 +288,7 @@ function hoof_wave(a, ta, b, c) {
 }
 
 function prance() {
-   if(prance_started || ess_started || sneeze_started || eye_started || tail_started || hoof_started) return
+   if(prance_started || ess_started || sneeze_started || eye_started || tail_started || hoof_started || butterfly_started || go_started || gallop_started) return
    prance_started = true
    var a = new Animate3
    var reared_up = 1000
@@ -318,7 +318,7 @@ function prance() {
 }
 
 function hoof() {
-   if(hoof_started || prance_started) return
+   if(hoof_started || prance_started || butterfly_started || go_started || gallop_started) return
    hoof_started = true
    var a = new Animate3
    hoof_wave(a, 0, 700, 1400)
@@ -332,7 +332,7 @@ function hoof() {
 }
 
 function butterfly() {
-   if(butterfly_started) return
+   if(ess_started || sneeze_started || eye_started || tail_started || prance_started || hoof_started || butterfly_started || go_started) return
    butterfly_started = true
    var a = new Animate3
    a.translate('butterfly', -2000, 0, 1000, -4000, 0, 1600);
@@ -372,6 +372,7 @@ function butterfly() {
    a.translate('butterfly', 4000, -7000, 2000, -5000, 5100, 6100);
    a.translate('butterfly', 2000, -5000, 1500, -2000, 6100, 7000);
    a.translate('butterfly', 1500, -2000, 300, 0, 7000, 8600);
+   a.translate('butterfly', 300, 0, -300, -2000, 8600, 10000);
 	[0,1,2,3,4,5,6,7,8].forEach(function(n){
       var t0 = n * 1000 + 4600
       var t1 = t0 + 500
@@ -384,9 +385,21 @@ function butterfly() {
    a.translate('eyeball', -70, 0, 0, 0, 4600, 4900)
    a.translate('eyeball', 0, 0, 0, -100, 4900, 6100)
    a.translate('eyeball', 0, -100, 0, 200, 6100, 8600)
-   a.translate('eyeball', 0, 200, 0, 0, 8600, 8900, true)
+   a.translate('eyeball', 0, 200, 0, 100, 9000, 11000)
+   a.translate('eyeball', 0, 100, 0, 0, 14000, 14300, true)
    gallop(a, 7000)
-	a.translate('grass', 0, 0, 30000, 0, 7000, 10000)
+        var grass_go = 7000
+        var grass_stop = 7000 + 3000
+        var tree_go = grass_go + 500
+        var tree_stop = tree_go + 4100
+        var meadow_go = tree_go + 1500
+        var meadow_stop = meadow_go + 4000
+        var bush_go = meadow_go + 1800
+        var bush_stop = bush_go + 3800
+    a.translate('grass', 0, 0, 30000, 0, grass_go, grass_stop)
+	a.translate('tree', -11000, 0, 30000, 0, tree_go, tree_stop)
+	a.translate('meadow', -10000, 1500, 30000, 1500, meadow_go, meadow_stop)
+	a.translate('bush', -8000, 0, 30000, 0, bush_go, bush_stop)
    a.finish(function() {
         butterfly_started = false
         a.exchange('near_wing', 'far_wing')
@@ -398,6 +411,7 @@ function butterfly() {
 }
 
 function gallop(a, go_time) {
+    if(ess_started || sneeze_started || eye_started || tail_started || prance_started || hoof_started || gallop_started) return
 	var jump_a = go_time + 300 // подняли корпус, приготовились к прыжку
 	var jump_b = jump_a + 300 // прыгнули и растянули ноги
 	var jump_c = jump_b + 600 // приземлились на передние ноги
@@ -468,7 +482,7 @@ function gallop(a, go_time) {
 		for(n = 0; n < count; ++n) jump_a = jump_one(jump_a, n == count-1)
 		return jump_a
 	}
-	jump_c = jump_series(jump_a, 3)
+	jump_c = jump_series(jump_a, 4)
 	var jump_d = jump_c + 300 // подтянули задние ноги
     var jump_e = jump_d + 300 // снова jump_a
 		a.rotate('body-rotate', -45, 0, jump_c, jump_d, jump_e)
@@ -488,7 +502,7 @@ function gallop(a, go_time) {
 }
 
 function go() {
-   if(go_started) return
+   if(ess_started || sneeze_started || eye_started || tail_started || prance_started || hoof_started || butterfly_started || go_started) return
    go_started = true
    var a = new Animate3
    gallop(a, 0)
