@@ -482,7 +482,7 @@ function gallop(a, go_time) {
 		for(n = 0; n < count; ++n) jump_a = jump_one(jump_a, n == count-1)
 		return jump_a
 	}
-	jump_c = jump_series(jump_a, 4)
+	jump_c = jump_series(jump_a, 5)
 	var jump_d = jump_c + 300 // подтянули задние ноги
     var jump_e = jump_d + 300 // снова jump_a
 		a.rotate('body-rotate', -45, 0, jump_c, jump_d, jump_e)
