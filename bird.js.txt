@@ -1,0 +1,27 @@
+function fly() {
+	var a = new Animate3
+	var wings_one = function(t0) {
+		var t1 = t0 + 1000
+		var t2 = t1 + 1000
+		a.path('bird_far_wing_up', 'bird_far_wing_up_t', 'bird_far_wing_down', t0, t1)
+		a.path('bird_near_wing_up', 'bird_near_wing_up_t', 'bird_near_wing_down', t0, t1)
+		a.path('bird_far_wing_up', 'bird_far_wing_down', 'bird_far_wing_up_t', t1, t2)
+		a.path('bird_near_wing_up', 'bird_near_wing_down', 'bird_near_wing_up_t', t1, t2)
+		return t2
+	}
+	function wings_series(jump_a, count) {
+		var n
+		for(n = 0; n < count; ++n) jump_a = wings_one(jump_a)
+		return jump_a
+	}
+	wings_series(0, 10)
+	a.start()
+}
+
+/*
+ * Local Variables:
+ * mode: JavaScript
+ * coding: windows-1251-dos
+ * tab-width: 4
+ * End:
+ */
