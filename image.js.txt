@@ -283,8 +283,8 @@ function tail() {
 function hoof_wave(a, ta, b, c) {
    a.path('hoof_left_line', 'hoof_left_line_2', 'hoof_left_line_3', ta, b)
    a.path('hoof_left', 'hoof_left_t', 'hoof_left_t_end', ta, b)
-   a.path('hoof_left_line', 'hoof_left_line_3', 'hoof_left_line_2', b, c)
-   a.path('hoof_left', 'hoof_left_t_end', 'hoof_left_t', b, c)
+	a.path('hoof_left_line', 'hoof_left_line_3', 'hoof_left_line_2', b, c, true)
+	a.path('hoof_left', 'hoof_left_t_end', 'hoof_left_t', b, c, true)
 }
 
 function prance() {

@@ -58,8 +58,8 @@ function Animate3() {
     }
     function Translate(id, x_from, y_from, x_to, y_to, time_from, time_to, time_finish) {
 	this.draw = gen_draw(time_from, time_to, time_finish, this, function(k) {
-	    var x = x_from + (x_to - x_from) * k
-	    var y = y_from + (y_to - y_from) * k
+	    var x = Math.round(x_from + (x_to - x_from) * k)
+	    var y = Math.round(y_from + (y_to - y_from) * k)
 	    document.getElementById(id).setAttribute('transform', 'translate('+x+','+y+')')
 	})
     }
@@ -112,7 +112,7 @@ function Animate3() {
 		    var y0 = parseInt(m0[2])
 		    var x1 = parseInt(m1[1])
 		    var y1 = parseInt(m1[2])
-		    d.push(''+(x0 + (x1 - x0) * k)+','+(y0 + (y1 - y0) * k))
+		    d.push(''+Math.round(x0 + (x1 - x0) * k)+','+Math.round(y0 + (y1 - y0) * k))
 		}
 		else d.push(v1)
 	    }
