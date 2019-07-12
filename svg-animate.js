@@ -144,7 +144,7 @@ function Animate3() {
     }
     function PathRotate3(id, points, time_from, time_to, ...corners) {
 	var time_finish
-	if(corners.length && !Array.isArray(corners[0])) time_finish = corners.shift
+	if(corners.length && !Array.isArray(corners[0])) time_finish = corners.shift()
 	if(!PathBase.call(this, id, id)) return
 	var rot = function(x,y,k) { return [x,y] }
 	corners.forEach(function(c) {
