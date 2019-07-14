@@ -18,6 +18,8 @@ function fly() {
 	a.start()
 }
 
+window.onkeyup = svgeditor
+
 /*
  * Local Variables:
  * mode: JavaScript
