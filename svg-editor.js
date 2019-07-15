@@ -1,7 +1,7 @@
 (function() {
     var text_left, text_height = 400, text_line = 100
     var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = [],
-	rotate, scalepoints
+	rotate, scalepoints, mirror
     var scale = 1
     var point_drag = {}
 
@@ -164,6 +164,70 @@
 	})
     }
 
+    point_drag.mirror_root_point = function(x,y) {
+	if(mirror.second_point) {
+	    mirror.second_point.x += x - mirror.root.x
+	    mirror.second_point.y += y - mirror.root.y
+	}
+	mirror.root = {x:x, y:y}
+	if(mirror.baseline) mirror_points()
+    }
+
+    point_drag.mirror_second_point = function(x,y) {
+	mirror.second_point = {x:x, y:y}
+	if(mirror.baseline) mirror_points()
+    }
+
+    var mirror_close = function() {
+	if(mirror.root_bbox) mirror.root_bbox.remove()
+	if(mirror.baseline) mirror.baseline.remove()
+	mirror = false
+    }
+
+    var mirror_baseline_path = function() {
+	// var x1 = mirror.root.x - 2 * (mirror.second_point.x - mirror.root.x)
+	var x1 = mirror.root.x * 3 - mirror.second_point.x * 2
+	var y1 = mirror.root.y * 3 - mirror.second_point.y * 2
+	var x2 = mirror.second_point.x * 2 - mirror.root.x
+	var y2 = mirror.second_point.y * 2 - mirror.root.y
+	return 'M '+x1+','+y1+' L '+x2+','+y2
+    }
+
+    var mirror_points = function() {
+	mirror.baseline.attributes.d.value = mirror_baseline_path()
+	var x1 = mirror.root.x
+	var y1 = mirror.root.y
+	var x2 = mirror.second_point.x
+	var y2 = mirror.second_point.y
+	edit_pathes(root, function(x,y) {
+	    // https://ru.wikipedia.org/wiki/Расстояние_от_точки_до_прямой_на_плоскости
+	    // http://www.gamedev.ru/code/forum/?id=64845
+	    var nx = y2 - y1
+	    var ny = x2 - x1
+	    var len = Math.sqrt(nx*nx + ny*ny)
+	    var d = (nx*x - ny*y + x2*y1 - y2*x1) / len
+	    if(d > 0) {
+		nx /= len
+		ny /= len
+		var dot2 = 2 * (nx*x + ny*y)
+		x -= dot2 * nx
+		y -= dot2 * ny
+		/*
+point n;
+    n.x = (pa->y - pb->y);
+    n.y = (pb->x - pa->x);
+    float len = sqrt(n.x*n.x + n.y*n.y);
+    n.x /= len;
+    n.y /= len;
+    float dot2 = 2*(n.x*ps->x + n.y*ps->y);
+    pr->x = ps->x - dot2 * n.x;
+    pr->y = ps->y - dot2 * n.y;
+*/
+	    }
+	    return ''+x+','+y
+	})
+    }
+
     point_drag.move_point = function(x,y) {
 	// rotate.root = {x:x, y:y}
     }
@@ -314,7 +378,7 @@
 		bbox.remove()
 		bbox = false
 	    }
-	    if(rotate || scalepoints) {
+	    if(rotate || scalepoints || mirror) {
 		if(rotate) {
 		    if(rotate.corner) rotate.corner.remove()
 		    rotate = false
@@ -323,6 +387,7 @@
 		    if(scalepoints.corner) scalepoints.corner.remove()
 		    scalepoints = false
 		}
+		if(mirror) mirror_close()
 	    }
 	    else if(selection.style.display == '') selection.style.display = 'none'
 	    else edgroup.style.display = 'none'
@@ -379,7 +444,7 @@
 	}
 	else if(e.key == 'Enter') {
 	    if(selno === false) ;
-	    else if(rotate || scalepoints) {
+	    else if(rotate || scalepoints || mirror) {
 		if(!rotate) ;
 		else if(rotate.corner) {
 		    if(bbox) {
@@ -425,6 +490,33 @@
 				' L '+scalepoints.root.x+','+scalepoints.root.y }])[0]
 			point_drag.create(scalepoints.root.x + d, scalepoints.root.y,
 					  point_drag.scalepoints_corner_point)
+		    }
+		}
+		if(!mirror) ;
+		else if(mirror.baseline) {
+		    if(bbox) {
+			bbox.remove()
+			bbox = false
+		    }
+		    mirror_close()
+		}
+		else if(root && root.getBBox) {
+		    if(mirror.second_point) {
+			save_pathes(root)
+			mirror.baseline = svggen(showgroup, ['path', {
+			    stroke: 'red', fill: 'none',
+			    d: mirror_baseline_path() }])[0]
+			mirror_points()
+		    }
+		    else {
+			mirror.root_bbox = bbox
+			bbox = false
+			var p = root.getBBox()
+			var d = Math.max(p.width, p.height)
+			if(d > mirror.root.y) d = mirror.root.y
+			mirror.second_point = { x: mirror.root.x + d, y: mirror.root.y }
+			point_drag.create(mirror.second_point.x, mirror.second_point.y,
+					  point_drag.mirror_second_point)
 		    }
 		}
 	    }
@@ -550,6 +642,13 @@
 		var p = root.getBBox()
 		scalepoints = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2}, box: p }
 		point_drag.create(scalepoints.root.x, scalepoints.root.y, point_drag.scalepoints_root_point)
+	    }
+	}
+	else if(e.key == 'q') { // зеркальное отражение части path
+	    if(root && root.getBBox && root.nodeName == 'path') {
+		var p = root.getBBox()
+		mirror = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
+		point_drag.create(mirror.root.x, mirror.root.y, point_drag.mirror_root_point)
 	    }
 	}
 	// else console.log(e)
