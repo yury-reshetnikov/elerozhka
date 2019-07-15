@@ -235,6 +235,8 @@ function Animate3() {
     this.draw = function() {
 	var count = 0
 	var t = (new Date).getTime() - this.started
+	if(this.time_modifier) t *= this.time_modifier
+	if(this.exit_time && t > this.exit_time) return
 	actions.forEach(function(item) {
 	    if(item.draw(t)) ++count
 	})
@@ -273,9 +275,15 @@ function Animate3() {
 	actions.push(new PathRotate(id, id, cx, cy, points, angle_from, angle_to, time_from, time_to, time_finish))
     }
     this.path_rotate_calc = function(id, cx, cy, angle) {
-	var element = document.getElementById(id)
-	if(!element) { console.log('unknown id '+id); return }
-	return element.attributes.d.value.split(/\s+/).map(function(item) {
+	var list
+	if(Array.isArray(id)) list = id
+	else {
+	    var element = document.getElementById(id)
+	    if(!element) { console.log('unknown id '+id); return }
+	    list = element.attributes.d.value.split(/\s+/)
+	}
+	var n = 0
+	return list.map(function(item) {
 	    var m = item.match(/(\d+),(\d+)/)
 	    if(m) {
 		var x = parseInt(m[1])
