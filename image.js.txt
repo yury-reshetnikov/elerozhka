@@ -421,7 +421,10 @@ function gallop(a, go_time) {
 	var jump_b = jump_a + 300 // прыгнули и растянули ноги
 	var jump_c = jump_b + 600 // приземлились на передние ноги
 	a.path_rotate_2('body_contour', 15530, 13400, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 19, 20, 21], 0, 15, go_time, jump_a, jump_c)
-    a.rotate('tail_3', 0, 15, go_time, jump_a, jump_c)
+	a.path_rotate_2('tail_3', 15530, 13400, [0, 1, 2, 3, 4, 8, 9], 0, 15, go_time, jump_a, jump_c)
+	a.path_rotate_3('tail_3', [5, 6, 7], go_time, jump_a,
+					[15530, 13400, 0, 15],
+					[17477, 11333, 0, -30])
     a.translate('head_without_neck', 0, 0, 1066, -600, go_time, jump_a)
 	a.rotate('front_hoofs', 0, 15, go_time, jump_a, jump_c)
     a.path_rotate('contour', 'contour_t0', 15530, 13400, [2, 3], 0, 15, go_time, jump_a)
@@ -432,6 +435,7 @@ function gallop(a, go_time) {
 	// jump_a + 100
 	var jump_one = function(jump_a, last) {
 		var jump_b = jump_a + 300 // прыгнули и растянули ноги
+		var jump_b2 = jump_b + 300 // хвост
 		var jump_c = jump_b + 600 // приземлились на передние ноги
 		var jump_d = jump_c + 300 // подтянули задние ноги
 		var jump_e = jump_d + 300 // снова jump_a
@@ -445,6 +449,10 @@ function gallop(a, go_time) {
 		a.path_rotate_2('contour', 15530, 13400, [2, 3], 15, 25, jump_a, jump_b, jump_c)
 		a.path_rotate_2('hoof_left_line', 15530, 13400, [0, 1], 0, 10, jump_a, jump_b, jump_c)
 		// jump_b
+		a.path_rotate('tail_3', a.path_rotate_calc(a.path_rotate_calc('tail_3',
+												15530, 13400, 15),
+												17477, 11333, -30),
+					  17477, 11333, [5,6,7], 0, 30, jump_b, jump_c)
 		a.rotate('body-rotate', 0, -45, jump_b, jump_c)
 		a.translate('head_without_neck', 1066, -600, -1000, 600, jump_b, jump_c)
 		a.path_translate('contour', 'contour_t0', [0, 1], 1066, -600, -1000, 600, jump_b, jump_c)
@@ -509,20 +517,22 @@ function gallop(a, go_time) {
 }
 
 function go() {
-   if(ess_started || sneeze_started || eye_started || tail_started || prance_started || hoof_started || butterfly_started || go_started) return
-   go_started = true
-   var a = new Animate3
-   gallop(a, 0)
-   a.start()
-	// a.draw_one_time(200)
-	// // a.draw_one_time(300)
-	// a.draw_one_time(400)
-	// // a.draw_one_time(600)
-	// a.draw_one_time(700)
-	// // console.log(document.getElementById('body_contour').attributes.d.value)
-   a.finish(function() {
-       go_started = false
-   })
+	if(ess_started || sneeze_started || eye_started || tail_started || prance_started || hoof_started || butterfly_started || go_started) return
+	go_started = true
+	var a = new Animate3
+	gallop(a, 0)
+	a.exit_time = 900
+	a.time_modifier = 1/5
+	a.start()
+	// a.draw_one_time(300)
+	// a.draw_one_time(300)
+	// a.draw_one_time(599)
+	// console.log(document.getElementById('tail_3').attributes.d.value)
+	// a.draw_one_time(600)
+	// console.log(document.getElementById('tail_3').attributes.d.value)
+	a.finish(function() {
+		go_started = false
+	})
 }
 
 window.onkeyup = svgeditor
