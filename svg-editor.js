@@ -67,6 +67,28 @@
 	}
     }
 
+    point_drag.drag = function(e) {
+	if(bbox && bbox._reshu_draggable) {
+	    var d = bbox._reshu_draggable
+	    var o = d.offset
+	    if(o) {
+		e.preventDefault()
+		var c = get_mouse_position(e)
+		var x = Math.trunc((c.x - o.x) / scale), y = Math.trunc((c.y - o.y) / scale)
+		d.translate.setTranslate(x, y)
+		x += d.x
+		y += d.y
+		d.drag(x,y)
+		d.changed = true
+	    }
+	}
+    }
+
+    point_drag.end = function(e) {
+	if(bbox && bbox._reshu_draggable && bbox._reshu_draggable.offset)
+	    bbox._reshu_draggable.offset = false
+    }
+
     point_drag.path_point = function(x,y) {
 	var n = text.children[selno]
 	n.textContent = ''+x+','+y
@@ -226,32 +248,6 @@ point n;
 	    }
 	    return ''+x+','+y
 	})
-    }
-
-    point_drag.move_point = function(x,y) {
-	// rotate.root = {x:x, y:y}
-    }
-
-    point_drag.drag = function(e) {
-	if(bbox && bbox._reshu_draggable) {
-	    var d = bbox._reshu_draggable
-	    var o = d.offset
-	    if(o) {
-		e.preventDefault()
-		var c = get_mouse_position(e)
-		var x = Math.trunc((c.x - o.x) / scale), y = Math.trunc((c.y - o.y) / scale)
-		d.translate.setTranslate(x, y)
-		x += d.x
-		y += d.y
-		d.drag(x,y)
-		d.changed = true
-	    }
-	}
-    }
-
-    point_drag.end = function(e) {
-	if(bbox && bbox._reshu_draggable && bbox._reshu_draggable.offset)
-	    bbox._reshu_draggable.offset = false
     }
 
     var text_node = function(item, text_top) {
