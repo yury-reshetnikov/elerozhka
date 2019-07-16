@@ -89,6 +89,49 @@
 	    bbox._reshu_draggable.offset = false
     }
 
+    point_drag.create2 = function(x1,y1,drag) {
+	var d = 500
+	var x = x1 - d/2, y = y1 - d/2, r = x + d, b = y + d
+	var bbox = svggen(showgroup, ['g', ['rect', {
+	    fill:"rgb(250,250,250)", 'fill-opacity':.8, stroke: 'none',
+	    style: { cursor: 'move' },
+	    x: x, y: y, width: d, height: d,
+	}], ['path', { stroke: 'black', d: 'M '+x+','+y+' L '+r+','+b }],
+	    ['path', { stroke: 'black', d: 'M '+x+','+b+' L '+r+','+y }]])[0]
+	var t = svg.createSVGTransform()
+	t.setTranslate(0, 0)
+	bbox.transform.baseVal.appendItem(t)
+	bbox._reshu_draggable = {
+	    translate: t,
+	    x: x1, y: y1,
+	    drag: drag,
+	}
+	bbox.onmousedown = function(e) {
+	    var o = bbox._reshu_draggable.offset = get_mouse_position(e)
+	    var m = bbox._reshu_draggable.translate.matrix
+	    o.x -= m.e * scale
+	    o.y -= m.f * scale
+	    window.onmousemove = function(e) {
+		var d = bbox._reshu_draggable
+		var o = d.offset
+		if(o) {
+		    e.preventDefault()
+		    var c = get_mouse_position(e)
+		    var x = Math.trunc((c.x - o.x) / scale), y = Math.trunc((c.y - o.y) / scale)
+		    d.translate.setTranslate(x, y)
+		    x += d.x
+		    y += d.y
+		    d.drag(x,y)
+		    d.changed = true
+		}
+	    }
+	    window.onmouseup = function(e) {
+		bbox._reshu_draggable.offset = false
+	    }
+	}
+	return bbox
+    }
+
     point_drag.path_point = function(x,y) {
 	var n = text.children[selno]
 	n.textContent = ''+x+','+y
@@ -184,12 +227,16 @@
 	    y = Math.round(scalepoints.root.y + (y - scalepoints.root.y) * s)
 	    return ''+x+','+y
 	})
+	show_path_points()
     }
 
     point_drag.mirror_root_point = function(x,y) {
 	if(mirror.second_point) {
-	    mirror.second_point.x += x - mirror.root.x
-	    mirror.second_point.y += y - mirror.root.y
+	    var sp = mirror.second_point
+	    sp.x += x - mirror.root.x
+	    sp.y += y - mirror.root.y
+	    var rd = mirror.line_bbox._reshu_draggable
+	    rd.translate.setTranslate(sp.x - rd.x, sp.y - rd.y)
 	}
 	mirror.root = {x:x, y:y}
 	if(mirror.baseline) mirror_points()
@@ -202,6 +249,7 @@
 
     var mirror_close = function() {
 	if(mirror.root_bbox) mirror.root_bbox.remove()
+	if(mirror.line_bbox) mirror.line_bbox.remove()
 	if(mirror.baseline) mirror.baseline.remove()
 	mirror = false
     }
@@ -215,6 +263,32 @@
 	return 'M '+x1+','+y1+' L '+x2+','+y2
     }
 
+    window.calc_mirror_point = function(x1,y1,x2,y2,x,y) {
+	var nx = y2 - y1
+	var ny = x2 - x1
+	var len = Math.sqrt(nx*nx + ny*ny)
+	console.log([nx,ny,len])
+	nx /= len
+	ny /= len
+	var dot2 = 2 * (nx*(x-x1) + ny*(y-y1))
+	console.log([nx,ny,dot2])
+	x -= dot2 * nx
+	y -= dot2 * ny
+	return [x, y]
+    }
+
+    window.calc_mirror_point2 = function(x1,y1,x2,y2,x,y) {
+	let b = x2 - x1;
+	let c = y2 - y1;
+	let denom = b * (-b) - c * c;
+	let ax = -b * (b * x + c * y) - c * (c * x1 - b * y1);
+	let ay = b * (c * x1 - b * y1) - c * (b * x + c * y);
+	return [
+            ax / denom,
+            ay / denom
+	];
+    }
+
     var mirror_points = function() {
 	mirror.baseline.attributes.d.value = mirror_baseline_path()
 	var x1 = mirror.root.x
@@ -223,17 +297,29 @@
 	var y2 = mirror.second_point.y
 	edit_pathes(root, function(x,y) {
 	    // https://ru.wikipedia.org/wiki/Расстояние_от_точки_до_прямой_на_плоскости
-	    // http://www.gamedev.ru/code/forum/?id=64845
+	    // http://www.gamedev.ru/code/forum/?id=64845 - здесь неправильная формула
+	    // https://ru.stackoverflow.com/questions/602336/Как-сделать-зеркальное-отражение-фигуры/603289#603289
+	    var b = x2 - x1
+	    var c = y2 - y1
+	    if(c*x + x2*y1 > b*y + y2*x1) {
+		var denom = b * b + c * c
+		x = Math.round(2 * (b * (b * x + c * y) + c * (c * x1 - b * y1)) / denom - x)
+		y = Math.round(2 * (c * (b * x + c * y) + b * (b * y1 - c * x1)) / denom - y)
+	    }
+	    /*
 	    var nx = y2 - y1
 	    var ny = x2 - x1
 	    var len = Math.sqrt(nx*nx + ny*ny)
-	    var d = (nx*x - ny*y + x2*y1 - y2*x1) / len
-	    if(d > 0) {
+	    // var d = (nx*x - ny*y + x2*y1 - y2*x1) / len
+	    // if(d > 0) {
+	    if(nx*x + x2*y1 > ny*y + y2*x1) {
 		nx /= len
 		ny /= len
-		var dot2 = 2 * (nx*x + ny*y)
+		var dot2 = 2 * (nx * (x - x1) + ny * (y - y1))
 		x -= dot2 * nx
 		y -= dot2 * ny
+	    }
+*/
 		/*
 point n;
     n.x = (pa->y - pb->y);
@@ -245,9 +331,9 @@ point n;
     pr->x = ps->x - dot2 * n.x;
     pr->y = ps->y - dot2 * n.y;
 */
-	    }
 	    return ''+x+','+y
 	})
+	show_path_points()
     }
 
     var text_node = function(item, text_top) {
@@ -505,14 +591,12 @@ point n;
 			mirror_points()
 		    }
 		    else {
-			mirror.root_bbox = bbox
-			bbox = false
 			var p = root.getBBox()
 			var d = Math.max(p.width, p.height)
 			if(d > mirror.root.y) d = mirror.root.y
 			mirror.second_point = { x: mirror.root.x + d, y: mirror.root.y }
-			point_drag.create(mirror.second_point.x, mirror.second_point.y,
-					  point_drag.mirror_second_point)
+			mirror.line_bbox = point_drag.create2(mirror.second_point.x, mirror.second_point.y,
+							      point_drag.mirror_second_point)
 		    }
 		}
 	    }
@@ -644,7 +728,8 @@ point n;
 	    if(root && root.getBBox && root.nodeName == 'path') {
 		var p = root.getBBox()
 		mirror = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
-		point_drag.create(mirror.root.x, mirror.root.y, point_drag.mirror_root_point)
+		mirror.root_bbox = point_drag.create2(mirror.root.x, mirror.root.y,
+						      point_drag.mirror_root_point)
 	    }
 	}
 	// else console.log(e)
