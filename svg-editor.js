@@ -306,31 +306,6 @@
 		x = Math.round(2 * (b * (b * x + c * y) + c * (c * x1 - b * y1)) / denom - x)
 		y = Math.round(2 * (c * (b * x + c * y) + b * (b * y1 - c * x1)) / denom - y)
 	    }
-	    /*
-	    var nx = y2 - y1
-	    var ny = x2 - x1
-	    var len = Math.sqrt(nx*nx + ny*ny)
-	    // var d = (nx*x - ny*y + x2*y1 - y2*x1) / len
-	    // if(d > 0) {
-	    if(nx*x + x2*y1 > ny*y + y2*x1) {
-		nx /= len
-		ny /= len
-		var dot2 = 2 * (nx * (x - x1) + ny * (y - y1))
-		x -= dot2 * nx
-		y -= dot2 * ny
-	    }
-*/
-		/*
-point n;
-    n.x = (pa->y - pb->y);
-    n.y = (pb->x - pa->x);
-    float len = sqrt(n.x*n.x + n.y*n.y);
-    n.x /= len;
-    n.y /= len;
-    float dot2 = 2*(n.x*ps->x + n.y*ps->y);
-    pr->x = ps->x - dot2 * n.x;
-    pr->y = ps->y - dot2 * n.y;
-*/
 	    return ''+x+','+y
 	})
 	show_path_points()
