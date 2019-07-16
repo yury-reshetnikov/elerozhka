@@ -7,6 +7,8 @@
 
     var plugin
 
+    var special_mode = function() { return rotate || scalepoints || mirror }
+
     var get_mouse_position = function(e) {
 	var CTM = svg.getScreenCTM()
 	return {
@@ -263,32 +265,6 @@
 	return 'M '+x1+','+y1+' L '+x2+','+y2
     }
 
-    window.calc_mirror_point = function(x1,y1,x2,y2,x,y) {
-	var nx = y2 - y1
-	var ny = x2 - x1
-	var len = Math.sqrt(nx*nx + ny*ny)
-	console.log([nx,ny,len])
-	nx /= len
-	ny /= len
-	var dot2 = 2 * (nx*(x-x1) + ny*(y-y1))
-	console.log([nx,ny,dot2])
-	x -= dot2 * nx
-	y -= dot2 * ny
-	return [x, y]
-    }
-
-    window.calc_mirror_point2 = function(x1,y1,x2,y2,x,y) {
-	let b = x2 - x1;
-	let c = y2 - y1;
-	let denom = b * (-b) - c * c;
-	let ax = -b * (b * x + c * y) - c * (c * x1 - b * y1);
-	let ay = b * (c * x1 - b * y1) - c * (b * x + c * y);
-	return [
-            ax / denom,
-            ay / denom
-	];
-    }
-
     var mirror_points = function() {
 	mirror.baseline.attributes.d.value = mirror_baseline_path()
 	var x1 = mirror.root.x
@@ -301,7 +277,7 @@
 	    // https://ru.stackoverflow.com/questions/602336/Как-сделать-зеркальное-отражение-фигуры/603289#603289
 	    var b = x2 - x1
 	    var c = y2 - y1
-	    if(c*x + x2*y1 > b*y + y2*x1) {
+	    if(mirror.full_mode || c*x + x2*y1 > b*y + y2*x1) {
 		var denom = b * b + c * c
 		x = Math.round(2 * (b * (b * x + c * y) + c * (c * x1 - b * y1)) / denom - x)
 		y = Math.round(2 * (c * (b * x + c * y) + b * (b * y1 - c * x1)) / denom - y)
@@ -435,7 +411,7 @@
 		bbox.remove()
 		bbox = false
 	    }
-	    if(rotate || scalepoints || mirror) {
+	    if(special_mode()) {
 		if(rotate) {
 		    if(rotate.corner) rotate.corner.remove()
 		    rotate = false
@@ -501,7 +477,7 @@
 	}
 	else if(e.key == 'Enter') {
 	    if(selno === false) ;
-	    else if(rotate || scalepoints || mirror) {
+	    else if(special_mode()) {
 		if(!rotate) ;
 		else if(rotate.corner) {
 		    if(bbox) {
@@ -648,14 +624,14 @@
 	    }
 	}
 	else if(e.key == 'r') { // rotate
-	    if(root && root.getBBox) {
+	    if(root && root.getBBox && !special_mode()) {
 		var p = root.getBBox()
 		rotate = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
 		point_drag.create(rotate.root.x, rotate.root.y, point_drag.rotate_root_point)
 	    }
 	}
 	else if(e.key == 'm') { // move
-	    if(root && root.getBBox) {
+	    if(root && root.getBBox && !special_mode()) {
 		var p = root.getBBox()
 		var x = p.x + p.width / 2, y = p.y + p.height / 2
 		save_pathes(root)
@@ -693,14 +669,18 @@
 	     * уменьшение-увеличение. Вверх-вниз резкое уменьшение-увеличение.
 	     * Выход из режима масштабирования как обычно кнопкой Esc или Enter.
 	     */
-	    if(root && root.getBBox) {
+	    if(root && root.getBBox && !special_mode()) {
 		var p = root.getBBox()
 		scalepoints = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2}, box: p }
 		point_drag.create(scalepoints.root.x, scalepoints.root.y, point_drag.scalepoints_root_point)
 	    }
 	}
 	else if(e.key == 'q') { // зеркальное отражение части path
-	    if(root && root.getBBox && root.nodeName == 'path') {
+	    if(mirror) {
+		mirror.full_mode = !mirror.full_mode
+		if(mirror.baseline) mirror_points()
+	    }
+	    else if(root && root.getBBox && root.nodeName == 'path' && !special_mode()) {
 		var p = root.getBBox()
 		mirror = { root: {x: p.x + p.width / 2, y: p.y + p.height / 2} }
 		mirror.root_bbox = point_drag.create2(mirror.root.x, mirror.root.y,
