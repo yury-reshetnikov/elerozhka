@@ -1,3 +1,5 @@
+window.onkeyup = svgeditor
+
 function fly() {
 	var a = new Animate3
 	var wings_one = function(t0) {
@@ -18,7 +20,20 @@ function fly() {
 	a.start()
 }
 
-window.onkeyup = svgeditor
+function test_wing() {
+	// var wing = document.getElementById('bird_near_wing_up')
+	// console.dir(wing)
+	// console.dir(wing.attributes.d)
+	var a = new Animate3
+	var t1 = 0, t2 = 3000, t1a = t1 + (t2 - t1) * 2 / 3
+	a.path_translate_2('bird_near_wing_up', [1], 0, 0, 200, 1500, t1, t2)
+	a.path_translate_2('bird_near_wing_up', [22,23], 0, 0, 0, 500, t1, t2)
+	a.path_translate_2('bird_near_wing_up', [21], 0, 0, -300, 900, t1, t2)
+	a.path_translate_2('bird_near_wing_up', [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], 0, 0, -500, 1000, t1, t2)
+	a.path_translate_2('bird_near_wing_up', [25], 0, 0, 300, 100, t1, t1a)
+	a.path_translate_2('bird_near_wing_up', [25], 300, 100, 1000, -220, t1a, t2)
+	a.start()
+}
 
 /*
  * Local Variables:
