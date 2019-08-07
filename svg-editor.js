@@ -400,32 +400,9 @@
 	}
     }
 
-    plugin = window.svgeditor = function(e) {
-	if(e.key == 'e') {
-	    if(!edgroup) { svg = document.children[0]; create(svg); }
-	    else edgroup.style.display = ''
-	}
-	else if(!edgroup || edgroup.style.display == 'none') ;
-	else if(e.key == 'Escape') {
-	    if(bbox) {
-		bbox.remove()
-		bbox = false
-	    }
-	    if(special_mode()) {
-		if(rotate) {
-		    if(rotate.corner) rotate.corner.remove()
-		    rotate = false
-		}
-		if(scalepoints) {
-		    if(scalepoints.corner) scalepoints.corner.remove()
-		    scalepoints = false
-		}
-		if(mirror) mirror_close()
-	    }
-	    else if(selection.style.display == '') selection.style.display = 'none'
-	    else edgroup.style.display = 'none'
-	}
-	else if(e.key == 'ArrowDown') {
+    plugin = window.svgeditor = function(w) {
+	w.onkeydown = function(e) {
+	if(e.key == 'ArrowDown') {
 	    if(selno === false) {
 		if(text.children.length) {
 		    selno = 0
@@ -450,6 +427,32 @@
 		--selno
 		show_selection()
 	    }
+	}
+	}
+	w.onkeyup = function(e) {
+	if(e.key == 'e') {
+	    if(!edgroup) { svg = document.children[0]; create(svg); }
+	    else edgroup.style.display = ''
+	}
+	else if(!edgroup || edgroup.style.display == 'none') ;
+	else if(e.key == 'Escape') {
+	    if(bbox) {
+		bbox.remove()
+		bbox = false
+	    }
+	    if(special_mode()) {
+		if(rotate) {
+		    if(rotate.corner) rotate.corner.remove()
+		    rotate = false
+		}
+		if(scalepoints) {
+		    if(scalepoints.corner) scalepoints.corner.remove()
+		    scalepoints = false
+		}
+		if(mirror) mirror_close()
+	    }
+	    else if(selection.style.display == '') selection.style.display = 'none'
+	    else edgroup.style.display = 'none'
 	}
 	else if(e.key == 'Home') {
 	    if(selno === false) {
@@ -691,6 +694,7 @@
 	// else return;
 	// e.preventDefault()
 	// console.log(e)
+    }
     }
 
 })();

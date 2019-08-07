@@ -1,4 +1,4 @@
-window.onkeyup = svgeditor
+svgeditor(window)
 
 function fly() {
 	var a = new Animate3
@@ -34,13 +34,14 @@ function test_wing() {
 	// a.path_translate_2('bird_near_wing_up', [25], 300, 100, 1000, -220, t1a, t2)
 	a.path_2('bird_near_wing_up', 'bird_near_wing_up_t001', t1, t2)
 	var t3 = t2 + 3000;
-	a.path_translate_2('bird_near_wing_up', [1], 200, 1500, 200, 1800, t2, t3)
-	a.path_translate_2('bird_near_wing_up', [2], -500, 1000, -500, 3500, t2, t3)
-	a.path_translate_2('bird_near_wing_up', [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], -500, 1000, -500, 3000, t2, t3)
-	a.path_translate_2('bird_near_wing_up', [21], -300, 900, -300, 1800, t2, t3)
-	a.path_translate_2('bird_near_wing_up', [22,23], 0, 500, 0, 1200, t2, t3)
-	a.path_translate_2('bird_near_wing_up', [24], 0, 0, -400, 600, t2, t3)
-	a.path_translate_2('bird_near_wing_up', [25], 1000, -220, 750, 475, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [1], 200, 1500, 200, 1800, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [2], -500, 1000, -500, 3500, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], -500, 1000, -500, 3000, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [21], -300, 900, -300, 1800, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [22,23], 0, 500, 0, 1200, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [24], 0, 0, -400, 600, t2, t3)
+	// a.path_translate_2('bird_near_wing_up', [25], 1000, -220, 750, 475, t2, t3)
+	a.path('bird_near_wing_up', 'bird_near_wing_up_t001', 'bird_near_wing_up_t002', t2, t3)
 	a.start()
 }
 

@@ -525,7 +525,7 @@ function go() {
    })
 }
 
-window.onkeyup = svgeditor
+svgeditor(window)
 
 /*
  * Local Variables:
