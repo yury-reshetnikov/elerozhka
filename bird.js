@@ -58,6 +58,9 @@ function test_wing() {
 	var t6 = t5 + 1000
 	a.path('bird_near_wing_up', 'bird_near_wing_up_t004', 'bird_near_wing_up_t005', t5, t6)
 	a.path('bird_near_wing_upext', 'bird_near_wing_upext_t004', 'bird_near_wing_upext_t005', t5, t6)
+	var t7 = t6 + 10000
+	a.display('bird_near_wing_up', false, t6)
+	a.path('bird_near_wing_upext', 'bird_near_wing_upext_t006', 'bird_near_wing_down', t6, t7)
 	a.start()
 }
 
