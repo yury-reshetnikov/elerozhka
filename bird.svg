@@ -8,7 +8,7 @@
   <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
   <script href="svg-animate.js"></script>
-  <script href="bird.js.txt"></script>
+  <script href="bird.js"></script>
   <style>
     path.line {
 	fill:none;
