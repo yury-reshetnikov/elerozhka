@@ -26,11 +26,11 @@ function test_wing() {
 	var t1 = 0, t2 = 2000, t1a = t1 + (t2 - t1) * 2 / 3
 	a.path_2('bird_near_wing_up', 'bird_near_wing_up_t001', t1, t2)
 	a.path_2('bird_near_wing_upext', 'bird_near_wing_upext_t001', t1, t2)
-	// a.start(); return
 	var t3 = t2 // + 3000;
 	var t4 = t3 + 4000
 	a.path('bird_near_wing_up', 'bird_near_wing_up_t001', 'bird_near_wing_up_t003', t3, t4)
 	a.path('bird_near_wing_upext', 'bird_near_wing_upext_t001', 'bird_near_wing_upext_t003', t3, t4)
+	a.start(); return
 	var t5 = t4 + 3000
 	a.path('bird_near_wing_up', 'bird_near_wing_up_t003', 'bird_near_wing_up_t004', t4, t5)
 	a.path('bird_near_wing_upext', 'bird_near_wing_upext_t003', 'bird_near_wing_upext_t004', t4, t5)
