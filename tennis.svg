@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="400mm" height="230mm" viewBox="0 0 40000 23000"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+<script href="tennis.js"></script>
+<rect id="box" x="1000" y="1000" width="30000" height="20000"
+      fill="green" stroke="black" stroke-width="100"
+      onclick="rocket.close(event)" onmousemove="rocket.move(event)"/>
+<circle id="ball" cx="5000" cy="5000" r="300"
+        fill="yellow" stroke="black" stroke-width="10"/>
+<line id="rocket" x1="10000" y1="18000" x2="13000" y2="18000"
+      stroke="violet" stroke-width="500" stroke-linecap="round"
+      onclick="rocket.click(event)"/>
+<script>
+  start()
+</script>
+</svg>
