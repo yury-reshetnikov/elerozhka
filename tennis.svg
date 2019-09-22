@@ -20,7 +20,7 @@
       onclick="rocket.close(event)" onmousemove="rocket.move(event)"/>
 <g id="box_pattern">
     <rect x="1500" y="1500" width="29000" height="14000"
-          fill="none" stroke="white" stroke-width="50"/>
+          fill="none" stroke="white" stroke-width="150" stroke-opacity="0.3"/>
     <line x1="16500" y1="1100" x2="16500" y2="15900"
           stroke="white" stroke-width="50"/>
     <line x1="1500" y1="3000" x2="30500" y2="3000"
