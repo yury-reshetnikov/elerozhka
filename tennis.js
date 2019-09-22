@@ -36,6 +36,7 @@ let rocket = {
 function start() {
    let box = document.getElementById('box')
    let ball = document.getElementById('ball')
+   let ball_base = document.getElementById('ball_base')
    rocket.element = document.getElementById('rocket')
    let speed = {
       x: 9, y: 3
@@ -44,16 +45,16 @@ function start() {
    function draw() {
       let time = (new Date).getTime()
       let tp = time - prev
-      let x = ball.cx.baseVal.value + speed.x * tp
-      let y = ball.cy.baseVal.value + speed.y * tp
+      let x = ball.transform.baseVal[0].matrix.e + speed.x * tp
+      let y = ball.transform.baseVal[0].matrix.f + speed.y * tp
       let limit = {
          x: {
-            left: box.x.baseVal.value + ball.r.baseVal.value,
-            right: box.x.baseVal.value + box.width.baseVal.value - ball.r.baseVal.value,
+            left: 0,
+            right: box.width.baseVal.value - ball_base.r.baseVal.value * 2 - box.attributes['stroke-width'].value,
          },
          y: {
-            top: box.y.baseVal.value + ball.r.baseVal.value,
-            bottom: box.y.baseVal.value + box.height.baseVal.value - ball.r.baseVal.value,
+            top: 0,
+            bottom: box.height.baseVal.value - ball_base.r.baseVal.value * 2 - box.attributes['stroke-width'].value,
          }
       }
       if(x < limit.x.left) {
@@ -74,8 +75,8 @@ function start() {
         y = 2 * limit.y.bottom - y
         speed.y = -speed.y
       }
-      ball.cx.baseVal.value = x
-      ball.cy.baseVal.value = y
+      ball.transform.baseVal[0].matrix.e = x
+      ball.transform.baseVal[0].matrix.f = y
       prev = time
       requestAnimationFrame(draw)
    }
