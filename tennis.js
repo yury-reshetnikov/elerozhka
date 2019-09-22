@@ -13,8 +13,7 @@ let rocket = {
         else {
             this.active = true
             this.origin = {}
-            this.origin.x1 = this.element.x1.baseVal.value
-            this.origin.x2 = this.element.x2.baseVal.value
+            this.origin.x = this.element.transform.baseVal[0].matrix.e
             this.mouse = {}
             let p = get_mouse_position(event)
             this.mouse.x = p.x
@@ -27,8 +26,10 @@ let rocket = {
         if(this.active) {
             let p = get_mouse_position(event)
             let dx = p.x - this.mouse.x
-            this.element.x1.baseVal.value = this.origin.x1 + dx
-            this.element.x2.baseVal.value = this.origin.x2 + dx
+            let x = this.origin.x + dx
+            if(x < this.limit.x.left) x = this.limit.x.left
+            if(x > this.limit.x.right) x = this.limit.x.right
+            this.element.transform.baseVal[0].matrix.e = x
         }
     },
 }
@@ -38,16 +39,11 @@ function start() {
    let ball = document.getElementById('ball')
    let ball_base = document.getElementById('ball_base')
    rocket.element = document.getElementById('rocket')
+   let rocket_base = document.getElementById('rocket_base')
    let speed = {
       x: 9, y: 3
    }
-   let prev = (new Date).getTime()
-   function draw() {
-      let time = (new Date).getTime()
-      let tp = time - prev
-      let x = ball.transform.baseVal[0].matrix.e + speed.x * tp
-      let y = ball.transform.baseVal[0].matrix.f + speed.y * tp
-      let limit = {
+   let limit = {
          x: {
             left: 0,
             right: box.width.baseVal.value - ball_base.r.baseVal.value * 2 - box.attributes['stroke-width'].value,
@@ -57,6 +53,23 @@ function start() {
             bottom: box.height.baseVal.value - ball_base.r.baseVal.value * 2 - box.attributes['stroke-width'].value,
          }
       }
+   rocket.limit = {
+         x: {
+            left: 0,
+            right: box.width.baseVal.value - (rocket_base.x2.baseVal.value - rocket_base.x1.baseVal.value) -
+                   box.attributes['stroke-width'].value - rocket_base.attributes['stroke-width'].value,
+         },
+         y: {
+            top: 0,
+            bottom: box.height.baseVal.value - ball_base.r.baseVal.value * 2 - box.attributes['stroke-width'].value,
+         }
+      }
+   let prev = (new Date).getTime()
+   function draw() {
+      let time = (new Date).getTime()
+      let tp = time - prev
+      let x = ball.transform.baseVal[0].matrix.e + speed.x * tp
+      let y = ball.transform.baseVal[0].matrix.f + speed.y * tp
       if(x < limit.x.left) {
          x = 2 * limit.x.left - x
          // x = limit.x.left + (limit.x.left - x)

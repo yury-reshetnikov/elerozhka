@@ -35,9 +35,11 @@
             fill="rgb(255,255,191)" stroke="none"/>
     <!--<path fill="rgb(209,209,0)" stroke="none" d="M 5000,5000 C 5000,5000 5000,5000 5000,5000 5000,5000 5000,5000 5000,5000 Z"/>-->
 </g>
-<line id="rocket" x1="10000" y1="14000" x2="13000" y2="14000"
+<g id="rocket" transform="translate(8700,12700)">
+      <line id="rocket_base" x1="1300" y1="1300" x2="4300" y2="1300"
       stroke="violet" stroke-width="500" stroke-linecap="round"
-      onclick="rocket.click(event)"/>
+      onclick="rocket.click(event)" onmousemove="rocket.move(event)"/>
+</g>
 <script>
    svgeditor(window)
    start()
