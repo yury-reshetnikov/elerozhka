@@ -9,8 +9,14 @@
 <script href="svg-editor.js"></script>
 <script href="svg-animate.js"></script>
 <script href="tennis.js"></script>
+<defs>
+        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="1200" height="1200">
+            <image xlink:href="grass3.jpg" x="0" y="0"
+                width="1200" height="1200" />
+        </pattern>
+    </defs>
 <rect id="box" x="1000" y="1000" width="30000" height="15000"
-      fill="green" stroke="black" stroke-width="100"
+      fill="url(#img_grass)" stroke="black" stroke-width="100"
       onclick="rocket.close(event)" onmousemove="rocket.move(event)"/>
 <g id="box_pattern">
     <rect x="1500" y="1500" width="29000" height="14000"
