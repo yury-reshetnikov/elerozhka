@@ -26,7 +26,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
         by1 = by2
         by2 = t
     }
-    let k1 = (ay2 - ay1) / (ax2 - ax1)
+    let k1 = (ay2 - ay1) / (ax2 - ax1) // !!! +++ деление на 0!!! при x1 == x2
     let k2 = (by2 - by1) / (bx2 - bx1)
     if(k1 == k2) return false
     let b1 = ay1 - k1 * ax1
@@ -35,6 +35,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
     let y = k1 * x + b1
     // Шаг 9 в источнике признан ошибочным
     if(x < ax1 || x > ax2 || x < bx1 || x > bx2 || y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
+    console.log({ax1:ax1,ay1:ay1,ax2:ax2,ay2:ay2,bx1:bx1,by1:by1,bx2:bx2,by2:by2,k1:k1,k2:k2,b1:b1,b2:b2,x:x,y:y})
     return {x:x, y:y}
 }
 
@@ -63,12 +64,12 @@ let rocket = {
             let x = this.origin.x + dx
             if(x < this.limit.x.left) x = this.limit.x.left
             if(x > this.limit.x.right) x = this.limit.x.right
-            this.element.transform.baseVal[0].matrix.e = x
+            this.element.transform.baseVal[0].matrix.e = this.x = x
             let dy = p.y - this.mouse.y
             let y = this.origin.y + dy
             if(y < this.limit.y.top) y = this.limit.y.top
             if(y > this.limit.y.bottom) y = this.limit.y.bottom
-            this.element.transform.baseVal[0].matrix.f = y
+            this.element.transform.baseVal[0].matrix.f = this.y = y
         }
     },
 }
@@ -78,6 +79,8 @@ function start() {
    let ball = document.getElementById('ball')
    let ball_base = document.getElementById('ball_base')
    rocket.element = document.getElementById('rocket')
+   rocket.x = rocket.element.transform.baseVal[0].matrix.e
+   rocket.y = rocket.element.transform.baseVal[0].matrix.f
    let rocket_base = document.getElementById('rocket_base')
    let speed = {
       x: 9, y: 3
@@ -104,32 +107,41 @@ function start() {
                    box.attributes['stroke-width'].value - rocket_base.attributes['stroke-width'].value,
          }
       }
+   rocket.width = rocket_base.x2.baseVal.value - rocket_base.x1.baseVal.value
    let prev = (new Date).getTime()
    function draw() {
       let time = (new Date).getTime()
       let tp = time - prev
-      let x = ball.transform.baseVal[0].matrix.e + speed.x * tp
-      let y = ball.transform.baseVal[0].matrix.f + speed.y * tp
+      let old_x = ball.transform.baseVal[0].matrix.e
+      let x = old_x + speed.x * tp
+      let old_y = ball.transform.baseVal[0].matrix.f
+      let y = old_y + speed.y * tp
+      let intersection_point
       for(;;)
-      if(x < limit.x.left) {
-         x = 2 * limit.x.left - x
-         // x = limit.x.left + (limit.x.left - x)
-         speed.x = -speed.x
-      }
-      else if(x > limit.x.right) {
-         x = 2 * limit.x.right - x
-         // x = limit_x_right - (x - limit_x_right)
-         speed.x = -speed.x
-      }
-      else if(y < limit.y.top) {
-        y = 2 * limit.y.top - y
-        speed.y = -speed.y
-      }
-      else if(y > limit.y.bottom) {
-        y = 2 * limit.y.bottom - y
-        speed.y = -speed.y
-      }
-      else break
+        if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
+            console.log(intersection_point)
+            if(isNaN(intersection_point.x) || isNaN(intersection_point.y)) return
+            break
+        }
+	else if(x < limit.x.left) {
+	    x = 2 * limit.x.left - x
+	    // x = limit.x.left + (limit.x.left - x)
+	    speed.x = -speed.x
+	}
+	else if(x > limit.x.right) {
+	    x = 2 * limit.x.right - x
+	    // x = limit_x_right - (x - limit_x_right)
+	    speed.x = -speed.x
+	}
+	else if(y < limit.y.top) {
+	    y = 2 * limit.y.top - y
+	    speed.y = -speed.y
+	}
+	else if(y > limit.y.bottom) {
+	    y = 2 * limit.y.bottom - y
+	    speed.y = -speed.y
+	}
+	else break
       ball.transform.baseVal[0].matrix.e = x
       ball.transform.baseVal[0].matrix.f = y
       prev = time
