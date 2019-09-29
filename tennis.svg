@@ -10,9 +10,9 @@
 <script href="svg-animate.js"></script>
 <script href="tennis.js"></script>
 <defs>
-        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="2408" height="1600">
+        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="30100" height="20000">
             <image xlink:href="grass4.jpg" x="0" y="0"
-                width="2408" height="1600" />
+                width="30100" height="20000" />
         </pattern>
     </defs>
 <rect id="box" x="1000" y="1000" width="30000" height="15000"

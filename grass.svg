@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="350mm" height="165mm" viewBox="0 0 35000 16500"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+<defs>
+  <!--
+  <pattern id="img_grass" patternUnits="userSpaceOnUse" width="11080" height="8300">
+    <image xlink:href="http://junior3d.ru/texture/%D0%97%D0%B5%D0%BC%D0%BB%D1%8F/%D0%A2%D1%80%D0%B0%D0%B2%D0%B0/%D1%82%D1%80%D0%B0%D0%B2%D0%B0_4.jpg" x="0" y="0"
+           width="11080" height="8300" />
+  </pattern>
+  -->
+  <pattern id="img_grass" patternUnits="userSpaceOnUse" width="40000" height="26660">
+    <image xlink:href="grass.jpg" x="0" y="0"
+           width="40000" height="26660" />
+  </pattern>
+</defs>
+<rect id="box" x="1000" y="1000" width="30000" height="15000"
+      fill="url(#img_grass)" stroke="black" stroke-width="100" />
+</svg>
