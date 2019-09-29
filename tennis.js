@@ -6,6 +6,38 @@ function get_mouse_position(e) {
     }
 }
 
+function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
+        // Взято здесь: https://profmeter.com.ua/communication/learning/course/course19/lesson194/
+        // Чтобы вычислить правильные угловые коэффициенты, должно выполняться условие x1 ≤ x2; x3 ≤ x4;
+        // Если нет - то меняем местами пары координат отрезков.
+    if(ax1 > ax2) {
+        let t = ax1
+        ax1 = ax2
+        ax2 = t
+        t = ay1
+        ay1 = ay2
+        ay2 = t
+    }
+    if(bx1 > bx2) {
+        let t = bx1
+        bx1 = bx2
+        bx2 = t
+        t = by1
+        by1 = by2
+        by2 = t
+    }
+    let k1 = (ay2 - ay1) / (ax2 - ax1)
+    let k2 = (by2 - by1) / (bx2 - bx1)
+    if(k1 == k2) return false
+    let b1 = ay1 - k1 * ax1
+    let b2 = by1 - k2 * bx1
+    let x = (b2 - b1) / (k1 - k2)
+    let y = k1 * x + b1
+    // Шаг 9 в источнике признан ошибочным
+    if(x < ax1 || x > ax2 || x < bx1 || x > bx2 || y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
+    return {x:x, y:y}
+}
+
 let rocket = {
     active: false,
     click: function(event) {
@@ -78,24 +110,26 @@ function start() {
       let tp = time - prev
       let x = ball.transform.baseVal[0].matrix.e + speed.x * tp
       let y = ball.transform.baseVal[0].matrix.f + speed.y * tp
+      for(;;)
       if(x < limit.x.left) {
          x = 2 * limit.x.left - x
          // x = limit.x.left + (limit.x.left - x)
          speed.x = -speed.x
       }
-      if(x > limit.x.right) {
+      else if(x > limit.x.right) {
          x = 2 * limit.x.right - x
          // x = limit_x_right - (x - limit_x_right)
          speed.x = -speed.x
       }
-      if(y < limit.y.top) {
+      else if(y < limit.y.top) {
         y = 2 * limit.y.top - y
         speed.y = -speed.y
       }
-      if(y > limit.y.bottom) {
+      else if(y > limit.y.bottom) {
         y = 2 * limit.y.bottom - y
         speed.y = -speed.y
       }
+      else break
       ball.transform.baseVal[0].matrix.e = x
       ball.transform.baseVal[0].matrix.f = y
       prev = time
