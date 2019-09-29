@@ -14,9 +14,11 @@ let rocket = {
             this.active = true
             this.origin = {}
             this.origin.x = this.element.transform.baseVal[0].matrix.e
+            this.origin.y = this.element.transform.baseVal[0].matrix.f
             this.mouse = {}
             let p = get_mouse_position(event)
             this.mouse.x = p.x
+            this.mouse.y = p.y
         }
     },
     close: function(event) {
@@ -30,6 +32,11 @@ let rocket = {
             if(x < this.limit.x.left) x = this.limit.x.left
             if(x > this.limit.x.right) x = this.limit.x.right
             this.element.transform.baseVal[0].matrix.e = x
+            let dy = p.y - this.mouse.y
+            let y = this.origin.y + dy
+            if(y < this.limit.y.top) y = this.limit.y.top
+            if(y > this.limit.y.bottom) y = this.limit.y.bottom
+            this.element.transform.baseVal[0].matrix.f = y
         }
     },
 }
@@ -61,7 +68,8 @@ function start() {
          },
          y: {
             top: 0,
-            bottom: box.height.baseVal.value - ball_base.r.baseVal.value * 2 - box.attributes['stroke-width'].value,
+            bottom: box.height.baseVal.value - (rocket_base.y2.baseVal.value - rocket_base.y1.baseVal.value) -
+                   box.attributes['stroke-width'].value - rocket_base.attributes['stroke-width'].value,
          }
       }
    let prev = (new Date).getTime()

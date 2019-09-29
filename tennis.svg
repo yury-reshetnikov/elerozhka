@@ -10,9 +10,9 @@
 <script href="svg-animate.js"></script>
 <script href="tennis.js"></script>
 <defs>
-        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="1200" height="1200">
-            <image xlink:href="grass3.jpg" x="0" y="0"
-                width="1200" height="1200" />
+        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="2408" height="1600">
+            <image xlink:href="grass4.jpg" x="0" y="0"
+                width="2408" height="1600" />
         </pattern>
     </defs>
 <rect id="box" x="1000" y="1000" width="30000" height="15000"
@@ -20,34 +20,36 @@
       onclick="rocket.close(event)" onmousemove="rocket.move(event)"/>
 <g id="box_pattern">
     <rect x="1500" y="1500" width="29000" height="14000"
-          fill="none" stroke="white" stroke-width="150" stroke-opacity="0.3"/>
+          fill="none" stroke="white" stroke-width="150" stroke-opacity="0.4"/>
     <line x1="16500" y1="1100" x2="16500" y2="15900"
-          stroke="white" stroke-width="50"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
     <line x1="1500" y1="3000" x2="30500" y2="3000"
-          stroke="white" stroke-width="50"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
     <line x1="1500" y1="14000" x2="30500" y2="14000"
-          stroke="white" stroke-width="50"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
     <line x1="8000" y1="8500" x2="25000" y2="8500"
-          stroke="white" stroke-width="50"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
     <line x1="8000" y1="3000" x2="8000" y2="14000"
-          stroke="white" stroke-width="50"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
     <line x1="25000" y1="3000" x2="25000" y2="14000"
-          stroke="white" stroke-width="50"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
 </g>
 <g id="ball" transform="translate(4000,4000)">
     <circle id="ball_base" cx="1350" cy="1350" r="300"
             fill="yellow" stroke="black" stroke-width="10"/>
     <circle cx="1250" cy="1250" r="100"
             fill="rgb(255,255,191)" stroke="none"/>
-    <!--<path fill="rgb(209,209,0)" stroke="none" d="M 5000,5000 C 5000,5000 5000,5000 5000,5000 5000,5000 5000,5000 5000,5000 Z"/>-->
+    <path fill="rgb(209,209,0)" stroke="none" d="M 1436,1068 C 1918,1312 1434,1893 1110,1514 1359,1612 1680,1401 1436,1068 Z"/>
 </g>
 <g id="rocket" transform="translate(8700,12700)">
       <line id="rocket_base" x1="1300" y1="1300" x2="4300" y2="1300"
       stroke="violet" stroke-width="500" stroke-linecap="round"
       onclick="rocket.click(event)" onmousemove="rocket.move(event)"/>
+      <path fill="rgb(198,35,207)" d="M 1056,1349 C 1066,1452 1164,1543 1283,1547 L 4272,1542 C 4412,1540 4499,1517 4562,1290 3695,1469 1930,1426 1056,1349 Z"/>
+      <ellipse cx="2200" cy="1170" rx="1000" ry="70" fill="rgb(245,208,247)"/>
 </g>
 <script>
    svgeditor(window)
-   start()
+   //start()
 </script>
 </svg>
