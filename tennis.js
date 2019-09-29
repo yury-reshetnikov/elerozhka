@@ -10,6 +10,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
         // Взято здесь: https://profmeter.com.ua/communication/learning/course/course19/lesson194/
         // Чтобы вычислить правильные угловые коэффициенты, должно выполняться условие x1 ≤ x2; x3 ≤ x4;
         // Если нет - то меняем местами пары координат отрезков.
+    // console.log({ax1:ax1,ay1:ay1,ax2:ax2,ay2:ay2,bx1:bx1,by1:by1,bx2:bx2,by2:by2})
     if(ax1 > ax2) {
         let t = ax1
         ax1 = ax2
@@ -39,9 +40,12 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
     return {x:x, y:y}
 }
 
+// console.log(intersection(10, 10, 100, 100, 20, 40, 70, 10))
+
 let rocket = {
     active: false,
     click: function(event) {
+        console.log({rx:this.x,ry:this.y})
         if(this.active) this.active = false
         else {
             this.active = true
@@ -121,8 +125,12 @@ function start() {
         if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
             console.log(intersection_point)
             if(isNaN(intersection_point.x) || isNaN(intersection_point.y)) return
-            break
+            y = y - 2 * (y - intersection_point.y)
+            // old_x = x // +++ ??? +++ нужна защита от повторного захода, но так как-то неправидьно
+            // old_y = y
+            break // +++ времянка
         }
+        // +++ !!! при отражении поменять old_x и old_y на точку отражения (у стенки)
 	else if(x < limit.x.left) {
 	    x = 2 * limit.x.left - x
 	    // x = limit.x.left + (limit.x.left - x)
