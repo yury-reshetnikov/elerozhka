@@ -1,3 +1,5 @@
+let debug_intersection = false
+
 function get_mouse_position(e) {
     let CTM = document.children[0].getScreenCTM()
     return {
@@ -10,7 +12,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
         // Взято здесь: https://profmeter.com.ua/communication/learning/course/course19/lesson194/
         // Чтобы вычислить правильные угловые коэффициенты, должно выполняться условие x1 ≤ x2; x3 ≤ x4;
         // Если нет - то меняем местами пары координат отрезков.
-    // console.log({ax1:ax1,ay1:ay1,ax2:ax2,ay2:ay2,bx1:bx1,by1:by1,bx2:bx2,by2:by2})
+    if(debug_intersection) console.log({ax1:ax1,ay1:ay1,ax2:ax2,ay2:ay2,bx1:bx1,by1:by1,bx2:bx2,by2:by2})
     if(ax1 > ax2) {
         let t = ax1
         ax1 = ax2
@@ -54,17 +56,28 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
     let x = (b2 - b1) / (k1 - k2)
     let y = k1 * x + b1
     // Шаг 9 в источнике признан ошибочным
+    if(x < ax1) return false
+    if(x > ax2) return false
+    if(x < bx1) return false
+    if(x > bx2) return false
+    if(y < Math.min(ay1, ay2)) return false
+    if(y > Math.max(ay1, ay2)) return false
+    if(y < Math.min(by1, by2)) return false
+    if(y > Math.max(by1, by2)) return false
     if(x < ax1 || x > ax2 || x < bx1 || x > bx2 || y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
     console.log({ax1:ax1,ay1:ay1,ax2:ax2,ay2:ay2,bx1:bx1,by1:by1,bx2:bx2,by2:by2,k1:k1,k2:k2,b1:b1,b2:b2,x:x,y:y})
     return {x:x, y:y}
 }
 
 // console.log(intersection(10, 10, 100, 100, 20, 40, 70, 10))
+console.log(intersection(6807.100000000089, 3471, 6811.900000000089, 3519,
+	5604.33784812643, 3518.8481478621416, 8604.33784812643, 3518.8481478621416))
 
 let rocket = {
     active: false,
     click: function(event) {
         console.log({rx:this.x,ry:this.y})
+        debug_intersection = this.active
         if(this.active) this.active = false
         else {
             this.active = true
@@ -106,7 +119,7 @@ function start() {
    rocket.y = rocket.element.transform.baseVal[0].matrix.f
    let rocket_base = document.getElementById('rocket_base')
    let speed = {
-      x: 9, y: 3
+      x: 0.3, y: 3
    }
    let limit = {
          x: {

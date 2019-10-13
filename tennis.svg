@@ -50,6 +50,6 @@
 </g>
 <script>
    svgeditor(window)
-   start()
+   // start()
 </script>
 </svg>
