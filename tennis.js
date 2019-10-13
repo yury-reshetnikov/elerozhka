@@ -27,7 +27,26 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
         by1 = by2
         by2 = t
     }
-    let k1 = (ay2 - ay1) / (ax2 - ax1) // !!! +++ деление на 0!!! при x1 == x2
+    if(ax1 == ax2) {
+        if(bx1 == bx2) return false
+        let x = ax1
+        if (x < bx1 || x > bx2) return false
+        let k2 = (by2 - by1) / (bx2 - bx1)
+        let b2 = by1 - k2 * bx1
+        let y = k2 * x + b2
+        if(y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
+        return {x:x, y:y}
+    }
+    else if(bx1 == bx2) {
+        let x = bx1
+        if(x < ax1 || x > ax2) return false
+        let k1 = (ay2 - ay1) / (ax2 - ax1)
+        let b1 = ay1 - k1 * ax1
+        let y = k1 * x + b1
+        if(y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
+        return {x:x, y:y}
+    }
+    let k1 = (ay2 - ay1) / (ax2 - ax1)
     let k2 = (by2 - by1) / (bx2 - bx1)
     if(k1 == k2) return false
     let b1 = ay1 - k1 * ax1
