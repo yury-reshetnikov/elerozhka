@@ -105,6 +105,7 @@ function start() {
    rocket.x = rocket.element.transform.baseVal[0].matrix.e
    rocket.y = rocket.element.transform.baseVal[0].matrix.f
    let rocket_base = document.getElementById('rocket_base')
+   let rocket_height = rocket_base.attributes['stroke-width'].value
    let speed = {
       x: 9, y: 3
    }
@@ -122,12 +123,12 @@ function start() {
          x: {
             left: 0,
             right: box.width.baseVal.value - (rocket_base.x2.baseVal.value - rocket_base.x1.baseVal.value) -
-                   box.attributes['stroke-width'].value - rocket_base.attributes['stroke-width'].value,
+                   box.attributes['stroke-width'].value - rocket_height,
          },
          y: {
             top: 0,
             bottom: box.height.baseVal.value - (rocket_base.y2.baseVal.value - rocket_base.y1.baseVal.value) -
-                   box.attributes['stroke-width'].value - rocket_base.attributes['stroke-width'].value,
+                   box.attributes['stroke-width'].value - rocket_height,
          }
       }
    rocket.width = rocket_base.x2.baseVal.value - rocket_base.x1.baseVal.value
@@ -139,9 +140,24 @@ function start() {
       let x = old_x + speed.x * tp
       let old_y = ball.transform.baseVal[0].matrix.f
       let y = old_y + speed.y * tp
+      let rocket_delta = rocket_height / 2 + ball_base.r.baseVal.value
+      let rocket_box = {x1:rocket.x - rocket_delta, y1:rocket.y - rocket_delta, x2:rocket.x + rocket.width + rocket_delta, y2:rocket.y + rocket_delta}
       let intersection_point
       for(;;)
-        if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
+        if(x > rocket_box.x1 && x < rocket_box.x2 && y > rocket_box.y1 && y < rocket_box.y2) {
+            if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y1, rocket_box.x2, rocket_box.y1)) {
+                console.log({old_x:old_x,old_y:old_y,x:x,y:y,box:rocket_box,p:intersection_point})
+                y = y - 2 * (y - intersection_point.y)
+                old_x = intersection_point.x
+                old_y = intersection_point.y
+                console.log({old_x:old_x,old_y:old_y,x:x,y:y})
+            }
+            else {
+                console.log({rocket_box:rocket_box,old_x:old_x,old_y:old_y,x:x,y:y})
+                return
+            }
+        }
+        else if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
             console.log(intersection_point)
             if(isNaN(intersection_point.x) || isNaN(intersection_point.y)) return
             y = y - 2 * (y - intersection_point.y)
