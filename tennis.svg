@@ -26,19 +26,19 @@
       onclick="rocket.close(event)" onmousemove="rocket.move(event)"/>
 <g id="box_pattern">
     <rect x="1500" y="1500" width="29000" height="14000"
-          fill="none" stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          fill="none" stroke="white" stroke-width="150" stroke-opacity="0.5"/>
     <line x1="16500" y1="1100" x2="16500" y2="15900"
-          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.5"/>
     <line x1="1500" y1="3000" x2="30500" y2="3000"
-          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.5"/>
     <line x1="1500" y1="14000" x2="30500" y2="14000"
-          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.5"/>
     <line x1="8000" y1="8500" x2="25000" y2="8500"
-          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.5"/>
     <line x1="8000" y1="3000" x2="8000" y2="14000"
-          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.5"/>
     <line x1="25000" y1="3000" x2="25000" y2="14000"
-          stroke="white" stroke-width="150" stroke-opacity="0.4"/>
+          stroke="white" stroke-width="150" stroke-opacity="0.5"/>
 </g>
 <g id="ball" transform="translate(4000,4000)">
     <circle id="ball_base" cx="1350" cy="1350" r="300"
@@ -47,10 +47,10 @@
             fill="rgb(255,255,191)" stroke="none"/>
     <path fill="rgb(209,209,0)" stroke="none" d="M 1436,1068 C 1918,1312 1434,1893 1110,1514 1359,1612 1680,1401 1436,1068 Z"/>
 </g>
-<g id="rocket" transform="translate(8700,12700)">
+<g id="rocket" transform="translate(8700,12700)"
+      onclick="rocket.click(event)" onmousemove="rocket.move(event)">
       <line id="rocket_base" x1="1300" y1="1300" x2="4300" y2="1300"
-      stroke="violet" stroke-width="500" stroke-linecap="round"
-      onclick="rocket.click(event)" onmousemove="rocket.move(event)"/>
+      stroke="violet" stroke-width="500" stroke-linecap="round"/>
       <path fill="rgb(198,35,207)" d="M 1056,1349 C 1066,1452 1164,1543 1283,1547 L 4272,1542 C 4412,1540 4499,1517 4562,1290 3695,1469 1930,1426 1056,1349 Z"/>
       <ellipse cx="2200" cy="1170" rx="1000" ry="70" fill="rgb(245,208,247)"/>
 </g>
