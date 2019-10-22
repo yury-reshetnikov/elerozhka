@@ -33,7 +33,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
         if (x < bx1 || x > bx2) return false
         let k2 = (by2 - by1) / (bx2 - bx1)
         let b2 = by1 - k2 * bx1
-        let y = k2 * x + b2
+        let y = Math.round(k2 * x + b2)
         if(y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
         return {x:x, y:y}
     }
@@ -42,7 +42,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
         if(x < ax1 || x > ax2) return false
         let k1 = (ay2 - ay1) / (ax2 - ax1)
         let b1 = ay1 - k1 * ax1
-        let y = k1 * x + b1
+        let y = Math.round(k1 * x + b1)
         if(y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
         return {x:x, y:y}
     }
@@ -51,8 +51,8 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
     if(k1 == k2) return false
     let b1 = ay1 - k1 * ax1
     let b2 = by1 - k2 * bx1
-    let x = (b2 - b1) / (k1 - k2)
-    let y = k1 * x + b1
+    let x = Math.round((b2 - b1) / (k1 - k2))
+    let y = Math.round(k1 * x + b1)
     // Шаг 9 в источнике признан ошибочным
     if(x < ax1 || x > ax2 || x < bx1 || x > bx2 || y < Math.min(ay1, ay2) || y > Math.max(ay1, ay2) || y < Math.min(by1, by2) || y > Math.max(by1, by2)) return false
     console.log({ax1:ax1,ay1:ay1,ax2:ax2,ay2:ay2,bx1:bx1,by1:by1,bx2:bx2,by2:by2,k1:k1,k2:k2,b1:b1,b2:b2,x:x,y:y})
@@ -64,7 +64,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
 let rocket = {
     active: false,
     click: function(event) {
-        console.log({rx:this.x,ry:this.y})
+        // console.log({rx:this.x,ry:this.y})
         if(this.active) this.active = false
         else {
             this.active = true
@@ -87,12 +87,12 @@ let rocket = {
             let x = this.origin.x + dx
             if(x < this.limit.x.left) x = this.limit.x.left
             if(x > this.limit.x.right) x = this.limit.x.right
-            this.element.transform.baseVal[0].matrix.e = this.x = x
+            this.element.transform.baseVal[0].matrix.e = this.x = Math.round(x)
             let dy = p.y - this.mouse.y
             let y = this.origin.y + dy
             if(y < this.limit.y.top) y = this.limit.y.top
             if(y > this.limit.y.bottom) y = this.limit.y.bottom
-            this.element.transform.baseVal[0].matrix.f = this.y = y
+            this.element.transform.baseVal[0].matrix.f = this.y = Math.round(y)
         }
     },
 }
@@ -140,7 +140,7 @@ function start() {
       let x = old_x + speed.x * tp
       let old_y = ball.transform.baseVal[0].matrix.f
       let y = old_y + speed.y * tp
-      let rocket_delta = rocket_height / 2 + ball_base.r.baseVal.value
+      let rocket_delta = Math.round(rocket_height / 2 + ball_base.r.baseVal.value)
       let rocket_box = {x1:rocket.x - rocket_delta, y1:rocket.y - rocket_delta, x2:rocket.x + rocket.width + rocket_delta, y2:rocket.y + rocket_delta}
       let intersection_point
       for(;;)
@@ -150,10 +150,11 @@ function start() {
                 y = y - 2 * (y - intersection_point.y)
                 old_x = intersection_point.x
                 old_y = intersection_point.y
+                speed.y = -speed.y
                 console.log({old_x:old_x,old_y:old_y,x:x,y:y})
             }
             else {
-                console.log({rocket_box:rocket_box,old_x:old_x,old_y:old_y,x:x,y:y})
+                console.log({rocket:rocket,rocket_box:rocket_box,old_x:old_x,old_y:old_y,x:x,y:y})
                 return
             }
         }
