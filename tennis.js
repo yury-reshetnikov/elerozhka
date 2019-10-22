@@ -63,6 +63,7 @@ function intersection(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
 
 let rocket = {
     active: false,
+    hited: false,
     click: function(event) {
         // console.log({rx:this.x,ry:this.y})
         if(this.active) this.active = false
@@ -145,8 +146,10 @@ function start() {
       let intersection_point
       for(;;)
         if(x > rocket_box.x1 && x < rocket_box.x2 && y > rocket_box.y1 && y < rocket_box.y2) { //новая позиция шарика находится внутри ракетки
+            if(rocket.hited) break
             if(old_x > rocket_box.x1 && old_x < rocket_box.x2 && old_y > rocket_box.y1 && old_y < rocket_box.y2) {
                 speed.y = -speed.y
+                rocket.hited = true
 		break
             }
             else if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y1, rocket_box.x2, rocket_box.y1)) { //пересечение с верхней гранью ракетки
@@ -155,6 +158,7 @@ function start() {
                 old_x = intersection_point.x
                 old_y = intersection_point.y
                 speed.y = -speed.y
+                rocket.hited = true
                 console.log({old_x:old_x,old_y:old_y,x:x,y:y})
             }
             else if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y2, rocket_box.x2, rocket_box.y2)) { //пересечение с нижней гранью ракетки
@@ -163,6 +167,7 @@ function start() {
                 old_x = intersection_point.x
                 old_y = intersection_point.y
                 speed.y = -speed.y
+                rocket.hited = true
                 console.log({old_x:old_x,old_y:old_y,x:x,y:y})
             }
             else {
@@ -170,7 +175,9 @@ function start() {
                 break
             }
         }
-        else if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
+        else {
+            rocket.hited = false
+        if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
             console.log(intersection_point)
             if(isNaN(intersection_point.x) || isNaN(intersection_point.y)) return
             y = y - 2 * (y - intersection_point.y)
@@ -198,6 +205,7 @@ function start() {
 	    speed.y = -speed.y
 	}
 	else break
+	}
       ball.transform.baseVal[0].matrix.e = x
       ball.transform.baseVal[0].matrix.f = y
       prev = time
