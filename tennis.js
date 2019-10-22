@@ -170,9 +170,9 @@ function start() {
             console.log(intersection_point)
             if(isNaN(intersection_point.x) || isNaN(intersection_point.y)) return
             y = y - 2 * (y - intersection_point.y)
-            // old_x = x // +++ ??? +++ нужна защита от повторного захода, но так как-то неправидьно
-            // old_y = y
-            break // +++ времянка
+            old_x = intersection_point.x
+            old_y = intersection_point.y
+            speed.y = -speed.y
         }
         // +++ !!! при отражении поменять old_x и old_y на точку отражения (у стенки)
 	else if(x < limit.x.left) {
