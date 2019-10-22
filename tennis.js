@@ -145,7 +145,11 @@ function start() {
       let intersection_point
       for(;;)
         if(x > rocket_box.x1 && x < rocket_box.x2 && y > rocket_box.y1 && y < rocket_box.y2) { //новая позиция шарика находится внутри ракетки
-            if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y1, rocket_box.x2, rocket_box.y1)) { //пересечение с верхней гранью ракетки
+            if(old_x > rocket_box.x1 && old_x < rocket_box.x2 && old_y > rocket_box.y1 && old_y < rocket_box.y2) {
+                speed.y = -speed.y
+		break
+            }
+            else if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y1, rocket_box.x2, rocket_box.y1)) { //пересечение с верхней гранью ракетки
                 console.log({old_x:old_x,old_y:old_y,x:x,y:y,box:rocket_box,p:intersection_point})
                 y = y - 2 * (y - intersection_point.y)
                 old_x = intersection_point.x
