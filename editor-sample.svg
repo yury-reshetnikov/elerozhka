@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="250mm" height="200mm" viewBox="0 0 25000 20000"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+  <script href="svggen.js"></script>
+  <script href="svg-editor.js"></script>
+  <g id="stars">
+      <g id="star1">
+       <path id="star1off" style="display:none" fill="rgb(255,255,107)" stroke="rgb(52,101,164)" d="M 2573,5592 L 3133,5464 3253,4870 3374,5464 3935,5592 3374,5718 3253,6313 3133,5718 2573,5592 Z"/>
+       <path id="star1on" fill="rgb(255,255,0)" stroke="rgb(52,101,164)" d="M 2403,5592 L 3103,5433 3253,4691 3404,5433 4105,5592 3404,5750 3253,6492 3103,5750 2403,5592 Z"/>
+      </g>
+      <g id="star2">
+       <path id="star2off" fill="rgb(255,255,107)" stroke="rgb(52,101,164)" d="M 3143,3072 L 3703,2944 3823,2350 3944,2944 4505,3072 3944,3198 3823,3793 3703,3198 3143,3072 Z"/>
+       <path id="star2on" style="display:none" fill="rgb(255,255,0)" stroke="rgb(52,101,164)" d="M 2973,3072 L 3673,2913 3823,2171 3974,2913 4675,3072 3974,3230 3823,3972 3673,3230 2973,3072 Z"/>
+      </g>
+      <g id="star3">
+       <path id="star3off" fill="rgb(255,255,107)" stroke="rgb(52,101,164)" d="M 5573,1551 L 6133,1423 6253,829 6374,1423 6935,1551 6374,1677 6253,2272 6133,1677 5573,1551 Z"/>
+       <path id="star3on" style="display:none" fill="rgb(255,255,0)" stroke="rgb(52,101,164)" d="M 5403,1551 L 6103,1392 6253,650 6404,1392 7105,1551 6404,1709 6253,2451 6103,1709 5403,1551 Z"/>
+      </g>
+  </g>
+</svg>
