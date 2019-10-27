@@ -301,10 +301,14 @@
 	show_path_points()
     }
 
-    var text_node = function(item, text_top) {
+    var text_node = function(item, text_top, item_index) {
 	var t = svggen(text, ['tspan', {
 	    'font-size': text_height, x: text_left, y: text_top
 	}, item.nodeName])[0]
+	t.onclick = function() {
+	    selno = item_index
+	    show_selection()
+	}
 	t.editor_data = item
 	if(item.id) svggen(t, ['tspan', '#'+item.id])
 	if(item.nodeName == 'path') {
@@ -312,13 +316,13 @@
 	}
     }
 
-    var text_children = function(root, text_top) {
+    var text_children = function(root, text_top, item_index) {
 	if(root.nodeName == 'path') {
 	    var before = '', after = []
 	    root.attributes.d.value.split(/\s+/).forEach(function(item) {
 		text_top += text_height
 		var n = {nodeName: item, before: before, after: ''}
-		text_node(n, text_top)
+		text_node(n, text_top, item_index++)
 		// +++ if(text_top >= svg.viewBox.baseVal.height) break // +++ доработать after
 		after.forEach(function(n) { n.after += ' ' + item })
 		before += item + ' '
@@ -327,13 +331,13 @@
 	}
 	else if(root.nodeName == 'circle') {
 	    text_top += text_height
-	    text_node({nodeName: root.attributes.cx.value+','+root.attributes.cy.value}, text_top)
+	    text_node({nodeName: root.attributes.cx.value+','+root.attributes.cy.value}, text_top, item_index++)
 	    text_top += text_height
-	    text_node({nodeName: root.attributes.r.value, radius: true}, text_top)
+	    text_node({nodeName: root.attributes.r.value, radius: true}, text_top, item_index++)
 	}
 	else for(let item of root.children) {
 	    text_top += text_height
-	    text_node(item, text_top)
+	    text_node(item, text_top, item_index++)
 	    if(text_top >= svg.viewBox.baseVal.height) break
 	}
     }
@@ -376,13 +380,13 @@
 	    else list.push(item)
 	}
 	list.forEach(function(item) { showgroup.appendChild(item) })
-	text_children(showgroup, 0)
+	text_children(showgroup, 0, 0)
     }
 
     var show_path_points = function() {
 	while(text.firstChild) text.removeChild(text.firstChild)
-	text_node(root, text_height)
-	text_children(root, text_height)
+	text_node(root, text_height, 0)
+	text_children(root, text_height, 1)
     }
 
     var show_selection = function() {
@@ -609,10 +613,10 @@
 		while(text.firstChild) text.removeChild(text.firstChild)
 		if(bbox) bbox.remove()
 		if(root.nodeName == 'svg' || (root.id == 'svg-show-group'))
-		    text_children(root, 0)
+		    text_children(root, 0, 0)
 		else {
-		    text_node(root, text_height)
-		    text_children(root, text_height)
+		    text_node(root, text_height, 0)
+		    text_children(root, text_height, 1)
 		}
 		show_selection()
 	    }
@@ -625,10 +629,10 @@
 		while(text.firstChild) text.removeChild(text.firstChild)
 		if(bbox) bbox.remove()
 		if(root.nodeName == 'svg' || (root.id == 'svg-show-group'))
-		    text_children(root, 0)
+		    text_children(root, 0, 0)
 		else {
-		    text_node(root, text_height)
-		    text_children(root, text_height)
+		    text_node(root, text_height, 0)
+		    text_children(root, text_height, 1)
 		}
 		show_selection()
 	    }
