@@ -21,4 +21,7 @@
        <path id="star3on" style="display:none" fill="rgb(255,255,0)" stroke="rgb(52,101,164)" d="M 5403,1551 L 6103,1392 6253,650 6404,1392 7105,1551 6404,1709 6253,2451 6103,1709 5403,1551 Z"/>
       </g>
   </g>
+<script>
+svgeditor(window)
+</script>
 </svg>
