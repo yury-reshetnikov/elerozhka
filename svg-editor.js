@@ -1,7 +1,7 @@
 (function() {
     var text_left, text_height = 400, text_line = 100
     var svg, showgroup, edgroup, text, selection, selno = false, bbox, root, rootsel = [],
-	rotate, scalepoints, mirror
+	rotate, scalepoints, mirror, arrow_point
     var scale = 1
     var point_drag = {}
 
@@ -83,6 +83,20 @@
 		d.drag(x,y)
 		d.changed = true
 	    }
+	}
+    }
+
+    point_drag.bykeyboard = function(dx,dy) {
+	if(bbox && bbox._reshu_draggable) {
+	    var d = bbox._reshu_draggable
+	    var m = d.translate.matrix
+	    var x = m.e + dx
+	    var y = m.f + dy
+            d.translate.setTranslate(x, y)
+	    x += d.x
+	    y += d.y
+	    d.drag(x,y)
+	    d.changed = true
 	}
     }
 
@@ -402,7 +416,18 @@
 
     plugin = window.svgeditor = function(w) {
 	w.onkeydown = function(e) {
-	if(e.key == 'ArrowDown') {
+        if(arrow_point) {
+	    var dist = function() { return e.ctrlKey ? 100 : e.shiftKey ? 1 : 10 }
+            if(e.key == 'ArrowDown')
+		point_drag.bykeyboard(0, dist())
+            else if(e.key == 'ArrowUp')
+		point_drag.bykeyboard(0, -dist())
+            else if(e.key == 'ArrowRight')
+		point_drag.bykeyboard(dist(), 0)
+            else if(e.key == 'ArrowLeft')
+		point_drag.bykeyboard(-dist(), 0)
+        }
+	else if(e.key == 'ArrowDown') {
 	    if(selno === false) {
 		if(text.children.length) {
 		    selno = 0
@@ -436,6 +461,16 @@
 	}
 	else if(!edgroup || edgroup.style.display == 'none') ;
 	else if(e.key == 'Escape') {
+	    if(arrow_point) {
+		arrow_point = false
+                if(selection)
+                    selection.style.fill = 'rgb(100,255,100)'
+		if(bbox && bbox._reshu_draggable) {
+		    var d = bbox._reshu_draggable
+		    d.drag(d.x,d.y)
+		    d.changed = false
+		}
+	    }
 	    if(bbox) {
 		bbox.remove()
 		bbox = false
@@ -559,7 +594,13 @@
 		    root = text.children[selno].editor_data.parentNode
 		    selno = rootsel.pop()
 		}
-		else if(!text.children[selno].editor_data.parentNode) return
+		else if(!text.children[selno].editor_data.parentNode) {
+                    if(bbox && selection) {
+                        arrow_point = !arrow_point
+                        selection.style.fill = arrow_point ? 'rgb(100,100,255)' : 'rgb(100,255,100)'
+                    }
+                    return
+		}
 		else {
 		    root = text.children[selno].editor_data
 		    rootsel.push(selno)
