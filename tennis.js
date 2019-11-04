@@ -85,6 +85,8 @@ let rocket = {
         if(this.active) {
             this.ox = this.x
             this.oy = this.y
+            rocket.old_time = rocket.time
+            rocket.time = (new Date).getTime()
             let p = get_mouse_position(event)
             let dx = p.x - this.mouse.x
             let x = this.origin.x + dx
@@ -105,8 +107,9 @@ function start() {
    let ball = document.getElementById('ball')
    let ball_base = document.getElementById('ball_base')
    rocket.element = document.getElementById('rocket')
-   rocket.x = rocket.element.transform.baseVal[0].matrix.e
-   rocket.y = rocket.element.transform.baseVal[0].matrix.f
+   rocket.ox = rocket.x = rocket.element.transform.baseVal[0].matrix.e
+   rocket.oy = rocket.y = rocket.element.transform.baseVal[0].matrix.f
+   rocket.old_time = rocket.time = (new Date).getTime()
    let rocket_base = document.getElementById('rocket_base')
    let rocket_height = rocket_base.attributes['stroke-width'].value
    let speed = {
@@ -156,7 +159,7 @@ function start() {
         if(x > rocket_box.x1 && x < rocket_box.x2 && y > rocket_box.y1 && y < rocket_box.y2) { //новая позиция шарика находится внутри ракетки
             if(rocket.hited) break
             if(old_x > rocket_box.x1 && old_x < rocket_box.x2 && old_y > rocket_box.y1 && old_y < rocket_box.y2) { //старая позиция шарика тоже внутри ракетки
-                if((speed.y < 0) != ((rocket.y - rocket.oy) < 0))
+                if((speed.y < 0) != ((rocket.y - rocket.oy) < 0) || prev > rocket.time)
                     speed.y = -speed.y
                 else speed.y += Math.sign(speed.y)
                 rocket.hited = true
