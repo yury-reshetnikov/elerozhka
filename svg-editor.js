@@ -418,106 +418,7 @@
 	}
     }
 
-    plugin = window.svgeditor = function(w) {
-	w.onkeydown = function(e) {
-        if(arrow_point) {
-	    var dist = function() { return e.ctrlKey ? 100 : e.shiftKey ? 1 : 10 }
-            if(e.key == 'ArrowDown')
-		point_drag.bykeyboard(0, dist())
-            else if(e.key == 'ArrowUp')
-		point_drag.bykeyboard(0, -dist())
-            else if(e.key == 'ArrowRight')
-		point_drag.bykeyboard(dist(), 0)
-            else if(e.key == 'ArrowLeft')
-		point_drag.bykeyboard(-dist(), 0)
-        }
-	else if(e.key == 'ArrowDown') {
-	    if(selno === false) {
-		if(text.children.length) {
-		    selno = 0
-		    show_selection()
-		}
-	    }
-	    else if(selection.style.display == 'none') show_selection()
-	    else if(selno < text.children.length - 1) {
-		++selno
-		show_selection()
-	    }
-	}
-	else if(e.key == 'ArrowUp') {
-	    if(selno === false) {
-		if(text.children.length) {
-		    selno = text.children.length - 1
-		    show_selection()
-		}
-	    }
-	    else if(selection.style.display == 'none') show_selection()
-	    else if(selno > 0) {
-		--selno
-		show_selection()
-	    }
-	}
-	}
-	w.onkeyup = function(e) {
-	if(e.key == 'e') {
-	    if(!edgroup) { svg = document.children[0]; create(svg); }
-	    else edgroup.style.display = ''
-	}
-	else if(!edgroup || edgroup.style.display == 'none') ;
-	else if(e.key == 'Escape') {
-	    if(arrow_point) {
-		arrow_point = false
-                if(selection)
-                    selection.style.fill = 'rgb(100,255,100)'
-		if(bbox && bbox._reshu_draggable) {
-		    var d = bbox._reshu_draggable
-		    d.drag(d.x,d.y)
-		    d.changed = false
-		}
-	    }
-	    if(bbox) {
-		bbox.remove()
-		bbox = false
-	    }
-	    if(special_mode()) {
-		if(rotate) {
-		    if(rotate.corner) rotate.corner.remove()
-		    rotate = false
-		}
-		if(scalepoints) {
-		    if(scalepoints.corner) scalepoints.corner.remove()
-		    scalepoints = false
-		}
-		if(mirror) mirror_close()
-	    }
-	    else if(selection.style.display == '') selection.style.display = 'none'
-	    else edgroup.style.display = 'none'
-	}
-	else if(e.key == 'Home') {
-	    if(selno === false) {
-		if(text.children.length) {
-		    selno = 0
-		    show_selection()
-		}
-	    }
-	    else {
-		selno = 0
-		show_selection()
-	    }
-	}
-	else if(e.key == 'End') {
-	    if(selno === false) {
-		if(text.children.length) {
-		    selno = text.children.length - 1
-		    show_selection()
-		}
-	    }
-	    else {
-		selno = text.children.length - 1
-		show_selection()
-	    }
-	}
-	else if(e.key == 'Enter') {
+    var enter = function() {
 	    if(selno === false) ;
 	    else if(special_mode()) {
 		if(!rotate) ;
@@ -620,6 +521,109 @@
 		}
 		show_selection()
 	    }
+    }
+
+    plugin = window.svgeditor = function(w) {
+	w.onkeydown = function(e) {
+        if(arrow_point) {
+	    var dist = function() { return e.ctrlKey ? 100 : e.shiftKey ? 1 : 10 }
+            if(e.key == 'ArrowDown')
+		point_drag.bykeyboard(0, dist())
+            else if(e.key == 'ArrowUp')
+		point_drag.bykeyboard(0, -dist())
+            else if(e.key == 'ArrowRight')
+		point_drag.bykeyboard(dist(), 0)
+            else if(e.key == 'ArrowLeft')
+		point_drag.bykeyboard(-dist(), 0)
+        }
+	else if(e.key == 'ArrowDown') {
+	    if(selno === false) {
+		if(text.children.length) {
+		    selno = 0
+		    show_selection()
+		}
+	    }
+	    else if(selection.style.display == 'none') show_selection()
+	    else if(selno < text.children.length - 1) {
+		++selno
+		show_selection()
+	    }
+	}
+	else if(e.key == 'ArrowUp') {
+	    if(selno === false) {
+		if(text.children.length) {
+		    selno = text.children.length - 1
+		    show_selection()
+		}
+	    }
+	    else if(selection.style.display == 'none') show_selection()
+	    else if(selno > 0) {
+		--selno
+		show_selection()
+	    }
+	}
+	}
+	w.onkeyup = function(e) {
+	if(e.key == 'e') {
+	    if(!edgroup) { svg = document.children[0]; create(svg); }
+	    else edgroup.style.display = ''
+	}
+	else if(!edgroup || edgroup.style.display == 'none') ;
+	else if(e.key == 'Escape') {
+	    if(arrow_point) {
+		arrow_point = false
+                if(selection)
+                    selection.style.fill = 'rgb(100,255,100)'
+		if(bbox && bbox._reshu_draggable) {
+		    var d = bbox._reshu_draggable
+		    d.drag(d.x,d.y)
+		    d.changed = false
+		}
+	    }
+	    if(bbox) {
+		bbox.remove()
+		bbox = false
+	    }
+	    if(special_mode()) {
+		if(rotate) {
+		    if(rotate.corner) rotate.corner.remove()
+		    rotate = false
+		}
+		if(scalepoints) {
+		    if(scalepoints.corner) scalepoints.corner.remove()
+		    scalepoints = false
+		}
+		if(mirror) mirror_close()
+	    }
+	    else if(selection.style.display == '') selection.style.display = 'none'
+	    else edgroup.style.display = 'none'
+	}
+	else if(e.key == 'Home') {
+	    if(selno === false) {
+		if(text.children.length) {
+		    selno = 0
+		    show_selection()
+		}
+	    }
+	    else {
+		selno = 0
+		show_selection()
+	    }
+	}
+	else if(e.key == 'End') {
+	    if(selno === false) {
+		if(text.children.length) {
+		    selno = text.children.length - 1
+		    show_selection()
+		}
+	    }
+	    else {
+		selno = text.children.length - 1
+		show_selection()
+	    }
+	}
+	else if(e.key == 'Enter') {
+            enter()
 	}
 	else if(e.key == 'Backspace') {
 	    if(selno === false) ;
