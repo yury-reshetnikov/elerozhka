@@ -83,6 +83,8 @@ let rocket = {
     },
     move: function(event) {
         if(this.active) {
+            this.ox = this.x
+            this.oy = this.y
             let p = get_mouse_position(event)
             let dx = p.x - this.mouse.x
             let x = this.origin.x + dx
@@ -144,31 +146,29 @@ function start() {
       let rocket_delta = Math.round(rocket_height / 2 + ball_base.r.baseVal.value)
       let rocket_box = {x1:rocket.x - rocket_delta, y1:rocket.y - rocket_delta, x2:rocket.x + rocket.width + rocket_delta, y2:rocket.y + rocket_delta}
       let intersection_point
+      function repel() {
+                y = y - 2 * (y - intersection_point.y)
+                old_x = intersection_point.x
+                old_y = intersection_point.y
+                speed.y = -speed.y
+      }
       for(;;)
         if(x > rocket_box.x1 && x < rocket_box.x2 && y > rocket_box.y1 && y < rocket_box.y2) { //новая позиция шарика находится внутри ракетки
             if(rocket.hited) break
-            if(old_x > rocket_box.x1 && old_x < rocket_box.x2 && old_y > rocket_box.y1 && old_y < rocket_box.y2) {
-                speed.y = -speed.y
+            if(old_x > rocket_box.x1 && old_x < rocket_box.x2 && old_y > rocket_box.y1 && old_y < rocket_box.y2) { //старая позиция шарика тоже внутри ракетки
+                if((speed.y < 0) != ((rocket.y - rocket.oy) < 0))
+                    speed.y = -speed.y
+                else speed.y += Math.sign(speed.y)
                 rocket.hited = true
 		break
             }
             else if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y1, rocket_box.x2, rocket_box.y1)) { //пересечение с верхней гранью ракетки
-                console.log({old_x:old_x,old_y:old_y,x:x,y:y,box:rocket_box,p:intersection_point})
-                y = y - 2 * (y - intersection_point.y)
-                old_x = intersection_point.x
-                old_y = intersection_point.y
-                speed.y = -speed.y
                 rocket.hited = true
-                console.log({old_x:old_x,old_y:old_y,x:x,y:y})
+                repel()
             }
             else if(intersection_point = intersection(old_x, old_y, x, y, rocket_box.x1, rocket_box.y2, rocket_box.x2, rocket_box.y2)) { //пересечение с нижней гранью ракетки
-                console.log({old_x:old_x,old_y:old_y,x:x,y:y,box:rocket_box,p:intersection_point})
-                y = y - 2 * (y - intersection_point.y)
-                old_x = intersection_point.x
-                old_y = intersection_point.y
-                speed.y = -speed.y
                 rocket.hited = true
-                console.log({old_x:old_x,old_y:old_y,x:x,y:y})
+                repel()
             }
             else {
                 console.log({rocket:rocket,rocket_box:rocket_box,old_x:old_x,old_y:old_y,x:x,y:y})
@@ -178,12 +178,8 @@ function start() {
         else {
             rocket.hited = false
         if(intersection_point = intersection(old_x, old_y, x, y, rocket.x, rocket.y, rocket.x + rocket.width, rocket.y)) {
-            console.log(intersection_point)
             if(isNaN(intersection_point.x) || isNaN(intersection_point.y)) return
-            y = y - 2 * (y - intersection_point.y)
-            old_x = intersection_point.x
-            old_y = intersection_point.y
-            speed.y = -speed.y
+            repel()
         }
         // +++ !!! при отражении поменять old_x и old_y на точку отражения (у стенки)
 	else if(x < limit.x.left) {
