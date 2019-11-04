@@ -263,6 +263,12 @@
 	if(mirror.baseline) mirror_points()
     }
 
+    var close_arrow_point = function() {
+        arrow_point = false
+        if(selection)
+            selection.style.fill = 'rgb(100,255,100)'
+    }
+
     var mirror_close = function() {
 	if(mirror.root_bbox) mirror.root_bbox.remove()
 	if(mirror.line_bbox) mirror.line_bbox.remove()
@@ -306,8 +312,15 @@
 	    'font-size': text_height, x: text_left, y: text_top
 	}, item.nodeName])[0]
 	t.onclick = function() {
+            if (arrow_point) close_arrow_point()
 	    selno = item_index
 	    show_selection()
+	}
+	t.ondblclick = function(e) {
+            if (arrow_point) close_arrow_point()
+	    selno = item_index
+	    show_selection()
+            enter()
 	}
 	t.editor_data = item
 	if(item.id) svggen(t, ['tspan', '#'+item.id])
@@ -571,9 +584,7 @@
 	else if(!edgroup || edgroup.style.display == 'none') ;
 	else if(e.key == 'Escape') {
 	    if(arrow_point) {
-		arrow_point = false
-                if(selection)
-                    selection.style.fill = 'rgb(100,255,100)'
+                close_arrow_point()
 		if(bbox && bbox._reshu_draggable) {
 		    var d = bbox._reshu_draggable
 		    d.drag(d.x,d.y)
