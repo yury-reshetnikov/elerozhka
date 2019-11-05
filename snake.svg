@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="350mm" height="165mm" viewBox="0 0 35000 16500"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+  <script href="svggen.js"></script>
+  <script href="svg-editor.js"></script>
+  <script href="svg-animate.js"></script>
+  <script href="snake.js"></script>
+        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="30100" height="20000">
+            <image xlink:href="grass4.jpg" x="0" y="0"
+                   width="30100" height="20000" />
+        </pattern>
+  <rect id="box" x="1000" y="1000" width="30000" height="15000"
+        fill="url(#img_grass)" stroke="black" stroke-width="100"/>
+  <path id="snake" d="M 10000,1000 C 10000,1000 10000,1000 10000,1000 Z"/>
+</svg>
