@@ -16,4 +16,7 @@
   <rect id="box" x="1000" y="1000" width="30000" height="15000"
         fill="url(#img_grass)" stroke="black" stroke-width="100"/>
   <path id="snake" d="M 10000,1000 C 10000,1000 10000,1000 10000,1000 Z"/>
+<script>
+   svgeditor(window)
+</script>
 </svg>
