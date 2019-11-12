@@ -1,6 +1,7 @@
 function start() {
    let box = document.getElementById('box')
    let snake = document.getElementById('snake')
+   let snake_head_rotate = document.getElementById('snake_head_rotate')
    let speed = {
       x: 1, y: 0
    }
@@ -18,6 +19,9 @@ function start() {
          }
       }
    // console.log(limit)
+   // console.log(snake_head_rotate.transform)
+   // console.log(snake_head_rotate.transform.baseVal[0].angle)
+   // return
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
 	   if(e.key == 'ArrowLeft') {

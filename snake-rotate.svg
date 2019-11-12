@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="350mm" height="165mm" viewBox="0 0 35000 16500"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+  <script href="svggen.js"></script>
+  <script href="svg-editor.js"></script>
+  <script href="svg-animate.js"></script>
+<defs>
+    <pattern id="img_sky" patternUnits="userSpaceOnUse" width="14736" height="8280">
+        <image xlink:href="sky.jpg" x="0" y="0"
+                width="14736" height="8280"/>
+    </pattern>
+</defs>
+  <rect id="box" x="1000" y="1000" width="30000" height="15000"
+        fill="url(#img_sky)" stroke="black" stroke-width="100"/>
+  <path id="food" fill="rgb(255,0,127)" stroke="black"
+        d="M 15000,15000 C 15500,14500 15500,15500 15000,15000 15500,15500 14500,15500 15000,15000 14500,15500 14500,14500 15000,15000 14500,14500 15500,14500 15000,15000"/>
+  <g id="snake01" transform="translate(0,-12000)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(0)" transform-origin="9700 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake02" transform="translate(100,-10000)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(-100,-500)">
+      <g id="snake_head_rotate" transform="rotate(-30)" transform-origin="9700 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake03" transform="translate(200,-8000)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(-200,-550)">
+      <g id="snake_head_rotate" transform="rotate(-60)" transform-origin="9700 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake11" transform="translate(5000,-12000)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(0)" transform-origin="8500 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake12" transform="translate(5150,-10000)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-30)" transform-origin="8500 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake13" transform="translate(5600,-8000)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-60)" transform-origin="8500 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake" transform="translate(0,0)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-90)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake" transform="translate(0,0)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-90)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake" transform="translate(0,0)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-90)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake" transform="translate(0,0)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-90)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake" transform="translate(0,0)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-90)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+  <g id="snake" transform="translate(0,0)">
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(-90)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
+  </g>
+<script>
+   svgeditor(window)
+</script>
+</svg>
