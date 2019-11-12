@@ -9,13 +9,28 @@
   <script href="svg-editor.js"></script>
   <script href="svg-animate.js"></script>
   <script href="snake.js"></script>
-        <pattern id="img_grass" patternUnits="userSpaceOnUse" width="30100" height="20000">
-            <image xlink:href="grass4.jpg" x="0" y="0"
-                   width="30100" height="20000" />
-        </pattern>
+<defs>
+    <pattern id="img_sky" patternUnits="userSpaceOnUse" width="14736" height="8280">
+        <image xlink:href="sky.jpg" x="0" y="0"
+                width="14736" height="8280"/>
+    </pattern>
+</defs>
   <rect id="box" x="1000" y="1000" width="30000" height="15000"
-        fill="url(#img_grass)" stroke="black" stroke-width="100"/>
-  <path id="snake" d="M 10000,1000 C 10000,1000 10000,1000 10000,1000 Z"/>
+        fill="url(#img_sky)" stroke="black" stroke-width="100"/>
+  <g id="snake">
+      <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+      <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
+      <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+      <use xlink:href="#snake_body" transform="translate(-800 0)"/>
+      <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+      <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+      <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+      <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+      <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+            d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+  </g>
+  <path id="food" fill="rgb(255,0,127)" stroke="black"
+        d="M 15000,15000 C 15500,14500 15500,15500 15000,15000 15500,15500 14500,15500 15000,15000 14500,15500 14500,14500 15000,15000 14500,14500 15500,14500 15000,15000"/>
 <script>
    svgeditor(window)
 </script>
