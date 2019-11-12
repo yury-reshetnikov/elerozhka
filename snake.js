@@ -18,6 +18,30 @@ function start() {
          }
       }
    // console.log(limit)
+   let other_keyup = window.onkeyup
+   window.onkeyup = function(e) {
+	   if(e.key == 'ArrowLeft') {
+            if (speed.x) {
+                speed.y = -speed.x
+                speed.x = 0
+            }
+            else {
+                speed.x = speed.y
+                speed.y = 0
+            }
+	   }
+	   else if(e.key == 'ArrowRight') {
+            if(speed.x) {
+                speed.y = speed.x
+                speed.x = 0
+            }
+            else {
+                speed.x = -speed.y
+                speed.y = 0
+            }
+	   }
+	   else if(other_keyup) other_keyup(e)
+   }
    let prev = (new Date).getTime()
    function draw() {
       let time = (new Date).getTime()
