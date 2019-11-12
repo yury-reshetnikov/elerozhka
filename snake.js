@@ -2,7 +2,7 @@ function start() {
    let box = document.getElementById('box')
    let snake = document.getElementById('snake')
    let speed = {
-      x: 3, y: 0
+      x: 1, y: 0
    }
    let snake_head_length = 1500
    let snake_delta_x = 7600

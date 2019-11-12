@@ -20,16 +20,20 @@
   <path id="food" fill="rgb(255,0,127)" stroke="black"
         d="M 15000,15000 C 15500,14500 15500,15500 15000,15000 15500,15500 14500,15500 15000,15000 14500,15500 14500,14500 15000,15000 14500,14500 15500,14500 15000,15000"/>
   <g id="snake" transform="translate(0,0)">
-      <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
       <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
       <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
       <use xlink:href="#snake_body" transform="translate(-800 0)"/>
-      <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
-      <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
-      <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
-      <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
-      <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
-            d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      <g id="snake_head_shift" transform="translate(0,0)">
+      <g id="snake_head_rotate" transform="rotate(0)" transform-origin="9300 15000">
+        <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
+        <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
+        <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
+        <circle id="snake_eyeball_r" cx="9300" cy="15180" r="50" fill="black" stroke="black"/>
+        <path id="snake_tongue" fill="rgb(255,0,0)" stroke="black"
+              d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
+      </g>
+      </g>
   </g>
 <script>
    svgeditor(window)
