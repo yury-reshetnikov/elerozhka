@@ -110,14 +110,15 @@ function start() {
       }
       if(rotate_tail !== false) {
 	  if(speed.y) {
-	      let leg = snake_tail_length - (rotate_tail - y)
-	      if(leg >= 0) {
-		  // let sin = leg / snake_tail_length
-		  // let angle = Math.asin(sin)
-		  // let cos = Math.cos(angle)
-		  let cos = leg / snake_tail_length
-		  let angle = Math.acos(cos)
-		  let sin = Math.sin(angle)
+	      // let leg = snake_tail_length - (rotate_tail - y)
+	      let leg = rotate_tail - y
+	      if(leg <= snake_tail_length) {
+		  let sin = leg / snake_tail_length
+		  let angle = Math.asin(sin)
+		  let cos = Math.cos(angle)
+		  // let cos = leg / snake_tail_length
+		  // let angle = Math.acos(cos)
+		  // let sin = Math.sin(angle)
 		  if(rotate_left) sin = -sin
 		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, sin, cos)
 	      }
