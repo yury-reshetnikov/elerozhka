@@ -16,9 +16,9 @@
     </pattern>
 </defs>
   <rect id="box" x="1000" y="1000" width="30000" height="15000"
-        fill="url(#img_sky)" stroke="black" stroke-width="100"/>
-  <path id="food" fill="rgb(255,0,127)" stroke="black"
-        d="M 15000,15000 C 15500,14500 15500,15500 15000,15000 15500,15500 14500,15500 15000,15000 14500,15500 14500,14500 15000,15000 14500,14500 15500,14500 15000,15000"/>
+        fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
+  <!--<path id="food" fill="rgb(255,0,127)" stroke="black"
+        d="M 15000,15000 C 15500,14500 15500,15500 15000,15000 15500,15500 14500,15500 15000,15000 14500,15500 14500,14500 15000,15000 14500,14500 15500,14500 15000,15000"/>-->
   <g id="snake" transform="translate(0,0)">
       <path id="snake_tail" fill="rgb(0,153,0)" stroke="black" d="M 6200,15000 C 7700,13700 7700,16300 6200,15000 Z"/>
       <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
@@ -34,6 +34,32 @@
               d="M 9900,14950 L 10200,14900 10000,15000 10200,15100 9900,15050 Z"/>
       </g>
       </g>
+  </g>
+  <g id="mouse">
+      <path id="mouse_tail" fill="rgb(200,200,200)" stroke="black"
+            d="M 14360,15000 C 14130,14590 14012,15386 13700,15000 13974,15537 14142,14633 14360,15100"/>
+      <path id="mouse_body" fill="rgb(200,200,200)" stroke="black"
+            d="M 15000,15000 C 14960,14770 14355,14590 14350,15000 14355,15410 14960,15230 15000,15000 Z"/>
+      <circle id="mouse_ear1" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="14850" r="150"/>
+      <circle id="mouse_ear2" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="15150" r="150"/>
+      <circle id="mouse_ear1_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="14865" r="145"/>
+      <circle id="mouse_ear2_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="15135" r="145"/>
+      <path id="mouse_nose" fill="black" d="M 14940,15000 C 14935,14968 14850,14903 14850,15000 14850,15097 14935,15032 14940,15000 Z"/>
+      <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14780,14700"/>
+      <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14880,14700"/>
+      <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14980,14700"/>
+      <path id="mouse_whisker_21" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14780,15320"/>
+      <path id="mouse_whisker_22" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14880,15320"/>
+      <path id="mouse_whisker_23" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14980,15320"/>
+  </g>
+  <g id="mongoose">
+      <path id="mongoose_ear2" fill="rgb(149,75,0)" stroke="black" d="M 9343,6397 C 9331,6315 9387,6273 9410,6259 9459,6318 9438,6352 9446,6381"/>
+      <path id="mongoose_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
+            d="M 9034,6647 C 9286,6228 9789,6337 9854,6700 10092,7278 11608,6038 12168,7316 12289,7750 11903,8212 10943,8235 11532,8114 11804,7917 12001,7622 11661,7599 11827,8053 11374,7962 11388,7667 11555,8030 11645,7584 11297,7471 11071,7743 10269,7463 9914,7629 10133,7977 9718,7909 9679,7660 9884,7872 9975,7426 9914,7139 9801,7176 9627,7048 8906,7131 8854,6825 9034,6647 Z"/>
+      <path id="mongoose_nose" d="M 9085,6934 C 9144,6923 9260,6762 9080,6767 8900,6773 9025,6927 9085,6934 Z"/>
+      <circle id="mongoose_eye" cx="9390" cy="6680" r="100"/>
+      <circle id="mongoose_eyeball" fill="white" cx="9360" cy="6650" r="40"/>
+      <path id="mongoose_ear1" fill="rgb(149,75,0)" stroke="black" d="M 9560,6504 C 9588,6401 9673,6381 9708,6376 9735,6470 9693,6499 9689,6536"/>
   </g>
 <script>
    svgeditor(window)
