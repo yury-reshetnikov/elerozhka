@@ -1,12 +1,28 @@
+function rotate_sin_cos(m, sin, cos) {
+    m.a = cos
+    m.b = sin
+    m.c = -sin
+    m.d = cos
+    m.e = 0
+    m.f = 0
+}
+
+function move1(m, d) {
+    m.e = d
+    m.f = d
+}
+
 function start() {
    let box = document.getElementById('box')
    let snake = document.getElementById('snake')
    let snake_head_rotate = document.getElementById('snake_head_rotate')
+   let snake_head_shift = document.getElementById('snake_head_shift')
+   let snake_body_1 = document.getElementById('snake_body_1')
    let speed = {
       x: 1, y: 0
    }
    let snake_head_length = 1300
-   let snake_rotate_length = 1700
+   let snake_body_length = 800
    let snake_delta_x = 7800
    let snake_delta_y = 12000
    let limit = {
@@ -23,8 +39,7 @@ function start() {
    let rotate_left
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
-   // snake_head_rotate.transform.baseVal[0].angle = -90
-   // console.log(snake_head_rotate.transform.baseVal[0].angle)
+   // console.log(snake_head_rotate.transform.baseVal[0])
    // return
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
@@ -66,27 +81,25 @@ function start() {
       let y = old_y + speed.y * tp
       if(rotate_start !== false) {
 	  if(speed.x) {
-	      // snake_head_rotate.transform.baseVal[0].angle = Math.round(Math.acos(
-	      // 	  (snake_rotate_length - (x - rotate_start)) / snake_rotate_length) * 180 / Math.PI)
-	      // console.log('angle:', snake_head_rotate.transform.baseVal[0].angle)
 	      let leg = snake_head_length - (x - rotate_start)
-	      if(leg < 0) return
-	      let cos = leg / snake_head_length
-	      let acos_rad = Math.acos(cos)
-	      let sin = Math.sin(acos_rad)
-	      if(rotate_left) sin = -sin
-	      let acos_gr = acos_rad * 180 / Math.PI
-	      let angle = Math.round(acos_gr)
-	      console.log('leg:', leg, ' cos:', cos, ' rad:', acos_rad, ' gr:', acos_gr, ' a:', angle)
-	      // snake_head_rotate.transform.angle = -angle
-	      let m = snake_head_rotate.transform.baseVal[0].matrix
-	      m.a = cos
-	      m.b = sin
-	      m.c = -sin
-	      m.d = cos
-	      m.e = 0
-	      m.f = 0
-	      console.log('angle:', snake_head_rotate.transform.baseVal[0].angle)
+	      if(leg >= 0) {
+		  let cos = leg / snake_head_length
+		  let acos_rad = Math.acos(cos)
+		  let sin = Math.sin(acos_rad)
+		  if(rotate_left) sin = -sin
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, sin, cos)
+	      }
+	      else {
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, rotate_left ? -1 : 1, 0)
+		  leg += snake_body_length
+		  if(leg >= 0) {
+		      move1(snake_head_shift.transform.baseVal[0].matrix, leg - snake_body_length)
+		      move1(snake_body_1.transform.baseVal[0].matrix, leg - snake_body_length)
+		  }
+		  else {
+		      return
+		  }
+	      }
 	  }
       }
       if (x >= limit.x.right || x <= limit.x.left || y >= limit.y.bottom || y <= limit.y.top) {
