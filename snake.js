@@ -18,10 +18,12 @@ function start() {
    let snake_head_rotate = document.getElementById('snake_head_rotate')
    let snake_head_shift = document.getElementById('snake_head_shift')
    let snake_body_1 = document.getElementById('snake_body_1')
+   let snake_tail = document.getElementById('snake_tail')
    let speed = {
       x: 1, y: 0
    }
    let snake_head_length = 1300
+   let snake_tail_length = 1100
    let snake_body_length = 800
    let snake_delta_x = 7800
    let snake_delta_y = 12000
@@ -37,6 +39,7 @@ function start() {
       }
    let rotate_start = false
    let rotate_left
+   let rotate_tail = false
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
@@ -97,8 +100,30 @@ function start() {
 		      move1(snake_body_1.transform.baseVal[0].matrix, leg - snake_body_length)
 		  }
 		  else {
-		      return
+                      speed.y = -speed.x
+                      speed.x = 0
+		      rotate_start = false
+		      rotate_tail = y
 		  }
+	      }
+	  }
+      }
+      if(rotate_tail !== false) {
+	  if(speed.y) {
+	      let leg = snake_tail_length - (rotate_tail - y)
+	      if(leg >= 0) {
+		  // let sin = leg / snake_tail_length
+		  // let angle = Math.asin(sin)
+		  // let cos = Math.cos(angle)
+		  let cos = leg / snake_tail_length
+		  let angle = Math.acos(cos)
+		  let sin = Math.sin(angle)
+		  if(rotate_left) sin = -sin
+		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, sin, cos)
+	      }
+	      else {
+		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+		  rotate_tail = false
 	      }
 	  }
       }
