@@ -14,9 +14,11 @@ function move1(m1, m2, a, d) {
     m2.f = d
 }
 
-function move2(m, a, d) {
-    m.e = a + d
-    m.f = a - d
+function move2(m1, m2, a, d, sign) {
+    m1.e = a + d * sign
+    m1.f = a * sign - d * sign
+    m2.e = a + d * sign
+    m2.f = a * sign - d * sign
 }
 
 function start() {
@@ -145,20 +147,21 @@ function start() {
 	      }
 	  }
 	  else {
-             let leg = snake_head_length - (rotate_start - y)
+             let sign = speed.y < 0 ? 1 : -1
+             let leg = snake_head_length - (rotate_start - y) * sign
              if(leg >= 0) {
 		  let cos = leg / snake_head_length
 		  let acos_rad = Math.acos(cos)
 		  let sin = Math.sin(acos_rad)
 		  if(rotate_left) sin = -sin
-		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos, sin)
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos * sign, sin * sign)
 	      }
 	      else {
-		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1)
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign)
 		  leg += snake_body_length
 		  if(leg >= 0) {
-		      move2(snake_head_shift.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length)
-		      move2(snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length)
+		      move2(snake_head_shift.transform.baseVal[0].matrix,
+                            snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length, sign)
 		  }
 		  else {
                       speed.x = speed.y
@@ -189,16 +192,17 @@ function start() {
 	      }
 	  }
 	  else {
-              let leg = rotate_tail - x
+              let sign = speed.x < 0 ? 1 : -1
+              let leg = (rotate_tail - x) * sign
 	      if(leg <= snake_tail_length) {
 		  let sin = leg / snake_tail_length
 		  let angle = Math.asin(sin)
 		  let cos = Math.cos(angle)
 		  if(rotate_left) sin = -sin
-		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -cos, sin)
+		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -cos * sign, sin * sign)
 	      }
 	      else {
-		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1)
+		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1 * sign)
 		  rotate_tail = false
 	      }
 	  }
