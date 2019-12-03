@@ -49,6 +49,21 @@ function start() {
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
+/**
+    { // полный поворот вверх
+	rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
+	move1(snake_head_shift.transform.baseVal[0].matrix, -snake_body_length)
+	move1(snake_body_1.transform.baseVal[0].matrix, -snake_body_length)
+	rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+    }
+    {   let leg = 1200
+	let cos = leg / snake_head_length
+	let acos_rad = Math.acos(cos)
+	let sin = Math.sin(acos_rad)
+	sin = -sin
+	rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos, sin)
+    }
+**/
    // return
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
@@ -120,13 +135,13 @@ function start() {
 	      }
 	  }
 	  else {
-             let leg = snake_head_length - (y - rotate_start)
+             let leg = snake_head_length - (rotate_start - y)
              if(leg >= 0) {
 		  let cos = leg / snake_head_length
 		  let acos_rad = Math.acos(cos)
 		  let sin = Math.sin(acos_rad)
 		  if(rotate_left) sin = -sin
-		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, sin, cos)
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos, sin)
 	      }
 	  }
       }
