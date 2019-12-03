@@ -37,6 +37,12 @@ function start() {
             bottom: box.height.baseVal.value - snake_head_length - box.attributes['stroke-width'].value - snake_delta_y,
          }
       }
+   function change_limit(x,y) {
+     limit.x.left += x
+     limit.x.right += x
+     limit.y.top += y
+     limit.y.bottom += y
+   }
    let rotate_start = false
    let rotate_left
    let rotate_tail = false
@@ -108,6 +114,8 @@ function start() {
                       speed.x = 0
 		      rotate_start = false
 		      rotate_tail = y
+		      change_limit(delta_rotate_x,0)
+		      delta_rotate_x = 0
 		  }
 	      }
 	  }
