@@ -82,6 +82,8 @@ function start() {
       let x = old_x + speed.x * tp
       let old_y = snake.transform.baseVal[0].matrix.f
       let y = old_y + speed.y * tp
+      let delta_rotate_x = x -
+      let delta_rotate_y = y -
       if(rotate_start !== false) {
 	  if(speed.x) {
 	      let leg = snake_head_length - (x - rotate_start)
@@ -139,3 +141,4 @@ function start() {
    }
    requestAnimationFrame(draw)
 }
+
