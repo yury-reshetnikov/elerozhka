@@ -82,10 +82,12 @@ function start() {
       let x = old_x + speed.x * tp
       let old_y = snake.transform.baseVal[0].matrix.f
       let y = old_y + speed.y * tp
-      let delta_rotate_x = x -
-      let delta_rotate_y = y -
+      let delta_rotate_x = 0
+      let delta_rotate_y = 0
       if(rotate_start !== false) {
 	  if(speed.x) {
+              delta_rotate_x = x - rotate_start
+              delta_rotate_y = -delta_rotate_x
 	      let leg = snake_head_length - (x - rotate_start)
 	      if(leg >= 0) {
 		  let cos = leg / snake_head_length
@@ -130,7 +132,8 @@ function start() {
 	      }
 	  }
       }
-      if (x >= limit.x.right || x <= limit.x.left || y >= limit.y.bottom || y <= limit.y.top) {
+      if (x - delta_rotate_x >= limit.x.right || x - delta_rotate_x <= limit.x.left ||
+          y - delta_rotate_y >= limit.y.bottom || y - delta_rotate_y <= limit.y.top) {
         console.log({x:x, y:y, limit:limit})
         return
       }
