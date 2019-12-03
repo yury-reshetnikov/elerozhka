@@ -12,6 +12,11 @@ function move1(m, d) {
     m.f = d
 }
 
+function move2(m, a, d) {
+    m.e = a + d
+    m.f = a - d
+}
+
 function start() {
    let box = document.getElementById('box')
    let snake = document.getElementById('snake')
@@ -142,6 +147,22 @@ function start() {
 		  let sin = Math.sin(acos_rad)
 		  if(rotate_left) sin = -sin
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos, sin)
+	      }
+	      else {
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1)
+		  leg += snake_body_length
+		  if(leg >= 0) {
+		      move2(snake_head_shift.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length)
+		      move2(snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length)
+		  }
+		  else {
+                      speed.x = speed.y
+                      speed.y = 0
+		      rotate_start = false
+		      rotate_tail = x
+		      // change_limit(delta_rotate_x,0)
+		      // delta_rotate_x = 0
+		  }
 	      }
 	  }
       }
