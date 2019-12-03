@@ -172,33 +172,19 @@ function start() {
 	  }
       }
       if(rotate_tail !== false) {
-	  if(speed.y < 0) {
+	  if(speed.y) {
+              let sign = speed.y < 0 ? 1 : -1
 	      // let leg = snake_tail_length - (rotate_tail - y)
-	      let leg = rotate_tail - y
+	      let leg = (rotate_tail - y) * sign
 	      if(leg <= snake_tail_length) {
 		  let sin = leg / snake_tail_length
 		  let angle = Math.asin(sin)
 		  let cos = Math.cos(angle)
 		  if(rotate_left) sin = -sin
-		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, sin, cos)
+		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, sin * sign, cos * sign)
 	      }
 	      else {
-		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
-		  rotate_tail = false
-	      }
-	  }
-	  else if(speed.y > 0) {
-	      // let leg = snake_tail_length - (rotate_tail - y)
-	      let leg = y - rotate_tail
-	      if(leg <= snake_tail_length) {
-		  let sin = leg / snake_tail_length
-		  let angle = Math.asin(sin)
-		  let cos = Math.cos(angle)
-		  if(rotate_left) sin = -sin
-		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -sin, -cos)
-	      }
-	      else {
-		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
+		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1 * sign, 0)
 		  rotate_tail = false
 	      }
 	  }
