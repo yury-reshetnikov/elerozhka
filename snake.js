@@ -119,6 +119,16 @@ function start() {
 		  }
 	      }
 	  }
+	  else {
+             let leg = snake_head_length - (y - rotate_start)
+             if(leg >= 0) {
+		  let cos = leg / snake_head_length
+		  let acos_rad = Math.acos(cos)
+		  let sin = Math.sin(acos_rad)
+		  if(rotate_left) sin = -sin
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, sin, cos)
+	      }
+	  }
       }
       if(rotate_tail !== false) {
 	  if(speed.y) {
