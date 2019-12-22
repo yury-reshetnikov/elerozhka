@@ -8,17 +8,13 @@ function rotate_sin_cos(m, sin, cos) {
 }
 
 function move1(m1, m2, a, d, sign_y) {
-    m1.e = d - 2 * a
-    m1.f = d * sign_y
-    m2.e = d - 2 * a
-    m2.f = d * sign_y
+    m2.e = m1.e = d - 2 * a
+    m2.f = m1.f = d * sign_y
 }
 
-function move2(m1, m2, a, d, sign) {
-    m1.e = a + d * sign
-    m1.f = a * sign - d * sign
-    m2.e = a + d * sign
-    m2.f = a * sign - d * sign
+function move2(m1, m2, a, d, sign, sign_x) {
+    m2.e = m1.e = a + d * sign * sign_x
+    m2.f = m1.f = a * sign - d * sign
 }
 
 function start() {
@@ -81,11 +77,13 @@ function start() {
    window.onkeyup = function(e) {
 	   if(e.key == 'ArrowLeft') {
 	       rotate_left = true
+               rotate_right = false
 	       rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
 		   snake.transform.baseVal[0].matrix.f
 	       console.log('left rotate_start:', rotate_start)
 	   }
 	   else if(e.key == 'ArrowRight') {
+	       rotate_left = false
                rotate_right = true
                rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
 		   snake.transform.baseVal[0].matrix.f
@@ -136,7 +134,7 @@ function start() {
 		  }
 	      }
 	  }
-	  else {
+	  else { // if(speed.y)
              let sign = speed.y < 0 ? 1 : -1
              let leg = snake_head_length - (rotate_start - y) * sign
              if(leg >= 0) {
@@ -147,14 +145,14 @@ function start() {
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos * sign, sin * sign)
 	      }
 	      else {
-		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign)
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotate_left ? 1 : -1))
 		  leg += snake_body_length
 		  if(leg >= 0) {
 		      move2(snake_head_shift.transform.baseVal[0].matrix,
-                            snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length, sign)
+                            snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length, sign, rotate_left ? 1 : -1)
 		  }
 		  else {
-                      speed.x = speed.y
+                      speed.x = rotate_left ? speed.y : -speed.y
                       speed.y = 0
 		      rotate_start = false
 		      rotate_tail = x
@@ -190,9 +188,13 @@ function start() {
               let leg = (rotate_tail - x) * sign
 	      if(leg <= snake_tail_length) {
 		  let sin = leg / snake_tail_length
+	          if(rotate_right) {
+                      sign = -sign
+                      sin = -sin
+	          }
 		  let angle = Math.asin(sin)
 		  let cos = Math.cos(angle)
-		  if(rotate_left) sin = -sin
+		  sin = -sin
 		  rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -cos * sign, sin * sign)
 	      }
 	      else {
