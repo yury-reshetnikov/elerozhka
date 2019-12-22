@@ -25,21 +25,22 @@ function start() {
    let snake_body_1 = document.getElementById('snake_body_1')
    let snake_tail = document.getElementById('snake_tail')
    let speed = {
-      x: 1, y: 0
+      x: 5, y: 0
    }
    let snake_head_length = 1300
    let snake_tail_length = 1100
    let snake_body_length = 800
    let snake_delta_x = 7800
-   let snake_delta_y = 12000
+   let snake_delta_y = 13100
+   let stroke_width = parseInt(box.attributes['stroke-width'].value)
    let limit = {
          x: {
-            left: 0 - snake_delta_x,
-            right: box.width.baseVal.value - snake_head_length - box.attributes['stroke-width'].value - snake_delta_x,
+            left: box.x.baseVal.value + stroke_width + (snake_head_length - snake_body_length) - snake_delta_x,
+            right: box.width.baseVal.value - snake_head_length - stroke_width - snake_delta_x,
          },
          y: {
-            top: 0 - snake_delta_y,
-            bottom: box.height.baseVal.value - snake_head_length - box.attributes['stroke-width'].value - snake_delta_y,
+            top: box.y.baseVal.value + stroke_width + (snake_head_length - snake_body_length) - snake_delta_y,
+            bottom: box.height.baseVal.value - snake_head_length - stroke_width - snake_delta_y,
          }
       }
    function change_limit(x,y) {
@@ -104,8 +105,7 @@ function start() {
       if(rotate_start !== false) {
 	  if(speed.x) {
 	      let sign = speed.x > 0 ? 1 : -1
-              delta_rotate_x = (x - rotate_start) * sign
-              delta_rotate_y = delta_rotate_x
+              delta_rotate_x = delta_rotate_y = (x - rotate_start) * sign
 	      let leg = snake_head_length - (x - rotate_start) * sign
 	      if(leg >= 0) {
 		  let cos = leg / snake_head_length
@@ -129,13 +129,14 @@ function start() {
                       speed.x = 0
 		      rotate_start = false
 		      rotate_tail = y
-		      change_limit(delta_rotate_x,0)
+		      change_limit(snake_head_length + snake_body_length, 0)
 		      delta_rotate_x = 0
 		  }
 	      }
 	  }
 	  else { // if(speed.y)
              let sign = speed.y < 0 ? 1 : -1
+             delta_rotate_x = delta_rotate_y = (y - rotate_start) * sign
              let leg = snake_head_length - (rotate_start - y) * sign
              if(leg >= 0) {
 		  let cos = leg / snake_head_length
@@ -156,8 +157,8 @@ function start() {
                       speed.y = 0
 		      rotate_start = false
 		      rotate_tail = x
-		      // change_limit(delta_rotate_x,0)
-		      // delta_rotate_x = 0
+		      change_limit(-(snake_head_length + snake_body_length), 0)
+		      delta_rotate_y = 0
 		  }
 	      }
 	  }
@@ -204,15 +205,13 @@ function start() {
 	      }
 	  }
       }
-      /*
       if (x - delta_rotate_x >= limit.x.right || x - delta_rotate_x <= limit.x.left ||
           y - delta_rotate_y >= limit.y.bottom || y - delta_rotate_y <= limit.y.top) {
-          console.log({x:x, y:y, limit:limit,
+          console.log('limit reached', {x:x, y:y, limit:limit,
 		       delta_rotate_x:delta_rotate_x, delta_rotate_y:delta_rotate_y,
 		       speed:speed})
         return
       }
-      */
       snake.transform.baseVal[0].matrix.e = x
       snake.transform.baseVal[0].matrix.f = y
       prev = time
