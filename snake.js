@@ -43,12 +43,6 @@ function start() {
             bottom: box.y.baseVal.value + box.height.baseVal.value - stroke_width - snake_delta_y,
          }
       }
-   function change_limit(x,y) {
-     limit.x.left += x
-     limit.x.right += x
-     limit.y.top += y
-     limit.y.bottom += y
-   }
    let rotate_start = false
    let rotate_left, rotate_right
    let rotate_tail = false
@@ -129,7 +123,6 @@ function start() {
                       speed.x = 0
 		      rotate_start = false
 		      rotate_tail = y
-		      change_limit(snake_head_length + snake_body_length, 0)
 		      delta_rotate_x = 0
 		  }
 	      }
@@ -157,7 +150,6 @@ function start() {
                       speed.y = 0
 		      rotate_start = false
 		      rotate_tail = x
-		      change_limit(-(snake_head_length + snake_body_length), 0)
 		      delta_rotate_y = 0
 		  }
 	      }
@@ -205,8 +197,13 @@ function start() {
 	      }
 	  }
       }
-      if (x - delta_rotate_x >= limit.x.right || x - delta_rotate_x <= limit.x.left ||
-          y - delta_rotate_y >= limit.y.bottom || y - delta_rotate_y <= limit.y.top) {
+      let dx = x - delta_rotate_x, dy = y - delta_rotate_y
+      if(speed.y < 0) {
+	  let delta = snake_head_length + Math.round(snake_body_length * 1.5)
+	  dx -= delta
+	  dy -= delta
+      }
+      if (dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
           console.log('limit reached', {x:x, y:y, limit:limit,
 		       delta_rotate_x:delta_rotate_x, delta_rotate_y:delta_rotate_y,
 		       speed:speed})
