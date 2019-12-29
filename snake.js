@@ -25,22 +25,22 @@ function start() {
    let snake_body_1 = document.getElementById('snake_body_1')
    let snake_tail = document.getElementById('snake_tail')
    let speed = {
-      x: 2, y: 0
+      x: 5, y: 0
    }
    let snake_head_length = 1300
    let snake_tail_length = 1100
    let snake_body_length = 800
-   let snake_delta_x = 7800
-   let snake_delta_y = 13100
-   let stroke_width = parseInt(box.attributes['stroke-width'].value)
+   let snake_delta_x = 10200
+   let snake_delta_y = 15000
+   let stroke_width = Math.round(parseInt(box.attributes['stroke-width'].value) / 2)
    let limit = {
          x: {
-            left: box.x.baseVal.value + stroke_width + (snake_head_length - snake_body_length) - snake_delta_x,
-            right: box.width.baseVal.value - snake_head_length - stroke_width - snake_delta_x,
+            left: box.x.baseVal.value + stroke_width - snake_delta_x,
+            right: box.x.baseVal.value + box.width.baseVal.value - stroke_width - snake_delta_x,
          },
          y: {
-            top: box.y.baseVal.value + stroke_width + (snake_head_length - snake_body_length) - snake_delta_y,
-            bottom: box.height.baseVal.value - snake_head_length - stroke_width - snake_delta_y,
+            top: box.y.baseVal.value + stroke_width - snake_delta_y,
+            bottom: box.y.baseVal.value + box.height.baseVal.value - stroke_width - snake_delta_y,
          }
       }
    function change_limit(x,y) {
@@ -56,8 +56,8 @@ function start() {
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
    // смена стартовой позиции при необходимости
-   //   snake.transform.baseVal[0].matrix.e = 0
-   //   snake.transform.baseVal[0].matrix.f = -10000
+   //snake.transform.baseVal[0].matrix.e = 0
+   //snake.transform.baseVal[0].matrix.f = -10000
 /**
     { // полный поворот вверх
 	rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
@@ -73,7 +73,7 @@ function start() {
 	rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos, sin)
     }
 **/
-   // return
+   //return
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
 	   if(e.key == 'ArrowLeft') {
