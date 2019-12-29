@@ -71,18 +71,22 @@ function start() {
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
 	   if(e.key == 'ArrowLeft') {
-	       rotate_left = true
-               rotate_right = false
-	       rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
-		   snake.transform.baseVal[0].matrix.f
-	       console.log('left rotate_start:', rotate_start)
+               if(rotate_start === false) {
+	           rotate_left = true
+                   rotate_right = false
+	           rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
+		       snake.transform.baseVal[0].matrix.f
+	           console.log('left rotate_start:', rotate_start)
+               }
 	   }
 	   else if(e.key == 'ArrowRight') {
-	       rotate_left = false
-               rotate_right = true
-               rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
-		   snake.transform.baseVal[0].matrix.f
-	       console.log('right rotate_start:', rotate_start)
+               if(rotate_start === false) {
+	           rotate_left = false
+                   rotate_right = true
+                   rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
+		       snake.transform.baseVal[0].matrix.f
+	           console.log('right rotate_start:', rotate_start)
+               }
 	   }
 	   else if(other_keyup) other_keyup(e)
    }
