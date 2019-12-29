@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+
+<!-- https://www.jotform.com/blog/html5-filesystem-api-create-files-store-locally-using-javascript-webkit/ -->
+
+<head>
+  <title>Проверяем локальное хранилище</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <script>
+    console.log('started')
+    // navigator.webkitPersistentStorage.requestQuota(1024*1024, function() { console.dir(arguments) })
+/*
+    window.webkitRequestFileSystem(window.PERSISTENT, 1024*1024,
+	function() { console.log(1) },
+	function(e) { console.dir(e) })
+*/
+    navigator.webkitPersistentStorage.requestQuota(1024*1024, function(q) {
+	console.log(q)
+	window.webkitRequestFileSystem(window.PERSISTENT, 1024*1024,
+	    function() { console.dir(arguments) },
+	    function(e) { console.dir(e) })
+    })
+/*
+    if (navigator.storage && navigator.storage.persist)
+	navigator.storage.persist().then(function(persistent) {
+	    if (persistent)
+		console.log("Storage will not be cleared except by explicit user action");
+	    else
+		console.log("Storage may be cleared by the UA under storage pressure.");
+	});
+    navigator.storage.estimate().then(function(estimate) {
+	console.dir(estimate)
+    });
+*/
+  </script>
+
+</body>
+</html>
