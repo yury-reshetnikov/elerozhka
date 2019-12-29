@@ -197,11 +197,20 @@ function start() {
 	      }
 	  }
       }
+      snake.transform.baseVal[0].matrix.e = x
+      snake.transform.baseVal[0].matrix.f = y
       let dx = x - delta_rotate_x, dy = y - delta_rotate_y
+      let delta = snake_head_length + Math.round(snake_body_length * 1.5)
       if(speed.y < 0) {
-	  let delta = snake_head_length + Math.round(snake_body_length * 1.5)
 	  dx -= delta
 	  dy -= delta
+      }
+      else if(speed.y > 0) {
+          dx -= delta
+          dy += delta
+      }
+      else if(speed.x < 0) {
+          dx -= 2 * delta
       }
       if (dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
           console.log('limit reached', {x:x, y:y, limit:limit,
@@ -209,8 +218,6 @@ function start() {
 		       speed:speed})
         return
       }
-      snake.transform.baseVal[0].matrix.e = x
-      snake.transform.baseVal[0].matrix.f = y
       prev = time
       requestAnimationFrame(draw)
    }
