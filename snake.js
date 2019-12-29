@@ -25,7 +25,7 @@ function start() {
    let snake_body_1 = document.getElementById('snake_body_1')
    let snake_tail = document.getElementById('snake_tail')
    let speed = {
-      x: 5, y: 0
+      x: 2, y: 0
    }
    let snake_head_length = 1300
    let snake_tail_length = 1100
@@ -99,7 +99,8 @@ function start() {
       if(rotate_start !== false) {
 	  if(speed.x) {
 	      let sign = speed.x > 0 ? 1 : -1
-              delta_rotate_x = delta_rotate_y = (x - rotate_start) * sign
+              delta_rotate_x = (x - rotate_start)
+              delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
 	      let leg = snake_head_length - (x - rotate_start) * sign
 	      if(leg >= 0) {
 		  let cos = leg / snake_head_length
@@ -129,7 +130,8 @@ function start() {
 	  }
 	  else { // if(speed.y)
              let sign = speed.y < 0 ? 1 : -1
-             delta_rotate_x = delta_rotate_y = (y - rotate_start) * sign
+             delta_rotate_y = (y - rotate_start)
+             delta_rotate_x = (y - rotate_start) * (rotate_left ? -1 : 1)
              let leg = snake_head_length - (rotate_start - y) * sign
              if(leg >= 0) {
 		  let cos = leg / snake_head_length
