@@ -213,7 +213,7 @@ function start() {
           dx -= 2 * delta
       }
       if (dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
-          console.log('limit reached', {x:x, y:y, limit:limit,
+          console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit,
 		       delta_rotate_x:delta_rotate_x, delta_rotate_y:delta_rotate_y,
 		       speed:speed})
         return
