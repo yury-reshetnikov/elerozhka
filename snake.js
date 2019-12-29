@@ -25,7 +25,7 @@ function start() {
    let snake_body_1 = document.getElementById('snake_body_1')
    let snake_tail = document.getElementById('snake_tail')
    let speed = {
-      x: 5, y: 0
+      x: 2, y: 0
    }
    let snake_head_length = 1300
    let snake_tail_length = 1100
@@ -220,3 +220,17 @@ function start() {
    requestAnimationFrame(draw)
 }
 
+function mongoose() {
+    let mongoose = document.getElementById('mongoose2')
+    let mongoose_att = document.getElementById('mongoose3')
+    let a = new Animate3
+    let time_s = 10
+    let time_f = 110
+    a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose3_body', time_s, time_f)
+    a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
+    a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
+    a.path ('mongoose2_nose', 'mongoose2_t_nose', 'mongoose3_nose', time_s, time_f)
+    a.translate ('mongoose2_t_eye', 0, 0, 2170, -405, time_s, time_f)
+    a.translate ('mongoose2_t_eyeball', 0, 0, 2170, -405, time_s, time_f)
+    a.start()
+}
