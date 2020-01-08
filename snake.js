@@ -128,7 +128,7 @@ function start() {
                       speed.x = 0
 		      rotate_start = false
 		      rotate_tail = y
-		      delta_rotate_x = 0
+		      delta_rotate_x = delta_rotate_y = 0
 		  }
 	      }
 	  }
@@ -156,7 +156,7 @@ function start() {
                       speed.y = 0
 		      rotate_start = false
 		      rotate_tail = x
-		      delta_rotate_y = 0
+		      delta_rotate_x = delta_rotate_y = 0
 		  }
 	      }
 	  }
