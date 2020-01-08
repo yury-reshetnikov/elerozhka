@@ -24,6 +24,7 @@ function start() {
    let snake_head_shift = document.getElementById('snake_head_shift')
    let snake_body_1 = document.getElementById('snake_body_1')
    let snake_tail = document.getElementById('snake_tail')
+   let mouse = document.getElementById('mouse')
    let speed = {
       x: 2, y: 0
    }
@@ -32,6 +33,8 @@ function start() {
    let snake_body_length = 800
    let snake_delta_x = 10200
    let snake_delta_y = 15000
+   let mouse_delta_x = 14600
+   let mouse_delta_y = 15000
    let stroke_width = Math.round(parseInt(box.attributes['stroke-width'].value) / 2)
    let limit = {
          x: {
@@ -50,7 +53,7 @@ function start() {
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
    // смена стартовой позиции при необходимости
-   //snake.transform.baseVal[0].matrix.e = 0
+   //snake.transform.baseVal[0].matrix.e = 5300
    //snake.transform.baseVal[0].matrix.f = -10000
 /**
     { // полный поворот вверх
@@ -227,6 +230,11 @@ function start() {
 		       delta_rotate_x:delta_rotate_x, delta_rotate_y:delta_rotate_y,
 		       speed:speed})
         return
+      }
+      let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
+      let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
+      if(Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2)) < snake_body_length / 2) {
+          mouse.style.display = 'none'
       }
       prev = time
       requestAnimationFrame(draw)

@@ -19,8 +19,8 @@
         fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
   <!--<path id="food" fill="rgb(255,0,127)" stroke="black"
         d="M 15000,15000 C 15500,14500 15500,15500 15000,15000 15500,15500 14500,15500 15000,15000 14500,15500 14500,14500 15000,15000 14500,14500 15500,14500 15000,15000"/>-->
-  <g id="mouse">
-      <path id="mouse_tail" fill="rgb(200,200,200)" stroke="black"
+  <g id="mouse" transform="translate(0,0)">
+      <path id="mouse_tail" style="display:none" fill="rgb(200,200,200)" stroke="black"
             d="M 14360,15000 C 14130,14590 14012,15386 13700,15000 13974,15537 14142,14633 14360,15100"/>
       <path id="mouse_tail_2" fill="rgb(200,200,200)" stroke="black"
             d="M 14360,15000 C 13912,15431 14824,15298 14766,15557 15041,15282 14131,15369 14360,15100"/>
