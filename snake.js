@@ -128,7 +128,7 @@ function start() {
                       speed.x = 0
 		      rotate_start = false
 		      rotate_tail = y
-		      delta_rotate_x = 0
+		      delta_rotate_x = delta_rotate_y = 0
 		  }
 	      }
 	  }
@@ -156,7 +156,7 @@ function start() {
                       speed.y = 0
 		      rotate_start = false
 		      rotate_tail = x
-		      delta_rotate_y = 0
+		      delta_rotate_x = delta_rotate_y = 0
 		  }
 	      }
 	  }
@@ -240,7 +240,7 @@ function mongoose() {
     a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
     a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
     a.path ('mongoose2_nose', 'mongoose2_t_nose', 'mongoose3_nose', time_s, time_f)
-    a.translate ('mongoose2_t_eye', 0, 0, 2170, -405, time_s, time_f)
-    a.translate ('mongoose2_t_eyeball', 0, 0, 2170, -405, time_s, time_f)
+    a.translate ('mongoose2_eye', 0, 0, 2170, -405, time_s, time_f)
+    a.translate ('mongoose2_eyeball', 0, 0, 2170, -405, time_s, time_f)
     a.start()
 }
