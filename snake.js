@@ -104,7 +104,7 @@ function start() {
 	  if(speed.x) {
 	      let sign = speed.x > 0 ? 1 : -1
               delta_rotate_x = (x - rotate_start)
-              delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
+              delta_rotate_y = (x + rotate_start) * (rotate_left ? 1 : -1)
 	      let leg = snake_head_length - (x - rotate_start) * sign
 	      if(leg >= 0) {
 		  let cos = leg / snake_head_length
@@ -235,7 +235,7 @@ function mongoose() {
     let mongoose_att = document.getElementById('mongoose3')
     let a = new Animate3
     let time_s = 10
-    let time_f = 110
+    let time_f = 160
     a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose3_body', time_s, time_f)
     a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
     a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
