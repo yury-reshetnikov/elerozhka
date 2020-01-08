@@ -104,7 +104,7 @@ function start() {
 	  if(speed.x) {
 	      let sign = speed.x > 0 ? 1 : -1
               delta_rotate_x = (x - rotate_start)
-              delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
+              delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1) - snake_body_length * sign
 	      let leg = snake_head_length - (x - rotate_start) * sign
 	      if(leg >= 0) {
 		  let cos = leg / snake_head_length
@@ -135,7 +135,7 @@ function start() {
 	  else { // if(speed.y)
              let sign = speed.y < 0 ? 1 : -1
              delta_rotate_y = (y - rotate_start)
-             delta_rotate_x = (y - rotate_start) * (rotate_left ? -1 : 1)
+             delta_rotate_x = (y - rotate_start) * (rotate_left ? -1 : 1) - snake_body_length * sign
              let leg = snake_head_length - (rotate_start - y) * sign
              if(leg >= 0) {
 		  let cos = leg / snake_head_length
