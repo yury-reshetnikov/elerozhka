@@ -240,7 +240,7 @@ function mongoose() {
     a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
     a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
     a.path ('mongoose2_nose', 'mongoose2_t_nose', 'mongoose3_nose', time_s, time_f)
-    a.translate ('mongoose2_t_eye', 0, 0, 2170, -405, time_s, time_f)
-    a.translate ('mongoose2_t_eyeball', 0, 0, 2170, -405, time_s, time_f)
+    a.translate ('mongoose2_eye', 0, 0, 920, -665, time_s, time_f)
+    a.translate ('mongoose2_eyeball', 0, 0, 920, -665, time_s, time_f)
     a.start()
 }
