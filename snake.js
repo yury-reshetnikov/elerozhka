@@ -23,6 +23,7 @@ function start() {
    let snake_head_rotate = document.getElementById('snake_head_rotate')
    let snake_head_shift = document.getElementById('snake_head_shift')
    let snake_body_1 = document.getElementById('snake_body_1')
+   let snake_full_body = document.getElementById('snake_full_body')
    let snake_tail = document.getElementById('snake_tail')
    let mouse = document.getElementById('mouse')
    let speed = {
@@ -49,7 +50,7 @@ function start() {
    let rotate_start = false
    let rotate_left, rotate_right
    let rotate_tail = false
-   let eating = false
+   let eating = false, growing = false, growing_start, growing_base
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
@@ -105,7 +106,8 @@ function start() {
 	node.r.baseVal.value = base.r.baseVal.value
 	node.style.fill = 'rgb(0,153,0)'
 	node.style.stroke = 'black'
-	base.parentNode.insertBefore(node, base.nextSibling)
+	// base.parentNode.insertBefore(node, base.nextSibling)
+	snake_full_body.append(node)
     }
    let prev = (new Date).getTime()
    function draw() {
@@ -245,18 +247,32 @@ function start() {
 		       speed:speed})
         return
       }
-      let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
-      let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
-      let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
-      if(eating) {
-          if(mouse_distance > snake_body_length) {
-              eating = false
-              mouse.style.display = 'none'
-	      add_snake_body(snake_body_1)
-          }
+      if(growing) {
+	  let delta = x - growing_start
+	  if(delta >= snake_body_length) {
+	      growing = eating = false
+	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - snake_body_length
+	  }
+	  else {
+	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - delta
+	  }
       }
-      else if(mouse_distance < snake_body_length / 2) {
-          eating = true
+      else {
+	  let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
+	  let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
+	  let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
+	  if(eating) {
+              if(mouse_distance > snake_body_length) {
+		  growing = true
+		  growing_start = x
+		  growing_base = snake_full_body.transform.baseVal[0].matrix.e
+		  mouse.style.display = 'none'
+		  add_snake_body(snake_body_1)
+              }
+	  }
+	  else if(mouse_distance < snake_body_length / 2) {
+              eating = true
+	  }
       }
       prev = time
       requestAnimationFrame(draw)
