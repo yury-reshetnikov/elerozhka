@@ -49,12 +49,14 @@ function start() {
    let rotate_start = false
    let rotate_left, rotate_right
    let rotate_tail = false
+   let eating = false
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
    // смена стартовой позиции при необходимости
    //snake.transform.baseVal[0].matrix.e = 5300
    //snake.transform.baseVal[0].matrix.f = -10000
+   //snake.transform.baseVal[0].matrix.f = -200
 /**
     { // полный поворот вверх
 	rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
@@ -74,7 +76,7 @@ function start() {
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
 	   if(e.key == 'ArrowLeft') {
-               if(rotate_start === false) {
+               if(rotate_start === false && !eating) {
 	           rotate_left = true
                    rotate_right = false
 	           rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
@@ -83,7 +85,7 @@ function start() {
                }
 	   }
 	   else if(e.key == 'ArrowRight') {
-               if(rotate_start === false) {
+               if(rotate_start === false && !eating) {
 	           rotate_left = false
                    rotate_right = true
                    rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
@@ -233,8 +235,15 @@ function start() {
       }
       let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
       let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
-      if(Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2)) < snake_body_length / 2) {
-          mouse.style.display = 'none'
+      let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
+      if(eating) {
+          if(mouse_distance > snake_body_length) {
+              eating = false
+              mouse.style.display = 'none'
+          }
+      }
+      else if(mouse_distance < snake_body_length / 2) {
+          eating = true
       }
       prev = time
       requestAnimationFrame(draw)
