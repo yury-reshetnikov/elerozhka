@@ -72,7 +72,10 @@ function start() {
 	rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos, sin)
     }
 **/
-   //return
+   // console.dir(snake_body_1)
+   // window.test = snake_body_1
+   // add_snake_body(snake_body_1)
+   // return
    let other_keyup = window.onkeyup
    window.onkeyup = function(e) {
 	   if(e.key == 'ArrowLeft') {
@@ -95,6 +98,15 @@ function start() {
 	   }
 	   else if(other_keyup) other_keyup(e)
    }
+    function add_snake_body(base) {
+	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+	node.cx.baseVal.value = base.cx.baseVal.value + snake_body_length
+	node.cy.baseVal.value = base.cy.baseVal.value
+	node.r.baseVal.value = base.r.baseVal.value
+	node.style.fill = 'rgb(0,153,0)'
+	node.style.stroke = 'black'
+	base.parentNode.insertBefore(node, base.nextSibling)
+    }
    let prev = (new Date).getTime()
    function draw() {
       let time = (new Date).getTime()
@@ -240,6 +252,7 @@ function start() {
           if(mouse_distance > snake_body_length) {
               eating = false
               mouse.style.display = 'none'
+	      add_snake_body(snake_body_1)
           }
       }
       else if(mouse_distance < snake_body_length / 2) {
