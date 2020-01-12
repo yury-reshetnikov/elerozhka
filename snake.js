@@ -22,7 +22,8 @@ function start() {
    let snake = document.getElementById('snake')
    let snake_head_rotate = document.getElementById('snake_head_rotate')
    let snake_head_shift = document.getElementById('snake_head_shift')
-   let snake_body_1 = document.getElementById('snake_body_1')
+   // let snake_body_1 = document.getElementById('snake_body_1')
+   let snake_body_2 = document.getElementById('snake_body_2')
    let snake_full_body = document.getElementById('snake_full_body')
    let snake_tail = document.getElementById('snake_tail')
    let mouse = document.getElementById('mouse')
@@ -51,6 +52,7 @@ function start() {
    let rotate_left, rotate_right
    let rotate_tail = false
    let eating = false, growing = false, growing_start, growing_base
+   let first_snake_body = snake_body_2, snake_body_dyn = []
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
@@ -104,10 +106,12 @@ function start() {
 	node.cx.baseVal.value = base.cx.baseVal.value + snake_body_length
 	node.cy.baseVal.value = base.cy.baseVal.value
 	node.r.baseVal.value = base.r.baseVal.value
-	node.style.fill = 'rgb(0,153,0)'
-	node.style.stroke = 'black'
+	node.setAttribute('fill', base.attributes.fill.value)
+	node.setAttribute('stroke', base.attributes.stroke.value)
+	node.setAttribute('transform', 'translate(0,0)')
 	// base.parentNode.insertBefore(node, base.nextSibling)
 	snake_full_body.append(node)
+	return node
     }
    let prev = (new Date).getTime()
    function draw() {
@@ -135,10 +139,10 @@ function start() {
 	      }
 	      else {
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotate_left ? -1 : 1) * sign, 0)
-		  leg += snake_body_length
+		  leg += snake_body_length * snake_body_dyn.length
 		  if(leg >= 0) {
 		      move1(snake_head_shift.transform.baseVal[0].matrix,
-			    snake_body_1.transform.baseVal[0].matrix,
+			    snake_body_dyn[0].transform.baseVal[0].matrix,
 			    speed.x > 0 ? 0 : snake_body_length,
 			    (leg - snake_body_length) * sign,
                             rotate_left ? 1 : -1)
@@ -168,7 +172,7 @@ function start() {
 	      }
 	      else {
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotate_left ? 1 : -1))
-		  leg += snake_body_length
+		  leg += snake_body_length * snake_body_dyn.length
 		  if(leg >= 0) {
 		      move2(snake_head_shift.transform.baseVal[0].matrix,
                             snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length, sign, rotate_left ? 1 : -1)
@@ -251,13 +255,17 @@ function start() {
 	  let delta = x - growing_start
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
+	      // +++
+	      mouse.transform.baseVal[0].matrix.e += 7000
+	      mouse.style.display = ''
+	      // +++
 	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - snake_body_length
 	  }
 	  else {
 	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - delta
 	  }
       }
-      else {
+       else if(mouse.style.display != 'none') {
 	  let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
 	  let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
 	  let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
@@ -267,7 +275,8 @@ function start() {
 		  growing_start = x
 		  growing_base = snake_full_body.transform.baseVal[0].matrix.e
 		  mouse.style.display = 'none'
-		  add_snake_body(snake_body_1)
+		  first_snake_body = add_snake_body(first_snake_body)
+		  snake_body_dyn.unshift(first_snake_body)
               }
 	  }
 	  else if(mouse_distance < snake_body_length / 2) {
