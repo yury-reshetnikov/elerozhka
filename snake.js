@@ -107,9 +107,23 @@ function start() {
             ++i
         }
     }
-    function move2(m1, m2, a, d, sign, sign_x) {
+    function move2(m1, dyn, leg, sign, sign_x) {
+        let m2 = dyn[0].transform.baseVal[0].matrix
+	let a = -snake_body_length * snake_body_dyn.length
+	let d = leg
         m2.e = m1.e = a + d * sign * sign_x
         m2.f = m1.f = a * sign - d * sign
+        leg += snake_body_length
+        let i = 1
+	while(leg < 0 && i < dyn.length) {
+            let m = dyn[i].transform.baseVal[0].matrix
+	    let a = -snake_body_length * (snake_body_dyn.length - i)
+	    let d = leg
+            m.e = a + d * sign * sign_x
+            m.f = a * sign - d * sign
+            leg += snake_body_length
+            ++i
+	}
     }
     function add_snake_body(base) {
 	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
@@ -181,10 +195,9 @@ function start() {
 	      }
 	      else {
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotate_left ? 1 : -1))
-		  leg += snake_body_length * snake_body_dyn.length
-		  if(leg >= 0) {
+		  if(leg + snake_body_length * snake_body_dyn.length >= 0) {
 		      move2(snake_head_shift.transform.baseVal[0].matrix,
-                            snake_body_1.transform.baseVal[0].matrix, -snake_body_length, leg - snake_body_length, sign, rotate_left ? 1 : -1)
+                            snake_body_dyn, leg, sign, rotate_left ? 1 : -1)
                       delta_rotate_x -= snake_body_length / 2 * sign * (rotate_left ? -1 : 1)
 		  }
 		  else {
@@ -265,7 +278,7 @@ function start() {
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
 	      // +++
-	      mouse.transform.baseVal[0].matrix.e += 6500
+	      mouse.transform.baseVal[0].matrix.e += 6000
 	      mouse.style.display = ''
 	      // +++
 	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - snake_body_length
