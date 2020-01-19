@@ -7,16 +7,6 @@ function rotate_sin_cos(m, sin, cos) {
     m.f = 0
 }
 
-function move1(m1, m2, a, d, sign_y) {
-    m2.e = m1.e = d - 2 * a
-    m2.f = m1.f = d * sign_y
-}
-
-function move2(m1, m2, a, d, sign, sign_x) {
-    m2.e = m1.e = a + d * sign * sign_x
-    m2.f = m1.f = a * sign - d * sign
-}
-
 function start() {
    let box = document.getElementById('box')
    let snake = document.getElementById('snake')
@@ -101,6 +91,26 @@ function start() {
 	   }
 	   else if(other_keyup) other_keyup(e)
    }
+    function move1(m1, dyn, a, leg, sign_x, sign_y) {
+        let m2 = dyn[0].transform.baseVal[0].matrix
+        let d = leg * sign_x
+        m2.e = m1.e = d - (dyn.length + 1) * a
+        m2.f = m1.f = d * sign_y
+        leg += snake_body_length
+        let i = 1
+        while(leg < 0 && i < dyn.length) {
+            let m = dyn[i].transform.baseVal[0].matrix
+            let d = leg * sign_x
+            m.e = d - (dyn.length - i + 1) * a
+            m.f = d * sign_y
+            leg += snake_body_length
+            ++i
+        }
+    }
+    function move2(m1, m2, a, d, sign, sign_x) {
+        m2.e = m1.e = a + d * sign * sign_x
+        m2.f = m1.f = a * sign - d * sign
+    }
     function add_snake_body(base) {
 	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 	node.cx.baseVal.value = base.cx.baseVal.value + snake_body_length
@@ -139,12 +149,11 @@ function start() {
 	      }
 	      else {
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotate_left ? -1 : 1) * sign, 0)
-		  leg += snake_body_length * snake_body_dyn.length
-		  if(leg >= 0) {
+		  if(leg + snake_body_length * snake_body_dyn.length >= 0) {
 		      move1(snake_head_shift.transform.baseVal[0].matrix,
-			    snake_body_dyn[0].transform.baseVal[0].matrix,
+			    snake_body_dyn,
 			    speed.x > 0 ? 0 : snake_body_length,
-			    (leg - snake_body_length) * sign,
+			    leg, sign,
                             rotate_left ? 1 : -1)
                       delta_rotate_y -= snake_body_length / 2 * sign * (rotate_left ? -1 : 1)
 		  }
@@ -256,7 +265,7 @@ function start() {
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
 	      // +++
-	      mouse.transform.baseVal[0].matrix.e += 7000
+	      mouse.transform.baseVal[0].matrix.e += 6500
 	      mouse.style.display = ''
 	      // +++
 	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - snake_body_length
