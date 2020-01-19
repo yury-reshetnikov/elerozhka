@@ -94,14 +94,14 @@ function start() {
     function move1(m1, dyn, a, leg, sign_x, sign_y) {
         let m2 = dyn[0].transform.baseVal[0].matrix
         let d = leg * sign_x
-        m2.e = m1.e = d - (dyn.length + 1) * a
+        m2.e = m1.e = d - 2 * dyn.length * a
         m2.f = m1.f = d * sign_y
         leg += snake_body_length
         let i = 1
         while(leg < 0 && i < dyn.length) {
             let m = dyn[i].transform.baseVal[0].matrix
             let d = leg * sign_x
-            m.e = d - (dyn.length - i + 1) * a
+            m.e = d - 2 * (dyn.length - i) * a
             m.f = d * sign_y
             leg += snake_body_length
             ++i
