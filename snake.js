@@ -23,8 +23,9 @@ function start() {
    let snake_head_length = 1300
    let snake_tail_length = 1100
    let snake_body_length = 800
-   let snake_delta_x = 10200
-   let snake_delta_y = 15000
+   let snake_body_dyn = []
+   let snake_delta_x = 10200 //snake_body_length * (snake_body_dyn.length + 1) + 8600
+   let snake_delta_y = 15000 //snake_body_length * (snake_body_dyn.length + 1) + 13400
    let mouse_delta_x = 14600
    let mouse_delta_y = 15000
    let stroke_width = Math.round(parseInt(box.attributes['stroke-width'].value) / 2)
@@ -42,7 +43,7 @@ function start() {
    let rotate_left, rotate_right
    let rotate_tail = false
    let eating = false, growing = false, growing_start, growing_base
-   let first_snake_body = snake_body_2, snake_body_dyn = []
+   let first_snake_body = snake_body_2
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])

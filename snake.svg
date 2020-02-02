@@ -47,7 +47,6 @@
       <g id="snake_head_shift" transform="translate(0,0)">
       <g id="snake_head_rotate" transform="rotate(0)" transform-origin="8500 15000">
         <path id="snake_head" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
-        <path id="open_mouth" fill="rgb(0,153,0)" stroke="black" d="M 10000,15000 C 8500,13700 8500,16300 10000,15000 Z"/>
         <ellipse id="snake_eye_l" cx="9300" cy="14820" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
         <ellipse id="snake_eye_r" cx="9300" cy="15180" rx="80" ry="160" fill="rgb(229,158,31)" stroke="black"/>
         <circle id="snake_eyeball_l" cx="9300" cy="14820" r="50" fill="black" stroke="black"/>
