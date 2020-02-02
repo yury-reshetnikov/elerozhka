@@ -24,6 +24,7 @@ function start() {
    let snake_tail_length = 1100
    let snake_body_length = 800
    let snake_body_dyn = []
+   let snake_growing_direction_x = 0
    let snake_delta_x = 10200 //snake_body_length * (snake_body_dyn.length + 1) + 8600
    let snake_delta_y = 15000 //snake_body_length * (snake_body_dyn.length + 1) + 13400
    let mouse_delta_x = 14600
@@ -95,7 +96,9 @@ function start() {
     function move1(m1, dyn, a, leg, sign_x, sign_y) {
         let m2 = dyn[0].transform.baseVal[0].matrix
         let d = leg * sign_x
-        m2.e = m1.e = d - 2 * dyn.length * a
+	if(sign_x > 0) m1.e = d - (snake_growing_direction_x - dyn.length) * snake_body_length
+        else m1.e = d - (dyn.length + snake_growing_direction_x) * a
+        m2.e = d - 2 * dyn.length * a
         m2.f = m1.f = d * sign_y
         leg += snake_body_length
         let i = 1
@@ -112,7 +115,8 @@ function start() {
         let m2 = dyn[0].transform.baseVal[0].matrix
 	let a = -snake_body_length * snake_body_dyn.length
 	let d = leg
-        m2.e = m1.e = a + d * sign * sign_x
+        m1.e = -snake_body_length * snake_growing_direction_x + d * sign * sign_x
+        m2.e = a + d * sign * sign_x
         m2.f = m1.f = a * sign - d * sign
         leg += snake_body_length
         let i = 1
@@ -260,6 +264,7 @@ function start() {
       snake.transform.baseVal[0].matrix.e = x
       snake.transform.baseVal[0].matrix.f = y
       let dx = x - delta_rotate_x, dy = y - delta_rotate_y
+// +++ ??? snake_growing_direction_x
       let delta = snake_head_length + snake_body_length * snake_body_dyn.length +
 	   Math.round(snake_body_length * 0.5)
       if(speed.y < 0) {
@@ -290,10 +295,16 @@ function start() {
 	      mouse.transform.baseVal[0].matrix.f -= 6000
 	      mouse.style.display = ''
 	      // +++
-	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
-		  growing_base - snake_body_length
-	      else if(speed.x < 0) snake_full_body.transform.baseVal[0].matrix.e =
-		  growing_base + snake_body_length
+	      if(speed.x > 0) {
+		  snake_full_body.transform.baseVal[0].matrix.e =
+		      growing_base - snake_body_length
+		  ++snake_growing_direction_x
+	      }
+	      else if(speed.x < 0) {
+		  snake_full_body.transform.baseVal[0].matrix.e =
+		      growing_base + snake_body_length
+		  --snake_growing_direction_x
+	      }
 	  }
 	  else {
 	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
