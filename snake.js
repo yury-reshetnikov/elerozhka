@@ -133,7 +133,11 @@ function start() {
 	node.r.baseVal.value = base.r.baseVal.value
 	node.setAttribute('fill', base.attributes.fill.value)
 	node.setAttribute('stroke', base.attributes.stroke.value)
-	node.setAttribute('transform', 'translate(0,0)')
+	let tx = 0, ty = 0
+	if(speed.x < 0) {
+	    tx = -snake_body_length * (snake_body_dyn.length + 1) * 2
+	}
+	node.setAttribute('transform', 'translate('+tx+','+ty+')')
 	// base.parentNode.insertBefore(node, base.nextSibling)
 	snake_full_body.append(node)
 	return node
@@ -276,17 +280,26 @@ function start() {
         return
       }
       if(growing) {
-	  let delta = x - growing_start
+	  let delta
+	  if(speed.x > 0) delta = x - growing_start
+	  else if(speed.x < 0) delta = growing_start - x
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
 	      // +++
 	      mouse.transform.baseVal[0].matrix.e += 6000
+	      mouse.transform.baseVal[0].matrix.f -= 6000
 	      mouse.style.display = ''
 	      // +++
-	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - snake_body_length
+	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
+		  growing_base - snake_body_length
+	      else if(speed.x < 0) snake_full_body.transform.baseVal[0].matrix.e =
+		  growing_base + snake_body_length
 	  }
 	  else {
-	      snake_full_body.transform.baseVal[0].matrix.e = growing_base - delta
+	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
+		  growing_base - delta
+	      else if(speed.x < 0) snake_full_body.transform.baseVal[0].matrix.e =
+		  growing_base + delta
 	  }
       }
        else if(mouse.style.display != 'none') {
