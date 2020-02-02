@@ -256,7 +256,8 @@ function start() {
       snake.transform.baseVal[0].matrix.e = x
       snake.transform.baseVal[0].matrix.f = y
       let dx = x - delta_rotate_x, dy = y - delta_rotate_y
-      let delta = snake_head_length + Math.round(snake_body_length * 1.5)
+      let delta = snake_head_length + snake_body_length * snake_body_dyn.length +
+	   Math.round(snake_body_length * 0.5)
       if(speed.y < 0) {
 	  dx -= delta
 	  dy -= delta
