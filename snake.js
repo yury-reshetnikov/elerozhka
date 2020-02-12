@@ -288,6 +288,8 @@ function start() {
 	  let delta
 	  if(speed.x > 0) delta = x - growing_start
 	  else if(speed.x < 0) delta = growing_start - x
+          else if(speed.y > 0) delta = y - growing_start
+          else if(speed.y < 0) delta = growing_start - y
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
 	      // +++
@@ -305,12 +307,26 @@ function start() {
 		      growing_base + snake_body_length
 		  --snake_growing_direction_x
 	      }
+              else if(speed.y > 0) {
+                  snake_full_body.transform.baseVal[0].matrix.f =
+                      growing_base_2 - snake_body_length
+                  ++snake_growing_direction_x
+              }
+              else if(speed.y < 0) {
+                  snake_full_body.transform.baseVal[0].matrix.f =
+                      growing_base_2 + snake_body_length
+                  --snake_growing_direction_x
+              }
 	  }
 	  else {
 	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
 		  growing_base - delta
 	      else if(speed.x < 0) snake_full_body.transform.baseVal[0].matrix.e =
 		  growing_base + delta
+              else if(speed.y > 0) snake_full_body.transform.baseVal[0].matrix.f =
+		  growing_base_2 - delta
+              else if(speed.y < 0) snake_full_body.transform.baseVal[0].matrix.f =
+		  growing_base_2 + delta
 	  }
       }
        else if(mouse.style.display != 'none') {
@@ -322,6 +338,7 @@ function start() {
 		  growing = true
 		  growing_start = x
 		  growing_base = snake_full_body.transform.baseVal[0].matrix.e
+		  growing_base_2 = snake_full_body.transform.baseVal[0].matrix.f
 		  mouse.style.display = 'none'
 		  first_snake_body = add_snake_body(first_snake_body)
 		  snake_body_dyn.unshift(first_snake_body)
