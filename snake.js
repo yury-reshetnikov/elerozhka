@@ -305,8 +305,8 @@ function start() {
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
 	      // +++
-	      mouse.transform.baseVal[0].matrix.e += 6000
-	      mouse.transform.baseVal[0].matrix.f -= 6000
+	      mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length)) + limit.x.left + snake_delta_x - mouse_delta_x
+	      mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length)) + limit.y.top + snake_delta_y - mouse_delta_y
 	      mouse.style.display = ''
 	      // +++
 	      if(speed.x > 0) {
