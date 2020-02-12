@@ -100,7 +100,8 @@ function start() {
 	if(sign_x > 0) m1.e = d - (snake_growing_direction_x - dyn.length) * snake_body_length
         else m1.e = d - (dyn.length + snake_growing_direction_x) * a
         m2.e = d - 2 * dyn.length * a
-        m2.f = m1.f = d * sign_y
+        m1.f = d * sign_y
+        m2.f = d * sign_y
         leg += snake_body_length
         let i = 1
         while(leg < 0 && i < dyn.length) {
@@ -118,7 +119,7 @@ function start() {
 	let d = leg
         m1.e = -snake_body_length * snake_growing_direction_x + d * sign * sign_x
         m2.e = a + d * sign * sign_x
-        m1.f = -snake_body_length * snake_growing_direction_x * sign - d * sign
+        m1.f = -snake_body_length * snake_growing_direction_y + a * sign - d * sign
         m2.f = a * sign - d * sign
         leg += snake_body_length
         let i = 1
