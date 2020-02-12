@@ -309,25 +309,30 @@ function start() {
 	      mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
 	      mouse.style.display = ''
 	      // +++
+	      let speed_increment = 0.2
 	      if(speed.x > 0) {
 		  snake_full_body.transform.baseVal[0].matrix.e =
 		      growing_base - snake_body_length
 		  ++snake_growing_direction_x
+		  speed.x += speed_increment
 	      }
 	      else if(speed.x < 0) {
 		  snake_full_body.transform.baseVal[0].matrix.e =
 		      growing_base + snake_body_length
 		  --snake_growing_direction_x
+		  speed.x -= speed_increment
 	      }
               else if(speed.y > 0) {
                   snake_full_body.transform.baseVal[0].matrix.f =
                       growing_base - snake_body_length
-                  ++snake_growing_direction_y
+		  ++snake_growing_direction_y
+		  speed.y += speed_increment
               }
               else if(speed.y < 0) {
                   snake_full_body.transform.baseVal[0].matrix.f =
                       growing_base + snake_body_length
                   --snake_growing_direction_y
+		  speed.y -= speed_increment
               }
 	  }
 	  else {
