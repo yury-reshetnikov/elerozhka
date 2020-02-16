@@ -16,10 +16,12 @@ function start() {
    let snake_body_2 = document.getElementById('snake_body_2')
    let snake_full_body = document.getElementById('snake_full_body')
    let snake_tail = document.getElementById('snake_tail')
-   let mouse = document.getElementById('mouse')
+   let mice = [ document.getElementById('mouse') ]
    let speed = {
       x: 2, y: 0
    }
+   let max_mice_count = 5
+   let max_new_mice_count = 3
    let snake_head_length = 1300
    let snake_tail_length = 1100
    let snake_body_length = 800
@@ -304,11 +306,21 @@ function start() {
           else if(speed.y < 0) delta = growing_start - y
 	  if(delta >= snake_body_length) {
 	      growing = eating = false
-	      // +++
-	      mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
-	      mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
-	      mouse.style.display = ''
-	      // +++
+	      let count = Math.round(Math.random() * max_new_mice_count)
+	      if(mice.length + count < 1) count = 2
+	      else if(mice.length + count > max_mice_count)
+		  count = max_mice_count - mice.length
+	      while(count--) {
+		  // let mouse = svggen(document.body, ['use', {
+		  //     'xlink:href': '#mouse_pattern', transform: 'translate(0,0)' }])[0]
+		  let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+		  mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
+		  mouse.setAttribute('transform', 'translate(0,0)')
+		  document.children[0].insertBefore(mouse, snake)
+		  mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
+		  mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
+		  mice.push(mouse)
+	      }
 	      let speed_increment = 0.2
 	      if(speed.x > 0) {
 		  snake_full_body.transform.baseVal[0].matrix.e =
@@ -346,30 +358,36 @@ function start() {
 		  growing_base + delta
 	  }
       }
-       else if(mouse.style.display != 'none') {
-	  let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
-	  let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
-	  let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
-	  if(eating) {
-              if(mouse_distance > snake_body_length) {
-		  growing = true
-		  if(speed.x) {
-		      growing_start = x
-		      growing_base = snake_full_body.transform.baseVal[0].matrix.e
-		  }
-		  else {
-		      growing_start = y
-		      growing_base = snake_full_body.transform.baseVal[0].matrix.f
-		  }
-		  mouse.style.display = 'none'
-		  first_snake_body = add_snake_body(first_snake_body)
-		  snake_body_dyn.unshift(first_snake_body)
-              }
-	  }
-	  else if(mouse_distance < snake_body_length / 2) {
-              eating = true
-	  }
-      }
+       else if(eating) {
+	   let mouse_distance = Math.sqrt(Math.pow(eating.x - dx, 2) + Math.pow(eating.y - dy, 2))
+           if(mouse_distance > snake_body_length) {
+	       growing = true
+	       if(speed.x) {
+		   growing_start = x
+		   growing_base = snake_full_body.transform.baseVal[0].matrix.e
+	       }
+	       else {
+		   growing_start = y
+		   growing_base = snake_full_body.transform.baseVal[0].matrix.f
+	       }
+	       mice[eating.index].remove()
+	       mice.splice(eating.index, 1)
+	       first_snake_body = add_snake_body(first_snake_body)
+	       snake_body_dyn.unshift(first_snake_body)
+           }
+       }
+       else {
+	   mice.some(function(mouse, mouse_index){
+	       let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
+	       let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
+	       let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
+	       if(mouse_distance < snake_body_length / 2) {
+		   eating = { x: mx, y: my, index: mouse_index }
+		   return true
+	       }
+	       return false
+	   })
+       }
       prev = time
       requestAnimationFrame(draw)
    }
