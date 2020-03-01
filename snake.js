@@ -318,19 +318,19 @@ function start() {
 	      mark.setAttribute('stroke', 'red')
 	      document.children[0].append(mark)
 	  }
-	  if(speed.x > 0) {
+	  if(dx >= limit.x.right) {
 	      let mark_y = dy + snake_delta_y
 	      add_mark('M 30000,'+mark_y+' L 32000,'+mark_y)
 	  }
-	  if(speed.x < 0) {
+	  if(dx <= limit.x.left) {
 	      let mark_y = dy + snake_delta_y
 	      add_mark('M 0,'+mark_y+' L 2000,'+mark_y)
 	  }
-	  if(speed.y > 0) {
+	  if(dy >= limit.y.bottom) {
 	      let mark_x = dx + snake_delta_x
 	      add_mark('M '+mark_x+',15000 L '+mark_x+',17000')
 	  }
-	  if(speed.y < 0) {
+	  if(dy <= limit.y.top) {
 	      let mark_x = dx + snake_delta_x
 	      add_mark('M '+mark_x+',0 L '+mark_x+ ',2000')
 	  }
