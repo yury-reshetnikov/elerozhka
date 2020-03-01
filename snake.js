@@ -298,33 +298,27 @@ function start() {
 		speed:speed, delta:delta, snake_body_dyn_length:snake_body_dyn.length,
 		snake_growing_direction_x:snake_growing_direction_x,
 		snake_growing_direction_y:snake_growing_direction_y})
-	  if(speed.x > 0) {
-	      let mark_y = dy + snake_delta_y
+	  let add_mark = function(d) {
 	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-	      mark.setAttribute('d', 'M 30000,'+mark_y+' L 32000,'+mark_y)
+	      mark.setAttribute('d', d)
 	      mark.setAttribute('stroke', 'red')
 	      document.children[0].append(mark)
+	  }
+	  if(speed.x > 0) {
+	      let mark_y = dy + snake_delta_y
+	      add_mark('M 30000,'+mark_y+' L 32000,'+mark_y)
 	  }
 	  if(speed.x < 0) {
 	      let mark_y = dy + snake_delta_y
-	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-	      mark.setAttribute('d', 'M 0,'+mark_y+' L 2000,'+mark_y)
-	      mark.setAttribute('stroke', 'red')
-	      document.children[0].append(mark)
+	      add_mark('M 0,'+mark_y+' L 2000,'+mark_y)
 	  }
 	  if(speed.y > 0) {
 	      let mark_x = dx + snake_delta_x
-	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-	      mark.setAttribute('d', 'M '+mark_x+',15000 L '+mark_x+',17000')
-	      mark.setAttribute('stroke', 'red')
-	      document.children[0].append(mark)
+	      add_mark('M '+mark_x+',15000 L '+mark_x+',17000')
 	  }
 	  if(speed.y < 0) {
 	      let mark_x = dx + snake_delta_x
-	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-	      mark.setAttribute('d', 'M '+mark_x+',0 L '+mark_x+ ',2000')
-	      mark.setAttribute('stroke', 'red')
-	      document.children[0].append(mark)
+	      add_mark('M '+mark_x+',0 L '+mark_x+ ',2000')
 	  }
           return
       }
