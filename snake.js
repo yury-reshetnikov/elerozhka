@@ -282,15 +282,24 @@ function start() {
       let delta = snake_head_length + snake_body_length * snake_body_dyn.length +
 	   Math.round(snake_body_length * 0.5)
       if(speed.y < 0) {
-	  dx -= delta
+          dx -= snake_head_length +
+	      snake_body_length * snake_growing_direction_x +
+	      Math.round(snake_body_length * 0.5)
 	  dy -= delta
       }
       else if(speed.y > 0) {
-          dx -= delta
+          dx -= snake_head_length +
+	      snake_body_length * snake_growing_direction_x +
+	      Math.round(snake_body_length * 0.5)
           dy += delta
       }
       else if(speed.x < 0) {
-          dx -= 2 * delta
+          dx -= 2 * snake_head_length +
+	      snake_body_length * (snake_body_dyn.length + snake_growing_direction_x) +
+	      2 * Math.round(snake_body_length * 0.5)
+      }
+      else if(speed.x > 0) {
+          dx += snake_body_length * (snake_body_dyn.length - snake_growing_direction_x)
       }
       if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
           console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit,
