@@ -292,11 +292,41 @@ function start() {
       else if(speed.x < 0) {
           dx -= 2 * delta
       }
-      if (dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
+      if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
           console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit,
-		       delta_rotate_x:delta_rotate_x, delta_rotate_y:delta_rotate_y,
-		       speed:speed})
-        return
+		delta_rotate_x:delta_rotate_x, delta_rotate_y:delta_rotate_y,
+		speed:speed, delta:delta, snake_body_dyn_length:snake_body_dyn.length,
+		snake_growing_direction_x:snake_growing_direction_x,
+		snake_growing_direction_y:snake_growing_direction_y})
+	  if(speed.x > 0) {
+	      let mark_y = dy + snake_delta_y
+	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	      mark.setAttribute('d', 'M 30000,'+mark_y+' L 32000,'+mark_y)
+	      mark.setAttribute('stroke', 'red')
+	      document.children[0].append(mark)
+	  }
+	  if(speed.x < 0) {
+	      let mark_y = dy + snake_delta_y
+	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	      mark.setAttribute('d', 'M 0,'+mark_y+' L 2000,'+mark_y)
+	      mark.setAttribute('stroke', 'red')
+	      document.children[0].append(mark)
+	  }
+	  if(speed.y > 0) {
+	      let mark_x = dx + snake_delta_x
+	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	      mark.setAttribute('d', 'M '+mark_x+',15000 L '+mark_x+',17000')
+	      mark.setAttribute('stroke', 'red')
+	      document.children[0].append(mark)
+	  }
+	  if(speed.y < 0) {
+	      let mark_x = dx + snake_delta_x
+	      let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	      mark.setAttribute('d', 'M '+mark_x+',0 L '+mark_x+ ',2000')
+	      mark.setAttribute('stroke', 'red')
+	      document.children[0].append(mark)
+	  }
+          return
       }
       if(growing) {
 	  let delta
