@@ -215,7 +215,7 @@ function start() {
 			    speed.x > 0 ? 0 : snake_body_length,
 			    leg, sign,
                             rotate_left ? 1 : -1)
-                      delta_rotate_y -= snake_body_length / 2 * sign * (rotate_left ? -1 : 1)
+                      delta_rotate_y -= snake_body_length_half * sign * (rotate_left ? -1 : 1)
 		  }
 		  else {
                       speed.y = rotate_left ? -speed.x : speed.x
@@ -402,6 +402,10 @@ function start() {
                   --snake_growing_direction_y
 		  speed.y -= speed_increment
               }
+	      // if(rotate_start !== false) {
+	      // 	  if(speed.x > 0 || speed.y > 0) rotate_start -= snake_body_length
+	      // 	  else rotate_start += snake_body_length
+	      // }
 	  }
 	  else {
 	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
@@ -412,6 +416,7 @@ function start() {
 		  growing_base - delta
               else if(speed.y < 0) snake_full_body.transform.baseVal[0].matrix.f =
 		  growing_base + delta
+	      // if(rotate_start !== false) rotate_start -= delta
 	  }
       }
        else if(eating) {
