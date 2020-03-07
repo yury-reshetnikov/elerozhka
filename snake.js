@@ -125,8 +125,9 @@ function start() {
 	if(growing) --dyn_length
 	if(sign_x > 0) m1.e = d - (snake_growing_direction_x - dyn_length) * snake_body_length
         else m1.e = d - (dyn_length + snake_growing_direction_x) * a
-        m2.e = d - 2 * dyn_length * a
         m1.f = -snake_body_length * snake_growing_direction_y + d * sign_y
+	if(growing) return
+        m2.e = d - 2 * dyn_length * a
         m2.f = d * sign_y
         leg += snake_body_length
         let i = 1
