@@ -403,10 +403,6 @@ function start() {
                   --snake_growing_direction_y
 		  speed.y -= speed_increment
               }
-	      // if(rotate_start !== false) {
-	      // 	  if(speed.x > 0 || speed.y > 0) rotate_start -= snake_body_length
-	      // 	  else rotate_start += snake_body_length
-	      // }
 	  }
 	  else {
 	      if(speed.x > 0) snake_full_body.transform.baseVal[0].matrix.e =
@@ -417,7 +413,6 @@ function start() {
 		  growing_base - delta
               else if(speed.y < 0) snake_full_body.transform.baseVal[0].matrix.f =
 		  growing_base + delta
-	      // if(rotate_start !== false) rotate_start -= delta
 	  }
       }
        else if(eating) {
@@ -436,6 +431,10 @@ function start() {
 	       mice.splice(eating.index, 1)
 	       first_snake_body = add_snake_body(first_snake_body)
 	       snake_body_dyn.unshift(first_snake_body)
+	       if(rotate_start !== false) {
+		   // first_snake_body.transform.baseVal[0].matrix.e =
+		   // first_snake_body.transform.baseVal[0].matrix.f =
+	       }
            }
        }
        else {
