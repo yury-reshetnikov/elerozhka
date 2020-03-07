@@ -25,6 +25,7 @@ function start() {
    let snake_head_length = 1300
    let snake_tail_length = 1100
    let snake_body_length = 800
+   let snake_body_length_half = 400
    let snake_body_dyn = []
    let snake_growing_direction_x = 0
    let snake_growing_direction_y = 0
@@ -177,7 +178,7 @@ function start() {
       if(rotate_start !== false) {
 	  if(speed.x) {
 	      let sign = speed.x > 0 ? 1 : -1
-              delta_rotate_x = (x - rotate_start)
+              delta_rotate_x = (x - rotate_start + snake_body_length_half * sign)
               delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
 	      let leg = snake_head_length - (x - rotate_start) * sign
 	      if(leg >= 0) {
@@ -209,7 +210,7 @@ function start() {
 	  }
 	  else { // if(speed.y)
              let sign = speed.y < 0 ? 1 : -1
-             delta_rotate_y = (y - rotate_start)
+             delta_rotate_y = (y - rotate_start + snake_body_length_half * -sign)
              delta_rotate_x = (y - rotate_start) * (rotate_left ? -1 : 1)
              let leg = snake_head_length - (rotate_start - y) * sign
              if(leg >= 0) {
