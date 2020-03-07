@@ -20,6 +20,7 @@ function start() {
    let speed = {
       x: 2, y: 0
    }
+   let slow = false
    let max_mice_count = 5
    let max_new_mice_count = 3
    let snake_head_length = 1300
@@ -100,22 +101,39 @@ function start() {
 	           console.log('right rotate_start:', rotate_start)
                }
 	   }
+	   else if(e.code == 'Space') {
+	       if(slow) {
+		   if(speed.x > 0) speed.x = slow
+		   else if(speed.x < 0) speed.x = -slow
+		   else if(speed.y > 0) speed.y = slow
+		   else /* if(speed.y < 0) */ speed.y = -slow
+		   slow = false
+	       }
+	       else {
+		   if(speed.x > 0) { slow = speed.x; speed.x = 0.1 }
+		   else if(speed.x < 0) { slow = -speed.x; speed.x = -0.1 }
+		   else if(speed.y > 0) { slow = speed.y; speed.y = 0.1 }
+		   else /* if(speed.y < 0) */ { slow = -speed.y; speed.y = -0.1 }
+	       }
+	   }
 	   else if(other_keyup) other_keyup(e)
    }
     function move1(m1, dyn, a, leg, sign_x, sign_y) {
         let m2 = dyn[0].transform.baseVal[0].matrix
         let d = leg * sign_x
-	if(sign_x > 0) m1.e = d - (snake_growing_direction_x - dyn.length) * snake_body_length
-        else m1.e = d - (dyn.length + snake_growing_direction_x) * a
-        m2.e = d - 2 * dyn.length * a
+	let dyn_length = dyn.length
+	if(growing) --dyn_length
+	if(sign_x > 0) m1.e = d - (snake_growing_direction_x - dyn_length) * snake_body_length
+        else m1.e = d - (dyn_length + snake_growing_direction_x) * a
+        m2.e = d - 2 * dyn_length * a
         m1.f = -snake_body_length * snake_growing_direction_y + d * sign_y
         m2.f = d * sign_y
         leg += snake_body_length
         let i = 1
-        while(leg < 0 && i < dyn.length) {
+        while(leg < 0 && i < dyn_length) {
             let m = dyn[i].transform.baseVal[0].matrix
             let d = leg * sign_x
-            m.e = d - 2 * (dyn.length - i) * a
+            m.e = d - 2 * (dyn_length - i) * a
             m.f = d * sign_y
             leg += snake_body_length
             ++i
