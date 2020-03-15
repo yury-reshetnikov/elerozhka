@@ -438,6 +438,7 @@ function start() {
 		       first_snake_body.transform.baseVal[0].matrix.f =
 			   delta * (rotate_left ? 1 : -1)
 		   }
+		   // +++ Lene dobavljat zdes
 	       }
            }
        }
