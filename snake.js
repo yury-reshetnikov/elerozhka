@@ -432,8 +432,9 @@ function start() {
 	       first_snake_body = add_snake_body(first_snake_body)
 	       snake_body_dyn.unshift(first_snake_body)
 	       if(rotate_start !== false) {
-		   // first_snake_body.transform.baseVal[0].matrix.e =
-		   // first_snake_body.transform.baseVal[0].matrix.f =
+		   let delta = rotate_start - x + snake_head_length - snake_body_length
+		   first_snake_body.transform.baseVal[0].matrix.e = delta
+		   first_snake_body.transform.baseVal[0].matrix.f = delta
 	       }
            }
        }
