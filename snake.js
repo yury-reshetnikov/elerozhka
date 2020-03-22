@@ -141,18 +141,21 @@ function start() {
         }
     }
     function move2(m1, dyn, leg, sign, sign_x) {
+	let dyn_length = dyn.length
+	if(growing) --dyn_length
         let m2 = dyn[0].transform.baseVal[0].matrix
-	let a = -snake_body_length * dyn.length
+	let a = -snake_body_length * dyn_length
 	let d = leg
         m1.e = -snake_body_length * snake_growing_direction_x + d * sign * sign_x
-        m2.e = a + d * sign * sign_x
         m1.f = -snake_body_length * snake_growing_direction_y + a * sign - d * sign
+	if(growing) return
+        m2.e = a + d * sign * sign_x
         m2.f = a * sign - d * sign
         leg += snake_body_length
         let i = 1
-	while(leg < 0 && i < dyn.length) {
+	while(leg < 0 && i < dyn_length) {
             let m = dyn[i].transform.baseVal[0].matrix
-	    let a = -snake_body_length * (dyn.length - i)
+	    let a = -snake_body_length * (dyn_length - i)
 	    let d = leg
             m.e = a + d * sign * sign_x
             m.f = a * sign - d * sign
