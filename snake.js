@@ -54,7 +54,14 @@ function start() {
 	mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
     }
-    random_mouse(mice[0])
+    // random_mouse(mice[0])
+    { let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+      mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
+      mouse.setAttribute('transform', 'translate(0,0)')
+      document.children[0].insertBefore(mouse, snake)
+      mouse.transform.baseVal[0].matrix.e = 100
+      mice.push(mouse)
+    }
    // console.log(limit)
    // console.log(snake_head_rotate.transform)
    // console.log(snake_head_rotate.transform.baseVal[0])
