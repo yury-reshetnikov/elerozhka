@@ -1,5 +1,6 @@
 function start() {
     let box = document.getElementById('box')
+    let snake = document.getElementById('snake')
     let snake_head_rotate = document.getElementById('snake_head_rotate')
     let snake_head_shift = document.getElementById('snake_head_shift')
     let snake_body_2 = document.getElementById('snake_body_2')
@@ -32,7 +33,7 @@ function start() {
             bottom: box.y.baseVal.value + box.height.baseVal.value - stroke_width - snake_delta_y,
 	}
     }
-    let eating = false, growing = false, growing_start, growing_base
+    let eating = false, growing = false, growing_start
     let first_snake_body = snake_body_2
     let random_mouse = function(mouse) {
 	mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
@@ -45,25 +46,18 @@ function start() {
     }
     function add_snake_body(base) {
 	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-	node.cx.baseVal.value = base.cx.baseVal.value + snake_body_length
-	node.cy.baseVal.value = base.cy.baseVal.value
+	let cx = base.cx.baseVal.value
+	let cy = base.cy.baseVal.value
+	if(speed.x > 0) cx += snake_body_length
+	else if(speed.x < 0) cx -= snake_body_length
+	else if(speed.y > 0) cy += snake_body_length
+	else /* if(speed.y < 0) */ cy -= snake_body_length
+	node.cx.baseVal.value = cx
+	node.cy.baseVal.value = cy
 	node.r.baseVal.value = base.r.baseVal.value
 	node.setAttribute('fill', base.attributes.fill.value)
 	node.setAttribute('stroke', base.attributes.stroke.value)
-	let tx = 0, ty = 0
-	/*
-	if(speed.x < 0) {
-	    tx = -snake_body_length * (snake_body_dyn.length + 1) * 2
-	}
-	else if(speed.y < 0) {
-	    tx = -snake_body_length * (snake_body_dyn.length + 1)
-	    ty = -snake_body_length * (snake_body_dyn.length + 1)
-	}
-	else if(speed.y > 0) {
-	    tx = -snake_body_length * (snake_body_dyn.length + 1)
-	    ty = snake_body_length * (snake_body_dyn.length + 1)
-	}
-	*/
+	let tx = base.transform.baseVal[0].matrix.e, ty = base.transform.baseVal[0].matrix.f
 	node.setAttribute('transform', 'translate('+tx+','+ty+')')
 	snake_full_body.append(node)
 	return node
@@ -80,10 +74,105 @@ function start() {
 	let x = old_x + speed.x * tp
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
 	let y = old_y + speed.y * tp
-	
+	// +++ rotations
+	// move
 	move(snake_head_shift, x, y)
-	move(snake_body_2, x, y)
-	move(snake_tail, x, y)
+	if(!growing) {
+	    let mx = x, my = y
+	    let dmx = 0, dmy = 0
+	    if(speed.x > 0) dmx = -snake_body_length
+	    else if(speed.x < 0) dmx = snake_body_length
+	    else if(speed.y > 0) dmy = -snake_body_length
+	    else /* if(speed.y < 0) */ dmy = snake_body_length
+	    snake_body_dyn.some(function(body) {
+		mx += dmx; my += dmy
+		move(body, mx, my)
+		return false
+	    })
+	    move(snake_body_2, mx, my)
+	    move(snake_tail, mx, my)
+	}
+	// intersections
+	let dx = x, dy = y
+	// +++ modify dx&dy depending on speed direction
+	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
+            console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
+	    let add_mark = function(d) {
+		let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+		mark.setAttribute('d', d)
+		mark.setAttribute('stroke', 'red')
+		document.children[0].append(mark)
+	    }
+	    if(dx >= limit.x.right) {
+		let mark_y = dy + snake_delta_y
+		add_mark('M 30000,'+mark_y+' L 32000,'+mark_y)
+	    }
+	    if(dx <= limit.x.left) {
+		let mark_y = dy + snake_delta_y
+		add_mark('M 0,'+mark_y+' L 2000,'+mark_y)
+	    }
+	    if(dy >= limit.y.bottom) {
+		let mark_x = dx + snake_delta_x
+		add_mark('M '+mark_x+',15000 L '+mark_x+',17000')
+	    }
+	    if(dy <= limit.y.top) {
+		let mark_x = dx + snake_delta_x
+		add_mark('M '+mark_x+',0 L '+mark_x+ ',2000')
+	    }
+            return
+	}
+	if(growing) {
+	    let delta
+	    if(speed.x > 0) delta = x - growing_start
+	    else if(speed.x < 0) delta = growing_start - x
+            else if(speed.y > 0) delta = y - growing_start
+            else if(speed.y < 0) delta = growing_start - y
+	    if(delta >= snake_body_length) {
+		growing = eating = false
+		let count = Math.round(Math.random() * max_new_mice_count)
+		if(mice.length + count < 1) count = 2
+		else if(mice.length + count > max_mice_count)
+		    count = max_mice_count - mice.length
+		while(count--) {
+		    // let mouse = svggen(document.body, ['use', {
+		    //     'xlink:href': '#mouse_pattern', transform: 'translate(0,0)' }])[0]
+		    let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+		    mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
+		    mouse.setAttribute('transform', 'translate(0,0)')
+		    document.children[0].insertBefore(mouse, snake)
+		    random_mouse(mouse)
+		    mice.push(mouse)
+		}
+		let speed_increment = 0.2
+		if(speed.x > 0) speed.x += speed_increment
+		else if(speed.x < 0) speed.x -= speed_increment
+		else if(speed.y > 0) speed.y += speed_increment
+		else /* if(speed.y < 0) */ speed.y -= speed_increment
+	    }
+	}
+	else if(eating) {
+	   let mouse_distance = Math.sqrt(Math.pow(eating.x - dx, 2) + Math.pow(eating.y - dy, 2))
+           if(mouse_distance > snake_body_length) {
+	       growing = true
+	       growing_start = speed.x ? x : y
+	       mice[eating.index].remove()
+	       mice.splice(eating.index, 1)
+	       first_snake_body = add_snake_body(first_snake_body)
+	       snake_body_dyn.unshift(first_snake_body)
+	   }
+	}
+	else {
+	    mice.some(function(mouse, mouse_index){
+		let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
+		let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
+		let mouse_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
+		if(mouse_distance < snake_body_length / 2) {
+		    eating = { x: mx, y: my, index: mouse_index }
+		    return true
+		}
+		return false
+	    })
+	}
 	prev = time
 	requestAnimationFrame(draw)
     }
