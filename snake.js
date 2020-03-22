@@ -438,6 +438,22 @@ function start() {
 		       first_snake_body.transform.baseVal[0].matrix.f =
 			   delta * (rotate_left ? 1 : -1)
 		   }
+		   if(speed.x < 0) {
+		       let delta = rotate_start + x + snake_head_length - snake_body_length
+		       first_snake_body.transform.baseVal[0].matrix.e = delta
+		       first_snake_body.transform.baseVal[0].matrix.f =
+			   delta * (rotate_left ? 1 : -1)
+		   }
+		   if(speed.y > 0) {
+		       let delta = rotate_start - y + snake_head_length - snake_body_length
+		       first_snake_body.transform.baseVal[0].matrix.e = delta * (rotate_left ? 1 : -1)
+		       first_snake_body.transform.baseVal[0].matrix.f = delta
+		   }
+		   if(speed.y < 0) {
+		       let delta = rotate_start + y + snake_head_length - snake_body_length
+		       first_snake_body.transform.baseVal[0].matrix.e = delta * (rotate_left ? 1 : -1)
+		       first_snake_body.transform.baseVal[0].matrix.f = delta
+		   }
 		   // +++ Lene dobavljat zdes
 	       }
            }
