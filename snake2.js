@@ -33,6 +33,7 @@ function start() {
             bottom: box.y.baseVal.value + box.height.baseVal.value - stroke_width - snake_delta_y,
 	}
     }
+    let rotations = []
     let eating = false, growing = false, growing_start
     let first_snake_body = snake_body_2
     let random_mouse = function(mouse) {
@@ -42,7 +43,38 @@ function start() {
     // random_mouse(mice[0])
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
-	if(other_keyup) other_keyup(e)
+	if(e.key == 'ArrowLeft') {
+            if(!eating && (!rotations.length || rotations[0].changed))
+		rotations.unshift({
+		    left: true,
+		    start: speed.x ? snake_head_shift.transform.baseVal[0].matrix.e
+			: snake_head_shift.transform.baseVal[0].matrix.f
+		})
+	}
+	else if(e.key == 'ArrowRight') {
+            if(!eating && (!rotations.length || rotations[0].changed))
+		rotations.unshift({
+		    left: false,
+		    start: speed.x ? snake_head_shift.transform.baseVal[0].matrix.e
+			: snake_head_shift.transform.baseVal[0].matrix.f
+		})
+	}
+	else if(e.code == 'Space') {
+	    if(slow) {
+		if(speed.x > 0) speed.x = slow
+		else if(speed.x < 0) speed.x = -slow
+		else if(speed.y > 0) speed.y = slow
+		else /* if(speed.y < 0) */ speed.y = -slow
+		slow = false
+	    }
+	    else {
+		if(speed.x > 0) { slow = speed.x; speed.x = 0.1 }
+		else if(speed.x < 0) { slow = -speed.x; speed.x = -0.1 }
+		else if(speed.y > 0) { slow = speed.y; speed.y = 0.1 }
+		else /* if(speed.y < 0) */ { slow = -speed.y; speed.y = -0.1 }
+	    }
+	}
+	else if(other_keyup) other_keyup(e)
     }
     function add_snake_body(base) {
 	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
@@ -74,9 +106,26 @@ function start() {
 	let x = old_x + speed.x * tp
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
 	let y = old_y + speed.y * tp
-	// +++ rotations
-	// move
-	move(snake_head_shift, x, y)
+	if(rotations.length) {
+	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
+	    if(leg >= 0) {
+	    }
+	    else {
+		if(!rotations[0].changed) {
+		    rotations[0].changed = true
+		    if(speed.x) {
+			speed.y = rotations[0].left ? -speed.x : speed.x
+			speed.x = 0
+		    }
+		    else {
+			speed.x = rotations[0].left ? speed.y : -speed.y
+			speed.y = 0
+		    }
+		}
+		// move(snake_head_shift, x, y)
+	    }
+	}
+	/* else */ move(snake_head_shift, x, y)
 	if(!growing) {
 	    let mx = x, my = y
 	    let dmx = 0, dmy = 0
