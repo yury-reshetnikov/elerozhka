@@ -142,7 +142,7 @@ function start() {
     }
     function move2(m1, dyn, leg, sign, sign_x) {
         let m2 = dyn[0].transform.baseVal[0].matrix
-	let a = -snake_body_length * snake_body_dyn.length
+	let a = -snake_body_length * dyn.length
 	let d = leg
         m1.e = -snake_body_length * snake_growing_direction_x + d * sign * sign_x
         m2.e = a + d * sign * sign_x
@@ -152,7 +152,7 @@ function start() {
         let i = 1
 	while(leg < 0 && i < dyn.length) {
             let m = dyn[i].transform.baseVal[0].matrix
-	    let a = -snake_body_length * (snake_body_dyn.length - i)
+	    let a = -snake_body_length * (dyn.length - i)
 	    let d = leg
             m.e = a + d * sign * sign_x
             m.f = a * sign - d * sign
@@ -438,23 +438,22 @@ function start() {
 		       first_snake_body.transform.baseVal[0].matrix.f =
 			   delta * (rotate_left ? 1 : -1)
 		   }
-		   if(speed.x < 0) {
+		   else if(speed.x < 0) {
 		       let delta = rotate_start + x + snake_head_length - snake_body_length
 		       first_snake_body.transform.baseVal[0].matrix.e = delta
 		       first_snake_body.transform.baseVal[0].matrix.f =
 			   delta * (rotate_left ? 1 : -1)
 		   }
-		   if(speed.y > 0) {
+		   else if(speed.y > 0) {
 		       let delta = rotate_start - y + snake_head_length - snake_body_length
 		       first_snake_body.transform.baseVal[0].matrix.e = delta * (rotate_left ? 1 : -1)
 		       first_snake_body.transform.baseVal[0].matrix.f = delta
 		   }
-		   if(speed.y < 0) {
+		   else if(speed.y < 0) {
 		       let delta = rotate_start + y + snake_head_length - snake_body_length
 		       first_snake_body.transform.baseVal[0].matrix.e = delta * (rotate_left ? 1 : -1)
 		       first_snake_body.transform.baseVal[0].matrix.f = delta
 		   }
-		   // +++ Lene dobavljat zdes
 	       }
            }
        }
