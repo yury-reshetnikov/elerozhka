@@ -1,3 +1,11 @@
+function rotate_sin_cos(m, sin, cos) {
+    m.a = cos
+    m.b = sin
+    m.c = -sin
+    m.d = cos
+    m.e = 0
+    m.f = 0
+}
 function start() {
     let box = document.getElementById('box')
     let snake = document.getElementById('snake')
@@ -33,6 +41,8 @@ function start() {
             bottom: box.y.baseVal.value + box.height.baseVal.value - stroke_width - snake_delta_y,
 	}
     }
+    let rotate_start = false
+    let rotate_left = false
     let rotations = []
     let eating = false, growing = false, growing_start
     let first_snake_body = snake_body_2
@@ -125,7 +135,71 @@ function start() {
 		// move(snake_head_shift, x, y)
 	    }
 	}
-	/* else */ move(snake_head_shift, x, y)
+	else { move(snake_head_shift, x, y)
+	  if(speed.x) {
+              rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
+		       snake.transform.baseVal[0].matrix.f
+	      let sign = speed.x > 0 ? 1 : -1
+              delta_rotate_x = (x - rotate_start + snake_body_length_half * sign)
+              delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
+	      let leg = snake_head_length - (x - rotate_start) * sign
+	      if(leg >= 0) {
+		  let cos = leg / snake_head_length
+		  let acos_rad = Math.acos(cos)
+		  let sin = Math.sin(acos_rad)
+		  if(rotate_left) sin = -sin
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, sin * sign, cos * sign)
+                  delta_rotate_y -= snake_body_length * sign * (rotate_left ? -1 : 1)
+	      }
+	      else {
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotate_left ? -1 : 1) * sign, 0)
+		  if(leg + snake_body_length * snake_body_dyn.length >= 0) {
+		      move1(snake_head_shift.transform.baseVal[0].matrix,
+			    snake_body_dyn,
+			    speed.x > 0 ? 0 : snake_body_length,
+			    leg, sign,
+                            rotate_left ? 1 : -1)
+                      delta_rotate_y -= snake_body_length_half * sign * (rotate_left ? -1 : 1)
+		  }
+		  else {
+                      speed.y = rotate_left ? -speed.x : speed.x
+                      speed.x = 0
+		      rotate_start = false
+		      rotate_tail = y
+		      delta_rotate_x = delta_rotate_y = 0
+		  }
+	      }
+	  }
+	  else { // if(speed.y)
+             let sign = speed.y < 0 ? 1 : -1
+             delta_rotate_y = (y - rotate_start + snake_body_length_half * -sign)
+             delta_rotate_x = (y - rotate_start) * (rotate_left ? -1 : 1)
+             let leg = snake_head_length - (rotate_start - y) * sign
+             if(leg >= 0) {
+		  let cos = leg / snake_head_length
+		  let acos_rad = Math.acos(cos)
+		  let sin = Math.sin(acos_rad)
+		  if(rotate_left) sin = -sin
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -cos * sign, sin * sign)
+                  delta_rotate_x -= snake_body_length * sign * (rotate_left ? -1 : 1)
+	      }
+	      else {
+		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotate_left ? 1 : -1))
+		  if(leg + snake_body_length * snake_body_dyn.length >= 0) {
+		      move2(snake_head_shift.transform.baseVal[0].matrix,
+                            snake_body_dyn, leg, sign, rotate_left ? 1 : -1)
+                      delta_rotate_x -= snake_body_length / 2 * sign * (rotate_left ? -1 : 1)
+		  }
+		  else {
+                      speed.x = rotate_left ? speed.y : -speed.y
+                      speed.y = 0
+		      rotate_start = false
+		      rotate_tail = x
+		      delta_rotate_x = delta_rotate_y = 0
+		  }
+	      }
+	  }
+	}
 	if(!growing) {
 	    let mx = x, my = y
 	    let dmx = 0, dmy = 0
