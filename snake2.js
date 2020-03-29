@@ -118,7 +118,7 @@ function start() {
 	if(rotations.length) {
 	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
 	    if(leg >= 0) {
-              let sign = speed.x > 0 ? 1 : -1
+              let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
               delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
               delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
               let cos = leg / snake_head_length
