@@ -119,39 +119,21 @@ function start() {
 	if(rotations.length) {
 	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
 	    if(leg >= 0) {
-	    }
-	    else {
-		if(!rotations[0].changed) {
-		    rotations[0].changed = true
-		    if(speed.x) {
-			speed.y = rotations[0].left ? -speed.x : speed.x
-			speed.x = 0
-		    }
-		    else {
-			speed.x = rotations[0].left ? speed.y : -speed.y
-			speed.y = 0
-		    }
-		}
-		// move(snake_head_shift, x, y)
-	    }
-	}
-	else { move(snake_head_shift, x, y)
-	  if(speed.x) {
-              rotate_start = speed.x ? snake.transform.baseVal[0].matrix.e :
-		       snake.transform.baseVal[0].matrix.f
-	      let sign = speed.x > 0 ? 1 : -1
-              delta_rotate_x = (x - rotate_start + snake_body_length_half * sign)
-              delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
-	      let leg = snake_head_length - (x - rotate_start) * sign
-	      if(leg >= 0) {
+            function move(snake_head_shift, x, y) {
+                if(speed.x) {
+                  let sign = speed.x > 0 ? 1 : -1
+                  delta_rotate_x = (x - rotate_start + snake_body_length_half * sign)
+                  delta_rotate_y = (x - rotate_start) * (rotate_left ? 1 : -1)
+                  let leg = snake_head_length - (x - rotate_start) * sign
+                if(leg >= 0) {
 		  let cos = leg / snake_head_length
 		  let acos_rad = Math.acos(cos)
 		  let sin = Math.sin(acos_rad)
 		  if(rotate_left) sin = -sin
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, sin * sign, cos * sign)
                   delta_rotate_y -= snake_body_length * sign * (rotate_left ? -1 : 1)
-	      }
-	      else {
+                }
+                else {
 		  rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotate_left ? -1 : 1) * sign, 0)
 		  if(leg + snake_body_length * snake_body_dyn.length >= 0) {
 		      move1(snake_head_shift.transform.baseVal[0].matrix,
@@ -199,6 +181,21 @@ function start() {
 		  }
 	      }
 	  }
+            }
+	    else {
+		if(!rotations[0].changed) {
+		    rotations[0].changed = true
+		    if(speed.x) {
+			speed.y = rotations[0].left ? -speed.x : speed.x
+			speed.x = 0
+		    }
+		    else {
+			speed.x = rotations[0].left ? speed.y : -speed.y
+			speed.y = 0
+		    }
+		}
+		// move(snake_head_shift, x, y)
+	    }
 	}
 	if(!growing) {
 	    let mx = x, my = y
