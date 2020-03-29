@@ -1,3 +1,12 @@
+function rotate_sin_cos(m, sin, cos) {
+    m.a = cos
+    m.b = sin
+    m.c = -sin
+    m.d = cos
+    m.e = 0
+    m.f = 0
+}
+
 function start() {
     let box = document.getElementById('box')
     let snake = document.getElementById('snake')
@@ -109,6 +118,13 @@ function start() {
 	if(rotations.length) {
 	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
 	    if(leg >= 0) {
+              let cos = leg / snake_head_length
+              let acos_rad = Math.acos(cos)
+              let sin = Math.sin(acos_rad)
+              if(rotate_left) sin = -sin
+              rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
+              if(speed.x) delta_rotate_y -= snake_body_length * sign * (rotate_left ? -1 : 1)
+              else delta_rotate_x -= snake_body_length * sign * (rotate_left ? -1 : 1)
 	    }
 	    else {
 		if(!rotations[0].changed) {
