@@ -89,10 +89,6 @@ function start() {
 	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 	let cx = base.cx.baseVal.value
 	let cy = base.cy.baseVal.value
-	if(speed.x > 0) cx += snake_body_length
-	else if(speed.x < 0) cx -= snake_body_length
-	else if(speed.y > 0) cy += snake_body_length
-	else /* if(speed.y < 0) */ cy -= snake_body_length
 	node.cx.baseVal.value = cx
 	node.cy.baseVal.value = cy
 	node.r.baseVal.value = base.r.baseVal.value
@@ -100,6 +96,10 @@ function start() {
 	node.setAttribute('stroke', base.attributes.stroke.value)
 	let tx = base.transform.baseVal[0].matrix.e, ty = base.transform.baseVal[0].matrix.f
 	node.setAttribute('transform', 'translate('+tx+','+ty+')')
+	if(speed.x > 0) tx += snake_body_length
+	else if(speed.x < 0) tx -= snake_body_length
+	else if(speed.y > 0) ty += snake_body_length
+	else /* if(speed.y < 0) */ ty -= snake_body_length
 	snake_full_body.append(node)
 	return node
     }
@@ -117,8 +117,8 @@ function start() {
 	let y = old_y + speed.y * tp
 	if(rotations.length) {
 	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
+	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
-              let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
               delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
               delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
               let cos = leg / snake_head_length
@@ -132,6 +132,7 @@ function start() {
 	    else {
 		if(!rotations[0].changed) {
 		    rotations[0].changed = true
+		    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotations[0].left ? -1 : 1) * sign, 0)
 		    if(speed.x) {
 			speed.y = rotations[0].left ? -speed.x : speed.x
 			speed.x = 0
