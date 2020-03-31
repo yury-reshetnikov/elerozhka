@@ -95,11 +95,11 @@ function start() {
 	node.setAttribute('fill', base.attributes.fill.value)
 	node.setAttribute('stroke', base.attributes.stroke.value)
 	let tx = base.transform.baseVal[0].matrix.e, ty = base.transform.baseVal[0].matrix.f
-	node.setAttribute('transform', 'translate('+tx+','+ty+')')
 	if(speed.x > 0) tx += snake_body_length
 	else if(speed.x < 0) tx -= snake_body_length
 	else if(speed.y > 0) ty += snake_body_length
 	else /* if(speed.y < 0) */ ty -= snake_body_length
+	node.setAttribute('transform', 'translate('+tx+','+ty+')')
 	snake_full_body.append(node)
 	return node
     }
