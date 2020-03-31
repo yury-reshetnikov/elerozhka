@@ -133,7 +133,8 @@ function start() {
 	    else {
 		if(!rotations[0].changed) {
 		    rotations[0].changed = true
-		    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotations[0].left ? -1 : 1) * sign, 0)
+		    if(speed.x) rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotations[0].left ? -1 : 1) * sign, 0)
+		    else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotate_left ? 1 : -1))
 		    if(speed.x) {
 			speed.y = rotations[0].left ? -speed.x : speed.x
 			speed.x = 0
