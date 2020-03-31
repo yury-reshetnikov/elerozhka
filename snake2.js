@@ -119,15 +119,9 @@ function start() {
 	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
-<<<<<<< HEAD
-              delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
-              delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
-=======
-              let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	      // уберу, пока оно никуда не привязано
               // delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
               // delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
->>>>>>> a040a3771a8123418a05bd0b30514b887981446e
               let cos = leg / snake_head_length
               let acos_rad = Math.acos(cos)
               let sin = Math.sin(acos_rad)
