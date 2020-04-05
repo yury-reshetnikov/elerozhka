@@ -115,39 +115,39 @@ function start() {
 	let x = old_x + speed.x * tp
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
 	let y = old_y + speed.y * tp
-	if(rotations.length) {
+	if(rotations.length && !rotations[0].changed) {
 	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
-	      // уберу, пока оно никуда не привязано
-              // delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
-              // delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
-              let cos = leg / snake_head_length
-              let acos_rad = Math.acos(cos)
-              let sin = Math.sin(acos_rad)
-              if(rotations[0].left) sin = -sin
-              rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
-              // if(speed.x) delta_rotate_y -= snake_body_length * sign * (rotations[0].left ? -1 : 1)
-              // else delta_rotate_x -= snake_body_length * sign * (rotations[0].left ? -1 : 1)
+		// уберу, пока оно никуда не привязано
+		// delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
+		// delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
+		let cos = leg / snake_head_length
+		let acos_rad = Math.acos(cos)
+		let sin = Math.sin(acos_rad)
+		if(rotations[0].left) sin = -sin
+		rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
+			       (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
+		// if(speed.x) delta_rotate_y -= snake_body_length * sign * (rotations[0].left ? -1 : 1)
+		// else delta_rotate_x -= snake_body_length * sign * (rotations[0].left ? -1 : 1)
 	    }
 	    else {
-		if(!rotations[0].changed) {
-		    rotations[0].changed = true
-		    if(speed.x) rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotations[0].left ? -1 : 1) * sign, 0)
-		    else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotations[0].left ? 1 : -1))
-		    if(speed.x) {
-			speed.y = rotations[0].left ? -speed.x : speed.x
-			speed.x = 0
-		    }
-		    else {
-			speed.x = rotations[0].left ? speed.y : -speed.y
-			speed.y = 0
-		    }
+		rotations[0].changed = true
+		if(speed.x) rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
+					   (rotations[0].left ? -1 : 1) * sign, 0)
+		else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
+					      0, -1 * sign * (rotations[0].left ? 1 : -1))
+		if(speed.x) {
+		    speed.y = rotations[0].left ? -speed.x : speed.x
+		    speed.x = 0
 		}
-		// move(snake_head_shift, x, y)
+		else {
+		    speed.x = rotations[0].left ? speed.y : -speed.y
+		    speed.y = 0
+		}
 	    }
 	}
-	/* else */ move(snake_head_shift, x, y)
+	move(snake_head_shift, x, y)
 	if(!growing) {
 	    let mx = x, my = y
 	    let dmx = 0, dmy = 0
