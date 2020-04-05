@@ -107,6 +107,9 @@ function start() {
 	node.transform.baseVal[0].matrix.e = x
 	node.transform.baseVal[0].matrix.f = y
     }
+    function get_speed_delta(sx, sy, start, x, y) {
+	return sx > 0 ? x - start : sx < 0 ? start - x : sy > 0 ? y - start : /* sy < 0 */ start - y
+    }
     let prev = (new Date).getTime()
     function draw() {
 	let time = (new Date).getTime()
@@ -116,7 +119,7 @@ function start() {
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
 	let y = old_y + speed.y * tp
 	if(rotations.length && !rotations[0].changed) {
-	    let leg = snake_head_length - (speed.x > 0 ? x - rotations[0].start : speed.x < 0 ? rotations[0].start - x : speed.y > 0 ? y - rotations[0].start : /* speed.y < 0 */ rotations[0].start - y)
+	    let leg = snake_head_length - get_speed_delta(speed.x, speed.y, rotations[0].start, x, y)
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
 		// уберу, пока оно никуда не привязано
@@ -157,8 +160,22 @@ function start() {
 		else if(sy > 0) my -= snake_body_length
 		else /* if(sy < 0) */ my += snake_body_length
 	    }
+	    let ri = 0
+	    if(rotations.length && !rotations[0].changed) ++ri
 	    snake_body_dyn.some(function(body) {
 		move(body, mx, my)
+		if(ri < rotations.length &&
+		   get_speed_delta(sx, sy, rotations[ri].start, mx, my) <= 0) {
+		    if(sx) {
+			sy = rotations[ri].left ? sx : -sx
+			sx = 0
+		    }
+		    else {
+			sx = rotations[ri].left ? -sy : sy
+			sy = 0
+		    }
+		    ++ri
+		}
 		add()
 		return false
 	    })
