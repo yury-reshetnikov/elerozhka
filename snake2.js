@@ -150,14 +150,16 @@ function start() {
 	move(snake_head_shift, x, y)
 	if(!growing) {
 	    let mx = x, my = y
-	    let dmx = 0, dmy = 0
-	    if(speed.x > 0) dmx = -snake_body_length
-	    else if(speed.x < 0) dmx = snake_body_length
-	    else if(speed.y > 0) dmy = -snake_body_length
-	    else /* if(speed.y < 0) */ dmy = snake_body_length
+	    let sx = speed.x, sy = speed.y
+	    function add() {
+		if(sx > 0) mx -= snake_body_length
+		else if(sx < 0) mx += snake_body_length
+		else if(sy > 0) my -= snake_body_length
+		else /* if(sy < 0) */ my += snake_body_length
+	    }
 	    snake_body_dyn.some(function(body) {
 		move(body, mx, my)
-		mx += dmx; my += dmy
+		add()
 		return false
 	    })
 	    move(snake_body_2, mx, my)
