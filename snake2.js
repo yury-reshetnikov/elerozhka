@@ -134,7 +134,7 @@ function start() {
 		if(!rotations[0].changed) {
 		    rotations[0].changed = true
 		    if(speed.x) rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (rotations[0].left ? -1 : 1) * sign, 0)
-		    else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotate_left ? 1 : -1))
+		    else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * sign * (rotations[0].left ? 1 : -1))
 		    if(speed.x) {
 			speed.y = rotations[0].left ? -speed.x : speed.x
 			speed.x = 0
@@ -156,8 +156,8 @@ function start() {
 	    else if(speed.y > 0) dmy = -snake_body_length
 	    else /* if(speed.y < 0) */ dmy = snake_body_length
 	    snake_body_dyn.some(function(body) {
-		mx += dmx; my += dmy
 		move(body, mx, my)
+		mx += dmx; my += dmy
 		return false
 	    })
 	    move(snake_body_2, mx, my)
