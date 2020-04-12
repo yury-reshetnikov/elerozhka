@@ -262,6 +262,7 @@ function start() {
 	       mice.splice(eating.index, 1)
 	       first_snake_body = add_snake_body(first_snake_body)
 	       snake_body_dyn.unshift(first_snake_body)
+	       if(snake_body_dyn.length == 3) rotations = []
 	   }
 	}
 	else {
