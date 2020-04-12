@@ -115,9 +115,9 @@ function start() {
 	let time = (new Date).getTime()
 	let tp = time - prev
 	let old_x = snake_head_shift.transform.baseVal[0].matrix.e
-	let x = old_x + speed.x * tp
+	let x = Math.round (old_x + speed.x * tp)
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
-	let y = old_y + speed.y * tp
+	let y = Math.round (old_y + speed.y * tp)
 	if(rotations.length && !rotations[0].changed) {
 	    let leg = snake_head_length - get_speed_delta(speed.x, speed.y, rotations[0].start, x, y)
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
