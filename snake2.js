@@ -166,6 +166,7 @@ function start() {
 		move(body, mx, my)
 		if(ri < rotations.length &&
 		   get_speed_delta(sx, sy, rotations[ri].start, mx, my) <= 0) {
+		    throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
 		    if(sx) {
 			sy = rotations[ri].left ? sx : -sx
 			sx = 0
