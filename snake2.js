@@ -164,6 +164,7 @@ function start() {
 	    if(rotations.length && !rotations[0].changed) ++ri
 	    snake_body_dyn.some(function(body) {
 		move(body, mx, my)
+		if(ri < rotations.length) throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
 		if(ri < rotations.length &&
 		   get_speed_delta(sx, sy, rotations[ri].start, mx, my) <= 0) {
 		    throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
