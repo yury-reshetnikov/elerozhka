@@ -183,9 +183,18 @@ function start() {
 	    move(snake_tail, mx, my)
 	}
 	// intersections
-	let del_x_y = snake_head_length + snake_body_length / 2
-	let dx = speed.x > 0 ? x : x - 2 * del_x_y,
-	    dy = speed.y > 0 ? y : y + del_x_y
+	let del_x_y = snake_head_length + snake_body_length_half
+	let dx = x
+	let dy = y
+	if(speed.x < 0) dx -= 2 * del_x_y
+        else if(speed.y > 0) {
+                dx -= del_x_y
+                dy += del_x_y
+        }
+        else if(speed.y < 0) {
+                dx -= del_x_y
+                dy -= del_x_y
+        }
 	// +++ modify dx&dy depending on speed direction
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
