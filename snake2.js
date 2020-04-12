@@ -183,7 +183,7 @@ function start() {
 	    move(snake_tail, mx, my)
 	}
 	// intersections
-	let dx = x, dy = y
+	let dx = dy = get_speed_delta(speed.x, speed.y, rotations[0].start, x, y)
 	// +++ modify dx&dy depending on speed direction
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
