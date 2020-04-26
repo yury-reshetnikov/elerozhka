@@ -56,16 +56,20 @@ function start() {
             if(!eating && (!rotations.length || rotations[0].changed))
 		rotations.unshift({
 		    left: true,
-		    start: speed.x ? snake_head_shift.transform.baseVal[0].matrix.e
-			: snake_head_shift.transform.baseVal[0].matrix.f
+		    start_x: snake_head_shift.transform.baseVal[0].matrix.e,
+		    start_y: snake_head_shift.transform.baseVal[0].matrix.f,
+		    speed_x: speed.x,
+		    speed_y: speed.y,
 		})
 	}
 	else if(e.key == 'ArrowRight') {
             if(!eating && (!rotations.length || rotations[0].changed))
 		rotations.unshift({
 		    left: false,
-		    start: speed.x ? snake_head_shift.transform.baseVal[0].matrix.e
-			: snake_head_shift.transform.baseVal[0].matrix.f
+		    start_x: snake_head_shift.transform.baseVal[0].matrix.e,
+		    start_y: snake_head_shift.transform.baseVal[0].matrix.f,
+		    speed_x: speed.x,
+		    speed_y: speed.y,
 		})
 	}
 	else if(e.code == 'Space') {
@@ -107,8 +111,8 @@ function start() {
 	node.transform.baseVal[0].matrix.e = x
 	node.transform.baseVal[0].matrix.f = y
     }
-    function get_speed_delta(sx, sy, start, x, y) {
-	return sx > 0 ? x - start : sx < 0 ? start - x : sy > 0 ? y - start : /* sy < 0 */ start - y
+    function get_speed_delta(rot, x, y) {
+	return rot.speed_x > 0 ? x - rot.start_x : rot.speed_x < 0 ? rot.start_x - x : rot.speed_y > 0 ? y - rot.start_y : /* sy < 0 */ rot.start_y - y
     }
     let prev = (new Date).getTime()
     function draw() {
@@ -119,7 +123,7 @@ function start() {
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
 	let y = Math.round (old_y + speed.y * tp)
 	if(rotations.length && !rotations[0].changed) {
-	    let leg = snake_head_length - get_speed_delta(speed.x, speed.y, rotations[0].start, x, y)
+	    let leg = snake_head_length - get_speed_delta(rotations[0], x, y)
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
 		// уберу, пока оно никуда не привязано
@@ -183,7 +187,8 @@ function start() {
 	    })
 	    move(snake_body_2, mx, my)
 	    if(ri < rotations.length) {
-		throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
+		// throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
+		console.log(mx,my)
 	    }
 	    move(snake_tail, mx, my)
 	}
@@ -265,7 +270,6 @@ function start() {
 	       mice.splice(eating.index, 1)
 	       first_snake_body = add_snake_body(first_snake_body)
 	       snake_body_dyn.unshift(first_snake_body)
-	       if(snake_body_dyn.length == 3) rotations = []
 	   }
 	}
 	else {
