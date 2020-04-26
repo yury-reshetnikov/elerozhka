@@ -188,7 +188,7 @@ function start() {
 	    move(snake_body_2, mx, my)
 	    if(ri < rotations.length) {
 		// throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
-		console.log(mx,my)
+		console.log('mx',mx,'my',my,'rot',rotations[ri])
 	    }
 	    move(snake_tail, mx, my)
 	}
