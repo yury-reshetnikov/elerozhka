@@ -192,7 +192,7 @@ function start() {
 		let leg = rot.speed_x > 0 ? (rot.left ? rot.start_y - my : my - rot.start_y) :
 		    rot.speed_x < 0 ? (rot.left ? my - rot.start_y : rot.start_y - my) :
                     rot.speed.y > 0 ? (rot.left ? mx - rot.start_x : rot.start_x - mx) :
-                    rot.speed.y < 0 ? (rot.left ? rot.start_x - mx : mx - rot.start_x)
+                    /*rot.speed.y < 0*/ (rot.left ? rot.start_x - mx : mx - rot.start_x)
 		console.log('mx',mx,'my',my,'leg',leg,'rot',rot)
 		if(leg < snake_tail_length) {
 		}
