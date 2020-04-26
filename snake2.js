@@ -190,7 +190,9 @@ function start() {
 		// throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
 		let rot = rotations[ri]
 		let leg = rot.speed_x > 0 ? (rot.left ? rot.start_y - my : my - rot.start_y) :
-		    rot.speed_x < 0 ? snake_tail_length*2 : snake_tail_length*2
+		    rot.speed_x < 0 ? (rot.left ? my - rot.start_y : rot.start_y - my) :
+                    rot.speed.y > 0 ? (rot.left ? mx - rot.start_x : rot.start_x - mx) :
+                    rot.speed.y < 0 ? (rot.left ? rot.start_x - mx : mx - rot.start_x)
 		console.log('mx',mx,'my',my,'leg',leg,'rot',rot)
 		if(leg < snake_tail_length) {
 		}
