@@ -196,9 +196,10 @@ function start() {
 		console.log('mx',mx,'my',my,'leg',leg,'rot',rot)
 		let sign = (rot.speed_x > 0 ? 1 : rot.speed_x < 0 ? -1 : rot.speed_y < 0 ? 1 : /*rot.speed_y > 0*/ -1)
 		if(leg < snake_tail_length) {
-		    let cos = leg / snake_tail_length
-		    let acos_rad = Math.acos(cos)
-                    let sin = Math.sin(acos_rad)
+		    let sin = leg / snake_tail_length
+		    let asin_rad = Math.asin(sin)
+		    let cos = Math.cos(asin_rad)
+		    if(rot.left) sin = -sin
 		    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, (rot.speed_x ? sin : -cos) * sign, (rot.speed_x ? cos : sin) * sign)
 		}
 		else {
