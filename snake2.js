@@ -122,16 +122,16 @@ function start() {
 	let x = Math.round (old_x + speed.x * tp)
 	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
 	let y = Math.round (old_y + speed.y * tp)
+        let leg = snake_head_length - get_speed_delta(rotations[0], x, y)
+	let cos = leg / snake_head_length
+	let acos_rad = Math.acos(cos)
+        let sin = Math.sin(acos_rad)
 	if(rotations.length && !rotations[0].changed) {
-	    let leg = snake_head_length - get_speed_delta(rotations[0], x, y)
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
 		// уберу, пока оно никуда не привязано
 		// delta_rotate_x = (x - rotations[0].start + snake_body_length_half * sign)
 		// delta_rotate_y = (x - rotations[0].start) * (rotations[0].left ? 1 : -1)
-		let cos = leg / snake_head_length
-		let acos_rad = Math.acos(cos)
-		let sin = Math.sin(acos_rad)
 		if(rotations[0].left) sin = -sin
 		rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
 			       (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
@@ -195,6 +195,7 @@ function start() {
                     /*rot.speed_y < 0*/ (rot.left ? rot.start_x - mx : mx - rot.start_x)
 		console.log('mx',mx,'my',my,'leg',leg,'rot',rot)
 		if(leg < snake_tail_length) {
+                    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
 		}
 		else {
 		    rotations.length = ri
