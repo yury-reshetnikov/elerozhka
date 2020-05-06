@@ -203,9 +203,9 @@ function start() {
 		}
 		else {
 		    if(rot.speed_x) rotate_sin_cos(snake_tail.transform.baseVal[0].matrix,
-					   (rotations[0].left ? -1 : 1) * sign, 0)
+					   (rot.left ? -1 : 1) * sign, 0)
 		    else/*rot.speed_y*/rotate_sin_cos(snake_tail.transform.baseVal[0].matrix,
-					      0, -1 * sign * (rotations[0].left ? 1 : -1))
+					      0, -1 * sign * (rot.left ? 1 : -1))
 		    rotations.length = ri
 		    console.log('ri',ri,'rotations',rotations)
 		}
