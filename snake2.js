@@ -199,7 +199,7 @@ function start() {
 		    let cos = leg / snake_tail_length
 		    let acos_rad = Math.acos(cos)
                     let sin = Math.sin(acos_rad)
-		    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
+		    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, (rot.speed_x ? sin : -cos) * sign, (rot.speed_x ? cos : sin) * sign)
 		}
 		else {
 		    if(rot.speed_x) rotate_sin_cos(snake_tail.transform.baseVal[0].matrix,
