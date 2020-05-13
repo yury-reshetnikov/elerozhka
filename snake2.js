@@ -131,21 +131,25 @@ function start() {
 		let cos = leg / snake_head_length
 		let acos_rad = Math.acos(cos)
 		let sin = Math.sin(acos_rad)
-		if (speed.x > 0 && rotations[0].left) {
-                    delta_rotate_x = snake_head_length - leg
-		    delta_rotate_y = snake_head_length * sin
+		if (speed.x > 0) {
+		    if(rotations[0].left) {
+			delta_rotate_x = snake_head_length - leg
+			delta_rotate_y = snake_head_length * sin
+		    }
+		    else {
+			delta_rotate_x = snake_head_length - leg
+			delta_rotate_y = - Math.round(snake_head_length * sin) - snake_body_length_half
+		    }
 		}
-		if (speed.x > 0 && !rotations[0].left) {
-                    delta_rotate_x = snake_head_length - leg
-		    delta_rotate_y = - (snake_head_length * sin)
-		}
-		if (speed.x < 0 && rotations[0].left) {
-                    delta_rotate_x = - (snake_head_length - leg)
-		    delta_rotate_y = snake_head_length * sin
-		}
-		if (speed.x < 0 && !rotations[0].left) {
-                    delta_rotate_x = - (snake_head_length - leg)
-		    delta_rotate_y = - (snake_head_length * sin)
+		else if (speed.x < 0) {
+		    if(rotations[0].left) {
+			delta_rotate_x = - (snake_head_length - leg)
+			delta_rotate_y = snake_head_length * sin
+		    }
+		    else {
+			delta_rotate_x = - (snake_head_length - leg)
+			delta_rotate_y = - (snake_head_length * sin)
+		    }
 		}
 		if (speed.y > 0 && rotations[0].left) {
                     delta_rotate_x = snake_head_length * sin
