@@ -133,35 +133,35 @@ function start() {
 		let sin = Math.sin(acos_rad)
 		if (speed.x > 0 && rotations[0].left) {
                     delta_rotate_x = snake_head_length - leg
-		    delta_rotate_y = snake_head_length / sin
+		    delta_rotate_y = snake_head_length * sin
 		}
 		if (speed.x > 0 && !rotations[0].left) {
                     delta_rotate_x = snake_head_length - leg
-		    delta_rotate_y = - (snake_head_length / sin)
+		    delta_rotate_y = - (snake_head_length * sin)
 		}
 		if (speed.x < 0 && rotations[0].left) {
                     delta_rotate_x = - (snake_head_length - leg)
-		    delta_rotate_y = snake_head_length / sin
+		    delta_rotate_y = snake_head_length * sin
 		}
 		if (speed.x < 0 && !rotations[0].left) {
                     delta_rotate_x = - (snake_head_length - leg)
-		    delta_rotate_y = - (snake_head_length / sin)
+		    delta_rotate_y = - (snake_head_length * sin)
 		}
 		if (speed.y > 0 && rotations[0].left) {
-                    delta_rotate_x = snake_head_length / sin
-		    delta_rotate_y = snake_head_length - leg
+                    delta_rotate_x = snake_head_length * sin
+		    delta_rotate_y = - (snake_head_length - leg)
 		}
 		if (speed.y > 0 && !rotations[0].left) {
-                    delta_rotate_x = - (snake_head_length / sin)
-		    delta_rotate_y = snake_head_length - leg
+                    delta_rotate_x = - (snake_head_length * sin)
+		    delta_rotate_y = - (snake_head_length - leg)
 		}
 		if (speed.y < 0 && rotations[0].left) {
-                    delta_rotate_x = snake_head_length / sin
-		    delta_rotate_y = - (snake_head_length - leg)
+                    delta_rotate_x = - (snake_head_length * sin)
+		    delta_rotate_y = snake_head_length - leg
 		}
 		if (speed.y < 0 && !rotations[0].left) {
-                    delta_rotate_x = - (snake_head_length / sin)
-		    delta_rotate_y = - (snake_head_length - leg)
+                    delta_rotate_x = snake_head_length * sin
+		    delta_rotate_y = snake_head_length - leg
 		}
 		if(rotations[0].left) sin = -sin
 		rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
