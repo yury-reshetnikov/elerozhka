@@ -183,10 +183,8 @@ function start() {
 	    if(rotations.length && !rotations[0].changed) ++ri
 	    snake_body_dyn.some(function(body) {
 		move(body, mx, my)
-		if(ri < rotations.length && snake_body_dyn.length > 2) throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
 		if(ri < rotations.length &&
 		   get_speed_delta(sx, sy, rotations[ri].start, mx, my) <= 0) {
-		    if(snake_body_dyn.length > 2) throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
 		    if(sx) {
 			sy = rotations[ri].left ? sx : -sx
 			sx = 0
@@ -202,13 +200,11 @@ function start() {
 	    })
 	    move(snake_body_2, mx, my)
 	    if(ri < rotations.length) {
-		// throw {ri:ri, rotations:rotations, speed:speed, sx:sx, sy:sy, mx:mx, my:my, delta:get_speed_delta(sx, sy, rotations[ri].start, mx, my)}
 		let rot = rotations[ri]
 		let leg = rot.speed_x > 0 ? (rot.left ? rot.start_y - my : my - rot.start_y) :
 		    rot.speed_x < 0 ? (rot.left ? my - rot.start_y : rot.start_y - my) :
                     rot.speed_y > 0 ? (rot.left ? mx - rot.start_x : rot.start_x - mx) :
                     /*rot.speed_y < 0*/ (rot.left ? rot.start_x - mx : mx - rot.start_x)
-		console.log('mx',mx,'my',my,'leg',leg,'rot',rot)
 		let sign = (rot.speed_x > 0 ? 1 : rot.speed_x < 0 ? -1 : rot.speed_y < 0 ? 1 : /*rot.speed_y > 0*/ -1)
 		if(leg < snake_tail_length) {
 		    let sin = leg / snake_tail_length
