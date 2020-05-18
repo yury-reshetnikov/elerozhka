@@ -183,17 +183,20 @@ function start() {
 	    if(rotations.length && !rotations[0].changed) ++ri
 	    snake_body_dyn.some(function(body) {
 		move(body, mx, my)
-		if(ri < rotations.length &&
-		   get_speed_delta(sx, sy, rotations[ri].start, mx, my) <= 0) {
-		    if(sx) {
-			sy = rotations[ri].left ? sx : -sx
-			sx = 0
+		if(ri < rotations.length) {
+		    let delta = get_speed_delta(sx, sy, rotations[ri].start, mx, my)
+		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy)
+		    if(delta <= 0) {
+			if(sx) {
+			    sy = rotations[ri].left ? sx : -sx
+			    sx = 0
+			}
+			else {
+			    sx = rotations[ri].left ? -sy : sy
+			    sy = 0
+			}
+			++ri
 		    }
-		    else {
-			sx = rotations[ri].left ? -sy : sy
-			sy = 0
-		    }
-		    ++ri
 		}
 		add()
 		return false
