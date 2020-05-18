@@ -193,22 +193,22 @@ function start() {
 		    if(!rot.left) delta = -delta
 		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
 		    if(delta < snake_body_length) {
+			let s = rot.left ? 1 : -1
 			if(rot.speed_x > 0) {
 			    mx += delta
-			    my += delta
+			    my += delta * s
 			}
 			else if(rot.speed_x < 0) {
 			    mx -= delta
-			    my -= delta
+			    my -= delta * s
 			}
 			else if(rot.speed_y > 0) {
-			    mx -= delta
+			    mx -= delta * s
 			    my += delta
 			}
 			else /* if(rot.speed_y < 0) */ {
+			    mx += delta * s
 			    my -= delta
-			    if(rot.left) mx += delta
-			    else mx -= delta
 			}
 			if(sx) {
 			    sy = rotations[ri].left ? sx : -sx
