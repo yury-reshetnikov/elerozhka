@@ -206,8 +206,9 @@ function start() {
 			    my += delta
 			}
 			else /* if(rot.speed_y < 0) */ {
-			    mx += delta
 			    my -= delta
+			    if(rot.left) mx += delta
+			    else mx -= delta
 			}
 			if(sx) {
 			    sy = rotations[ri].left ? sx : -sx
