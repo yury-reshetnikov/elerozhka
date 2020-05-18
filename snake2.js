@@ -191,7 +191,7 @@ function start() {
 			rot.speed_y > 0 ? mx - rot.start_x :
 			/* rot.speed_y < 0 */ rot.start_x - mx
 		    if(!rot.left) delta = -delta
-		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
+		    // console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
 		    if(delta < snake_body_length) {
 			let s = rot.left ? 1 : -1
 			if(rot.speed_x > 0) {
@@ -245,7 +245,7 @@ function start() {
 		    else/*rot.speed_y*/rotate_sin_cos(snake_tail.transform.baseVal[0].matrix,
 					      0, -1 * sign * (rot.left ? 1 : -1))
 		    rotations.length = ri
-		    console.log('ri',ri,'rotations',rotations)
+		    // console.log('ri',ri,'rotations',rotations)
 		}
 	    }
 	    move(snake_tail, mx, my)
