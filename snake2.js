@@ -211,11 +211,11 @@ function start() {
 			    my -= delta
 			}
 			if(sx) {
-			    sy = rotations[ri].left ? sx : -sx
+			    sy = sx * s
 			    sx = 0
 			}
 			else {
-			    sx = rotations[ri].left ? -sy : sy
+			    sx = sy * -s
 			    sy = 0
 			}
 			++ri
