@@ -188,6 +188,8 @@ function start() {
 		    let delta = rotations[ri].start_y - (y + my)
 		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
 		    if(delta < snake_head_length) {
+			mx += delta
+			my += delta
 			if(sx) {
 			    sy = rotations[ri].left ? sx : -sx
 			    sx = 0
