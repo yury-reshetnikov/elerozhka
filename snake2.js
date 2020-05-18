@@ -187,7 +187,7 @@ function start() {
 		    // let delta = get_speed_delta(rotations[ri], mx, my)
 		    let delta = rotations[ri].start_y - (y + my)
 		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
-		    if(delta < snake_body_length) {
+		    if(delta < snake_body_length + snake_body_length_half) {
 			if(sx) {
 			    sy = rotations[ri].left ? sx : -sx
 			    sx = 0
