@@ -190,6 +190,7 @@ function start() {
 			rot.speed_x < 0 ? my - rot.start_y :
 			rot.speed_y > 0 ? mx - rot.start_x :
 			/* rot.speed_y < 0 */ rot.start_x - mx
+		    if(!rot.left) delta = -delta
 		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
 		    if(delta < snake_body_length) {
 			if(rot.speed_x > 0) {
