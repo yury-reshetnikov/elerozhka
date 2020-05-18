@@ -192,6 +192,7 @@ function start() {
 			    sx = 0
 			}
 			else {
+			    mx += delta
 			    sx = rotations[ri].left ? -sy : sy
 			    sy = 0
 			}
