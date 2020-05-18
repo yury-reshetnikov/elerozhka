@@ -185,11 +185,11 @@ function start() {
 		move(body, mx, my)
 		if(ri < rotations.length) {
 		    // let delta = get_speed_delta(rotations[ri], mx, my)
-		    let delta = rotations[ri].start_y - (y + my)
-		    if(delta < snake_head_length) {
-			console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
-			// mx += delta
-			my = 0
+		    let delta = rotations[ri].start_y - my
+		    console.log('ri',ri,'delta',delta,'mx',mx,'my',my,'sx',sx,'sy',sy,'rot',rotations[ri])
+		    if(delta < snake_body_length) {
+			mx += delta
+			my += delta
 			if(sx) {
 			    sy = rotations[ri].left ? sx : -sx
 			    sx = 0
