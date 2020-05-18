@@ -153,7 +153,7 @@ function start() {
 		}
 		else if (speed.y > 0) {
                     if(rotations[0].left) {
-                        delta_rotate_x = - Math.round(snake_head_length * sin) + snake_body_length_half
+                        delta_rotate_x = - Math.round(snake_head_length * sin) - snake_body_length_half
 		        delta_rotate_y = snake_head_length - leg
                     }
 		    else {
