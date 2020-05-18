@@ -135,23 +135,19 @@ function start() {
 		let b = Math.round(snake_head_length * sin) + snake_body_length_half
 		if (speed.x > 0) {
 		    delta_rotate_x = a
-		    if(rotations[0].left) delta_rotate_y = b
-		    else delta_rotate_y = -b
+		    delta_rotate_y = rotations[0].left ? b : -b
 		}
 		else if (speed.x < 0) {
 		    delta_rotate_x = -a
-		    if(rotations[0].left) delta_rotate_y = -b
-		    else delta_rotate_y = b
+		    delta_rotate_y = rotations[0].left ? -b : b
 		}
 		else if (speed.y > 0) {
 		    delta_rotate_y = a
-                    if(rotations[0].left) delta_rotate_x = -b
-		    else delta_rotate_x = b
+                    delta_rotate_x = rotations[0].left ? -b : b
 		}
 		else /* speed.y < 0 */ {
 		    delta_rotate_y = -a
-		    if(rotations[0].left) delta_rotate_x = b
-		    else delta_rotate_x = -b
+		    delta_rotate_x = rotations[0].left ? b : -b
 		}
 		if(rotations[0].left) sin = -sin
 		rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
