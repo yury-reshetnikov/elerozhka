@@ -196,7 +196,7 @@ function start() {
 			    mx += delta
 			    my += delta
 			}
-			else if(rot.speed_x > 0) {
+			else if(rot.speed_x < 0) {
 			    mx -= delta
 			    my -= delta
 			}
