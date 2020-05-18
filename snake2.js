@@ -131,51 +131,31 @@ function start() {
 		let cos = leg / snake_head_length
 		let acos_rad = Math.acos(cos)
 		let sin = Math.sin(acos_rad)
+		let a = snake_head_length - leg
+		let b = Math.round(snake_head_length * sin) + snake_body_length_half
 		if (speed.x > 0) {
-		    if(rotations[0].left) {
-			delta_rotate_x = snake_head_length - leg
-			delta_rotate_y = Math.round(snake_head_length * sin) + snake_body_length_half
-		    }
-		    else {
-			delta_rotate_x = snake_head_length - leg
-			delta_rotate_y = - Math.round(snake_head_length * sin) - snake_body_length_half
-		    }
+		    delta_rotate_x = a
+		    if(rotations[0].left) delta_rotate_y = b
+		    else delta_rotate_y = -b
 		}
 		else if (speed.x < 0) {
-		    if(rotations[0].left) {
-			delta_rotate_x = - (snake_head_length - leg)
-			delta_rotate_y = -(Math.round(snake_head_length * sin) + snake_body_length_half)
-		    }
-		    else {
-			delta_rotate_x = - (snake_head_length - leg)
-			delta_rotate_y = Math.round(snake_head_length * sin) + snake_body_length_half
-		    }
+		    delta_rotate_x = -a
+		    if(rotations[0].left) delta_rotate_y = -b
+		    else delta_rotate_y = b
 		}
 		else if (speed.y > 0) {
-                    if(rotations[0].left) {
-                        delta_rotate_x = - Math.round(snake_head_length * sin) - snake_body_length_half
-		        delta_rotate_y = snake_head_length - leg
-                    }
-		    else {
-                        delta_rotate_x = Math.round(snake_head_length * sin) + snake_body_length_half
-		        delta_rotate_y = snake_head_length - leg
-		    }
+		    delta_rotate_y = a
+                    if(rotations[0].left) delta_rotate_x = -b
+		    else delta_rotate_x = b
 		}
 		else /* speed.y < 0 */ {
-                    if(rotations[0].left) {
-                        delta_rotate_x = Math.round(snake_head_length * sin) + snake_body_length_half
-		        delta_rotate_y = - (snake_head_length - leg)
-		    }
-		    else {
-                        delta_rotate_x = - Math.round(snake_head_length * sin) - snake_body_length_half
-		        delta_rotate_y = -(snake_head_length - leg)
-		    }
+		    delta_rotate_y = -a
+		    if(rotations[0].left) delta_rotate_x = b
+		    else delta_rotate_x = -b
 		}
 		if(rotations[0].left) sin = -sin
 		rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
 			       (speed.x ? sin : -cos) * sign, (speed.x ? cos : sin) * sign)
-		// if(speed.x) delta_rotate_y -= snake_body_length * sign * (rotations[0].left ? -1 : 1)
-		// else delta_rotate_x -= snake_body_length * sign * (rotations[0].left ? -1 : 1)
 	    }
 	    else {
 		rotations[0].changed = true
