@@ -95,7 +95,7 @@
   </g>
   <text font-size="400">
     <tspan x="1000" y="800">mice eaten</tspan>
-    <tspan id="counter" x="2800" y="800"></tspan>
+    <tspan id="counter" x="2800" y="800">0</tspan>
   </text>
 <script>
    svgeditor(window)

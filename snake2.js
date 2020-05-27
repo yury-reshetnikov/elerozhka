@@ -8,7 +8,7 @@ function rotate_sin_cos(m, sin, cos) {
 }
 
 function start() {
-    let counter.textContent = 0
+    let counter = document.getElementById('counter')
     let box = document.getElementById('box')
     let snake = document.getElementById('snake')
     let snake_head_rotate = document.getElementById('snake_head_rotate')
@@ -329,7 +329,7 @@ function start() {
 	       mice.splice(eating.index, 1)
 	       first_snake_body = add_snake_body(first_snake_body)
 	       snake_body_dyn.unshift(first_snake_body)
-	       counter.textContent = mice.length ++
+	       counter.textContent = snake_body_dyn.length
 	   }
 	}
 	else {
