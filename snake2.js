@@ -6,7 +6,7 @@ function calc_growing_delta(growing_start, speed, x, y) {
     console.log('delta',delta,'x',x,'y',y)
 }
 
-function calñ_growing_start(growing_delta, speed, x, y) {
+function calc_growing_start(growing_delta, speed, x, y) {
     if(speed.x > 0) growing_start = x - delta
     else if(speed.x < 0) growing_start = delta + x
     else if(speed.y > 0) growing_start = y - delta
@@ -311,7 +311,7 @@ function start() {
             return
 	}
 	if(growing) {
-	    let delta = calc_growing_delta
+	    let delta = calc_growing_delta(growing_start, speed, x, y)
 	    if(delta >= snake_body_length) {
 		growing = eating = false
 		let count = Math.round(Math.random() * max_new_mice_count)
