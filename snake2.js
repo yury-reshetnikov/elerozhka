@@ -1,3 +1,18 @@
+function calc_growing_delta(growing_start, speed, x, y) {
+    if(speed.x > 0) delta = x - growing_start
+    else if(speed.x < 0) delta = growing_start - x
+    else if(speed.y > 0) delta = y - growing_start
+    else if(speed.y < 0) delta = growing_start - y
+    console.log('delta',delta,'x',x,'y',y)
+}
+
+function calñ_growing_start(growing_delta, speed, x, y) {
+    if(speed.x > 0) growing_start = x - delta
+    else if(speed.x < 0) growing_start = delta + x
+    else if(speed.y > 0) growing_start = y - delta
+    else if(speed.y < 0) growing_start = delta + y
+}
+
 function rotate_sin_cos(m, sin, cos) {
     m.a = cos
     m.b = sin
@@ -296,13 +311,7 @@ function start() {
             return
 	}
 	if(growing) {
-	    // let delta = calc_growing_delta(growing_start, speed, x, y)
-	    let delta
-	    if(speed.x > 0) delta = x - growing_start
-	    else if(speed.x < 0) delta = growing_start - x
-            else if(speed.y > 0) delta = y - growing_start
-            else if(speed.y < 0) delta = growing_start - y
-	    console.log('delta',delta,'x',x,'y',y)
+	    let delta = calc_growing_delta
 	    if(delta >= snake_body_length) {
 		growing = eating = false
 		let count = Math.round(Math.random() * max_new_mice_count)
