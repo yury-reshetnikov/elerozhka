@@ -161,6 +161,8 @@ function start() {
 					   (rotations[0].left ? -1 : 1) * sign, 0)
 		else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
 					      0, -1 * sign * (rotations[0].left ? 1 : -1))
+		// let delta
+		// if(growing) delta = calc_growing_delta(growing_start, speed, x, y)
 		if(speed.x) {
 		    speed.y = rotations[0].left ? -speed.x : speed.x
 		    speed.x = 0
@@ -169,6 +171,7 @@ function start() {
 		    speed.x = rotations[0].left ? speed.y : -speed.y
 		    speed.y = 0
 		}
+		// if(growing) growing_start = calc_growing_start(delta, speed, x, y)
 	    }
 	}
 	move(snake_head_shift, x, y)
@@ -293,6 +296,7 @@ function start() {
             return
 	}
 	if(growing) {
+	    // let delta = calc_growing_delta(growing_start, speed, x, y)
 	    let delta
 	    if(speed.x > 0) delta = x - growing_start
 	    else if(speed.x < 0) delta = growing_start - x
