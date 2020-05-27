@@ -93,6 +93,9 @@
       <circle id="mongoose3_eyeball" fill="white" cx="9315" cy="6460" r="25"/>
       <path id="mongoose3_ear1" fill="rgb(149,75,0)" stroke="black" d="M 9386,6420 C 9402,6362 9450,6351 9469,6348 9485,6401 9461,6417 9459,6438"/>
   </g>
+  <text font-size="400">
+    <tspan x="1000" y="800">0</tspan>
+  </text>
 <script>
    svgeditor(window)
    start()
