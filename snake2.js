@@ -5,7 +5,7 @@ function calc_growing_delta(growing_start, speed, x, y) {
     else if(speed.y < 0) return growing_start - y
 }
 
-function calc_growing_start(growing_delta, speed, x, y) {
+function calc_growing_start(delta, speed, x, y) {
     if(speed.x > 0) return x - delta
     else if(speed.x < 0) return delta + x
     else if(speed.y > 0) return y - delta
@@ -175,8 +175,8 @@ function start() {
 					   (rotations[0].left ? -1 : 1) * sign, 0)
 		else/*speed.y*/rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix,
 					      0, -1 * sign * (rotations[0].left ? 1 : -1))
-		// let delta
-		// if(growing) delta = calc_growing_delta(growing_start, speed, x, y)
+		let delta
+		if(growing) delta = calc_growing_delta(growing_start, speed, x, y)
 		if(speed.x) {
 		    speed.y = rotations[0].left ? -speed.x : speed.x
 		    speed.x = 0
@@ -185,7 +185,7 @@ function start() {
 		    speed.x = rotations[0].left ? speed.y : -speed.y
 		    speed.y = 0
 		}
-		// if(growing) growing_start = calc_growing_start(delta, speed, x, y)
+		if(growing) growing_start = calc_growing_start(delta, speed, x, y)
 	    }
 	}
 	move(snake_head_shift, x, y)
@@ -311,7 +311,7 @@ function start() {
 	}
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
-            console.log('delta',delta,'x',x,'y',y)
+	    console.log('delta',delta,'x',x,'y',y)
 	    if(delta >= snake_body_length) {
 		growing = eating = false
 		let count = Math.round(Math.random() * max_new_mice_count)
