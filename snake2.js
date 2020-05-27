@@ -127,7 +127,7 @@ function start() {
 	let delta_rotate_y = 0
 	if(rotations.length && !rotations[0].changed) {
 	    let leg = snake_head_length - get_speed_delta(rotations[0], x, y)
-	    console.log('leg',leg,'x',x,'y',y,'rot',rotations[0])
+	    console.log('leg',leg,'x',x,'y',y,'growing',growing,'rot',rotations[0])
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
 		let cos = leg / snake_head_length
