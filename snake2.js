@@ -29,8 +29,8 @@ function add_red_line(d) {
 }
 
 function add_red_cross(x, y) {
-    add_red_line('M 'x'-500,'y'+500 L 'x'+500,'y'-500')
-    add_red_line('M 'x'-500,'y'-500 L 'x'+500,'y'+500')
+    add_red_line('M '+x+'-500,'+y+'+500 L '+x+'+500,'+y+'-500')
+    add_red_line('M '+x+'-500,'+y+'-500 L '+x+'+500,'+y+'+500')
 }
 
 function start() {
@@ -320,9 +320,9 @@ function start() {
 	    by = body.transform.baseVal[0].matrix.f
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
-		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}
                 add_red_cross(dx,dy)
                 add_red_cross(bx,by)
+		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}
 	    }
 	})
 	if(growing) {
