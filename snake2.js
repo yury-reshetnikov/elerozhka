@@ -141,7 +141,7 @@ function start() {
 	let delta_rotate_y = 0
 	if(rotations.length && !rotations[0].changed) {
 	    let leg = snake_head_length - get_speed_delta(rotations[0], x, y)
-	    console.log('leg',leg,'x',x,'y',y,'growing',growing,'rot',rotations[0])
+	    // console.log('leg',leg,'x',x,'y',y,'growing',growing,'rot',rotations[0])
 	    let sign = (speed.x > 0 ? 1 : speed.x < 0 ? -1 : speed.y < 0 ? 1 : /*speed.y > 0*/ -1)
 	    if(leg >= 0) {
 		let cos = leg / snake_head_length
@@ -282,7 +282,6 @@ function start() {
                 dx -= del_x_y
                 dy -= del_x_y
         }
-	// +++ modify dx&dy depending on speed direction
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
 	    let add_mark = function(d) {
@@ -309,9 +308,15 @@ function start() {
 	    }
             return
 	}
+	// check for intersection with tail
+	snake_body_dyn.some(function(body) {
+	    bx = body.transform.baseVal[0].matrix.e
+	    by = body.transform.baseVal[0].matrix.f
+	    throw {bx:bx,by:by,x:x,y:y}
+	})
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
-	    console.log('delta',delta,'x',x,'y',y)
+	    // console.log('delta',delta,'x',x,'y',y)
 	    if(delta >= snake_body_length) {
 		growing = eating = false
 		let count = Math.round(Math.random() * max_new_mice_count)
