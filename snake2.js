@@ -314,7 +314,7 @@ function start() {
 	    by = body.transform.baseVal[0].matrix.f
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
-		throw {bx:bx,by:by,x:x,y:y,d:body_distance}
+		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}
 	    }
 	})
 	if(growing) {
