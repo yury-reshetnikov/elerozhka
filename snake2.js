@@ -312,7 +312,10 @@ function start() {
 	snake_body_dyn.some(function(body) {
 	    bx = body.transform.baseVal[0].matrix.e
 	    by = body.transform.baseVal[0].matrix.f
-	    throw {bx:bx,by:by,x:x,y:y}
+	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
+	    if(body_distance < snake_body_length / 2) {
+		throw {bx:bx,by:by,x:x,y:y,d:body_distance}
+	    }
 	})
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
