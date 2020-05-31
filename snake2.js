@@ -316,7 +316,7 @@ function start() {
 	}
 	// check for intersection with tail
 	snake_body_dyn.some(function(body) {
-	    bx = body.transform.baseVal[0].matrix.e
+	    bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
 	    by = body.transform.baseVal[0].matrix.f
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
