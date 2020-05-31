@@ -29,8 +29,8 @@ function add_red_line(d) {
 }
 
 function add_red_cross(x, y) {
-    add_red_line('M '+x+'-500,'+y+'+500 L '+x+'+500,'+y+'-500')
-    add_red_line('M '+x+'-500,'+y+'-500 L '+x+'+500,'+y+'+500')
+    add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
+    add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
 }
 
 function start() {
