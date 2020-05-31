@@ -28,6 +28,11 @@ function add_red_line(d) {
     document.children[0].append(mark)
 }
 
+function add_red_cross(x, y) {
+    add_red_line('M 'x'-500,'y'+500 L 'x'+500,'y'-500')
+    add_red_line('M 'x'-500,'y'-500 L 'x'+500,'y'+500')
+}
+
 function start() {
     let counter = document.getElementById('counter')
     let box = document.getElementById('box')
@@ -316,6 +321,8 @@ function start() {
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
 		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}
+                add_red_cross(dx,dy)
+                add_red_cross(bx,by)
 	    }
 	})
 	if(growing) {
