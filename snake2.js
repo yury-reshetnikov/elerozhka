@@ -1,14 +1,3 @@
-let max_mice_count = 5
-let max_new_mice_count = 3
-let snake_head_length = 1300
-let snake_tail_length = 1100
-let snake_body_length = 800
-let snake_body_length_half = 400
-let snake_delta_x = 10200 //snake_body_length * (snake_body_dyn.length + 1) + 8600
-let snake_delta_y = 15000 //snake_body_length * (snake_body_dyn.length + 1) + 13400
-let mouse_delta_x = 14600
-let mouse_delta_y = 15000
-
 function calc_growing_delta(growing_start, speed, x, y) {
     if(speed.x > 0) return x - growing_start
     else if(speed.x < 0) return growing_start - x
@@ -40,8 +29,6 @@ function add_red_line(d) {
 }
 
 function add_red_cross(x, y) {
-    x += snake_delta_x
-    y += snake_delta_y
     add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
     add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
 }
@@ -60,7 +47,17 @@ function start() {
 	x: 2, y: 0
     }
     let slow = false
+    let max_mice_count = 5
+    let max_new_mice_count = 3
+    let snake_head_length = 1300
+    let snake_tail_length = 1100
+    let snake_body_length = 800
+    let snake_body_length_half = 400
     let snake_body_dyn = []
+    let snake_delta_x = 10200 //snake_body_length * (snake_body_dyn.length + 1) + 8600
+    let snake_delta_y = 15000 //snake_body_length * (snake_body_dyn.length + 1) + 13400
+    let mouse_delta_x = 14600
+    let mouse_delta_y = 15000
     let stroke_width = Math.round(parseInt(box.attributes['stroke-width'].value) / 2)
     let limit = {
 	x: {
