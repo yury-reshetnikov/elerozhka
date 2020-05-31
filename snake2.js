@@ -21,6 +21,13 @@ function rotate_sin_cos(m, sin, cos) {
     m.f = 0
 }
 
+function add_red_line(d) {
+    let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+    mark.setAttribute('d', d)
+    mark.setAttribute('stroke', 'red')
+    document.children[0].append(mark)
+}
+
 function start() {
     let counter = document.getElementById('counter')
     let box = document.getElementById('box')
@@ -284,27 +291,21 @@ function start() {
         }
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
-	    let add_mark = function(d) {
-		let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-		mark.setAttribute('d', d)
-		mark.setAttribute('stroke', 'red')
-		document.children[0].append(mark)
-	    }
 	    if(dx >= limit.x.right) {
 		let mark_y = dy + snake_delta_y
-		add_mark('M 30000,'+mark_y+' L 32000,'+mark_y)
+		add_red_line('M 30000,'+mark_y+' L 32000,'+mark_y)
 	    }
 	    if(dx <= limit.x.left) {
 		let mark_y = dy + snake_delta_y
-		add_mark('M 0,'+mark_y+' L 2000,'+mark_y)
+		add_red_line('M 0,'+mark_y+' L 2000,'+mark_y)
 	    }
 	    if(dy >= limit.y.bottom) {
 		let mark_x = dx + snake_delta_x
-		add_mark('M '+mark_x+',15000 L '+mark_x+',17000')
+		add_red_line('M '+mark_x+',15000 L '+mark_x+',17000')
 	    }
 	    if(dy <= limit.y.top) {
 		let mark_x = dx + snake_delta_x
-		add_mark('M '+mark_x+',0 L '+mark_x+ ',2000')
+		add_red_line('M '+mark_x+',0 L '+mark_x+ ',2000')
 	    }
             return
 	}
