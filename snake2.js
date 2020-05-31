@@ -21,18 +21,6 @@ function rotate_sin_cos(m, sin, cos) {
     m.f = 0
 }
 
-function add_red_line(d) {
-    let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-    mark.setAttribute('d', d)
-    mark.setAttribute('stroke', 'red')
-    document.children[0].append(mark)
-}
-
-function add_red_cross(x, y) {
-    add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
-    add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
-}
-
 function start() {
     let counter = document.getElementById('counter')
     let box = document.getElementById('box')
@@ -72,6 +60,18 @@ function start() {
     let rotations = []
     let eating = false, growing = false, growing_start
     let first_snake_body = snake_body_2
+    function add_red_line(d) {
+	let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+	mark.setAttribute('d', d)
+	mark.setAttribute('stroke', 'red')
+	document.children[0].append(mark)
+    }
+    function add_red_cross(x, y) {
+	x += snake_delta_x
+	y += snake_delta_y
+	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
+	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
+    }
     let random_mouse = function(mouse) {
 	mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
