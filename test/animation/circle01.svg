@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="250mm" height="200mm" viewBox="0 0 25000 20000"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+  <!--
+      https://habr.com/ru/post/450924/
+  -->
+  <circle cx="10000" cy="10000">
+    <animate attributeName="r" values="3000;8000;3000" dur="10s" repeatCount="indefinite" />
+  </circle>
+</svg>
