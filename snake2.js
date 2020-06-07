@@ -72,7 +72,7 @@ function start() {
 	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
 	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
     }
-    let random_mouse = function(mouse) {
+    function random_mouse(mouse) {
 	mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
     }
