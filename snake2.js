@@ -314,17 +314,20 @@ function start() {
 	    }
             return
 	}
-	// check for intersection with tail
+	// checking for intersection with tail
 	snake_body_dyn.some(function(body) {
 	    bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
 	    by = body.transform.baseVal[0].matrix.f
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
-                add_red_cross(dx,dy)
+                snake_body_dyn.shift()
+                /*add_red_cross(dx,dy)
                 add_red_cross(bx,by)
-		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}
+		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}*/
 	    }
 	})
+	// checking for intersection with body
+	//if()
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
 	    // console.log('delta',delta,'x',x,'y',y)
