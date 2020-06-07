@@ -364,7 +364,8 @@ function start() {
 	       mice.splice(eating.index, 1)
 	       first_snake_body = add_snake_body(first_snake_body)
 	       snake_body_dyn.unshift(first_snake_body)
-	       counter.textContent = snake_body_dyn.length
+	       // counter.textContent = snake_body_dyn.length
+	       ++counter.textContent
 	   }
 	}
 	else {
