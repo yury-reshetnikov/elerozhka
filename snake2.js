@@ -320,7 +320,8 @@ function start() {
 	    by = body.transform.baseVal[0].matrix.f
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
-                snake_body_dyn.shift()
+		let lost = snake_body_dyn.pop()
+		if(lost) lost.remove()
                 /*add_red_cross(dx,dy)
                 add_red_cross(bx,by)
 		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}*/
