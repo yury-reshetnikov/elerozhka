@@ -314,7 +314,7 @@ function start() {
 	    }
             return
 	}
-	// checking for intersection with tail
+	// checking for intersection with body
 	snake_body_dyn.some(function(body) {
 	    bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
 	    by = body.transform.baseVal[0].matrix.f
@@ -327,7 +327,7 @@ function start() {
 		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}*/
 	    }
 	})
-	// checking for intersection with body
+	// checking for intersection with body_2 and tail
 	//if()
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
