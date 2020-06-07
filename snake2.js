@@ -328,7 +328,6 @@ function start() {
 	    }
 	})
 	// checking for intersection with body_2 and tail
-	//if()
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
 	    // console.log('delta',delta,'x',x,'y',y)
