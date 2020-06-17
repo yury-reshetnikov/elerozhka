@@ -93,7 +93,7 @@ function start() {
     if(0) random_mouse(mice[0])
     else
 	for(let x = 1; x < 10; ++x)
-	    for(let y = 1; y < 10; ++y)
+	    for(let y = 0; y < 10; ++y)
 		mice.push(shift_mouse(clone_mouse(),
 				      snake_head_length * x,
 				      -snake_head_length * y))
