@@ -91,7 +91,7 @@ function start() {
 	return mouse
     }
     // random_mouse(mice[0])
-    for(let n = -5; n < 15; ++n)
+    for(let n = -3; n < 12; ++n)
 	mice.push(shift_mouse(clone_mouse(), snake_head_length * n, 0))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
@@ -353,16 +353,16 @@ function start() {
 	    // console.log('delta',delta,'x',x,'y',y)
 	    if(delta >= snake_body_length) {
 		growing = eating = false
-		let count = Math.round(Math.random() * max_new_mice_count)
-		if(mice.length + count < 1) count = 2
-		else if(mice.length + count > max_mice_count)
-		    count = max_mice_count - mice.length
-		while(count--) {
-		    // let mouse = svggen(document.body, ['use', {
-		    //     'xlink:href': '#mouse_pattern', transform: 'translate(0,0)' }])[0]
-		    let mouse = clone_mouse()
-		    random_mouse(mouse)
-		    mice.push(mouse)
+		if(mice.length < max_mice_count) {
+		    let count = Math.round(Math.random() * max_new_mice_count)
+		    if(mice.length + count < 1) count = 2
+		    else if(mice.length + count > max_mice_count)
+			count = max_mice_count - mice.length
+		    while(count--) {
+			let mouse = clone_mouse()
+			random_mouse(mouse)
+			mice.push(mouse)
+		    }
 		}
 		let speed_increment = 0.05
 		if(speed.x > 0) speed.x += speed_increment
