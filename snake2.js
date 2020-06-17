@@ -90,9 +90,13 @@ function start() {
 	mouse.transform.baseVal[0].matrix.f = y
 	return mouse
     }
-    // random_mouse(mice[0])
-    for(let n = 1; n < 10; ++n)
-	mice.push(shift_mouse(clone_mouse(), snake_head_length * n, 0))
+    if(0) random_mouse(mice[0])
+    else
+	for(let x = 1; x < 10; ++x)
+	    for(let y = 1; y < 10; ++y)
+		mice.push(shift_mouse(clone_mouse(),
+				      snake_head_length * x,
+				      -snake_head_length * y))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
 	if(e.key == 'ArrowLeft') {
