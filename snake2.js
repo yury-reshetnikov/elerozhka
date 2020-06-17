@@ -78,6 +78,7 @@ function start() {
 	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
 	mouse.setAttribute('transform', 'translate(0,0)')
 	document.children[0].insertBefore(mouse, snake)
+	return mouse
     }
     function random_mouse(mouse) {
 	mx = mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
