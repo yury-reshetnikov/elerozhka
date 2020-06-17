@@ -368,7 +368,7 @@ function start() {
 			mice.push(mouse)
 		    }
 		}
-		let speed_increment = 0.05
+		let speed_increment = 0.01
 		if(speed.x > 0) speed.x += speed_increment
 		else if(speed.x < 0) speed.x -= speed_increment
 		else if(speed.y > 0) speed.y += speed_increment
