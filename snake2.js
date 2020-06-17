@@ -36,7 +36,7 @@ function start() {
 	x: 2, y: 0
     }
     let slow = false
-    let max_mice_count = 5
+    let max_mice_count = 100
     let max_new_mice_count = 3
     let snake_head_length = 1300
     let snake_tail_length = 1100
@@ -95,8 +95,8 @@ function start() {
 	for(let x = 1; x < 10; ++x)
 	    for(let y = 0; y < 10; ++y)
 		mice.push(shift_mouse(clone_mouse(),
-				      (snake_head_length + 10) * x,
-				      -(snake_head_length + 10) * y))
+				      (snake_head_length + 100) * x,
+				      -(snake_head_length + 100) * y))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
 	if(e.key == 'ArrowLeft') {
