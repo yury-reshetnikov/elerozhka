@@ -317,9 +317,9 @@ function start() {
             return
 	}
 	// checking for intersection with body
-	snake_body_dyn.some(function(body) {
-	    bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
-	    by = body.transform.baseVal[0].matrix.f
+	function check_body_inersection(body) {
+	    let bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
+	    let by = body.transform.baseVal[0].matrix.f
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
 		let lost = snake_body_dyn.pop()
@@ -329,7 +329,10 @@ function start() {
                 add_red_cross(bx,by)
 		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}*/
 	    }
-	})
+	}
+	snake_body_dyn.some(check_body_inersection)
+	check_body_inersection(snake_body_2)
+	check_body_inersection(snake_tail)
 	// checking for intersection with body_2 and tail
 	/*let b2x = body.transform.baseVal[0].matrix.e - snake_body_length
 	let b2y = body.transform.baseVal[0].matrix.f
