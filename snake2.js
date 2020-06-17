@@ -331,12 +331,9 @@ function start() {
 	    }
 	}
 	snake_body_dyn.some(check_body_inersection)
+	// checking for intersection with body_2 and tail
 	check_body_inersection(snake_body_2)
 	check_body_inersection(snake_tail)
-	// checking for intersection with body_2 and tail
-	/*let b2x = body.transform.baseVal[0].matrix.e - snake_body_length
-	let b2y = body.transform.baseVal[0].matrix.f
-	let body_2_distance = Math.sqrt(Math.pow(b2x - dx, 2) + Math.pow(b2y - dy, 2))*/
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
 	    // console.log('delta',delta,'x',x,'y',y)
