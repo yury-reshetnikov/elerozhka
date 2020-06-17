@@ -95,8 +95,8 @@ function start() {
 	for(let x = 1; x < 10; ++x)
 	    for(let y = 0; y < 10; ++y)
 		mice.push(shift_mouse(clone_mouse(),
-				      snake_head_length * x,
-				      -snake_head_length * y))
+				      (snake_head_length + 10) * x,
+				      -(snake_head_length + 10) * y))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
 	if(e.key == 'ArrowLeft') {
