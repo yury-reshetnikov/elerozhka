@@ -83,13 +83,13 @@ function start() {
     function random_mouse(mouse) {
 	let mx, my
 	for(;;) {
-	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
-	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
+	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length
+	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length
             //let mouse_distance = Math.sqrt(Math.pow(mx - snake_body_dyn.some, 2) + Math.pow(my - snake_body_dyn.some, 2))
 	    break
 	}
-	mouse.transform.baseVal[0].matrix.e = mx
-	mouse.transform.baseVal[0].matrix.f = my
+	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
+	mouse.transform.baseVal[0].matrix.f = my + snake_delta_y - mouse_delta_y
     }
     function shift_mouse(mouse, x, y) {
 	mouse.transform.baseVal[0].matrix.e = x
