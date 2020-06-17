@@ -73,12 +73,23 @@ function start() {
 	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
 	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
     }
+    function clone_mouse() {
+	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
+	mouse.setAttribute('transform', 'translate(0,0)')
+	document.children[0].insertBefore(mouse, snake)
+    }
     function random_mouse(mouse) {
 	mx = mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
 	my = mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
         //let mouse_distance = Math.sqrt(Math.pow(mx - snake_body_dyn.some, 2) + Math.pow(my - snake_body_dyn.some, 2))
     }
-    random_mouse(mice[0])
+    // random_mouse(mice[0])
+    mice.push(clone_mouse())
+    mice.push(clone_mouse())
+    mice.push(clone_mouse())
+    mice.push(clone_mouse())
+    mice.push(clone_mouse())
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
 	if(e.key == 'ArrowLeft') {
@@ -346,10 +357,7 @@ function start() {
 		while(count--) {
 		    // let mouse = svggen(document.body, ['use', {
 		    //     'xlink:href': '#mouse_pattern', transform: 'translate(0,0)' }])[0]
-		    let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-		    mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
-		    mouse.setAttribute('transform', 'translate(0,0)')
-		    document.children[0].insertBefore(mouse, snake)
+		    let mouse = clone_mouse()
 		    random_mouse(mouse)
 		    mice.push(mouse)
 		}
