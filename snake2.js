@@ -91,11 +91,8 @@ function start() {
 	return mouse
     }
     // random_mouse(mice[0])
-    mice.push(shift_mouse(clone_mouse(), snake_head_length, 0))
-    mice.push(shift_mouse(clone_mouse(), snake_head_length * 2, 0))
-    mice.push(shift_mouse(clone_mouse(), snake_head_length * 3, 0))
-    mice.push(shift_mouse(clone_mouse(), snake_head_length * 4, 0))
-    mice.push(shift_mouse(clone_mouse(), snake_head_length * 5, 0))
+    for(let n = -5; n < 15; ++n)
+	mice.push(shift_mouse(clone_mouse(), snake_head_length * n, 0))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
 	if(e.key == 'ArrowLeft') {
