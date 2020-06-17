@@ -85,12 +85,17 @@ function start() {
 	my = mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
         //let mouse_distance = Math.sqrt(Math.pow(mx - snake_body_dyn.some, 2) + Math.pow(my - snake_body_dyn.some, 2))
     }
+    function shift_mouse(mouse, x, y) {
+	mouse.transform.baseVal[0].matrix.e = x
+	mouse.transform.baseVal[0].matrix.f = y
+	return mouse
+    }
     // random_mouse(mice[0])
-    mice.push(clone_mouse())
-    mice.push(clone_mouse())
-    mice.push(clone_mouse())
-    mice.push(clone_mouse())
-    mice.push(clone_mouse())
+    mice.push(shift_mouse(clone_mouse(), snake_head_length, 0))
+    mice.push(shift_mouse(clone_mouse(), snake_head_length * 2, 0))
+    mice.push(shift_mouse(clone_mouse(), snake_head_length * 3, 0))
+    mice.push(shift_mouse(clone_mouse(), snake_head_length * 4, 0))
+    mice.push(shift_mouse(clone_mouse(), snake_head_length * 5, 0))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
 	if(e.key == 'ArrowLeft') {
