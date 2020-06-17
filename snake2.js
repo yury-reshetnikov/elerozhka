@@ -91,7 +91,7 @@ function start() {
 	return mouse
     }
     // random_mouse(mice[0])
-    for(let n = -3; n < 12; ++n)
+    for(let n = 1; n < 10; ++n)
 	mice.push(shift_mouse(clone_mouse(), snake_head_length * n, 0))
     let other_keyup = window.onkeyup
     window.onkeyup = function(e) {
