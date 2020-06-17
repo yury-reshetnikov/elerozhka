@@ -23,6 +23,7 @@ function rotate_sin_cos(m, sin, cos) {
 
 function start() {
     let counter = document.getElementById('counter')
+    let s_counter = document.getElementById('s_counter')
     let box = document.getElementById('box')
     let snake = document.getElementById('snake')
     let snake_head_rotate = document.getElementById('snake_head_rotate')
@@ -73,8 +74,9 @@ function start() {
 	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
     }
     function random_mouse(mouse) {
-	mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
-	mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
+	mx = mouse.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length + snake_delta_x - mouse_delta_x
+	my = mouse.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length + snake_delta_y - mouse_delta_y
+        //let mouse_distance = Math.sqrt(Math.pow(mx - snake_body_dyn.some, 2) + Math.pow(my - snake_body_dyn.some, 2))
     }
     random_mouse(mice[0])
     let other_keyup = window.onkeyup
@@ -322,12 +324,16 @@ function start() {
 	    if(body_distance < snake_body_length / 2) {
 		let lost = snake_body_dyn.pop()
 		if(lost) lost.remove()
+                s_counter.textContent = snake_body_dyn.length+1
                 /*add_red_cross(dx,dy)
                 add_red_cross(bx,by)
 		throw {bx:bx,by:by,dx:dx,dy:dy,d:body_distance}*/
 	    }
 	})
 	// checking for intersection with body_2 and tail
+	/*let b2x = body.transform.baseVal[0].matrix.e - snake_body_length
+	let b2y = body.transform.baseVal[0].matrix.f
+	let body_2_distance = Math.sqrt(Math.pow(b2x - dx, 2) + Math.pow(b2y - dy, 2))*/
 	if(growing) {
 	    let delta = calc_growing_delta(growing_start, speed, x, y)
 	    // console.log('delta',delta,'x',x,'y',y)
@@ -365,6 +371,7 @@ function start() {
 	       snake_body_dyn.unshift(first_snake_body)
 	       // counter.textContent = snake_body_dyn.length
 	       ++counter.textContent
+	       ++s_counter.textContent
 	   }
 	}
 	else {

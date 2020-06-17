@@ -43,6 +43,10 @@
     <g id="snake_full_body" transform="translate(0,0)">
       <path id="snake_tail" transform="rotate(0)" transform-origin="8500 15000" fill="rgb(0,153,0)" stroke="black" d="M 7000,15000 C 8500,13700 8500,16300 7000,15000 Z"/>
       <circle id="snake_body_2" transform="translate(0,0)" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/>
+        <animate>
+
+        </animate>
+      </circle>
       <!-- <circle id="snake_body_1" transform="translate(0,0)" fill="rgb(0,153,0)" stroke="black" cx="8500" cy="15000" r="400"/> -->
     </g>
       <g id="snake_head_shift" transform="translate(0,0)">
@@ -96,6 +100,10 @@
   <text font-size="400">
     <tspan x="1000" y="800">mice eaten</tspan>
     <tspan id="counter" x="2800" y="800">0</tspan>
+  </text>
+  <text font-size="400">
+    <tspan x="4000" y="800">snake's size</tspan>
+    <tspan id="s_counter" x="5950" y="800">1</tspan>
   </text>
 <script>
    svgeditor(window)
