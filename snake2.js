@@ -36,7 +36,7 @@ function start() {
 	x: 2, y: 0
     }
     let slow = false
-    let max_mice_count = 100
+    let max_mice_count = 10
     let max_new_mice_count = 3
     let snake_head_length = 1300
     let snake_tail_length = 1100
