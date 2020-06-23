@@ -8,7 +8,18 @@
   <!--
       https://habr.com/ru/post/450924/
   -->
-  <circle cx="10000" cy="10000" fill="lightgreen" stroke="yellow">
-    <animate attributeName="r" values="300;800;300" dur="1s" repeatCount="indefinite" />
+  <circle cx="10000" cy="10000" fill="lightgreen" stroke="yellow" r="300">
+    <animate id="ca" attributeName="r" values="300;800;300" dur="1s" repeatCount="indefinite" />
+    <!--
+	https://stackoverflow.com/questions/8455773/svg-trigger-animation-with-event
+	 begin="indefinite"
+	document.getElementById('ca').beginElement()
+	document.getElementById('ca').endElement()
+	https://developer.mozilla.org/en-US/docs/Web/API/SVGAnimationElement
+    -->
+  </circle>
+  <circle cx="10000" cy="12000" fill="lightgreen" stroke="yellow" r="300">
+    <animate id="ca2_01" attributeName="cx" by="10000" dur="1s" fill="freeze" />
+    <animate id="ca2_02" attributeName="cy" by="-5000" dur="1s" fill="freeze" begin="ca2_01.end" />
   </circle>
 </svg>
