@@ -24,6 +24,10 @@
     <animate id="ca2_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
     <animate id="ca2_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
   </circle>
+  <circle cx="10000" cy="12000" fill="lightgreen" stroke="yellow" r="800">
+    <animate id="ca3_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.begin" />
+    <animate id="ca3_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.begin" />
+  </circle>
   <script>
     function start() {
       document.getElementById('ca2_01').beginElement()
