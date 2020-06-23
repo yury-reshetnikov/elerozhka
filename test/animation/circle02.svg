@@ -20,6 +20,8 @@
   </circle>
   <circle cx="10000" cy="12000" fill="lightgreen" stroke="yellow" r="300">
     <animate id="ca2_01" attributeName="cx" by="10000" dur="1s" fill="freeze" />
-    <animate id="ca2_02" attributeName="cy" by="-5000" dur="1s" fill="freeze" begin="ca2_01.end" />
+    <animate id="ca2_02" attributeName="cy" by="-5000" dur="1s" fill="freeze" />
+    <animate id="ca2_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end" />
+    <animate id="ca2_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end" />
   </circle>
 </svg>
