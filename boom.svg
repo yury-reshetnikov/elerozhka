@@ -5,6 +5,7 @@
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      xml:space="preserve">
+  <script href="boom.js"></script>
   <!--
       https://habr.com/ru/post/450924/
   -->
@@ -47,14 +48,5 @@
     function start() {
       document.getElementById('ca2_01').beginElement()
     }
-  </script>
-  <script>
-	let ball = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-	ball.setAttribute('cx', 5000)
-	ball.setAttribute('cy', 5000)
-	ball.setAttribute('r', 200)
-	ball.setAttribute('fill', 'green')
-	ball.setAttribute('stroke', 'black')
-	document.children[0].append(ball)
   </script>
 </svg>
