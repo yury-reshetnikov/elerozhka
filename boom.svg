@@ -5,16 +5,56 @@
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      xml:space="preserve">
-  <rect id="box" x="1000" y="1000" width="30000" height="15000"
-        fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
-  <circle id="snake_body" fill="rgb(0,153,0)" stroke="black"
-          cx="15000" cy="10000" r="400"/>
+  <!--
+      https://habr.com/ru/post/450924/
+  -->
+  <rect id="box" x="1000" y="1000" width="30000" height="15000" fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
+    <!--
+	https://stackoverflow.com/questions/8455773/svg-trigger-animation-with-event
+	 begin="indefinite"
+	document.getElementById('ca').beginElement()
+	document.getElementById('ca').endElement()
+	https://developer.mozilla.org/en-US/docs/Web/API/SVGAnimationElement
+    -->
+  <circle id="snake_body" fill="rgb(0,153,0)" stroke="black" cx="15000" cy="10000" r="400">
+    <animate id="ca3_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.begin" />
+    <animate id="ca3_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.begin" />
+  </circle>
   <g id="little_balls">
-         <circle fill="rgb(0,153,0)" stroke="black" cx="14875" cy="9800" r="100"/>
-         <circle fill="rgb(0,153,0)" stroke="black" cx="15125" cy="9800" r="100"/>
-         <circle fill="rgb(0,153,0)" stroke="black" cx="14750" cy="10000" r="100"/>
+         <circle fill="rgb(0,153,0)" stroke="black" cx="15125" cy="9800" r="100">
+           <animate id="ca2_01" attributeName="cx" by="10000" dur="1s" fill="freeze" begin="indefinite" />
+           <animate id="ca2_02" attributeName="cy" by="-5000" dur="1s" fill="freeze" begin="ca2_01.begin" />
+           <animate id="ca2_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
+           <animate id="ca2_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
+         </circle>
+         <circle fill="rgb(0,153,0)" stroke="black" cx="14750" cy="10000" r="100">
+           <animate id="ca2_01" attributeName="cx" by="10000" dur="1s" fill="freeze" begin="indefinite" />
+           <animate id="ca2_02" attributeName="cy" by="5000" dur="1s" fill="freeze" begin="ca2_01.begin" />
+           <animate id="ca2_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
+           <animate id="ca2_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
+         </circle>
+         <circle fill="rgb(0,153,0)" stroke="black" cx="15125" cy="10200" r="100">
+           <animate id="ca2_01" attributeName="cx" by="-10000" dur="1s" fill="freeze" begin="indefinite" />
+           <animate id="ca2_02" attributeName="cy" by="-5000" dur="1s" fill="freeze" begin="ca2_01.begin" />
+           <animate id="ca2_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
+           <animate id="ca2_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.end - 0.2s" />
+         </circle>
+         <!-- <circle fill="rgb(0,153,0)" stroke="black" cx="14875" cy="9800" r="100"/>
          <circle fill="rgb(0,153,0)" stroke="black" cx="15250" cy="10000" r="100"/>
-         <circle fill="rgb(0,153,0)" stroke="black" cx="14875" cy="10200" r="100"/>
-         <circle fill="rgb(0,153,0)" stroke="black" cx="15125" cy="10200" r="100"/>
+         <circle fill="rgb(0,153,0)" stroke="black" cx="14875" cy="10200" r="100"/> -->
   </g>
+  <script>
+    function start() {
+      document.getElementById('ca2_01').beginElement()
+    }
+  </script>
+  <script>
+	let ball = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+	ball.setAttribute('cx', 5000)
+	ball.setAttribute('cy', 5000)
+	ball.setAttribute('r', 200)
+	ball.setAttribute('fill', 'green')
+	ball.setAttribute('stroke', 'black')
+	document.children[0].append(ball)
+  </script>
 </svg>
