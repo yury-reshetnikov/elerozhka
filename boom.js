@@ -21,9 +21,9 @@ function create_ball(cx, cy, r, element) {
     create_ball(5000, 5000, 400, snake_body)
 }*/
 
-let animate_fill
-function animate_big_ball(ball) {
-    animate_fill = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+function animate_big_ball(animate_id, ball) {
+    let animate_fill = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+    animate_fill.setAttribute('id', animate_id)
     animate_fill.setAttribute('attributeName', 'fill-opacity')
     animate_fill.setAttribute('by', '-1')
     animate_fill.setAttribute('dur', '0.2s')
@@ -33,7 +33,7 @@ function animate_big_ball(ball) {
     // TODO animate_stroke
 }
 
-function create_balls_group(x, y) {
+function create_balls_group(animate_id, x, y) {
     let big_ball = create_ball(x, y, 400, snake_body)
     create_ball(x-125, y-200, 100, big_ball)
     create_ball(x+125, y-200, 100, big_ball)
@@ -41,9 +41,5 @@ function create_balls_group(x, y) {
     create_ball(x+250, y, 100, big_ball)
     create_ball(x-125, y+200, 100, big_ball)
     create_ball(x+125, y+200, 100, big_ball)
-    animate_big_ball(big_ball)
-}
-
-function start2() {
-    animate_fill.beginElement()
+    animate_big_ball(animate_id, big_ball)
 }

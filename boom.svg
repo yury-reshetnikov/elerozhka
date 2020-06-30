@@ -45,9 +45,12 @@
          <circle fill="rgb(0,153,0)" stroke="black" cx="14875" cy="10200" r="100"/> -->
   </g>
   <script>
-    create_balls_group(5000, 5000)
+    create_balls_group('ball01_animate', 5000, 5000)
     function start() {
       document.getElementById('ca2_01').beginElement()
+    }
+    function start2() {
+	document.getElementById('ball01_animate').beginElement()
     }
   </script>
 </svg>
