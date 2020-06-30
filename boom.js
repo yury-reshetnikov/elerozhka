@@ -1,3 +1,5 @@
+let snake_body = document.getElementById('snake_body')
+
 function create_ball(cx, cy, r, element) {
     let ball = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
     ball.setAttribute('cx', cx)
@@ -5,8 +7,7 @@ function create_ball(cx, cy, r, element) {
     ball.setAttribute('r', r)
     ball.setAttribute('fill', 'green')
     ball.setAttribute('stroke', 'black')
-    document.children[0].append(ball)
-    document.insertBefore(ball, element)
+    document.children[0].insertBefore(ball, element)
 }
 
 create_ball(4875, 4800, 100, snake_body)
