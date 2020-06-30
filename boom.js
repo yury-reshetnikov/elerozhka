@@ -1,3 +1,5 @@
+let snake_body = document.getElementById('snake_body')
+
 function create_ball(cx, cy, r, element) {
     let ball = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
     ball.setAttribute('cx', cx)
@@ -8,8 +10,7 @@ function create_ball(cx, cy, r, element) {
     document.children[0].insertBefore(ball, element)
 }
 
-function play() {
-    let snake_body = document.getElementById('snake_body')
+/*function play() {
     create_ball(4875, 4800, 100, snake_body)
     create_ball(5125, 4800, 100, snake_body)
     create_ball(4750, 5000, 100, snake_body)
@@ -17,4 +18,14 @@ function play() {
     create_ball(4875, 5200, 100, snake_body)
     create_ball(5125, 5200, 100, snake_body)
     create_ball(5000, 5000, 400, snake_body)
-}
+}*/
+
+function create_balls_group(x, y)
+    create_ball(x, y, 400, snake_body)
+    return ball
+    create_ball(x-125, y-200, 100, ball)
+    create_ball(x+125, y-200, 100, ball)
+    create_ball(x-250, y, 100, ball)
+    create_ball(x+250, y, 100, ball)
+    create_ball(x-125, y+200, 100, ball)
+    create_ball(x+125, y+200, 100, ball)
