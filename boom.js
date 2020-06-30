@@ -8,6 +8,7 @@ function create_ball(cx, cy, r, element) {
     ball.setAttribute('fill', 'green')
     ball.setAttribute('stroke', 'black')
     document.children[0].insertBefore(ball, element)
+    return ball
 }
 
 /*function play() {
@@ -20,12 +21,12 @@ function create_ball(cx, cy, r, element) {
     create_ball(5000, 5000, 400, snake_body)
 }*/
 
-function create_balls_group(x, y)
-    create_ball(x, y, 400, snake_body)
-    return ball
-    create_ball(x-125, y-200, 100, ball)
-    create_ball(x+125, y-200, 100, ball)
-    create_ball(x-250, y, 100, ball)
-    create_ball(x+250, y, 100, ball)
-    create_ball(x-125, y+200, 100, ball)
-    create_ball(x+125, y+200, 100, ball)
+function create_balls_group(x, y) {
+    let big_ball = create_ball(x, y, 400, snake_body)
+    create_ball(x-125, y-200, 100, big_ball)
+    create_ball(x+125, y-200, 100, big_ball)
+    create_ball(x-250, y, 100, big_ball)
+    create_ball(x+250, y, 100, big_ball)
+    create_ball(x-125, y+200, 100, big_ball)
+    create_ball(x+125, y+200, 100, big_ball)
+}
