@@ -45,6 +45,7 @@
          <circle fill="rgb(0,153,0)" stroke="black" cx="14875" cy="10200" r="100"/> -->
   </g>
   <script>
+    play()
     function start() {
       document.getElementById('ca2_01').beginElement()
     }
