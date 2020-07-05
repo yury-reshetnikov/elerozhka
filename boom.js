@@ -42,14 +42,14 @@ function animate_big_ball(animate_id, ball) {
 function animate_small_balls(animate_id, ball, sign_x, sign_y) {
     let animate_flight_x = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
     animate_flight_x.setAttribute('attributeName', 'cx')
-    animate_flight_x.setAttribute('by', 10000 * sign_x)
+    animate_flight_x.setAttribute('by', Math.round(2000 * sign_x))
     animate_flight_x.setAttribute('dur', '1s')
     animate_flight_x.setAttribute('fill', 'freeze')
     animate_flight_x.setAttribute('begin', animate_id + '.begin')
     ball.append(animate_flight_x)
     let animate_flight_y = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
     animate_flight_y.setAttribute('attributeName', 'cy')
-    animate_flight_y.setAttribute('by', -5000 * sign_y)
+    animate_flight_y.setAttribute('by', Math.round(2000 * sign_y))
     animate_flight_y.setAttribute('dur', '1s')
     animate_flight_y.setAttribute('fill', 'freeze')
     animate_flight_y.setAttribute('begin', animate_id + '.begin')
@@ -72,14 +72,15 @@ function animate_small_balls(animate_id, ball, sign_x, sign_y) {
 
 function create_balls_group(animate_id, x, y) {
     let big_ball = create_ball(x, y, 400, snake_body)
-    /*
     for(let n = 0; n < 12; ++n) {
 	let angle = Math.PI / 6 * n
 	// console.log('n',n,'angle',angle,'x',Math.round(Math.cos(angle)*250),'y',Math.round(Math.sin(angle)*250))
-	create_ball(x + Math.round(Math.cos(angle)*250),
-		    y + Math.round(Math.sin(angle)*250), 100, big_ball)
+	let small_ball = create_ball(x + Math.round(Math.cos(angle)*250),
+				     y + Math.round(Math.sin(angle)*250),
+				     100, big_ball)
+	animate_small_balls(animate_id, small_ball, Math.cos(angle), Math.sin(angle))
     }
-    */
+    /*
     let ball_1 = create_ball(x-125, y-200, 100, big_ball)
     let ball_2 = create_ball(x+125, y-200, 100, big_ball)
     let ball_3 = create_ball(x-250, y, 100, big_ball)
@@ -93,4 +94,5 @@ function create_balls_group(animate_id, x, y) {
     animate_small_balls(animate_id, ball_4, 1, -1)
     animate_small_balls(animate_id, ball_5, -1, -1)
     animate_small_balls(animate_id, ball_6, -1/2, 1)
+    */
 }
