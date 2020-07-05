@@ -185,10 +185,72 @@ function start() {
     function get_speed_delta(rot, x, y) {
 	return rot.speed_x > 0 ? x - rot.start_x : rot.speed_x < 0 ? rot.start_x - x : rot.speed_y > 0 ? y - rot.start_y : /* sy < 0 */ rot.start_y - y
     }
+    function animate_big_ball(animate_id, ball) {
+	let animate_fill = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+	animate_fill.setAttribute('id', animate_id)
+	animate_fill.setAttribute('attributeName', 'fill-opacity')
+	animate_fill.setAttribute('by', '-1')
+	animate_fill.setAttribute('dur', '0.1s')
+	animate_fill.setAttribute('fill', 'freeze')
+	animate_fill.setAttribute('begin', 'indefinite')
+	ball.append(animate_fill)
+	let animate_stroke = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+	animate_stroke.setAttribute('attributeName', 'stroke-opacity')
+	animate_stroke.setAttribute('by', '-1')
+	animate_stroke.setAttribute('dur', '0.1s')
+	animate_stroke.setAttribute('fill', 'freeze')
+	animate_stroke.setAttribute('begin', animate_id + '.begin')
+	ball.append(animate_stroke)
+    }
+    function animate_small_ball(animate_id, ball, sign_x, sign_y) {
+	let animate_flight_x = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+	animate_flight_x.setAttribute('attributeName', 'cx')
+	animate_flight_x.setAttribute('by', Math.round(1000 * sign_x))
+	animate_flight_x.setAttribute('dur', '0.3s')
+	animate_flight_x.setAttribute('fill', 'freeze')
+	animate_flight_x.setAttribute('begin', animate_id + '.begin')
+	ball.append(animate_flight_x)
+	let animate_flight_y = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+	animate_flight_y.setAttribute('attributeName', 'cy')
+	animate_flight_y.setAttribute('by', Math.round(1000 * sign_y))
+	animate_flight_y.setAttribute('dur', '0.3s')
+	animate_flight_y.setAttribute('fill', 'freeze')
+	animate_flight_y.setAttribute('begin', animate_id + '.begin')
+	ball.append(animate_flight_y)
+	let animate_fill = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+	animate_fill.setAttribute('attributeName', 'fill-opacity')
+	animate_fill.setAttribute('by', '-1')
+	animate_fill.setAttribute('dur', '0.1s')
+	animate_fill.setAttribute('fill', 'freeze')
+	animate_fill.setAttribute('begin', animate_id + '.begin + 0.2s')
+	ball.append(animate_fill)
+	let animate_stroke = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
+	animate_stroke.setAttribute('attributeName', 'stroke-opacity')
+	animate_stroke.setAttribute('by', '-1')
+	animate_stroke.setAttribute('dur', '0.1s')
+	animate_stroke.setAttribute('fill', 'freeze')
+	animate_stroke.setAttribute('begin', animate_id + '.begin + 0.2s')
+	ball.append(animate_stroke)
+    }
+    let animate_id_count = 0
     function boom(big_ball) {
 	// TODO Задание Лене - поискать свойство, которое сразу отдаст текущую позицию с учетом трансформы
-	add_red_cross_nodelta(parseInt(big_ball.attributes.cx.value) + big_ball.transform.baseVal[0].matrix.e, parseInt(big_ball.attributes.cy.value) + big_ball.transform.baseVal[0].matrix.f)
-	throw big_ball
+	let x = parseInt(big_ball.attributes.cx.value) + big_ball.transform.baseVal[0].matrix.e,
+	    y = parseInt(big_ball.attributes.cy.value) + big_ball.transform.baseVal[0].matrix.f
+	let animate_id = 'animate_' + ++animate_id_count
+	// add_red_cross_nodelta(x, y)
+	// throw big_ball
+	animate_big_ball(animate_id, big_ball)
+	for(let n = 0; n < 12; ++n) {
+	    let angle = Math.PI / 6 * n
+	    // console.log('n',n,'angle',angle,'x',Math.round(Math.cos(angle)*250),'y',Math.round(Math.sin(angle)*250))
+	    let small_ball = create_ball(x + Math.round(Math.cos(angle)*250),
+					 y + Math.round(Math.sin(angle)*250),
+					 100, big_ball)
+	    angle += Math.random() * Math.PI * 2 - Math.PI
+	    animate_small_balls(animate_id, small_ball,
+				Math.cos(angle), Math.sin(angle))
+	}
     }
     let prev = (new Date).getTime()
     function draw() {
