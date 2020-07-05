@@ -161,6 +161,7 @@ function start() {
 	else if(other_keyup) other_keyup(e)
     }
     function add_snake_body(base) {
+	var group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
 	var node = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 	let cx = base.cx.baseVal.value
 	let cy = base.cy.baseVal.value
@@ -175,7 +176,8 @@ function start() {
 	else if(speed.y > 0) ty += snake_body_length
 	else /* if(speed.y < 0) */ ty -= snake_body_length
 	node.setAttribute('transform', 'translate('+tx+','+ty+')')
-	snake_full_body.append(node)
+	group.append(node)
+	snake_full_body.append(group)
 	return node
     }
     function move(node, x, y) {
@@ -263,7 +265,7 @@ function start() {
 	}
 	document.getElementById(animate_id).beginElement()
 	setTimeout(function() {
-	    big_ball.remove()
+	    big_ball.parentNode.remove()
 	}, 5000)
     }
     let prev = (new Date).getTime()
