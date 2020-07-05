@@ -59,14 +59,14 @@ function animate_small_balls(animate_id, ball, sign_x, sign_y) {
     animate_fill.setAttribute('by', '-1')
     animate_fill.setAttribute('dur', '0.2s')
     animate_fill.setAttribute('fill', 'freeze')
-    animate_fill.setAttribute('begin', animate_id + '.begin')
+    animate_fill.setAttribute('begin', animate_id + '.begin + 0.8s')
     ball.append(animate_fill)
     let animate_stroke = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
     animate_stroke.setAttribute('attributeName', 'stroke-opacity')
     animate_stroke.setAttribute('by', '-1')
     animate_stroke.setAttribute('dur', '0.2s')
     animate_stroke.setAttribute('fill', 'freeze')
-    animate_stroke.setAttribute('begin', animate_id + '.begin')
+    animate_stroke.setAttribute('begin', animate_id + '.begin + 0.8s')
     ball.append(animate_stroke)
 }
 
