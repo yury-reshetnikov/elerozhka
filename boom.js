@@ -32,12 +32,11 @@ function animate_big_ball(animate_id, ball) {
     ball.append(animate_fill)
     // TODO animate_stroke
     let animate_stroke = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
-    animate_stroke.setAttribute('id', animate_id)
     animate_stroke.setAttribute('attributeName', 'stroke-opacity')
     animate_stroke.setAttribute('by', '-1')
     animate_stroke.setAttribute('dur', '0.2s')
     animate_stroke.setAttribute('fill', 'freeze')
-    animate_stroke.setAttribute('begin', 'indefinite')
+    animate_stroke.setAttribute('begin', animate_id + '.begin')
     ball.append(animate_stroke)
 }
 
