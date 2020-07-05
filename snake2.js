@@ -258,8 +258,8 @@ function start() {
 					 y + Math.round(Math.sin(angle)*250),
 					 100, big_ball)
 	    angle += Math.random() * Math.PI * 2 - Math.PI
-	    animate_small_balls(animate_id, small_ball,
-				Math.cos(angle), Math.sin(angle))
+	    animate_small_ball(animate_id, small_ball,
+			       Math.cos(angle), Math.sin(angle))
 	}
     }
     let prev = (new Date).getTime()
