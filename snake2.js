@@ -192,7 +192,7 @@ function start() {
 	ball.setAttribute('r', r)
 	ball.setAttribute('fill', 'green')
 	ball.setAttribute('stroke', 'black')
-	document.children[0].insertBefore(ball, element)
+	element.parent.insertBefore(ball, element)
 	return ball
     }
     function animate_big_ball(animate_id, ball) {
