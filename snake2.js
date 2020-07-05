@@ -183,6 +183,9 @@ function start() {
     }
     function boom(big_ball) {
 	// TODO Задание Лене - поискать свойство, которое сразу отдаст текущую позицию с учетом трансформы
+	console.log(big_ball.attributes.cx.value)
+	console.log(parseInt(big_ball.attributes.cx.value), parseInt(big_ball.attributes.cy.value))
+	add_red_cross(parseInt(big_ball.attributes.cx.value), parseInt(big_ball.attributes.cy.value))
 	add_red_cross(parseInt(big_ball.attributes.cx.value) + big_ball.transform.baseVal[0].matrix.e, parseInt(big_ball.attributes.cy.value) + big_ball.transform.baseVal[0].matrix.f)
 	throw big_ball
     }
