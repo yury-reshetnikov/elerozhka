@@ -182,6 +182,8 @@ function start() {
 	return rot.speed_x > 0 ? x - rot.start_x : rot.speed_x < 0 ? rot.start_x - x : rot.speed_y > 0 ? y - rot.start_y : /* sy < 0 */ rot.start_y - y
     }
     function boom(big_ball) {
+	// TODO Задание Лене - поискать свойство, которое сразу отдаст текущую позицию с учетом трансформы
+	add_red_cross(big_ball.attributes.cx + big_ball.transform.baseVal[0].matrix.e, big_ball.attributes.cy + big_ball.transform.baseVal[0].matrix.f)
 	throw big_ball
     }
     let prev = (new Date).getTime()
