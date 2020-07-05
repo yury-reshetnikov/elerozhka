@@ -181,6 +181,9 @@ function start() {
     function get_speed_delta(rot, x, y) {
 	return rot.speed_x > 0 ? x - rot.start_x : rot.speed_x < 0 ? rot.start_x - x : rot.speed_y > 0 ? y - rot.start_y : /* sy < 0 */ rot.start_y - y
     }
+    function boom(big_ball) {
+	throw big_ball
+    }
     let prev = (new Date).getTime()
     function draw() {
 	let time = (new Date).getTime()
@@ -361,7 +364,7 @@ function start() {
 	    let body_distance = Math.sqrt(Math.pow(bx - dx, 2) + Math.pow(by - dy, 2))
 	    if(body_distance < snake_body_length / 2) {
 		let lost = snake_body_dyn.pop()
-		if(lost) lost.remove()
+		if(lost) boom(lost)
                 s_counter.textContent = snake_body_dyn.length+1
                 /*add_red_cross(dx,dy)
                 add_red_cross(bx,by)
