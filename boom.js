@@ -72,6 +72,7 @@ function animate_small_balls(animate_id, ball, sign_x, sign_y) {
 
 function create_balls_group(animate_id, x, y) {
     let big_ball = create_ball(x, y, 400, snake_body)
+    animate_big_ball(animate_id, big_ball)
     for(let n = 0; n < 12; ++n) {
 	let angle = Math.PI / 6 * n
 	// console.log('n',n,'angle',angle,'x',Math.round(Math.cos(angle)*250),'y',Math.round(Math.sin(angle)*250))
@@ -87,7 +88,6 @@ function create_balls_group(animate_id, x, y) {
     let ball_4 = create_ball(x+250, y, 100, big_ball)
     let ball_5 = create_ball(x-125, y+200, 100, big_ball)
     let ball_6 = create_ball(x+125, y+200, 100, big_ball)
-    animate_big_ball(animate_id, big_ball)
     animate_small_balls(animate_id, ball_1, -1, 1)
     animate_small_balls(animate_id, ball_2, 1, 1)
     animate_small_balls(animate_id, ball_3, 1, -1/2)
