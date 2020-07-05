@@ -79,6 +79,8 @@ function create_balls_group(animate_id, x, y) {
 	let small_ball = create_ball(x + Math.round(Math.cos(angle)*250),
 				     y + Math.round(Math.sin(angle)*250),
 				     100, big_ball)
-	animate_small_balls(animate_id, small_ball, Math.cos(angle), Math.sin(angle))
+	angle += Math.random() * Math.PI / 3 - Math.PI / 6
+	animate_small_balls(animate_id, small_ball,
+			    Math.cos(angle), Math.sin(angle))
     }
 }
