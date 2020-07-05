@@ -261,6 +261,7 @@ function start() {
 	    animate_small_ball(animate_id, small_ball,
 			       Math.cos(angle), Math.sin(angle))
 	}
+	document.getElementById(animate_id).beginElement()
     }
     let prev = (new Date).getTime()
     function draw() {
