@@ -21,7 +21,7 @@
     <animate id="ca3_03" attributeName="fill-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.begin" />
     <animate id="ca3_04" attributeName="stroke-opacity" by="-1" dur="0.2s" fill="freeze" begin="ca2_01.begin" />
   </circle>
-  <g id="little_balls">
+  <g id="small_balls">
          <circle fill="rgb(0,153,0)" stroke="black" cx="15125" cy="9800" r="100">
            <animate id="ca2_01" attributeName="cx" by="10000" dur="1s" fill="freeze" begin="indefinite" />
            <animate id="ca2_02" attributeName="cy" by="-5000" dur="1s" fill="freeze" begin="ca2_01.begin" />
