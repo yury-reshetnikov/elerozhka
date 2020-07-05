@@ -185,6 +185,16 @@ function start() {
     function get_speed_delta(rot, x, y) {
 	return rot.speed_x > 0 ? x - rot.start_x : rot.speed_x < 0 ? rot.start_x - x : rot.speed_y > 0 ? y - rot.start_y : /* sy < 0 */ rot.start_y - y
     }
+    function create_ball(cx, cy, r, element) {
+	let ball = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+	ball.setAttribute('cx', cx)
+	ball.setAttribute('cy', cy)
+	ball.setAttribute('r', r)
+	ball.setAttribute('fill', 'green')
+	ball.setAttribute('stroke', 'black')
+	document.children[0].insertBefore(ball, element)
+	return ball
+    }
     function animate_big_ball(animate_id, ball) {
 	let animate_fill = document.createElementNS('http://www.w3.org/2000/svg', 'animate')
 	animate_fill.setAttribute('id', animate_id)
