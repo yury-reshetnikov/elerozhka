@@ -73,6 +73,10 @@ function start() {
 	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
 	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
     }
+    function add_red_cross_nodelta(x, y) {
+	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
+	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
+    }
     function clone_mouse() {
 	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
 	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
@@ -183,10 +187,7 @@ function start() {
     }
     function boom(big_ball) {
 	// TODO Задание Лене - поискать свойство, которое сразу отдаст текущую позицию с учетом трансформы
-	console.log(big_ball.attributes.cx.value)
-	console.log(parseInt(big_ball.attributes.cx.value), parseInt(big_ball.attributes.cy.value))
-	add_red_cross(parseInt(big_ball.attributes.cx.value), parseInt(big_ball.attributes.cy.value))
-	add_red_cross(parseInt(big_ball.attributes.cx.value) + big_ball.transform.baseVal[0].matrix.e, parseInt(big_ball.attributes.cy.value) + big_ball.transform.baseVal[0].matrix.f)
+	add_red_cross_nodelta(parseInt(big_ball.attributes.cx.value) + big_ball.transform.baseVal[0].matrix.e, parseInt(big_ball.attributes.cy.value) + big_ball.transform.baseVal[0].matrix.f)
 	throw big_ball
     }
     let prev = (new Date).getTime()
