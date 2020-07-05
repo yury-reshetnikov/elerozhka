@@ -262,6 +262,9 @@ function start() {
 			       Math.cos(angle), Math.sin(angle))
 	}
 	document.getElementById(animate_id).beginElement()
+	setTimeout(function() {
+	    big_ball.remove()
+	}, 5000)
     }
     let prev = (new Date).getTime()
     function draw() {
