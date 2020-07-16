@@ -508,6 +508,12 @@ function start() {
 		return false
 	    })
 	}
+    function mongoose() {
+            let mongoose = document.getElementById('mongoose2')
+	    let mgx = parseInt(mongoose.attributes.cx.value) + mongoose.transform.baseVal[0].matrix.e,
+	        mgy = parseInt(mongoose.attributes.cy.value) + mongoose.transform.baseVal[0].matrix.f
+            add_red_cross_nodelta(mgx, mgy)
+    }
 	prev = time
 	requestAnimationFrame(draw)
     }
