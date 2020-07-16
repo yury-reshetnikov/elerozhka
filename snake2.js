@@ -77,6 +77,12 @@ function start() {
 	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
 	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
     }
+    function mongoose() {
+        let mongoose = document.getElementById('mongoose2')
+        let mongoose_delta_x = 8933
+            mongoose_delta_y = 7485
+        add_red_cross_nodelta(mongoose_delta_x, mongoose_delta_y)
+    }
     function clone_mouse() {
 	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
 	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
@@ -114,7 +120,8 @@ function start() {
 	mouse.transform.baseVal[0].matrix.f = y
 	return mouse
     }
-    if(0) random_mouse(mice[0])
+    mongoose()
+    if(1) random_mouse(mice[0])
     else
 	for(let x = 1; x < 10; ++x)
 	    for(let y = 0; y < 10; ++y)
@@ -508,12 +515,6 @@ function start() {
 		return false
 	    })
 	}
-    function mongoose() {
-            let mongoose = document.getElementById('mongoose2')
-	    let mgx = parseInt(mongoose.attributes.cx.value) + mongoose.transform.baseVal[0].matrix.e,
-	        mgy = parseInt(mongoose.attributes.cy.value) + mongoose.transform.baseVal[0].matrix.f
-            add_red_cross_nodelta(mgx, mgy)
-    }
 	prev = time
 	requestAnimationFrame(draw)
     }
