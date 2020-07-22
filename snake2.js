@@ -532,6 +532,7 @@ function start() {
 		if(mongoose_distance < mgr) {
                     console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 		    snake_body_dyn.forEach(boom)
+		    boom(add_snake_body(snake_body_2))
 		    snake_body_dyn.length = 0
 		    first_snake_body = snake_body_2
 		}
