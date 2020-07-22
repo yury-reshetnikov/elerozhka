@@ -106,7 +106,31 @@ function start() {
         add_red_cross_nodelta(mongoose_delta_x, mongoose_delta_y)
         add_red_circle(mongoose_delta_x, mongoose_delta_y, mgr)
     }
-    //function random_mongoose () {}
+    function random_mongoose(mongoose) {
+	let mx, my
+	for(;;) {
+	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + 2 * mgr
+	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + 2 * mgr
+	    let intersected = false
+	    function check(body) {
+		let bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
+		let by = body.transform.baseVal[0].matrix.f
+		let body_distance = Math.sqrt(Math.pow(bx - mx, 2) + Math.pow(by - my, 2))
+		if(body_distance < mgr) {
+		    console.log('mx',mx,'my',my)
+		    intersected = true
+		    return true
+		}
+		else return false
+	    }
+	    snake_body_dyn.some(check)
+	    if(!intersected) check(snake_body_2)
+	    if(!intersected) check(snake_tail)
+	    if(!intersected) break
+	}
+	mongoose.transform.baseVal[0].matrix.e = mx + snake_delta_x - mongoose_delta_x
+	mongoose.transform.baseVal[0].matrix.f = my + snake_delta_y - mongoose_delta_y
+    }
     function clone_mouse() {
 	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
 	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
