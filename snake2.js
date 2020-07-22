@@ -531,6 +531,9 @@ function start() {
 		let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
 		if(mongoose_distance < mgr) {
                     console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+		    snake_body_dyn.forEach(boom)
+		    snake_body_dyn.length = 0
+		    first_snake_body = snake_body_2
 		}
 	    }
 	}
