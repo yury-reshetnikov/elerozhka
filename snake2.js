@@ -63,7 +63,7 @@ function start() {
 	}
     }
     let rotations = []
-    let eating = false, growing = false, growing_start
+    let eating = false, growing = false, growing_start, cutting = false
     let first_snake_body = snake_body_2
     function add_red_line(d) {
 	let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
@@ -132,7 +132,7 @@ function start() {
 	mouse.transform.baseVal[0].matrix.f = y
 	return mouse
     }
-    mongoose_identify()
+    // mongoose_identify()
     if(1) random_mouse(mice[0])
     else
 	for(let x = 1; x < 10; ++x)
@@ -526,11 +526,14 @@ function start() {
 		}
 		return false
 	    })
-	    {   let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
+	    if(cutting) ;
+	    else {
+		let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
 		let mgy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
 		let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
 		if(mongoose_distance < mgr) {
                     console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+		    cutting = true
 		    snake_body_dyn.forEach(boom)
 		    boom(add_snake_body(snake_body_2))
 		    snake_body_dyn.length = 0
