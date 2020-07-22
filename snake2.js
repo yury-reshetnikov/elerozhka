@@ -32,6 +32,7 @@ function start() {
     let snake_full_body = document.getElementById('snake_full_body')
     let snake_tail = document.getElementById('snake_tail')
     let mice = [ document.getElementById('mouse') ]
+    let mongoose = document.getElementById('mongoose2')
     let speed = {
 	x: 2, y: 0
     }
@@ -47,6 +48,9 @@ function start() {
     let snake_delta_y = 15000 //snake_body_length * (snake_body_dyn.length + 1) + 13400
     let mouse_delta_x = 14600
     let mouse_delta_y = 15000
+    let mongoose_delta_x = 9090
+    let mongoose_delta_y = 7485
+    let mgr = 1000
     let stroke_width = Math.round(parseInt(box.attributes['stroke-width'].value) / 2)
     let limit = {
 	x: {
@@ -86,13 +90,11 @@ function start() {
         circle.setAttribute('fill-opacity', 0.6)
         document.children[0].append(circle)
     }
-    function mongoose() {
-        let mongoose = document.getElementById('mongoose2')
-        let mongoose_delta_x = 9090
-            mongoose_delta_y = 7485
+    function mongoose_identify() {
         add_red_cross_nodelta(mongoose_delta_x, mongoose_delta_y)
-        add_red_circle(mongoose_delta_x, mongoose_delta_y, 1000)
+        add_red_circle(mongoose_delta_x, mongoose_delta_y, mgr)
     }
+    //function random_mongoose () {}
     function clone_mouse() {
 	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
 	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
@@ -130,7 +132,7 @@ function start() {
 	mouse.transform.baseVal[0].matrix.f = y
 	return mouse
     }
-    mongoose()
+    mongoose_identify()
     if(1) random_mouse(mice[0])
     else
 	for(let x = 1; x < 10; ++x)
@@ -525,10 +527,13 @@ function start() {
 		return false
 	    })
 	}
-	function random_mongoose () {
-            let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
-            let mgy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
+	function mongoose_intersection () {
+            let mgx = mouse.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x + mgr
+            let mgy = mouse.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y + mgr
             let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
+            if(mongoose_distance < snake_body_length / 2) {
+                console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            }
 	}
 	prev = time
 	requestAnimationFrame(draw)
