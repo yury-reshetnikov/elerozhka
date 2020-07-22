@@ -526,9 +526,9 @@ function start() {
 	    })
 	}
 	function random_mongoose () {
-            let mgx = mongoose.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
-            let mgy = mongoose.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
-            let mongoose_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
+            let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
+            let mgy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
+            let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
 	}
 	prev = time
 	requestAnimationFrame(draw)
