@@ -169,6 +169,7 @@ function start() {
 	return mouse
     }
     // mongoose_identify()
+    random_mongoose(mongoose)
     if(1) random_mouse(mice[0])
     else
 	for(let x = 1; x < 10; ++x)
@@ -575,6 +576,10 @@ function start() {
 		    boom(add_snake_body(snake_body_2))
 		    snake_body_dyn.length = 0
 		    first_snake_body = snake_body_2
+		    setTimeout(function() {
+			random_mongoose(mongoose)
+			cutting = false
+		    }, 200)
 		}
 	    }
 	}
