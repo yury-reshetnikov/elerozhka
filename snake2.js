@@ -77,11 +77,21 @@ function start() {
 	add_red_line('M '+(x-500)+','+(y+500)+' L '+(x+500)+','+(y-500))
 	add_red_line('M '+(x-500)+','+(y-500)+' L '+(x+500)+','+(y+500))
     }
+    function add_red_circle(cx, cy, r) {
+        let circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+        circle.setAttribute('cx', cx)
+        circle.setAttribute('cy', cy)
+        circle.setAttribute('r', r)
+        circle.setAttribute('fill', 'red')
+        circle.setAttribute('fill-opacity', 0.6)
+        document.children[0].append(circle)
+    }
     function mongoose() {
         let mongoose = document.getElementById('mongoose2')
-        let mongoose_delta_x = 8933
+        let mongoose_delta_x = 9090
             mongoose_delta_y = 7485
         add_red_cross_nodelta(mongoose_delta_x, mongoose_delta_y)
+        add_red_circle(mongoose_delta_x, mongoose_delta_y, 1000)
     }
     function clone_mouse() {
 	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
@@ -514,6 +524,11 @@ function start() {
 		}
 		return false
 	    })
+	}
+	function random_mongoose () {
+            let mgx = mongoose.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
+            let mgy = mongoose.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
+            let mongoose_distance = Math.sqrt(Math.pow(mx - dx, 2) + Math.pow(my - dy, 2))
 	}
 	prev = time
 	requestAnimationFrame(draw)
