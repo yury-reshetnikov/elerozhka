@@ -526,14 +526,13 @@ function start() {
 		}
 		return false
 	    })
-	}
-	function mongoose_intersection () {
-            let mgx = mouse.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x + mgr
-            let mgy = mouse.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y + mgr
-            let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
-            if(mongoose_distance < snake_body_length / 2) {
-                console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-            }
+	    {   let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
+		let mgy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
+		let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
+		if(mongoose_distance < mgr) {
+                    console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+		}
+	    }
 	}
 	prev = time
 	requestAnimationFrame(draw)
