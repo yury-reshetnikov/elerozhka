@@ -529,9 +529,11 @@ function start() {
 	    {   let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
 		let mgy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
 		let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
-		let all_snake = snake_body_dyn.pop
 		if(mongoose_distance < mgr) {
-                    boom(all_snake)
+                    console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+		    snake_body_dyn.forEach(boom)
+		    snake_body_dyn.length = 0
+		    first_snake_body = snake_body_2
 		}
 	    }
 	}
