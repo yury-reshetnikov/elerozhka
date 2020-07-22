@@ -90,6 +90,18 @@ function start() {
         circle.setAttribute('fill-opacity', 0.6)
         document.children[0].append(circle)
     }
+    function mongoose_atack() {
+	let a = new Animate3
+	let time_s = 0
+	let time_f = 150
+	a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose3_body', time_s, time_f)
+	a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
+	a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
+	a.path ('mongoose2_nose', 'mongoose2_t_nose', 'mongoose3_nose', time_s, time_f)
+	a.translate ('mongoose2_eye', 0, 0, 920, -665, time_s, time_f)
+	a.translate ('mongoose2_eyeball', 0, 0, 920, -665, time_s, time_f)
+	a.start()
+    }
     function mongoose_identify() {
         add_red_cross_nodelta(mongoose_delta_x, mongoose_delta_y)
         add_red_circle(mongoose_delta_x, mongoose_delta_y, mgr)
@@ -533,6 +545,7 @@ function start() {
 		let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
 		if(mongoose_distance < mgr) {
                     console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+		    mongoose_atack()
 		    cutting = true
 		    snake_body_dyn.forEach(boom)
 		    boom(add_snake_body(snake_body_2))
