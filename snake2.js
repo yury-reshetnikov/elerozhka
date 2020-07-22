@@ -90,7 +90,7 @@ function start() {
         circle.setAttribute('fill-opacity', 0.6)
         document.children[0].append(circle)
     }
-    function mongoose_atack() {
+    function mongoose_attack() {
 	let a = new Animate3
 	let time_s = 0
 	let time_f = 150
