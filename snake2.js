@@ -161,7 +161,7 @@ function start() {
 		let bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
 		let by = body.transform.baseVal[0].matrix.f
 		let body_distance = Math.sqrt(Math.pow(bx - mx, 2) + Math.pow(by - my, 2))
-		if(body_distance < snake_body_length / 2) {
+		if(body_distance < snake_body_length) {
 		    console.log('mx',mx,'my',my)
 		    intersected = true
 		    return true
