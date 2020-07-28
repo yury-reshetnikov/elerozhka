@@ -65,6 +65,7 @@ function start() {
     let rotations = []
     let eating = false, growing = false, growing_start, cutting = false
     let first_snake_body = snake_body_2
+    let marked_mouse, marked_mouse_circle
     function add_red_line(d) {
 	let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 	mark.setAttribute('d', d)
@@ -186,10 +187,21 @@ function start() {
 	mouse.transform.baseVal[0].matrix.f = y
 	return mouse
     }
+    function mark_mouse(mouse) {
+	if(marked_mouse != mouse) {
+	    marked_mouse = mouse
+	    if(marked_mouse_circle) {
+		marked_mouse_circle.remove()
+		marked_mouse_circle = false
+	    }
+	    // TODO
+	}
+    }
     // mongoose_identify()
     random_mongoose(mongoose)
     if(1) {
 	random_mouse(mice[0])
+	mark_mouse(mice[0])
 	add_mices()
     }
     else
