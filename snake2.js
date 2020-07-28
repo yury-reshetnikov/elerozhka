@@ -65,7 +65,8 @@ function start() {
     let rotations = []
     let eating = false, growing = false, growing_start, cutting = false
     let first_snake_body = snake_body_2
-    let marked_mouse, marked_mouse_circle, prev_mouse_nearest_distance
+    let marked_mouse, marked_mouse_circle,
+	prev_mouse_nearest_distance, min_mouse_nearest_distance
     function add_red_line(d) {
 	let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 	mark.setAttribute('d', d)
@@ -603,7 +604,12 @@ function start() {
 		// TODO show nearest_distance
 		if(prev_mouse_nearest_distance && prev_mouse_nearest_distance > nearest_distance) {
 		    // TODO show nearest_distance as min_nearest_distance
-		    console.log('min mouse nearest_distance', nearest_distance);
+		    min_mouse_nearest_distance = nearest_distance
+		}
+		else if(min_mouse_nearest_distance) {
+		    console.log('min mouse nearest_distance',
+				min_mouse_nearest_distance);
+		    min_mouse_nearest_distance = false
 		}
 		prev_mouse_nearest_distance = nearest_distance
 	    }
