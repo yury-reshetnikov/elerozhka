@@ -544,7 +544,7 @@ function start() {
 		else /* if(speed.y < 0) */ speed.y -= speed_increment
 	    }
 	}
-	else(eating) {
+	else if(eating) {
 	   let mouse_distance = Math.sqrt(Math.pow(eating.x - dx, 2) + Math.pow(eating.y - dy, 2))
            if(mouse_distance > snake_body_length) {
 	       growing = true
