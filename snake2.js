@@ -170,6 +170,17 @@ function start() {
 	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = my + snake_delta_y - mouse_delta_y
     }
+    function add_mices() {
+	let count = Math.round(Math.random() * max_new_mice_count)
+	if(mice.length + count < 1) count = 2
+	else if(mice.length + count > max_mice_count)
+	    count = max_mice_count - mice.length
+	while(count--) {
+	    let mouse = clone_mouse()
+	    random_mouse(mouse)
+	    mice.push(mouse)
+	}
+    }
     function shift_mouse(mouse, x, y) {
 	mouse.transform.baseVal[0].matrix.e = x
 	mouse.transform.baseVal[0].matrix.f = y
@@ -177,7 +188,10 @@ function start() {
     }
     // mongoose_identify()
     random_mongoose(mongoose)
-    if(1) random_mouse(mice[0])
+    if(1) {
+	random_mouse(mice[0])
+	add_mices()
+    }
     else
 	for(let x = 1; x < 10; ++x)
 	    for(let y = 0; y < 10; ++y)
@@ -526,17 +540,7 @@ function start() {
 	    // console.log('delta',delta,'x',x,'y',y)
 	    if(delta >= snake_body_length) {
 		growing = eating = false
-		if(mice.length < max_mice_count) {
-		    let count = Math.round(Math.random() * max_new_mice_count)
-		    if(mice.length + count < 1) count = 2
-		    else if(mice.length + count > max_mice_count)
-			count = max_mice_count - mice.length
-		    while(count--) {
-			let mouse = clone_mouse()
-			random_mouse(mouse)
-			mice.push(mouse)
-		    }
-		}
+		if(mice.length < max_mice_count) add_mices()
 		let speed_increment = 0.01
 		if(speed.x > 0) speed.x += speed_increment
 		else if(speed.x < 0) speed.x -= speed_increment
