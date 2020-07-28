@@ -24,6 +24,8 @@ function rotate_sin_cos(m, sin, cos) {
 function start() {
     let counter = document.getElementById('counter')
     let s_counter = document.getElementById('s_counter')
+    let d_counter = document.getElementById('d_counter')
+    let min_d_counter = document.getElementById('min_d_counter')
     let box = document.getElementById('box')
     let snake = document.getElementById('snake')
     let snake_head_rotate = document.getElementById('snake_head_rotate')
@@ -599,8 +601,8 @@ function start() {
 	    }
 	    else if(nearest_mouse) {
 		mark_mouse(nearest_mouse)
-		// TODO show nearest_distance
-		// TODO show min_nearest_distance
+		d_counter.textContent = nearest_distance
+		min_d_counter.textContent = min_nearest_distance
 	    }
 	    if(cutting) ;
 	    else {
