@@ -606,6 +606,7 @@ function start() {
 		d_counter.textContent = nearest_distance.toLocaleString('ru-RU', { maximumFractionDigits: 0, minimumIntegerDigits: 7 })
 		if(prev_mouse_nearest_distance && prev_mouse_nearest_distance > nearest_distance) {
 		    min_d_counter.textContent = nearest_distance.toLocaleString('ru-RU', { maximumFractionDigits: 0, minimumIntegerDigits: 7 })
+		    min_mouse_nearest_distance = nearest_distance
 		}
 		else if(min_mouse_nearest_distance) {
 		    console.log('min mouse nearest_distance',
