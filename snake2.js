@@ -575,6 +575,8 @@ function start() {
 	   }
 	}
 	else {
+	    let nearest_mouse
+	    let nearest_distance
 	    mice.some(function(mouse, mouse_index){
 		let mx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
 		let my = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
@@ -583,8 +585,17 @@ function start() {
 		    eating = { x: mx, y: my, index: mouse_index }
 		    return true
 		}
+		else if(!nearest_mouse || nearest_distance > mouse_distance) {
+		    nearest_mouse = mouse
+		    nearest_distance = mouse_distance
+		}
 		return false
 	    })
+	    if(!eating && nearest_mouse) {
+		mark_mouse(nearest_mouse)
+		// TODO show nearest_distance
+		// TODO show min_nearest_distance
+	    }
 	    if(cutting) ;
 	    else {
 		let mgx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
