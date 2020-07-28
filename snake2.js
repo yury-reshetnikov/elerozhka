@@ -101,12 +101,12 @@ function start() {
 	a.path ('mongoose2_nose', 'mongoose2_t_nose', 'mongoose3_nose', time_s, time_f)
 	a.translate ('mongoose2_eye', 0, 0, 920, -665, time_s, time_f)
 	a.translate ('mongoose2_eyeball', 0, 0, 920, -665, time_s, time_f)
-        a.path ('mongoose2_body', 'mongoose3_body', 'mongoose2_t_body', time_f, time_ff)
-        a.path ('mongoose2_ear2', 'mongoose3_ear2', 'mongoose2_t_ear2', time_f, time_ff)
-        a.path ('mongoose2_ear1', 'mongoose3_ear1', 'mongoose2_t_ear1', time_f, time_ff)
-        a.path ('mongoose2_nose', 'mongoose3_nose', 'mongoose2_t_nose', time_f, time_ff)
-        a.translate ('mongoose2_eye', 920, -665, 0, 0, time_f, time_ff)
-        a.translate ('mongoose2_eyeball', 920, -665, 0, 0, time_f, time_ff)
+        a.path ('mongoose2_body', 'mongoose3_body', 'mongoose2_t_body', time_f, time_ff, true)
+        a.path ('mongoose2_ear2', 'mongoose3_ear2', 'mongoose2_t_ear2', time_f, time_ff, true)
+        a.path ('mongoose2_ear1', 'mongoose3_ear1', 'mongoose2_t_ear1', time_f, time_ff, true)
+        a.path ('mongoose2_nose', 'mongoose3_nose', 'mongoose2_t_nose', time_f, time_ff, true)
+        a.translate ('mongoose2_eye', 920, -665, 0, 0, time_f, time_ff, true)
+        a.translate ('mongoose2_eyeball', 920, -665, 0, 0, time_f, time_ff, true)
 	a.start()
     }
     function mongoose_identify() {
@@ -579,7 +579,6 @@ function start() {
 		let mgy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
 		let mongoose_distance = Math.sqrt(Math.pow(mgx - dx, 2) + Math.pow(mgy - dy, 2))
 		if(mongoose_distance < mgr) {
-                    console.log ('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 		    mongoose_attack()
 		    cutting = true
 		    snake_body_dyn.forEach(boom)
