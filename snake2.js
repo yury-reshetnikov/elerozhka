@@ -87,9 +87,11 @@ function start() {
         circle.setAttribute('cx', cx)
         circle.setAttribute('cy', cy)
         circle.setAttribute('r', r)
-        circle.setAttribute('fill', 'red')
-        circle.setAttribute('fill-opacity', 0.6)
+        circle.setAttribute('stroke', 'red')
+        circle.setAttribute('stroke-width', '40')
+        circle.setAttribute('fill', 'none')
         document.children[0].append(circle)
+        return circle
     }
     function mongoose_attack() {
 	let a = new Animate3
@@ -194,7 +196,7 @@ function start() {
 		marked_mouse_circle.remove()
 		marked_mouse_circle = false
 	    }
-	    // TODO
+	    add_red_circle(mouse.transform.baseVal[0].matrix.e + mouse_delta_x, mouse.transform.baseVal[0].matrix.f + mouse_delta_y, snake_body_length_half)
 	}
     }
     // mongoose_identify()
