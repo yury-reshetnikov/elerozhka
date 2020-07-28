@@ -93,13 +93,20 @@ function start() {
     function mongoose_attack() {
 	let a = new Animate3
 	let time_s = 0
-	let time_f = 150
+	let time_f = 170
+	let time_ff = 200
 	a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose3_body', time_s, time_f)
 	a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
 	a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
 	a.path ('mongoose2_nose', 'mongoose2_t_nose', 'mongoose3_nose', time_s, time_f)
 	a.translate ('mongoose2_eye', 0, 0, 920, -665, time_s, time_f)
 	a.translate ('mongoose2_eyeball', 0, 0, 920, -665, time_s, time_f)
+        a.path ('mongoose2_body', 'mongoose3_body', 'mongoose2_t_body', time_f, time_ff)
+        a.path ('mongoose2_ear2', 'mongoose3_ear2', 'mongoose2_t_ear2', time_f, time_ff)
+        a.path ('mongoose2_ear1', 'mongoose3_ear1', 'mongoose2_t_ear1', time_f, time_ff)
+        a.path ('mongoose2_nose', 'mongoose3_nose', 'mongoose2_t_nose', time_f, time_ff)
+        a.translate ('mongoose2_eye', 920, -665, 0, 0, time_f, time_ff)
+        a.translate ('mongoose2_eyeball', 920, -665, 0, 0, time_f, time_ff)
 	a.start()
     }
     function mongoose_identify() {
@@ -302,7 +309,6 @@ function start() {
     }
     let animate_id_count = 0
     function boom(big_ball) {
-	// TODO Задание Лене - поискать свойство, которое сразу отдаст текущую позицию с учетом трансформы
 	let x = parseInt(big_ball.attributes.cx.value) + big_ball.transform.baseVal[0].matrix.e,
 	    y = parseInt(big_ball.attributes.cy.value) + big_ball.transform.baseVal[0].matrix.f
 	let animate_id = 'animate_' + ++animate_id_count
@@ -538,7 +544,7 @@ function start() {
 		else /* if(speed.y < 0) */ speed.y -= speed_increment
 	    }
 	}
-	else if(eating) {
+	else(eating) {
 	   let mouse_distance = Math.sqrt(Math.pow(eating.x - dx, 2) + Math.pow(eating.y - dy, 2))
            if(mouse_distance > snake_body_length) {
 	       growing = true
