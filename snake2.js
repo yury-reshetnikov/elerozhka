@@ -596,12 +596,14 @@ function start() {
 		    marked_mouse_circle.remove()
 		    marked_mouse_circle = false
 		}
+		prev_mouse_nearest_distance = false
 	    }
 	    else if(nearest_mouse) {
 		mark_mouse(nearest_mouse)
 		// TODO show nearest_distance
 		if(prev_mouse_nearest_distance && prev_mouse_nearest_distance > nearest_distance) {
 		    // TODO show nearest_distance as min_nearest_distance
+		    console.log('min mouse nearest_distance', nearest_distance);
 		}
 		prev_mouse_nearest_distance = nearest_distance
 	    }
