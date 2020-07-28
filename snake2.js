@@ -192,11 +192,9 @@ function start() {
     function mark_mouse(mouse) {
 	if(marked_mouse != mouse) {
 	    marked_mouse = mouse
-	    if(marked_mouse_circle) {
+	    if(marked_mouse_circle)
 		marked_mouse_circle.remove()
-		marked_mouse_circle = false
-	    }
-	    add_red_circle(mouse.transform.baseVal[0].matrix.e + mouse_delta_x, mouse.transform.baseVal[0].matrix.f + mouse_delta_y, snake_body_length_half)
+	    marked_mouse_circle = add_red_circle(mouse.transform.baseVal[0].matrix.e + mouse_delta_x, mouse.transform.baseVal[0].matrix.f + mouse_delta_y, snake_body_length_half)
 	}
     }
     // mongoose_identify()
