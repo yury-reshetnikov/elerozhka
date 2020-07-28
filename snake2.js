@@ -591,7 +591,13 @@ function start() {
 		}
 		return false
 	    })
-	    if(!eating && nearest_mouse) {
+	    if(eating) {
+		if(marked_mouse_circle) {
+		    marked_mouse_circle.remove()
+		    marked_mouse_circle = false
+		}
+	    }
+	    else if(nearest_mouse) {
 		mark_mouse(nearest_mouse)
 		// TODO show nearest_distance
 		// TODO show min_nearest_distance
