@@ -122,8 +122,8 @@ function start() {
     function random_mongoose(mongoose) {
 	let mx, my
 	for(;;) {
-	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + 2 * mgr
-	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + 2 * mgr
+	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - mgr * 2 * 3)) + limit.x.left + 2 * mgr
+	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - mgr * 2 * 3)) + limit.y.top + 2 * mgr
 	    let intersected = false
 	    function check(body) {
 		let bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
