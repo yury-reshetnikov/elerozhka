@@ -100,15 +100,13 @@ function start() {
         let starter_size = snake_body_length * 4
         snake_head_shift.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - starter_size * 2)) + limit.x.left + starter_size
 	snake_head_shift.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.y.bottom - limit.y.top - starter_size * 2)) + limit.y.top + starter_size
-        let xl_limit_distance = snake.transform.baseVal[0].matrix.e - limit.x.left
-	let xr_limit_distance = limit.x.right - snake.transform.baseVal[0].matrix.e
-	let yt_limit_distance = snake.transform.baseVal[0].matrix.f - limit.y.top
-	let yb_limit_distance = limit.y.bottom - snake.transform.baseVal[0].matrix.f
+        let xl_limit_distance = snake_head_shift.transform.baseVal[0].matrix.e - limit.x.left
+	let xr_limit_distance = limit.x.right - snake_head_shift.transform.baseVal[0].matrix.e
+	let yt_limit_distance = snake_head_shift.transform.baseVal[0].matrix.f - limit.y.top
+	let yb_limit_distance = limit.y.bottom - snake_head_shift.transform.baseVal[0].matrix.f
 	if(xl_limit_distance < xr_limit_distance && xl_limit_distance < yt_limit_distance && xl_limit_distance < yb_limit_distance) ;
 	else if(xr_limit_distance < yt_limit_distance && xr_limit_distance < yb_limit_distance) speed.x = -speed.x
 	else if(yt_limit_distance < yb_limit_distance) {
-	    console.log('xl:', xl_limit_distance, 'xr:', xr_limit_distance,
-			'yt:', yt_limit_distance, 'yb:', yt_limit_distance)
 	    speed.y = speed.x
 	    speed.x = 0
 	}
