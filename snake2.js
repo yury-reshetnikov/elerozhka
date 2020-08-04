@@ -107,6 +107,8 @@ function start() {
 	if(xl_limit_distance < xr_limit_distance && xl_limit_distance < yt_limit_distance && xl_limit_distance < yb_limit_distance) ;
 	else if(xr_limit_distance < yt_limit_distance && xr_limit_distance < yb_limit_distance) speed.x = -speed.x
 	else if(yt_limit_distance < yb_limit_distance) {
+	    console.log('xl:', xl_limit_distance, 'xr:', xr_limit_distance,
+			'yt:', yt_limit_distance, 'yb:', yt_limit_distance)
 	    speed.y = speed.x
 	    speed.x = 0
 	}
