@@ -96,6 +96,19 @@ function start() {
         document.children[0].append(circle)
         return circle
     }
+    function random_snake() {
+        let starter_size = snake_body_length * 4
+        let snake.transform.baseVal[0].matrix.e = Math.round(Math.random() * (starter_size * 2 + limit.x.left - limit.x.right)) - snake_delta_x
+	let snake.transform.baseVal[0].matrix.f = Math.round(Math.random() * (snake_body_length * 2 + limit.y.top - limit.y.bottom)) - snake_delta_y
+        let xl_limit_distance = snake.transform.baseVal[0].matrix.e - limit.x.left
+	let xr_limit_distance = limit.x.right - snake.transform.baseVal[0].matrix.e
+	let yt_limit_distance = snake.transform.baseVal[0].matrix.f - limit.y.top
+	let yb_limit_distance = limit.y.bottom - snake.transform.baseVal[0].matrix.f
+	if(xl_limit_distance < xr_limit_distance && xl_limit_distance < yt_limit_distance && xl_limit_distance < yb_limit_distance) speed.x
+	else if(xr_limit_distance < yt_limit_distance && xr_limit_distance < yb_limit_distance) -speed.x
+	else if(yt_limit_distance < yb_limit_distance) speed.y
+	else -speed.y
+    }
     function mongoose_attack() {
 	let a = new Animate3
 	let time_s = 0
