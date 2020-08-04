@@ -98,8 +98,8 @@ function start() {
     }
     function random_snake() {
         let starter_size = snake_body_length * 4
-        let snake.transform.baseVal[0].matrix.e = Math.round(Math.random() * (starter_size * 2 + limit.x.left - limit.x.right)) - snake_delta_x
-	let snake.transform.baseVal[0].matrix.f = Math.round(Math.random() * (snake_body_length * 2 + limit.y.top - limit.y.bottom)) - snake_delta_y
+        snake.transform.baseVal[0].matrix.e = Math.round(Math.random() * (limit.x.right - limit.x.left - starter_size * 2)) - snake_delta_x + limit.x.left + starter_size
+	snake.transform.baseVal[0].matrix.f = Math.round(Math.random() * (limit.x.bottom - limit.x.top - starter_size * 2)) - snake_delta_y + limit.y.top + starter_size
         let xl_limit_distance = snake.transform.baseVal[0].matrix.e - limit.x.left
 	let xr_limit_distance = limit.x.right - snake.transform.baseVal[0].matrix.e
 	let yt_limit_distance = snake.transform.baseVal[0].matrix.f - limit.y.top
