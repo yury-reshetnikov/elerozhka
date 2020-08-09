@@ -387,6 +387,13 @@ function start() {
 	    big_ball.parentNode.remove()
 	}, 5000)
     }
+    function full_snake_boom() {
+        snake_body_dyn.forEach(boom)
+	boom(add_snake_body(snake_body_2))
+	snake_body_dyn.length = 0
+        first_snake_body = snake_body_2
+
+    }
     let prev = (new Date).getTime()
     function draw() {
 	let time = (new Date).getTime()
@@ -543,22 +550,31 @@ function start() {
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
 	    if(dx >= limit.x.right) {
-		let mark_y = dy + snake_delta_y
-		add_red_line('M 30000,'+mark_y+' L 32000,'+mark_y)
+		full_snake_boom()
+                speed.x = -speed.x
+                rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * 1)
+                rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1 * 1)
 	    }
 	    if(dx <= limit.x.left) {
-		let mark_y = dy + snake_delta_y
-		add_red_line('M 0,'+mark_y+' L 2000,'+mark_y)
+		full_snake_boom()
+		speed.x = -speed.x
+                rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * -1)
+                rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1 * -1)
 	    }
 	    if(dy >= limit.y.bottom) {
-		let mark_x = dx + snake_delta_x
-		add_red_line('M '+mark_x+',15000 L '+mark_x+',17000')
+		full_snake_boom()
+	        speed.y = -speed.y
+	        speed.x = 0
+	        rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
+	        rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
 	    }
 	    if(dy <= limit.y.top) {
-		let mark_x = dx + snake_delta_x
-		add_red_line('M '+mark_x+',0 L '+mark_x+ ',2000')
+		full_snake_boom()
+	        speed.y = -speed.y
+	        speed.x = 0
+	        rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
+	        rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
 	    }
-            return
 	}
 	// checking for intersection with body
 	function check_body_inersection(body) {
@@ -654,10 +670,7 @@ function start() {
 		if(mongoose_distance < mgr) {
 		    mongoose_attack()
 		    cutting = true
-		    snake_body_dyn.forEach(boom)
-		    boom(add_snake_body(snake_body_2))
-		    snake_body_dyn.length = 0
-		    first_snake_body = snake_body_2
+		    full_snake_boom()
 		    setTimeout(function() {
 			random_mongoose(mongoose)
 			cutting = false
