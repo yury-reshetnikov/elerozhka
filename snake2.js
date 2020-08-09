@@ -104,21 +104,11 @@ function start() {
 	let xr_limit_distance = limit.x.right - snake_head_shift.transform.baseVal[0].matrix.e
 	let yt_limit_distance = snake_head_shift.transform.baseVal[0].matrix.f - limit.y.top
 	let yb_limit_distance = limit.y.bottom - snake_head_shift.transform.baseVal[0].matrix.f
-	let prev = (new Date).getTime()
-	let time = (new Date).getTime()
-	let tp = time - prev
-	let old_x = snake_head_shift.transform.baseVal[0].matrix.e
-	let x = Math.round (old_x + speed.x * tp)
-	let old_y = snake_head_shift.transform.baseVal[0].matrix.f
-	let y = Math.round (old_y + speed.y * tp)
-	let leg = snake_head_length - get_speed_delta(rotations[0], x, y)
-        let cos = leg / snake_head_length
-	let acos_rad = Math.acos(cos)
-	let sin = Math.sin(acos_rad)
 	if(xl_limit_distance < xr_limit_distance && xl_limit_distance < yt_limit_distance && xl_limit_distance < yb_limit_distance) ;
 	else if(xr_limit_distance < yt_limit_distance && xr_limit_distance < yb_limit_distance) {
             speed.x = -speed.x
-            rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, (speed.x ? sin : -cos) * -1, (speed.x ? cos : sin) * -1)
+            rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * 1)
+            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1 * 1)
 	}
 	else if(yt_limit_distance < yb_limit_distance) {
 	    speed.y = speed.x
