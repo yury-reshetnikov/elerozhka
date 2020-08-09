@@ -113,10 +113,14 @@ function start() {
 	else if(yt_limit_distance < yb_limit_distance) {
 	    speed.y = speed.x
 	    speed.x = 0
+	    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
+	    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
 	}
 	else {
 	    speed.y = -speed.x
 	    speed.x = 0
+	    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
+	    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
 	}
     }
     function mongoose_attack() {
