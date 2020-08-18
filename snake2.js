@@ -551,6 +551,7 @@ function start() {
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
 	    full_snake_boom()
+	    rotations.length = 0
             let xl_limit_distance = snake_head_shift.transform.baseVal[0].matrix.e - limit.x.left
 	    let xr_limit_distance = limit.x.right - snake_head_shift.transform.baseVal[0].matrix.e
 	    let yt_limit_distance = snake_head_shift.transform.baseVal[0].matrix.f - limit.y.top
