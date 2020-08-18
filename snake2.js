@@ -613,6 +613,7 @@ function start() {
 		}
 	    }
 	    else console.log('unknown border?!!!');
+	    console.log(speed)
 	}
 	// checking for intersection with body
 	function check_body_inersection(body) {
