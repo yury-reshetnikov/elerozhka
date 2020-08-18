@@ -596,8 +596,8 @@ function start() {
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
 		}
-		snake_head_shift.transform.baseVal[0].matrix.e -=
-		    snake_head_length
+		snake_head_shift.transform.baseVal[0].matrix.e =
+		    limit.x.left - snake_head_length
 	    }
 	    else if(dy >= limit.y.bottom) {
 		if(xl_limit_distance < xr_limit_distance) {
@@ -612,8 +612,8 @@ function start() {
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
 		}
-		snake_head_shift.transform.baseVal[0].matrix.f +=
-		    snake_head_length
+		snake_head_shift.transform.baseVal[0].matrix.f =
+		    limit.y.bottom + snake_head_length
 	    }
 	    else if(dy <= limit.y.top) {
 		if(xl_limit_distance < xr_limit_distance) {
@@ -628,8 +628,8 @@ function start() {
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
 		}
-		snake_head_shift.transform.baseVal[0].matrix.f -=
-		    snake_head_length
+		snake_head_shift.transform.baseVal[0].matrix.f =
+		    limit.y.top - snake_head_length
 	    }
 	    else console.log('unknown border?!!!');
 	    console.log(speed)
