@@ -392,6 +392,7 @@ function start() {
 	boom(add_snake_body(snake_body_2))
 	snake_body_dyn.length = 0
         first_snake_body = snake_body_2
+        s_counter.textContent = 1
 
     }
     let prev = (new Date).getTime()
@@ -549,31 +550,69 @@ function start() {
         }
 	if(dx >= limit.x.right || dx <= limit.x.left || dy >= limit.y.bottom || dy <= limit.y.top) {
             console.log('limit reached', {x:x, y:y, dx:dx, dy:dy, limit:limit})
+            let xl_limit_distance = snake_head_shift.transform.baseVal[0].matrix.e - limit.x.left
+	    let xr_limit_distance = limit.x.right - snake_head_shift.transform.baseVal[0].matrix.e
+	    let yt_limit_distance = snake_head_shift.transform.baseVal[0].matrix.f - limit.y.top
+	    let yb_limit_distance = limit.y.bottom - snake_head_shift.transform.baseVal[0].matrix.f
 	    if(dx >= limit.x.right) {
 		full_snake_boom()
-                speed.x = -speed.x
-                rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * 1)
-                rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1 * 1)
+		if(yt_limit_distance < yb_limit_distance) {
+                    speed.y = -speed.x
+                    speed.x = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
+	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
+		}
+		else {
+                    speed.y = speed.x
+                    speed.x = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
+	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+		}
 	    }
 	    if(dx <= limit.x.left) {
 		full_snake_boom()
-		speed.x = -speed.x
-                rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, -1 * -1)
-                rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, -1 * -1)
+		if(yt_limit_distance < yb_limit_distance) {
+                    speed.y = -speed.x
+                    speed.x = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
+	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
+		}
+		else {
+                    speed.y = speed.x
+                    speed.x = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
+	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+		}
 	    }
 	    if(dy >= limit.y.bottom) {
 		full_snake_boom()
-	        speed.y = -speed.y
-	        speed.x = 0
-	        rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
-	        rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+		if(xl_limit_distance < xr_limit_distance) {
+                    speed.x = speed.y
+                    speed.y = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * 1)
+                    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
+		}
+		else {
+                    speed.x = -speed.y
+                    speeed.y = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
+                    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
+		}
 	    }
 	    if(dy <= limit.y.top) {
-		full_snake_boom()
-	        speed.y = -speed.y
-	        speed.x = 0
-	        rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
-	        rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
+                full_snake_boom()
+		if(xl_limit_distance < xr_limit_distance) {
+                    speed.x = -speed.y
+                    speed.y = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * 1)
+                    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
+		}
+		else {
+                    speed.x = speed.y
+                    speeed.y = 0
+                    rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
+                    rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
+		}
 	    }
 	}
 	// checking for intersection with body
