@@ -576,8 +576,8 @@ function start() {
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
 		}
-		snake_head_shift.transform.baseVal[0].matrix.e +=
-		    snake_head_length
+		snake_head_shift.transform.baseVal[0].matrix.e =
+		    limit.x.right + snake_head_length
 	    }
 	    else if(dx <= limit.x.left) {
 		if(yt_limit_distance < yb_limit_distance) {
