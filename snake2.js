@@ -565,13 +565,13 @@ function start() {
 	    let yb_limit_distance = limit.y.bottom - snake_head_shift.transform.baseVal[0].matrix.f
 	    if(dx >= limit.x.right) {
 		if(yt_limit_distance < yb_limit_distance) {
-                    abs_speed()
+                    speed.y = abs_speed()
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
 		}
 		else {
-                    -abs_speed()
+                    speed.y = -abs_speed()
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
@@ -579,13 +579,13 @@ function start() {
 	    }
 	    else if(dx <= limit.x.left) {
 		if(yt_limit_distance < yb_limit_distance) {
-                    -abs_speed()
+                    speed.y = abs_speed()
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
 		}
 		else {
-                    abs_speed()
+                    speed.y = -abs_speed()
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
@@ -593,13 +593,13 @@ function start() {
 	    }
 	    else if(dy >= limit.y.bottom) {
 		if(xl_limit_distance < xr_limit_distance) {
-                    -abs_speed()
+                    speed.x = abs_speed()
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * 1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
 		}
 		else {
-                    abs_speed()
+                    speed.x = -abs_speed()
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
@@ -607,13 +607,13 @@ function start() {
 	    }
 	    else if(dy <= limit.y.top) {
 		if(xl_limit_distance < xr_limit_distance) {
-                    abs_speed()
+                    speed.x = abs_speed()
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * 1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
 		}
 		else {
-                    -abs_speed()
+                    speed.x = -abs_speed()
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
