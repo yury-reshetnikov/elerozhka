@@ -569,6 +569,10 @@ function start() {
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
+		    if(yt_limit_distance < snake_head_length) {
+			snake_head_shift.transform.baseVal[0].matrix.f =
+			    limit.y.top + snake_head_length
+		    }
 		}
 		else {
                     speed.y = -abs_speed()
