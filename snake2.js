@@ -594,7 +594,7 @@ function start() {
 		}
 		else {
                     speed.x = -speed.y
-                    speeed.y = 0
+                    speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
 		}
@@ -609,7 +609,7 @@ function start() {
 		}
 		else {
                     speed.x = speed.y
-                    speeed.y = 0
+                    speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
 		}
