@@ -69,6 +69,13 @@ function start() {
     let first_snake_body = snake_body_2
     let marked_mouse, marked_mouse_circle,
 	prev_mouse_nearest_distance, min_mouse_nearest_distance
+    function abs_speed() {
+	if(speed.x > 0) return speed.x
+	else if(speed.x < 0) return -speed.x
+	else if(speed.y > 0) return speed.y
+	else if(speed.y < 0) return -speed.y
+	else throw 'zero speed'
+    }
     function add_red_line(d) {
 	let mark = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 	mark.setAttribute('d', d)
