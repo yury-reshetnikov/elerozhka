@@ -229,7 +229,12 @@ function start() {
 			intersected = true
 			return true
 		    }
-		    else return false
+		    else {
+			console.log('chx',chx,'chy',chy,'mx',mx,'my',my,
+				    'mongoose_distance',mongoose_distance,
+				    'mgr', mgr)
+			return false
+		    }
 		}
 		mg_check(mongoose)
 	    }
