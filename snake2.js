@@ -645,7 +645,7 @@ function start() {
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
 		    if(xl_limit_distance < snake_head_length + snake_head_length) {
 			snake_head_shift.transform.baseVal[0].matrix.e =
-			    limit.x.left + snake_head_length * 2
+			    limit.x.left + snake_head_length * 3
 		    }
 		    else console.log('xl_limit_distance:', xl_limit_distance)
 		}
@@ -670,7 +670,7 @@ function start() {
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
 		    if(xl_limit_distance < snake_head_length + snake_head_length) {
 			snake_head_shift.transform.baseVal[0].matrix.e =
-			    limit.x.left + snake_head_length * 2
+			    limit.x.left + snake_head_length * 3
 		    }
 		}
 		else {
