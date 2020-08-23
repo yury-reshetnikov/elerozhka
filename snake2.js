@@ -224,7 +224,7 @@ function start() {
 		    let chx = mongoose.transform.baseVal[0].matrix.e
 		    let chy = mongoose.transform.baseVal[0].matrix.f
 		    let mongoose_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
-		    if(mongoose_distance < snake_body_length) {
+		    if(mongoose_distance < mgr) {
 			console.log('mx',mx,'my',my)
 			intersected = true
 			return true
