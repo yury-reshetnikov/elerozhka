@@ -205,18 +205,20 @@ function start() {
 	    snake_body_dyn.some(check)
 	    if(!intersected) check(snake_body_2)
 	    if(!intersected) check(snake_tail)
-            function m_check(mice) {
-		let chx = mouse.transform.baseVal[0].matrix.e
-		let chy = mouse.transform.baseVal[0].matrix.f
-		let mouse_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
-		if(mouse_distance < snake_body_length) {
-		    console.log('mx',mx,'my',my)
-		    intersected = true
-		    return true
+	    if(!intersected) {
+		mice.some(m_check)
+		function m_check(mice) {
+		    let chx = mouse.transform.baseVal[0].matrix.e
+		    let chy = mouse.transform.baseVal[0].matrix.f
+		    let mouse_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
+		    if(mouse_distance < snake_body_length) {
+			console.log('mx',mx,'my',my)
+			intersected = true
+			return true
+		    }
+		    else return false
 		}
-		else return false
-            }
-	    if(!intersected) mice.some(m_check)
+	    }
             if(!intersected) break
 	}
             function mg_check(mongoose) {
