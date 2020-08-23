@@ -205,7 +205,6 @@ function start() {
 	    snake_body_dyn.some(check)
 	    if(!intersected) check(snake_body_2)
 	    if(!intersected) check(snake_tail)
-	    if(!intersected) break
             function m_check(mice) {
 		let chx = mouse.transform.baseVal[0].matrix.e
 		let chy = mouse.transform.baseVal[0].matrix.f
@@ -217,7 +216,7 @@ function start() {
 		}
 		else return false
             }
-            mice.some(m_check)
+	    if(!intersected) mice.some(m_check)
             if(!intersected) break
 	}
             function mg_check(mongoose) {
