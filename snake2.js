@@ -188,8 +188,8 @@ function start() {
     function random_mouse(mouse) {
 	let mx, my
 	for(;;) {
-	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3)) + limit.x.left + snake_body_length
-	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3)) + limit.y.top + snake_body_length
+	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3 - snake_body_length_half)) + limit.x.left + snake_body_length + snake_body_length_half
+	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3 - snake_body_length_half)) + limit.y.top + snake_body_length + snake_body_length_half
 	    let intersected = false
 	    function check(body) {
 		let bx = body.transform.baseVal[0].matrix.e - snake_head_length - snake_body_length_half
