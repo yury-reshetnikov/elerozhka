@@ -39,8 +39,8 @@ function start() {
 	x: 2, y: 0
     }
     let slow = false
-    let max_mice_count = 10
-    let max_new_mice_count = 3
+    let max_mice_count = 1000
+    let max_new_mice_count = 300
     let snake_head_length = 1300
     let snake_tail_length = 1100
     let snake_body_length = 800
@@ -203,41 +203,39 @@ function start() {
 		else return false
 	    }
 	    snake_body_dyn.some(check)
-	    if(!intersected) check(snake_body_2)
-	    if(!intersected) check(snake_tail)
-	    if(!intersected) {
-		mice.some(m_check)
-		function m_check(mice) {
-		    let chx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
-		    let chy = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
-		    let mouse_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
-		    if(mouse_distance < snake_body_length) {
-			console.log('mx',mx,'my',my)
-			intersected = true
-			return true
-		    }
-		    else return false
+	    if(intersected) continue
+	    if(check(snake_body_2)) continue
+	    if(check(snake_tail)) continue
+	    function m_check(mice) {
+		let chx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
+		let chy = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
+		let mouse_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
+		if(mouse_distance < snake_body_length) {
+		    console.log('mx',mx,'my',my)
+		    intersected = true
+		    return true
+		}
+		else return false
+	    }
+	    mice.some(m_check)
+	    if(intersected) continue
+	    function mg_check(mongoose) {
+		let chx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
+		let chy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
+		let mongoose_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
+		if(mongoose_distance < mgr + snake_body_length) {
+		    console.log('mx',mx,'my',my)
+		    intersected = true
+		    return true
+		}
+		else {
+		    // console.log('chx',chx,'chy',chy,'mx',mx,'my',my,
+		    // 	    'mongoose_distance',mongoose_distance,
+		    // 	    'mgr', mgr)
+		    return false
 		}
 	    }
-	    if(!intersected) {
-		function mg_check(mongoose) {
-		    let chx = mongoose.transform.baseVal[0].matrix.e + mongoose_delta_x - snake_delta_x
-		    let chy = mongoose.transform.baseVal[0].matrix.f + mongoose_delta_y - snake_delta_y
-		    let mongoose_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
-		    if(mongoose_distance < mgr) {
-			console.log('mx',mx,'my',my)
-			intersected = true
-			return true
-		    }
-		    else {
-			// console.log('chx',chx,'chy',chy,'mx',mx,'my',my,
-			// 	    'mongoose_distance',mongoose_distance,
-			// 	    'mgr', mgr)
-			return false
-		    }
-		}
-		mg_check(mongoose)
-	    }
+	    mg_check(mongoose)
             if(!intersected) break
 	}
 	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
