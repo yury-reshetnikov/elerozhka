@@ -233,7 +233,6 @@ function start() {
             }
             /*mongoose(mg_check)
             if(!intersected) break*/
-	}
 	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = my + snake_delta_y - mouse_delta_y
     }
