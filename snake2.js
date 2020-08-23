@@ -219,21 +219,22 @@ function start() {
 		    else return false
 		}
 	    }
+	    if(!intersected) {
+		function mg_check(mongoose) {
+		    let chx = mongoose.transform.baseVal[0].matrix.e
+		    let chy = mongoose.transform.baseVal[0].matrix.f
+		    let mongoose_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
+		    if(mongoose_distance < snake_body_length) {
+			console.log('mx',mx,'my',my)
+			intersected = true
+			return true
+		    }
+		    else return false
+		}
+		mg_check(mongoose)
+	    }
             if(!intersected) break
 	}
-            function mg_check(mongoose) {
-		let chx = mongoose.transform.baseVal[0].matrix.e
-		let chy = mongoose.transform.baseVal[0].matrix.f
-		let mongoose_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
-		if(mongoose_distance < snake_body_length) {
-		    console.log('mx',mx,'my',my)
-		    intersected = true
-		    return true
-		}
-		else return false
-            }
-            /*mongoose(mg_check)
-            if(!intersected) break*/
 	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = my + snake_delta_y - mouse_delta_y
     }
