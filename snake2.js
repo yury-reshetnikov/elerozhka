@@ -206,6 +206,33 @@ function start() {
 	    if(!intersected) check(snake_body_2)
 	    if(!intersected) check(snake_tail)
 	    if(!intersected) break
+            function m_check(mice) {
+		let chx = mouse.transform.baseVal[0].matrix.e
+		let chy = mouse.transform.baseVal[0].matrix.f
+		let mouse_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
+		if(mouse_distance < snake_body_length) {
+		    console.log('mx',mx,'my',my)
+		    intersected = true
+		    return true
+		}
+		else return false
+            }
+            mice.some(m_check)
+            if(!intersected) break
+	}
+            function mg_check(mongoose) {
+		let chx = mongoose.transform.baseVal[0].matrix.e
+		let chy = mongoose.transform.baseVal[0].matrix.f
+		let mongoose_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
+		if(mongoose_distance < snake_body_length) {
+		    console.log('mx',mx,'my',my)
+		    intersected = true
+		    return true
+		}
+		else return false
+            }
+            /*mongoose(mg_check)
+            if(!intersected) break*/
 	}
 	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = my + snake_delta_y - mouse_delta_y
@@ -579,6 +606,10 @@ function start() {
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+	            if(yb_limit_distance < snake_head_length) {
+                        snake_head_shift.transform.baseVal[0].matrix.f =
+                            limit.y.bottom - snake_head_length
+	            }
 		}
 		snake_head_shift.transform.baseVal[0].matrix.e =
 		    limit.x.right + snake_head_length
@@ -589,12 +620,20 @@ function start() {
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 1, 0)
+		    if(yt_limit_distance < snake_head_length) {
+			snake_head_shift.transform.baseVal[0].matrix.f =
+			    limit.y.top + snake_head_length
+		    }
 		}
 		else {
                     speed.y = -abs_speed()
                     speed.x = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, -1, 0)
 	            rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, -1, 0)
+	            if(yb_limit_distance < snake_head_length) {
+                        snake_head_shift.transform.baseVal[0].matrix.f =
+                            limit.y.bottom - snake_head_length
+	            }
 		}
 		snake_head_shift.transform.baseVal[0].matrix.e =
 		    limit.x.left + snake_head_length + snake_body_length
@@ -605,12 +644,20 @@ function start() {
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * 1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
+		    if(xl_limit_distance < snake_head_length) {
+			snake_head_shift.transform.baseVal[0].matrix.e =
+			    limit.x.left + snake_head_length
+		    }
 		}
 		else {
                     speed.x = -abs_speed()
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
+		    if(xr_limit_distance < snake_head_length) {
+			snake_head_shift.transform.baseVal[0].matrix.e =
+			    limit.x.right - snake_head_length
+		    }
 		}
 		snake_head_shift.transform.baseVal[0].matrix.f =
 		    limit.y.bottom - snake_body_length_half - stroke_width
@@ -621,12 +668,20 @@ function start() {
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * 1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
+		    if(xl_limit_distance < snake_head_length) {
+			snake_head_shift.transform.baseVal[0].matrix.e =
+			    limit.x.left + snake_head_length
+		    }
 		}
 		else {
                     speed.x = -abs_speed()
                     speed.y = 0
                     rotate_sin_cos(snake_head_rotate.transform.baseVal[0].matrix, 0, 1 * -1)
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
+		    if(xr_limit_distance < snake_head_length) {
+			snake_head_shift.transform.baseVal[0].matrix.e =
+			    limit.x.right - snake_head_length
+		    }
 		}
 		snake_head_shift.transform.baseVal[0].matrix.f =
 		    limit.y.top + snake_body_length_half + stroke_width
