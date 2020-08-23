@@ -645,7 +645,7 @@ function start() {
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
 		    if(xl_limit_distance < snake_head_length) {
 			snake_head_shift.transform.baseVal[0].matrix.e =
-			    limit.x.left + snake_head_length
+			    limit.x.left + snake_head_length * 2
 		    }
 		}
 		else {
@@ -655,7 +655,7 @@ function start() {
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
 		    if(xr_limit_distance < snake_head_length) {
 			snake_head_shift.transform.baseVal[0].matrix.e =
-			    limit.x.right - snake_head_length
+			    limit.x.right
 		    }
 		}
 		snake_head_shift.transform.baseVal[0].matrix.f =
@@ -669,7 +669,7 @@ function start() {
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * 1)
 		    if(xl_limit_distance < snake_head_length) {
 			snake_head_shift.transform.baseVal[0].matrix.e =
-			    limit.x.left + snake_head_length
+			    limit.x.left + snake_head_length * 2
 		    }
 		}
 		else {
@@ -679,7 +679,7 @@ function start() {
                     rotate_sin_cos(snake_tail.transform.baseVal[0].matrix, 0, 1 * -1)
 		    if(xr_limit_distance < snake_head_length) {
 			snake_head_shift.transform.baseVal[0].matrix.e =
-			    limit.x.right - snake_head_length
+			    limit.x.right
 		    }
 		}
 		snake_head_shift.transform.baseVal[0].matrix.f =
