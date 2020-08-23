@@ -186,8 +186,13 @@ function start() {
 	return mouse
     }
     function random_mouse(mouse) {
+	let check_count = 0
 	let mx, my
 	for(;;) {
+	    if(++check_count > 10) {
+		mouse.remove()
+		return false
+	    }
 	    mx = Math.round(Math.random() * (limit.x.right - limit.x.left - snake_body_length * 3 - snake_body_length_half)) + limit.x.left + snake_body_length + snake_body_length_half
 	    my = Math.round(Math.random() * (limit.y.bottom - limit.y.top - snake_body_length * 3 - snake_body_length_half)) + limit.y.top + snake_body_length + snake_body_length_half
 	    let intersected = false
@@ -240,6 +245,7 @@ function start() {
 	}
 	mouse.transform.baseVal[0].matrix.e = mx + snake_delta_x - mouse_delta_x
 	mouse.transform.baseVal[0].matrix.f = my + snake_delta_y - mouse_delta_y
+	return true
     }
     function add_mices() {
 	let count = Math.round(Math.random() * max_new_mice_count)
@@ -248,8 +254,8 @@ function start() {
 	    count = max_mice_count - mice.length
 	while(count--) {
 	    let mouse = clone_mouse()
-	    random_mouse(mouse)
-	    mice.push(mouse)
+	    if(random_mouse(mouse))
+		mice.push(mouse)
 	}
     }
     function shift_mouse(mouse, x, y) {
