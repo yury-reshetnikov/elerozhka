@@ -211,7 +211,7 @@ function start() {
 	    if(intersected) continue
 	    if(check(snake_body_2)) continue
 	    if(check(snake_tail)) continue
-	    function m_check(mice) {
+	    function m_check(mouse) {
 		let chx = mouse.transform.baseVal[0].matrix.e + mouse_delta_x - snake_delta_x
 		let chy = mouse.transform.baseVal[0].matrix.f + mouse_delta_y - snake_delta_y
 		let mouse_distance = Math.sqrt(Math.pow(chx - mx, 2) + Math.pow(chy - my, 2))
