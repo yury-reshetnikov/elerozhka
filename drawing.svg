@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.2" width="350mm" height="165mm" viewBox="0 0 35000 16500"
+<svg version="1.2" width="250mm" height="165mm" viewBox="0 0 25000 16500"
      preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -8,7 +8,7 @@
   <script href="svggen.js"></script>
   <script href="svg-editor.js"></script>
   <script href="svg-animate.js"></script>
-  <rect id="box" x="1000" y="1000" width="30000" height="15000" fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
+  <rect id="box" x="1000" y="1000" width="20000" height="15000" fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
   <g id="mongoose" onmouseover="mongoose()">
       <path id="mongoose2_ear2" fill="rgb(149,75,0)" stroke="black" d="M 8398,7007 C 8391,6961 8423,6937 8436,6929 8463,6963 8452,6982 8456,6998"/>
       <path id="mongoose2_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
