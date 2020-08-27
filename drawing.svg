@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" width="350mm" height="165mm" viewBox="0 0 35000 16500"
+     preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:space="preserve">
+  <script href="svggen.js"></script>
+  <script href="svg-editor.js"></script>
+  <script href="svg-animate.js"></script>
+  <rect id="box" x="1000" y="1000" width="30000" height="15000" fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
+  <g id="mongoose" onmouseover="mongoose()">
+      <path id="mongoose2_ear2" fill="rgb(149,75,0)" stroke="black" d="M 8398,7007 C 8391,6961 8423,6937 8436,6929 8463,6963 8452,6982 8456,6998"/>
+      <path id="mongoose2_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
+            d="M 8224,7148 C 8366,6912 8649,6973 8685,7177 8819,7502 9672,6805 9987,7524 10055,7768 9838,8028 9298,8041 9629,7973 9782,7862 9893,7696 9702,7683 9795,7938 9540,7887 9548,7721 9642,7925 9693,7675 9497,7611 9370,7764 8919,7606 8719,7700 8842,7896 8609,7857 8587,7717 8702,7836 8754,7586 8719,7424 8656,7445 8558,7373 8152,7420 8123,7248 8224,7148 Z"/>
+      <path id="mongoose2_nose" d="M 8253,7309 C 8286,7303 8351,7212 8250,7215 8149,7218 8219,7305 8253,7309 Z"/>
+      <circle id="mongoose2_eye" cx="8415" cy="7145" r="70"/>
+      <circle id="mongoose2_eyeball" fill="white" cx="8385" cy="7115" r="25"/>
+      <path id="mongoose2_ear1" fill="rgb(149,75,0)" stroke="black" d="M 8520,7067 C 8536,7009 8584,6998 8603,6995 8619,7048 8595,7064 8593,7085"/>
+  </g>
+  <g id="mouse">
+      <path id="mouse_tail" style="display:none" fill="rgb(200,200,200)" stroke="black"
+            d="M 14360,15000 C 14130,14590 14012,15386 13700,15000 13974,15537 14142,14633 14360,15100"/>
+      <path id="mouse_tail_2" fill="rgb(200,200,200)" stroke="black"
+            d="M 14360,15000 C 13912,15431 14824,15298 14766,15557 15041,15282 14131,15369 14360,15100"/>
+      <path id="mouse_body" fill="rgb(200,200,200)" stroke="black"
+            d="M 15000,15000 C 14960,14770 14355,14590 14350,15000 14355,15410 14960,15230 15000,15000 Z"/>
+      <circle id="mouse_ear1" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="14850" r="150"/>
+      <circle id="mouse_ear2" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="15150" r="150"/>
+      <circle id="mouse_ear1_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="14865" r="145"/>
+      <circle id="mouse_ear2_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="15135" r="145"/>
+      <path id="mouse_nose" fill="black" d="M 14940,15000 C 14935,14968 14850,14903 14850,15000 14850,15097 14935,15032 14940,15000 Z"/>
+      <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14780,14700"/>
+      <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14880,14700"/>
+      <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14980,14700"/>
+      <path id="mouse_whisker_21" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14780,15320"/>
+      <path id="mouse_whisker_22" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14880,15320"/>
+      <path id="mouse_whisker_23" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14980,15320"/>
+  </g>
+<script>
+svgeditor(window)
+</script>
+</svg>
