@@ -27,7 +27,7 @@
       <circle id="mongoose2_t_eyeball" fill="white" cx="8385" cy="7115" r="25"/>
       <path id="mongoose2_t_ear1" fill="rgb(149,75,0)" stroke="black" d="M 8520,7067 C 8536,7009 8584,6998 8603,6995 8619,7048 8595,7064 8593,7085"/>
   </g>
-  <g id="mongoose4">
+  <g id="mongoose4" style="display:none">
       <path id="mongoose4_paw1" fill="rgb(149,75,0)" stroke="black" d="M 8976,7590 C 8942,7557 8903,7549 8937,7510 9020,7459 9035,7544 9046,7563"/>
       <path id="mongoose4_paw2" fill="rgb(149,75,0)" stroke="black" d="M 9019,8002 C 9004,8061 8992,8100 8937,8075 8882,8054 8931,8014 8946,7975"/>
       <path id="mongoose4_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
@@ -61,9 +61,10 @@
 svgeditor(window)
 function mongoose_turn() {
     let time_s = 0
-    let time_f = 100
+    let time_f = 250
     let a = new Animate3
-    a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose4_body', time_s, time_f)
+    a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose4_body', time_s, time_f, true)
+    a.start()
 }
 mongoose_turn()
 </script>
