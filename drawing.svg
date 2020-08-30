@@ -121,7 +121,7 @@ function mouse_turn() {
     a.path ('mouse_tail', 'mouse_t_tail', 'mouse2_tail', time_s, time_f, true)
     let min_mouse_distance = 1000
     let max_mouse_distance = 3000
-    a.translate ('mouse2', 0, 0, Math.round(Math.random() * (max_mouse_distance - min_mouse_distance) + max_mouse_distance), Math.round(Math.random() * (max_mouse_distance - min_mouse_distance) + max_mouse_distance))
+    a.translate ('mouse2', 0, 0, Math.round(Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance), Math.round(Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance))
     a.start ()
 }
 mouse_turn()
