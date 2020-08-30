@@ -111,6 +111,7 @@ function mongoose_turn() {
 function mouse_turn() {
     let time_s = 200
     let time_f = 400
+    let time_ff = 1000
     a.path ('mouse_whisker_11', 'mouse_t_whisker_11', 'mouse2_whisker_11', time_s, time_f, true)
     a.path ('mouse_whisker_12', 'mouse_t_whisker_12', 'mouse2_whisker_12', time_s, time_f, true)
     a.path ('mouse_whisker_13', 'mouse_t_whisker_13', 'mouse2_whisker_13', time_s, time_f, true)
@@ -118,6 +119,9 @@ function mouse_turn() {
     a.path ('mouse_whisker_22', 'mouse_t_whisker_22', 'mouse2_whisker_22', time_s, time_f, true)
     a.path ('mouse_whisker_23', 'mouse_t_whisker_23', 'mouse2_whisker_23', time_s, time_f, true)
     a.path ('mouse_tail', 'mouse_t_tail', 'mouse2_tail', time_s, time_f, true)
+    let min_mouse_distance = 1000
+    let max_mouse_distance = 3000
+    a.translate ('mouse2', 0, 0, Math.round(Math.random() * (max_mouse_distance - min_mouse_distance) + max_mouse_distance), Math.round(Math.random() * (max_mouse_distance - min_mouse_distance) + max_mouse_distance))
     a.start ()
 }
 mouse_turn()
