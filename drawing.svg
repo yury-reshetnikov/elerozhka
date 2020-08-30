@@ -23,23 +23,21 @@
       <path id="mongoose_ear2" fill="rgb(149,75,0)" stroke="black" d="M 8615,7793 C 8675,7800 8692,7847 8698,7865 8648,7888 8629,7867 8608,7868"/>
   </g>
   <g id="mouse">
-      <path id="mouse_tail" style="display:none" fill="rgb(200,200,200)" stroke="black"
+      <path id="mouse_tail" fill="rgb(200,200,200)" stroke="black"
             d="M 14360,15000 C 14130,14590 14012,15386 13700,15000 13974,15537 14142,14633 14360,15100"/>
-      <path id="mouse_tail_2" fill="rgb(200,200,200)" stroke="black"
-            d="M 14360,15000 C 13912,15431 14824,15298 14766,15557 15041,15282 14131,15369 14360,15100"/>
       <path id="mouse_body" fill="rgb(200,200,200)" stroke="black"
             d="M 15000,15000 C 14960,14770 14355,14590 14350,15000 14355,15410 14960,15230 15000,15000 Z"/>
       <circle id="mouse_ear1" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="14850" r="150"/>
       <circle id="mouse_ear2" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="15150" r="150"/>
       <circle id="mouse_ear1_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="14865" r="145"/>
       <circle id="mouse_ear2_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="15135" r="145"/>
-      <path id="mouse_nose" fill="black" d="M 14940,15000 C 14935,14968 14850,14903 14850,15000 14850,15097 14935,15032 14940,15000 Z"/>
-      <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14780,14700"/>
-      <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14880,14700"/>
-      <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14980,14700"/>
-      <path id="mouse_whisker_21" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14780,15320"/>
-      <path id="mouse_whisker_22" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14880,15320"/>
-      <path id="mouse_whisker_23" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14980,15320"/>
+      <path id="mouse_nose" fill="black" d="M 14936,15011 C 14931,14979 14846,14914 14846,15011 14846,15108 14931,15043 14936,15011 Z"/>
+      <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14810,14920 14840,14850 14780,14800 14780,14700"/>
+      <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14860,14890 14890,14820 14850,14770 14880,14700"/>
+      <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14950,14910 14930,14820 15000,14780 14980,14700"/>
+      <path id="mouse_whisker_21" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14870,15130 14810,15150 14850,15230 14780,15320"/>
+      <path id="mouse_whisker_22" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14910,15160 14880,15200 14920,15250 14880,15320"/>
+      <path id="mouse_whisker_23" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14970,15120 14930,15180 14990,15230 14980,15320"/>
   </g>
 <script>
 svgeditor(window)

@@ -30,7 +30,7 @@
       <circle id="mouse_ear2" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="15150" r="150"/>
       <circle id="mouse_ear1_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="14865" r="145"/>
       <circle id="mouse_ear2_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="15135" r="145"/>
-      <path id="mouse_nose" fill="black" d="M 14940,15000 C 14935,14968 14850,14903 14850,15000 14850,15097 14935,15032 14940,15000 Z"/>
+      <path id="mouse_nose" fill="black" d="M 14936,15011 C 14931,14979 14846,14914 14846,15011 14846,15108 14931,15043 14936,15011 Z"/>
       <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14780,14700"/>
       <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14880,14700"/>
       <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14980,14700"/>
