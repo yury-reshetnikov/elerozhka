@@ -45,21 +45,23 @@
   <use xlink:href="#mongoose2_t" transform="translate(-3000 -3000)"/>
   <use xlink:href="#mongoose4" transform="translate(-3000 -1000)"/>
   <g id="mouse">
-      <path id="mouse_tail" fill="rgb(200,200,200)" stroke="black"
-            d="M 14360,15000 C 13912,15431 14824,15298 14766,15557 15041,15282 14131,15369 14360,15100"/>
-      <path id="mouse_body" fill="rgb(200,200,200)" stroke="black"
-            d="M 15000,15000 C 14960,14770 14355,14590 14350,15000 14355,15410 14960,15230 15000,15000 Z"/>
-      <circle id="mouse_ear1" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="14850" r="150"/>
-      <circle id="mouse_ear2" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="15150" r="150"/>
-      <circle id="mouse_ear1_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="14865" r="145"/>
-      <circle id="mouse_ear2_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="15135" r="145"/>
-      <path id="mouse_nose" fill="black" d="M 14936,15011 C 14931,14979 14846,14914 14846,15011 14846,15108 14931,15043 14936,15011 Z"/>
-      <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14780,14700 14780,14700 14780,14700 14780,14700"/>
-      <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14880,14700 14880,14700 14880,14700 14880,14700"/>
-      <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14980,14700 14980,14700 14980,14700 14980,14700"/>
-      <path id="mouse_whisker_21" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14780,15320 14780,15320 14780,15320 14780,15320"/>
-      <path id="mouse_whisker_22" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14880,15320 14880,15320 14880,15320 14880,15320"/>
-      <path id="mouse_whisker_23" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14980,15320 14980,15320 14980,15320 14980,15320"/>
+      <g id="mouse_rotate" transform-origin="14360 14990">
+          <path id="mouse_tail" fill="rgb(200,200,200)" stroke="black"
+                d="M 14360,15000 C 13912,15431 14824,15298 14766,15557 15041,15282 14131,15369 14360,15100"/>
+          <path id="mouse_body" fill="rgb(200,200,200)" stroke="black"
+                d="M 15000,15000 C 14960,14770 14355,14590 14350,15000 14355,15410 14960,15230 15000,15000 Z"/>
+          <circle id="mouse_ear1" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="14850" r="150"/>
+          <circle id="mouse_ear2" fill="rgb(200,200,200)" stroke="black" cx="14600" cy="15150" r="150"/>
+          <circle id="mouse_ear1_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="14865" r="145"/>
+          <circle id="mouse_ear2_" fill="rgb(200,200,200)" stroke="none" cx="14620" cy="15135" r="145"/>
+          <path id="mouse_nose" fill="black" d="M 14936,15011 C 14931,14979 14846,14914 14846,15011 14846,15108 14931,15043 14936,15011 Z"/>
+          <path id="mouse_whisker_11" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14780,14700 14780,14700 14780,14700 14780,14700"/>
+          <path id="mouse_whisker_12" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14880,14700 14880,14700 14880,14700 14880,14700"/>
+          <path id="mouse_whisker_13" stroke="black" stroke-width="20" fill="none" d="M 14880,14960 L 14980,14700 14980,14700 14980,14700 14980,14700"/>
+          <path id="mouse_whisker_21" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14780,15320 14780,15320 14780,15320 14780,15320"/>
+          <path id="mouse_whisker_22" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14880,15320 14880,15320 14880,15320 14880,15320"/>
+          <path id="mouse_whisker_23" stroke="black" stroke-width="20" fill="none" d="M 14880,15060 L 14980,15320 14980,15320 14980,15320 14980,15320"/>
+      </g>
   </g>
   <g style="display:none">
       <g id="mouse_t">
@@ -124,6 +126,7 @@ function mouse_turn() {
     let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
     let direction = Math.random() * Math.PI * 2
     a.translate ('mouse', 0, 0, Math.round(distance * Math.cos(direction)), Math.round(distance * Math.sin(direction)), time_f, time_ff, true)
+    a.rotate ('mouse_rotate', 0, direction, time_f, time_f+100, true)
     a.start ()
 }
 mongoose_turn()
