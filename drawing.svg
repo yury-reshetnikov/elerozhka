@@ -131,7 +131,7 @@ function mongoose_turn() {
     a.start()
 }
 function mouse_turn() {
-    let num = clone_mouse()
+    let suf = clone_mouse()
     let time_s = 200
     let time_f = 400
     // let time_ff = 1000
