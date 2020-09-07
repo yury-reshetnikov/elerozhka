@@ -126,7 +126,7 @@ function mouse_turn() {
     let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
     let direction = Math.random() * Math.PI * 2
     a.translate ('mouse', 0, 0, Math.round(distance * Math.cos(direction)), Math.round(distance * Math.sin(direction)), time_f, time_ff, true)
-    a.rotate ('mouse_rotate', 0, direction, time_f, time_f+100, true)
+    a.rotate ('mouse_rotate', 0, direction / Math.PI * 180, time_f, time_f+100, true)
     a.start ()
 }
 mongoose_turn()
