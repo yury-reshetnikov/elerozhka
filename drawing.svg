@@ -127,9 +127,9 @@ function mouse_turn() {
     let direction = Math.random() * Math.PI * 2
     let angle = direction / Math.PI * 180
     if(angle > 180) angle -= 360
-    let time_ff = time_f + 3 * Math.abs(angle)
+    let time_ff = time_s + 3 * Math.abs(angle)
     let time_fff = time_ff + 600
-    a.rotate ('mouse_rotate', 0, angle, time_f, time_ff, true)
+    a.rotate ('mouse_rotate', 0, angle, time_s, time_ff, true)
     a.translate ('mouse', 0, 0, Math.round(distance * Math.cos(direction)), Math.round(distance * Math.sin(direction)), time_ff, time_fff, true)
     a.start ()
 }
