@@ -45,7 +45,7 @@
   <use xlink:href="#mongoose2_t" transform="translate(-3000 -3000)"/>
   <use xlink:href="#mongoose4" transform="translate(-3000 -1000)"/>
   <g id="mouse">
-      <g id="mouse_rotate" transform-origin="14360 14990">
+      <g id="mouse_rotate" transform-origin="14765 14990">
           <path id="mouse_tail" fill="rgb(200,200,200)" stroke="black"
                 d="M 14360,15000 C 13912,15431 14824,15298 14766,15557 15041,15282 14131,15369 14360,15100"/>
           <path id="mouse_body" fill="rgb(200,200,200)" stroke="black"
