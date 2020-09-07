@@ -129,8 +129,18 @@ function mouse_turn() {
     if(angle > 180) angle -= 360
     let time_ff = time_s + 3 * Math.abs(angle)
     let time_fff = time_ff + 600
+    time_ffff = time_fff + 200
+    time_fffff = time_fff + 3 * Math.abs(angle)
     a.rotate ('mouse_rotate', 0, angle, time_s, time_ff, true)
     a.translate ('mouse', 0, 0, Math.round(distance * Math.cos(direction)), Math.round(distance * Math.sin(direction)), time_ff, time_fff, true)
+    a.path ('mouse_whisker_11', 'mouse2_whisker_11', 'mouse_t_whisker_11', time_fff, time_ffff, true)
+    a.path ('mouse_whisker_12', 'mouse2_whisker_12', 'mouse_t_whisker_12', time_fff, time_ffff, true)
+    a.path ('mouse_whisker_13', 'mouse2_whisker_13', 'mouse_t_whisker_13', time_fff, time_ffff, true)
+    a.path ('mouse_whisker_21', 'mouse2_whisker_21', 'mouse_t_whisker_21', time_fff, time_ffff, true)
+    a.path ('mouse_whisker_22', 'mouse2_whisker_22', 'mouse_t_whisker_22', time_fff, time_ffff, true)
+    a.path ('mouse_whisker_23', 'mouse2_whisker_23', 'mouse_t_whisker_23', time_fff, time_ffff, true)
+    a.path ('mouse_tail', 'mouse2_tail', 'mouse_t_tail', time_fff, time_ffff, true)
+    a.rotate ('mouse_rotate', angle, 0, time_fff, time_fffff)
     a.start ()
 }
 mongoose_turn()
