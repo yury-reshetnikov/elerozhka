@@ -130,8 +130,7 @@ function mongoose_turn() {
     a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose4_body', time_s, time_f, true)
     a.start()
 }
-function mouse_turn() {
-    let suf = clone_mouse()
+function mouse_turn(suf) {
     let time_s = 200
     let time_f = 400
     // let time_ff = 1000
@@ -165,6 +164,6 @@ function mouse_turn() {
     a.start ()
 }
 mongoose_turn()
-mouse_turn()
+mouse_turn(clone_mouse())
 </script>
 </svg>
