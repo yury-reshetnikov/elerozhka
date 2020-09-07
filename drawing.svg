@@ -32,7 +32,7 @@
       <path id="mongoose4_paw1" fill="rgb(149,75,0)" stroke="black" d="M 8976,7590 C 8942,7557 8903,7549 8937,7510 9020,7459 9035,7544 9046,7563"/>
       <path id="mongoose4_paw2" fill="rgb(149,75,0)" stroke="black" d="M 9019,8002 C 9004,8061 8992,8100 8937,8075 8882,8054 8931,8014 8946,7975"/>
       <path id="mongoose4_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
-            d="M 8240,7761 C 8234,7610 8508,7443 8696,7673 8805,7782 9286,7196 9832,7760 10086,7799 9987,8120 9492,8091 9912,7996 9881,7885 9821,7870 9040,8340 8802,7760 8682,7855 8461,8030 8267,7890 8240,7761 Z"/>
+            d="M 8240,7761 C 8234,7610 8508,7443 8696,7673 8805,7782 9286,7196 9832,7760 10086,7799 9987,8120 9492,8091 9912,7996 9881,7885 9821,7870 9040,8340 8802,7760 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8461,8030 8267,7890 8240,7761 Z"/>
       <path id="mongoose4_nose" d="M 8280,7749 C 8285,7782 8374,7849 8374,7748 8374,7647 8285,7715 8280,7749 Z"/>
       <circle id="mongoose4_eye1" cx="8500" cy="7670" r="70"/>
       <circle id="mongoose4_eyeball1" fill="white" cx="8470" cy="7640" r="25"/>
@@ -103,8 +103,8 @@
 svgeditor(window)
 let a = new Animate3
 function mongoose_turn() {
-    let time_s = 0
-    let time_f = 250
+    let time_s = 500
+    let time_f = 750
     a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose4_body', time_s, time_f, true)
     a.start()
 }
@@ -126,6 +126,7 @@ function mouse_turn() {
     a.translate ('mouse', 0, 0, Math.round(distance * Math.cos(direction)), Math.round(distance * Math.sin(direction)), time_f, time_ff, true)
     a.start ()
 }
+mongoose_turn()
 mouse_turn()
 </script>
 </svg>
