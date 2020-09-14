@@ -10,10 +10,12 @@
   <script href="svg-animate.js"></script>
   <rect id="box" x="1000" y="1000" width="20000" height="15000" fill="rgb(255,204,153)" stroke="black" stroke-width="100"/>
   <g id="mongoose2" transform="translate(0,0)">
+      <path id="mongoose4_paw1" fill="rgb(149,75,0)" stroke="black" d="M 9676,7890 C 9642,7857 9603,7849 9637,7810 9720,7759 9735,7844 9746,7863"/>
+      <path id="mongoose4_paw2" fill="rgb(149,75,0)" stroke="black" d="M 9719,7802 C 9704,7861 9692,7900 9637,7875 9582,7854 9631,7814 9646,7775"/>
       <path id="mongoose2_ear2" fill="rgb(149,75,0)" stroke="black" d="M 8398,7007 C 8391,6961 8423,6937 8436,6929 8463,6963 8452,6982 8456,6998"/>
       <path id="mongoose2_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
             d="M 8224,7148 C 8366,6912 8649,6973 8685,7177 8819,7502 9672,6805 9987,7524 10055,7768 9838,8028 9298,8041 9629,7973 9782,7862 9893,7696 9702,7683 9795,7938 9540,7887 9548,7721 9642,7925 9693,7675 9497,7611 9370,7764 8919,7606 8719,7700 8842,7896 8609,7857 8587,7717 8702,7836 8754,7586 8719,7424 8656,7445 8558,7373 8152,7420 8123,7248 8224,7148 Z"/>
-      <path id="mongoose2_nose" d="M 8253,7309 C 8286,7303 8351,7212 8250,7215 8149,7218 8219,7305 8253,7309 Z"/>
+      <path id="mongoose2_nose" transform-origin="8252 7260" d="M 8253,7309 C 8286,7303 8351,7212 8250,7215 8149,7218 8219,7305 8253,7309 Z"/>
       <circle id="mongoose2_eye" cx="8415" cy="7145" r="70"/>
       <circle id="mongoose2_eyeball" fill="white" cx="8385" cy="7115" r="25"/>
       <path id="mongoose2_ear1" fill="rgb(149,75,0)" stroke="black" d="M 8520,7067 C 8536,7009 8584,6998 8603,6995 8619,7048 8595,7064 8593,7085"/>
@@ -29,8 +31,8 @@
       <path id="mongoose2_t_ear1" fill="rgb(149,75,0)" stroke="black" d="M 8520,7067 C 8536,7009 8584,6998 8603,6995 8619,7048 8595,7064 8593,7085"/>
   </g>
   <g id="mongoose4">
-      <path id="mongoose4_paw1" fill="rgb(149,75,0)" stroke="black" d="M 8976,7590 C 8942,7557 8903,7549 8937,7510 9020,7459 9035,7544 9046,7563"/>
-      <path id="mongoose4_paw2" fill="rgb(149,75,0)" stroke="black" d="M 9019,8002 C 9004,8061 8992,8100 8937,8075 8882,8054 8931,8014 8946,7975"/>
+      <!-- <path id="mongoose4_paw1" fill="rgb(149,75,0)" stroke="black" d="M 8976,7590 C 8942,7557 8903,7549 8937,7510 9020,7459 9035,7544 9046,7563"/>
+      <path id="mongoose4_paw2" fill="rgb(149,75,0)" stroke="black" d="M 9019,8002 C 9004,8061 8992,8100 8937,8075 8882,8054 8931,8014 8946,7975"/> -->
       <path id="mongoose4_body" fill="rgb(149,75,0)" stroke="black" stroke-width="20"
             d="M 8240,7761 C 8234,7610 8508,7443 8696,7673 8805,7782 9286,7196 9832,7760 10086,7799 9987,8120 9492,8091 9912,7996 9881,7885 9821,7870 9040,8340 8802,7760 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8682,7855 8461,8030 8267,7890 8240,7761 Z"/>
       <path id="mongoose4_nose" d="M 8280,7749 C 8285,7782 8374,7849 8374,7748 8374,7647 8285,7715 8280,7749 Z"/>
@@ -128,6 +130,16 @@ function mongoose_turn() {
     let time_s = 500
     let time_f = 750
     a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose4_body', time_s, time_f, true)
+    a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose4_ear1', time_s, time_f, true)
+    a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose4_ear2', time_s, time_f, true)
+    a.translate ('mongoose2_nose', 0, 0, 27, 440, time_s, time_f, true)
+    a.rotate ('mongoose2_nose', 0, 90, time_s, time_f, true)
+    a.translate ('mongoose2_eye', 0, 0, 70, 520, time_s, time_f, true)
+    a.translate ('mongoose2_eyeball', 0, 0, 70, 520, time_s, time_f, true)
+    // a.translate ('mongoose4_eye2', 0, -50, 0, 0, time_s, time_f, true)
+    // a.translate ('mongoose4_eyeball2', 0, -50, 0, 0, time_s, time_f, true)
+    a.translate ('mongoose4_paw1', 0, 0, -700, -300, time_s, time_f, true)
+    a.translate ('mongoose4_paw2', 0, 0, -700, 200, time_s, time_f, true)
     a.start()
 }
 function mouse_turn(suf) {
