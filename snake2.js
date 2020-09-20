@@ -33,7 +33,7 @@ function start() {
     let snake_body_2 = document.getElementById('snake_body_2')
     let snake_full_body = document.getElementById('snake_full_body')
     let snake_tail = document.getElementById('snake_tail')
-    let mice = [ document.getElementById('mouse') ]
+    let mice = []
     let mongoose = document.getElementById('mongoose2')
     let speed = {
 	x: 2, y: 0
@@ -286,11 +286,7 @@ function start() {
     // mongoose_identify()
     random_snake()
     random_mongoose(mongoose)
-    if(1) {
-	random_mouse(mice[0])
-	mark_mouse(mice[0])
-	add_mices()
-    }
+    if(1) add_mices()
     else
 	for(let x = 1; x < 10; ++x)
 	    for(let y = 0; y < 10; ++y)
