@@ -825,7 +825,7 @@ function start() {
 		    console.log('min mouse nearest_distance',
 				min_mouse_nearest_distance);
 		    if(min_mouse_nearest_distance < 2*snake_body_length) {
-			console.log(nearest_mouse.id)
+			console.log(nearest_mouse.id.substr('mouse'.length))
                         // mouse_turn()
 		    }
 		    min_mouse_nearest_distance = false
