@@ -192,14 +192,10 @@ function start() {
     let mouse_count = 0
     function clone_mouse() {
         let suf = '_' + ++mouse_count
-	let mouse = document.createElementNS('http://www.w3.org/2000/svg', 'use')
-	mouse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#mouse_pattern')
+	let mouse = clone_node(document.getElementById('mouse'), suf)
 	mouse.setAttribute('transform', 'translate(0,0)')
-	document.children[0].insertBefore(mouse, snake)
+        snake.parentNode.insertBefore(mouse, snake)
 	return mouse
-        snake.parentNode.insertBefore(
-	    clone_node(document.getElementById('mouse'), suf), snake)
-        return suf
     }
     function random_mouse(mouse) {
 	let check_count = 0
