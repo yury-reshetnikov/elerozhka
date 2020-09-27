@@ -318,6 +318,7 @@ function start() {
         a.path ('mouse_whisker_23'+suf, 'mouse2_whisker_23', 'mouse_t_whisker_23', time_fff, time_ffff, true)
         a.path ('mouse_tail'+suf, 'mouse2_tail', 'mouse_t_tail', time_fff, time_ffff, true)
         a.rotate ('mouse_rotate'+suf, angle, 0, time_fff, time_fffff)
+        if(marked_mouse_circle) marked_mouse_circle.remove()
         a.start ()
     }
     // mongoose_identify()
