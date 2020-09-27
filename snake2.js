@@ -283,7 +283,8 @@ function start() {
 	    marked_mouse_circle = add_red_circle(mouse.transform.baseVal[0].matrix.e + mouse_delta_x, mouse.transform.baseVal[0].matrix.f + mouse_delta_y, snake_body_length_half)
 	}
     }
-    function mouse_turn(suf) {
+    function mouse_turn(mouse) {
+	let suf = mouse.id.substr('mouse'.length)
         let a = new Animate3
         let time_s = 200
         let time_f = 400
@@ -297,7 +298,7 @@ function start() {
         a.path ('mouse_tail'+suf, 'mouse_t_tail', 'mouse2_tail', time_s, time_f, true)
         let min_mouse_distance = 1000
         let max_mouse_distance = 3000
-        let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance/* + limit.x.left - limit.x.right*/
+        let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
         let direction = Math.random() * Math.PI * 2
         let angle = direction / Math.PI * 180
         if(angle > 180) angle -= 360
@@ -306,7 +307,9 @@ function start() {
         time_ffff = time_fff + 200
         time_fffff = time_fff + 3 * Math.abs(angle)
         a.rotate ('mouse_rotate'+suf, 0, angle, time_s, time_ff, true)
-        a.translate ('mouse'+suf, mouse.transform.baseVal[0].matrix.e, mouse.transform.baseVal[0].matrix.f, Math.round(distance * Math.cos(direction) + mouse.transform.baseVal[0].matrix.e), Math.round(distance * Math.sin(direction) + mouse.transform.baseVal[0].matrix.f), time_ff, time_fff, true)
+	let mx = mouse.transform.baseVal[0].matrix.e
+	let my = mouse.transform.baseVal[0].matrix.f
+        a.translate ('mouse'+suf, mx, my, mx + Math.round(distance * Math.cos(direction)), my + Math.round(distance * Math.sin(direction)), time_ff, time_fff, true)
         a.path ('mouse_whisker_11'+suf, 'mouse2_whisker_11', 'mouse_t_whisker_11', time_fff, time_ffff, true)
         a.path ('mouse_whisker_12'+suf, 'mouse2_whisker_12', 'mouse_t_whisker_12', time_fff, time_ffff, true)
         a.path ('mouse_whisker_13'+suf, 'mouse2_whisker_13', 'mouse_t_whisker_13', time_fff, time_ffff, true)
@@ -825,7 +828,7 @@ function start() {
 		    console.log('min mouse nearest_distance',
 				min_mouse_nearest_distance);
 		    if(min_mouse_nearest_distance < 2*snake_body_length)
-                        mouse_turn(nearest_mouse.id.substr('mouse'.length))
+                        mouse_turn(nearest_mouse)
 		    min_mouse_nearest_distance = false
 		}
 		prev_mouse_nearest_distance = nearest_distance
