@@ -297,7 +297,7 @@ function start() {
         a.path ('mouse_tail'+suf, 'mouse_t_tail', 'mouse2_tail', time_s, time_f, true)
         let min_mouse_distance = 1000
         let max_mouse_distance = 3000
-        let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
+        let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance/* + limit.x.left - limit.x.right*/
         let direction = Math.random() * Math.PI * 2
         let angle = direction / Math.PI * 180
         if(angle > 180) angle -= 360

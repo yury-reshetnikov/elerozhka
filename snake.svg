@@ -105,8 +105,8 @@
     <tspan id="d_counter" x="9900" y="800">?</tspan>
   </text>
   <text font-size="400">
-    <tspan x="14200" y="800">min_nearest_distance</tspan>
-    <tspan id="min_d_counter" x="17800" y="800">?</tspan>
+    <tspan x="12200" y="800">min_nearest_distance</tspan>
+    <tspan id="min_d_counter" x="15800" y="800">?</tspan>
   </text>
 <script>
    svgeditor(window)
