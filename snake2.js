@@ -321,6 +321,8 @@ function start() {
         if(marked_mouse_circle)
             marked_mouse_circle.remove()
 	a.finish(function() {
+            if(marked_mouse_circle)
+		marked_mouse_circle.remove()
             marked_mouse_circle = false
             marked_mouse = false
 	})
