@@ -824,6 +824,7 @@ function start() {
 		    marked_mouse_circle = false
 		}
 		prev_mouse_nearest_distance = false
+		min_mouse_nearest_distance = false
 	    }
 	    else if(nearest_mouse) {
 		mark_mouse(nearest_mouse)
