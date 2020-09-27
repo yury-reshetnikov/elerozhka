@@ -295,7 +295,7 @@ function start() {
         a.path ('mouse_whisker_21'+suf, 'mouse_whisker_21', 'mouse2_whisker_21', time_s, time_f, true)
         a.path ('mouse_whisker_22'+suf, 'mouse_whisker_22', 'mouse2_whisker_22', time_s, time_f, true)
         a.path ('mouse_whisker_23'+suf, 'mouse_whisker_23', 'mouse2_whisker_23', time_s, time_f, true)
-        a.path ('mouse_tail'+suf, 'mouse_t_tail', 'mouse2_tail', time_s, time_f, true)
+        a.path ('mouse_tail'+suf, 'mouse_tail', 'mouse2_tail', time_s, time_f, true)
         let min_mouse_distance = 1000
         let max_mouse_distance = 3000
         let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
@@ -317,7 +317,7 @@ function start() {
         a.path ('mouse_whisker_22'+suf, 'mouse_2_whisker_22', 'mouse_whisker_22', time_fff, time_ffff, true)
         a.path ('mouse_whisker_23'+suf, 'mouse_2_whisker_23', 'mouse_whisker_23', time_fff, time_ffff, true)
         a.path ('mouse_whisker_23'+suf, 'mouse_2_whisker_23', 'mouse_whisker_23', time_fff, time_ffff, true)
-        a.path ('mouse_tail'+suf, 'mouse_tail', 'mouse_t_tail', time_fff, time_ffff, true)
+        a.path ('mouse_tail'+suf, 'mouse_2_tail', 'mouse_tail', time_fff, time_ffff, true)
         a.rotate ('mouse_rotate'+suf, angle, 0, time_fff, time_fffff)
         if(marked_mouse_circle)
             marked_mouse_circle.remove()
