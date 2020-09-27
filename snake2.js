@@ -306,7 +306,7 @@ function start() {
         time_ffff = time_fff + 200
         time_fffff = time_fff + 3 * Math.abs(angle)
         a.rotate ('mouse_rotate'+suf, 0, angle, time_s, time_ff, true)
-        a.translate ('mouse'+suf, 0, 0, Math.round(distance * Math.cos(direction)), Math.round(distance * Math.sin(direction)), time_ff, time_fff, true)
+        a.translate ('mouse'+suf, mouse.transform.baseVal[0].matrix.e, mouse.transform.baseVal[0].matrix.f, Math.round(distance * Math.cos(direction) + mouse.transform.baseVal[0].matrix.e), Math.round(distance * Math.sin(direction) + mouse.transform.baseVal[0].matrix.f), time_ff, time_fff, true)
         a.path ('mouse_whisker_11'+suf, 'mouse2_whisker_11', 'mouse_t_whisker_11', time_fff, time_ffff, true)
         a.path ('mouse_whisker_12'+suf, 'mouse2_whisker_12', 'mouse_t_whisker_12', time_fff, time_ffff, true)
         a.path ('mouse_whisker_13'+suf, 'mouse2_whisker_13', 'mouse_t_whisker_13', time_fff, time_ffff, true)
