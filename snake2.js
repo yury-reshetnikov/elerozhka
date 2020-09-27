@@ -289,12 +289,12 @@ function start() {
         let time_s = 200
         let time_f = 400
         // let time_ff = 1000
-        a.path ('mouse_whisker_11'+suf, 'mouse_t_whisker_11', 'mouse2_whisker_11', time_s, time_f, true)
-        a.path ('mouse_whisker_12'+suf, 'mouse_t_whisker_12', 'mouse2_whisker_12', time_s, time_f, true)
-        a.path ('mouse_whisker_13'+suf, 'mouse_t_whisker_13', 'mouse2_whisker_13', time_s, time_f, true)
-        a.path ('mouse_whisker_21'+suf, 'mouse_t_whisker_21', 'mouse2_whisker_21', time_s, time_f, true)
-        a.path ('mouse_whisker_22'+suf, 'mouse_t_whisker_22', 'mouse2_whisker_22', time_s, time_f, true)
-        a.path ('mouse_whisker_23'+suf, 'mouse_t_whisker_23', 'mouse2_whisker_23', time_s, time_f, true)
+        a.path ('mouse_whisker_11'+suf, 'mouse_whisker_11', 'mouse2_whisker_11', time_s, time_f, true)
+        a.path ('mouse_whisker_12'+suf, 'mouse_whisker_12', 'mouse2_whisker_12', time_s, time_f, true)
+        a.path ('mouse_whisker_13'+suf, 'mouse_whisker_13', 'mouse2_whisker_13', time_s, time_f, true)
+        a.path ('mouse_whisker_21'+suf, 'mouse_whisker_21', 'mouse2_whisker_21', time_s, time_f, true)
+        a.path ('mouse_whisker_22'+suf, 'mouse_whisker_22', 'mouse2_whisker_22', time_s, time_f, true)
+        a.path ('mouse_whisker_23'+suf, 'mouse_whisker_23', 'mouse2_whisker_23', time_s, time_f, true)
         a.path ('mouse_tail'+suf, 'mouse_t_tail', 'mouse2_tail', time_s, time_f, true)
         let min_mouse_distance = 1000
         let max_mouse_distance = 3000
@@ -310,12 +310,13 @@ function start() {
 	let mx = mouse.transform.baseVal[0].matrix.e
 	let my = mouse.transform.baseVal[0].matrix.f
         a.translate ('mouse'+suf, mx, my, mx + Math.round(distance * Math.cos(direction)), my + Math.round(distance * Math.sin(direction)), time_ff, time_fff, true)
-        a.path ('mouse_whisker_11'+suf, 'mouse_whisker_11', 'mouse_t_whisker_11', time_fff, time_ffff, true)
-        a.path ('mouse_whisker_12'+suf, 'mouse_whisker_12', 'mouse_t_whisker_12', time_fff, time_ffff, true)
-        a.path ('mouse_whisker_13'+suf, 'mouse_whisker_13', 'mouse_t_whisker_13', time_fff, time_ffff, true)
-        a.path ('mouse_whisker_21'+suf, 'mouse_whisker_21', 'mouse_t_whisker_21', time_fff, time_ffff, true)
-        a.path ('mouse_whisker_22'+suf, 'mouse_whisker_22', 'mouse_t_whisker_22', time_fff, time_ffff, true)
-        a.path ('mouse_whisker_23'+suf, 'mouse_whisker_23', 'mouse_t_whisker_23', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_11'+suf, 'mouse_2_whisker_11', 'mouse_whisker_11', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_12'+suf, 'mouse_2_whisker_12', 'mouse_whisker_12', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_13'+suf, 'mouse_2_whisker_13', 'mouse_whisker_13', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_21'+suf, 'mouse_2_whisker_21', 'mouse_whisker_21', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_22'+suf, 'mouse_2_whisker_22', 'mouse_whisker_22', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_23'+suf, 'mouse_2_whisker_23', 'mouse_whisker_23', time_fff, time_ffff, true)
+        a.path ('mouse_whisker_23'+suf, 'mouse_2_whisker_23', 'mouse_whisker_23', time_fff, time_ffff, true)
         a.path ('mouse_tail'+suf, 'mouse_tail', 'mouse_t_tail', time_fff, time_ffff, true)
         a.rotate ('mouse_rotate'+suf, angle, 0, time_fff, time_fffff)
         if(marked_mouse_circle)
