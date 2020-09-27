@@ -301,15 +301,15 @@ function start() {
         let min_mouse_distance = 1000
         let max_mouse_distance = 3000
         let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
-        let direction = Math.random() * Math.PI / 2
-	direction += Math.PI / 2
+        let direction = Math.random() * Math.PI / 2 + Math.PI / 4
 	if(speed.x) {
 	    if(dy < my + mouse_delta_y - snake_delta_y) ;
-	    else ;
+	    else direction += Math.PI
 	}
 	else {
-	    if(dx < mx + mouse_delta_x - snake_delta_x) ;
-	    else ;
+	    if(dx < mx + mouse_delta_x - snake_delta_x)
+		direction -= Math.PI / 2
+	    else direction += Math.PI / 2
 	}
         let angle = direction / Math.PI * 180
         if(angle > 180) angle -= 360
