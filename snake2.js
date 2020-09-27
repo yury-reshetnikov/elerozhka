@@ -320,8 +320,10 @@ function start() {
         a.rotate ('mouse_rotate'+suf, angle, 0, time_fff, time_fffff)
         if(marked_mouse_circle)
             marked_mouse_circle.remove()
-        marked_mouse_circle = false
-        marked_mouse = false
+	a.finish(function() {
+            marked_mouse_circle = false
+            marked_mouse = false
+	})
         a.start ()
     }
     // mongoose_identify()
