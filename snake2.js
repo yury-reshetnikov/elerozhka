@@ -302,6 +302,7 @@ function start() {
         let max_mouse_distance = 3000
         let distance = Math.random() * (max_mouse_distance - min_mouse_distance) + min_mouse_distance
         let direction = Math.random() * Math.PI / 2
+	direction += Math.PI / 2
 	if(speed.x) {
 	    if(dy < my + mouse_delta_y - snake_delta_y) ;
 	    else ;
