@@ -321,10 +321,10 @@ function start() {
         time_fffff = time_fff + 3 * Math.abs(angle)
         let dst_x = mx + Math.round(distance * Math.cos(direction))
         let dst_y = my + Math.round(distance * Math.sin(direction))
-        let left_limit = limit.x.left + snake_body_length + snake_body_length_half
-        let right_limit = limit.x.right - snake_body_length - snake_body_length_half
-        let top_limit = limit.y.top + snake_body_length + snake_body_length_half
-        let bottom_limit = limit.y.bottom - snake_body_length - snake_body_length_half
+        let left_limit = limit.x.left + snake_body_length + snake_body_length_half + snake_delta_x - mouse_delta_x
+        let right_limit = limit.x.right - snake_body_length - snake_body_length_half - snake_delta_x + mouse_delta_x
+        let top_limit = limit.y.top + snake_body_length + snake_body_length_half + snake_delta_y - mouse_delta_y
+        let bottom_limit = limit.y.bottom - snake_body_length - snake_body_length_half - snake_delta_y + mouse_delta_y
         if (dst_x < left_limit) dst_x = left_limit
         else if (dst_x > right_limit) dst_x = right_limit
         if (dst_y < top_limit) dst_y = top_limit
