@@ -515,7 +515,7 @@ function start() {
 	snake_body_dyn.length = 0
         first_snake_body = snake_body_2
         s_counter.textContent = 1
-	eating = false
+	growing = eating = false
 
     }
     let prev = (new Date).getTime()
