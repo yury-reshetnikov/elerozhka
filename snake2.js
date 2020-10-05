@@ -397,6 +397,9 @@ function start() {
 		else /* if(speed.y < 0) */ { slow = -speed.y; speed.y = -0.1 }
 	    }
 	}
+	else if(e.key == 'i') {
+	    console.log('eating', eating)
+	}
 	else if(other_keyup) other_keyup(e)
     }
     function add_snake_body(base) {
