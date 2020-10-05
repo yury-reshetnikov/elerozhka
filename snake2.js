@@ -284,6 +284,8 @@ function start() {
 	}
     }
     function mouse_turn(mouse, dx, dy, speed) {
+	if(mouse.snake_mouse_turn) return
+	mouse.snake_mouse_turn = true
 	let suf = mouse.id.substr('mouse'.length)
         let a = new Animate3
         let time_s = 200
@@ -344,6 +346,7 @@ function start() {
 		marked_mouse_circle.remove()
             marked_mouse_circle = false
             marked_mouse = false
+	    mouse.snake_mouse_turn = false
 	})
         a.start ()
     }
