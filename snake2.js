@@ -319,10 +319,14 @@ function start() {
         time_fffff = time_fff + 3 * Math.abs(angle)
         let dst_x = mx + Math.round(distance * Math.cos(direction))
         let dst_y = my + Math.round(distance * Math.sin(direction))
-        if (dst_x < limit.x.left + snake_body_length + snake_body_length_half)
-        else if (dst_x > limit.x.right - snake_body_length - snake_body_length_half)
-        else if (dst_y < limit.y.top + snake_body_length + snake_body_length_half)
-        else if (dst_y > limit.y.bottom - snake_body_length - snake_body_length_half)
+        let left_limit = limit.x.left + snake_body_length + snake_body_length_half
+        let right_limit = limit.x.right - snake_body_length - snake_body_length_half
+        let top_limit = limit.y.top + snake_body_length + snake_body_length_half
+        let bottom_limit = limit.y.bottom - snake_body_length - snake_body_length_half
+        if (dst_x < left_limit) dst_x = left_limit
+        else if (dst_x > right_limit) dst_x = right_limit
+        else if (dst_y < top_limit) dst_y = top_limit
+        else if (dst_y > bottom_limit) dst_y = bottom_limit
         a.rotate ('mouse_rotate'+suf, 0, angle, time_s, time_ff, true)
         a.translate ('mouse'+suf, mx, my, dst_x, dst_y, time_ff, time_fff, true)
         a.path ('mouse_whisker_11'+suf, 'mouse2_whisker_11', 'mouse_whisker_11', time_fff, time_ffff, true)
