@@ -398,7 +398,7 @@ function start() {
 	    }
 	}
 	else if(e.key == 'i') {
-	    console.log('eating', eating)
+	    console.log('eating', eating, 'growing', growing)
 	}
 	else if(other_keyup) other_keyup(e)
     }
