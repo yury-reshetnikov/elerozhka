@@ -325,7 +325,7 @@ function start() {
         let bottom_limit = limit.y.bottom - snake_body_length - snake_body_length_half
         if (dst_x < left_limit) dst_x = left_limit
         else if (dst_x > right_limit) dst_x = right_limit
-        else if (dst_y < top_limit) dst_y = top_limit
+        if (dst_y < top_limit) dst_y = top_limit
         else if (dst_y > bottom_limit) dst_y = bottom_limit
         a.rotate ('mouse_rotate'+suf, 0, angle, time_s, time_ff, true)
         a.translate ('mouse'+suf, mx, my, dst_x, dst_y, time_ff, time_fff, true)
