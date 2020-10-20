@@ -164,6 +164,12 @@ function start() {
 	    x -= 1000
 	    time_ff += 1000
         }
+        a.display ('back_paw_1', false, time_ff+500)
+        a.display ('back_paw_2', false, time_ff+500)
+	a.finish(function() {
+	    random_mongoose(mongoose)
+	    cutting = false
+	})
 	a.start()
     }
     function mongoose_identify() {
@@ -894,10 +900,6 @@ function start() {
 		    mongoose_attack()
 		    cutting = true
 		    full_snake_boom()
-		    setTimeout(function() {
-			random_mongoose(mongoose)
-			cutting = false
-		    }, 5000)
 		}
 	    }
 	}
