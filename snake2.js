@@ -161,6 +161,7 @@ function start() {
             a.path ('back_paw_2_1', 'back_paw_2_2', 'back_paw_2', time_ff+1000, time_ff+1500, true)
             a.path ('mongoose2_body', 'mongoose2_t_body', 'moving_mongoose_body', time_ff, time_ff+50, true)
             a.translate ('mongoose2', x-1000, mongoose.transform.baseVal[0].matrix.f, x-1500, mongoose.transform.baseVal[0].matrix.f, time_ff+1000, time_ff+1500, true)
+	    x -= 1000
         }
 	a.start()
     }
