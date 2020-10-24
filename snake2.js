@@ -135,6 +135,7 @@ function start() {
 	let time_s = 0
 	let time_f = 170
 	let time_ff = 200
+	let time_step = 250
 	a.path ('mongoose2_body', 'mongoose2_t_body', 'mongoose3_body', time_s, time_f)
 	a.path ('mongoose2_ear2', 'mongoose2_t_ear2', 'mongoose3_ear2', time_s, time_f)
 	a.path ('mongoose2_ear1', 'mongoose2_t_ear1', 'mongoose3_ear1', time_s, time_f)
@@ -149,24 +150,22 @@ function start() {
         a.translate ('mongoose2_eyeball', 920, -665, 0, 0, time_f, time_ff, true)
         a.display ('back_paw_1', true, time_ff)
         a.display ('back_paw_2', true, time_ff)
-        a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_ff, time_ff+500, true)
-        a.translate ('mongoose2', mongoose.transform.baseVal[0].matrix.e, mongoose.transform.baseVal[0].matrix.f, mongoose.transform.baseVal[0].matrix.e-500, mongoose.transform.baseVal[0].matrix.f, time_ff, time_ff+500, true)
+        a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_ff, time_ff+time_step, true)
+        a.translate ('mongoose2', mongoose.transform.baseVal[0].matrix.e, mongoose.transform.baseVal[0].matrix.f, mongoose.transform.baseVal[0].matrix.e-500, mongoose.transform.baseVal[0].matrix.f, time_ff, time_ff+time_step, true)
         let x = mongoose.transform.baseVal[0].matrix.e
 	let limit_x_left = limit.x.left - snake_delta_x + mongoose_delta_x
 	while (x > limit_x_left) {
-            a.path ('back_paw_1', 'back_paw_1_1', 'back_paw_1_2', time_ff+500, time_ff+1000, true)
-            a.path ('back_paw_2', 'back_paw_2_1', 'back_paw_2_2', time_ff+500, time_ff+1000, true)
-            a.path ('mongoose2_body', 'moving_mongoose_body_back', 'moving_mongoose_body_front', time_ff+500, time_ff+1000, true)
-            a.translate ('mongoose2', x-500, mongoose.transform.baseVal[0].matrix.f, x-1000, mongoose.transform.baseVal[0].matrix.f, time_ff+500, time_ff+1000, true)
-            a.path ('back_paw_1', 'back_paw_1_2', 'back_paw_1_1', time_ff+1000, time_ff+1500, true)
-            a.path ('back_paw_2', 'back_paw_2_2', 'back_paw_2_1', time_ff+1000, time_ff+1500, true)
-            a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_ff, time_ff+50, true)
-            a.translate ('mongoose2', x-1000, mongoose.transform.baseVal[0].matrix.f, x-1500, mongoose.transform.baseVal[0].matrix.f, time_ff+1000, time_ff+1500, true)
+            a.path ('back_paw_1', 'back_paw_1_1', 'back_paw_1_2', time_ff+time_step, time_ff+time_step*2, true)
+            a.path ('back_paw_2', 'back_paw_2_1', 'back_paw_2_2', time_ff+time_step, time_ff+time_step*2, true)
+            a.path ('mongoose2_body', 'moving_mongoose_body_back', 'moving_mongoose_body_front', time_ff+time_step, time_ff+time_step*2, true)
+            a.translate ('mongoose2', x-500, mongoose.transform.baseVal[0].matrix.f, x-1000, mongoose.transform.baseVal[0].matrix.f, time_ff+time_step, time_ff+time_step*2, true)
+            a.path ('back_paw_1', 'back_paw_1_2', 'back_paw_1_1', time_ff+time_step*2, time_ff+time_step*3, true)
+            a.path ('back_paw_2', 'back_paw_2_2', 'back_paw_2_1', time_ff+time_step*2, time_ff+time_step*3, true)
+            a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_ff+time_step*2, time_ff+time_step*3, true)
+            a.translate ('mongoose2', x-1000, mongoose.transform.baseVal[0].matrix.f, x-1500, mongoose.transform.baseVal[0].matrix.f, time_ff+time_step*2, time_ff+time_step*3, true)
 	    x -= 1000
-	    time_ff += 1000
+	    time_ff += time_step*2
         }
-        a.display ('back_paw_1', false, time_ff+500)
-        a.display ('back_paw_2', false, time_ff+500)
 	a.finish(function() {
 	    random_mongoose(mongoose)
 	})
