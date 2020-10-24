@@ -152,7 +152,8 @@ function start() {
         a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_ff, time_ff+500, true)
         a.translate ('mongoose2', mongoose.transform.baseVal[0].matrix.e, mongoose.transform.baseVal[0].matrix.f, mongoose.transform.baseVal[0].matrix.e-500, mongoose.transform.baseVal[0].matrix.f, time_ff, time_ff+500, true)
         let x = mongoose.transform.baseVal[0].matrix.e
-        while (x > limit.x.left) {
+	let limit_x_left = limit.x.left - snake_delta_x + mongoose_delta_x
+	while (x > limit_x_left) {
             a.path ('back_paw_1', 'back_paw_1_1', 'back_paw_1_2', time_ff+500, time_ff+1000, true)
             a.path ('back_paw_2', 'back_paw_2_1', 'back_paw_2_2', time_ff+500, time_ff+1000, true)
             a.path ('mongoose2_body', 'moving_mongoose_body_back', 'moving_mongoose_body_front', time_ff+500, time_ff+1000, true)
@@ -198,7 +199,8 @@ function start() {
 	    if(!intersected) check(snake_tail)
 	    if(!intersected) break
 	}
-	mongoose.transform.baseVal[0].matrix.e = Math.round((limit.x.right - (mx + snake_delta_x - mongoose_delta_x))/1000) * 1000 + mgr
+	let step_count = Math.floor((limit.x.right + mgr -mx + 999)/1000)
+	mongoose.transform.baseVal[0].matrix.e = (mx + step_count * 1000) + snake_delta_x - mongoose_delta_x
 	mongoose.transform.baseVal[0].matrix.f = my + snake_delta_y - mongoose_delta_y
     }
     function clone_node(src, suf) {
