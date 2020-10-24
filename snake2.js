@@ -203,7 +203,7 @@ function start() {
 	mongoose.transform.baseVal[0].matrix.f = my + snake_delta_y - mongoose_delta_y
 	let a = new Animate3
 	let time_s = 0
-	let time_step = 200
+	let time_step = 250
         a.display ('back_paw_1', true, time_s)
         a.display ('back_paw_2', true, time_s)
         a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_s, time_s+time_step, true)
@@ -222,9 +222,9 @@ function start() {
 	    x -= 1000
 	    time_s += time_step*2
         }
-        a.display ('back_paw_1', false, time_s+500)
-        a.display ('back_paw_2', false, time_s+500)
-        a.path ('mongoose2_body', 'moving_mongoose_body_front', 'mongoose2_t_body', time_s+500, time_s+1000, true)
+        a.display ('back_paw_1', false, time_s+time_step)
+        a.display ('back_paw_2', false, time_s+time_step)
+        a.path ('mongoose2_body', 'moving_mongoose_body_front', 'mongoose2_t_body', time_s+time_step, time_s+time_step*2, true)
 	a.finish(function() {
 	    cutting = false
 	})
