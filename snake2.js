@@ -199,7 +199,7 @@ function start() {
 	    if(!intersected) check(snake_tail)
 	    if(!intersected) break
 	}
-	let step_count = Math.floor((limit.x.right + mgr -mx + 999)/1000)
+	let step_count = Math.ceil((limit.x.right + mgr - mx) / 1000)
 	mongoose.transform.baseVal[0].matrix.e = (mx + step_count * 1000) + snake_delta_x - mongoose_delta_x
 	mongoose.transform.baseVal[0].matrix.f = my + snake_delta_y - mongoose_delta_y
     }
