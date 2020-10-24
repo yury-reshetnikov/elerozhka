@@ -202,6 +202,33 @@ function start() {
 	let step_count = Math.ceil((limit.x.right + mgr - mx) / 1000)
 	mongoose.transform.baseVal[0].matrix.e = (mx + step_count * 1000) + snake_delta_x - mongoose_delta_x
 	mongoose.transform.baseVal[0].matrix.f = my + snake_delta_y - mongoose_delta_y
+	let a = new Animate3
+	let time_s = 0
+        a.display ('back_paw_1', true, time_s)
+        a.display ('back_paw_2', true, time_s)
+        a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_s, time_s+500, true)
+        a.translate ('mongoose2', mongoose.transform.baseVal[0].matrix.e, mongoose.transform.baseVal[0].matrix.f, mongoose.transform.baseVal[0].matrix.e-500, mongoose.transform.baseVal[0].matrix.f, time_s, time_s+500, true)
+        let x = mongoose.transform.baseVal[0].matrix.e
+	while (step_count--) {
+            a.path ('back_paw_1', 'back_paw_1_1', 'back_paw_1_2', time_s+500, time_s+1000, true)
+            a.path ('back_paw_2', 'back_paw_2_1', 'back_paw_2_2', time_s+500, time_s+1000, true)
+            a.path ('mongoose2_body', 'moving_mongoose_body_back', 'moving_mongoose_body_front', time_s+500, time_s+1000, true)
+            a.translate ('mongoose2', x-500, mongoose.transform.baseVal[0].matrix.f, x-1000, mongoose.transform.baseVal[0].matrix.f, time_s+500, time_s+1000, true)
+            a.path ('back_paw_1', 'back_paw_1_2', 'back_paw_1_1', time_s+1000, time_s+1500, true)
+            a.path ('back_paw_2', 'back_paw_2_2', 'back_paw_2_1', time_s+1000, time_s+1500, true)
+            a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_s, time_s+50, true)
+            a.translate ('mongoose2', x-1000, mongoose.transform.baseVal[0].matrix.f, x-1500, mongoose.transform.baseVal[0].matrix.f, time_s+1000, time_s+1500, true)
+	    x -= 1000
+	    time_s += 1000
+        }
+        a.display ('back_paw_1', false, time_s+500)
+        a.display ('back_paw_2', false, time_s+500)
+	a.finish(function() {
+	    random_mongoose(mongoose)
+	    cutting = false
+	})
+	a.start()
+
     }
     function clone_node(src, suf) {
         let dst = document.createElementNS(src.namespaceURI, src.nodeName)
