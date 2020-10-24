@@ -65,7 +65,7 @@ function start() {
 	}
     }
     let rotations = []
-    let eating = false, growing = false, growing_start, cutting = false
+    let eating = false, growing = false, growing_start, cutting = true
     let first_snake_body = snake_body_2
     let marked_mouse, marked_mouse_circle,
 	prev_mouse_nearest_distance, min_mouse_nearest_distance
