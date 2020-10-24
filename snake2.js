@@ -198,7 +198,7 @@ function start() {
 	    if(!intersected) check(snake_tail)
 	    if(!intersected) break
 	}
-	mongoose.transform.baseVal[0].matrix.e = mx + snake_delta_x - mongoose_delta_x
+	mongoose.transform.baseVal[0].matrix.e = Math.round((limit.x.right - (mx + snake_delta_x - mongoose_delta_x))/1000) * 1000 + mgr
 	mongoose.transform.baseVal[0].matrix.f = my + snake_delta_y - mongoose_delta_y
     }
     function clone_node(src, suf) {
