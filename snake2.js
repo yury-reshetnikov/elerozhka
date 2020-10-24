@@ -206,17 +206,18 @@ function start() {
         a.display ('back_paw_1', true, time_s)
         a.display ('back_paw_2', true, time_s)
         a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_s, time_s+500, true)
-        a.translate ('mongoose2', mongoose.transform.baseVal[0].matrix.e, mongoose.transform.baseVal[0].matrix.f, mongoose.transform.baseVal[0].matrix.e-500, mongoose.transform.baseVal[0].matrix.f, time_s, time_s+500, true)
         let x = mongoose.transform.baseVal[0].matrix.e
+	let y = mongoose.transform.baseVal[0].matrix.f
+        a.translate ('mongoose2', x, y, x-500, y, time_s, time_s+500, true)
 	while (step_count--) {
             a.path ('back_paw_1', 'back_paw_1_1', 'back_paw_1_2', time_s+500, time_s+1000, true)
             a.path ('back_paw_2', 'back_paw_2_1', 'back_paw_2_2', time_s+500, time_s+1000, true)
             a.path ('mongoose2_body', 'moving_mongoose_body_back', 'moving_mongoose_body_front', time_s+500, time_s+1000, true)
-            a.translate ('mongoose2', x-500, mongoose.transform.baseVal[0].matrix.f, x-1000, mongoose.transform.baseVal[0].matrix.f, time_s+500, time_s+1000, true)
+            a.translate ('mongoose2', x-500, y, x-1000, y, time_s+500, time_s+1000, true)
             a.path ('back_paw_1', 'back_paw_1_2', 'back_paw_1_1', time_s+1000, time_s+1500, true)
             a.path ('back_paw_2', 'back_paw_2_2', 'back_paw_2_1', time_s+1000, time_s+1500, true)
             a.path ('mongoose2_body', 'moving_mongoose_body_front', 'moving_mongoose_body_back', time_s, time_s+50, true)
-            a.translate ('mongoose2', x-1000, mongoose.transform.baseVal[0].matrix.f, x-1500, mongoose.transform.baseVal[0].matrix.f, time_s+1000, time_s+1500, true)
+            a.translate ('mongoose2', x-1000, y, x-1500, y, time_s+1000, time_s+1500, true)
 	    x -= 1000
 	    time_s += 1000
         }
