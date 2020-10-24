@@ -222,6 +222,7 @@ function start() {
         }
         a.display ('back_paw_1', false, time_s+500)
         a.display ('back_paw_2', false, time_s+500)
+        a.path ('mongoose2_body', 'moving_mongoose_body_back', 'mongoose2_t_body', time_s+500, time_s+1000, true)
 	a.finish(function() {
 	    cutting = false
 	})
