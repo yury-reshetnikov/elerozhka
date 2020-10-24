@@ -169,7 +169,6 @@ function start() {
         a.display ('back_paw_2', false, time_ff+500)
 	a.finish(function() {
 	    random_mongoose(mongoose)
-	    cutting = false
 	})
 	a.start()
     }
@@ -224,7 +223,6 @@ function start() {
         a.display ('back_paw_1', false, time_s+500)
         a.display ('back_paw_2', false, time_s+500)
 	a.finish(function() {
-	    random_mongoose(mongoose)
 	    cutting = false
 	})
 	a.start()
