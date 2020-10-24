@@ -222,14 +222,13 @@ function start() {
 	    x -= 1000
 	    time_s += time_step*2
         }
-        a.display ('back_paw_1', false, time_s+time_step)
-        a.display ('back_paw_2', false, time_s+time_step)
-        a.path ('mongoose2_body', 'moving_mongoose_body_front', 'mongoose2_t_body', time_s+time_step, time_s+time_step*2, true)
+        a.display ('back_paw_1', false, time_s+time_step*2)
+        a.display ('back_paw_2', false, time_s+time_step*2)
+        a.path ('mongoose2_body', 'moving_mongoose_body_back', 'mongoose2_t_body', time_s+time_step, time_s+time_step*2, true)
 	a.finish(function() {
 	    cutting = false
 	})
 	a.start()
-
     }
     function clone_node(src, suf) {
         let dst = document.createElementNS(src.namespaceURI, src.nodeName)
