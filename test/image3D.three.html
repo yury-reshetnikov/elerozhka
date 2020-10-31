@@ -13,8 +13,8 @@ var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHe
 var renderer = new THREE.WebGLRenderer()
 renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
 document.body.appendChild( renderer.domElement )
-scene.add(new THREE.AmbientLight(0xffffff, 0.5))
-var point_light = new THREE.PointLight(0xffffff, 5)
+scene.add(new THREE.AmbientLight(0xffffff, 0.6))
+var point_light = new THREE.PointLight(0xffffff, 0.5)
 // var point_light = new THREE.DirectionalLight(0xffffff, 5)
 point_light.position.set( -500, 700, 300 )
 point_light.castShadow = true
