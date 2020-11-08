@@ -16,10 +16,11 @@ renderer.setClearColor( 0xffffff, 1 )
 document.body.appendChild( renderer.domElement )
 renderer.shadowMap.enabled = true
 scene.add(new THREE.AmbientLight(0xffffff, 0.6))
-let point_light = new THREE.PointLight(0xffffff, 1)
+let point_light = new THREE.PointLight(0xffffff, 0.5)
 // let point_light = new THREE.DirectionalLight(0xffffff, 5)
-point_light.position.set( -50, 70, 30 )
+point_light.position.set( -500, 700, 300 )
 point_light.castShadow = true
+point_light.shadow.camera.far = 5000
 scene.add(point_light)
 
 let planeGeometry = new THREE.PlaneBufferGeometry(600,400);
@@ -149,7 +150,7 @@ scene.add( object )
 
 scene.add( new THREE.CameraHelper( point_light.shadow.camera ) )
 
-camera.position.z = 600
+camera.position.set(0, 600, 600)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
 function animate() {
     requestAnimationFrame( animate )
