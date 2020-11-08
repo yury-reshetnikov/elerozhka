@@ -18,6 +18,8 @@ document.body.appendChild( renderer.domElement )
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
+scene.add(new THREE.AmbientLight(0xffffff, 0.2))
+
 //Create a PointLight and turn on shadows for the light
 const light = new THREE.PointLight( 0xffffff, 1, 1000 );
 light.position.set( 0, 50, 0 );
