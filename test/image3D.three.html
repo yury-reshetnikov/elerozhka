@@ -7,26 +7,39 @@
 </head>
 <body>
   <script>
-var scene = new THREE.Scene()
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
+let scene = new THREE.Scene()
+let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
 
-var renderer = new THREE.WebGLRenderer()
+let renderer = new THREE.WebGLRenderer()
 renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
+// renderer.setClearColorHex( 0xffffff, 1 )
+renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild( renderer.domElement )
+// renderer.shadowMap.enabled = true
 scene.add(new THREE.AmbientLight(0xffffff, 0.6))
-var point_light = new THREE.PointLight(0xffffff, 0.5)
-// var point_light = new THREE.DirectionalLight(0xffffff, 5)
+let point_light = new THREE.PointLight(0xffffff, 0.5)
+// let point_light = new THREE.DirectionalLight(0xffffff, 5)
 point_light.position.set( -500, 700, 300 )
 point_light.castShadow = true
 // point_light.castShadow = true
 scene.add(point_light)
 
+let planeGeometry = new THREE.PlaneGeometry(600,400);
+let planeMaterial = new THREE.MeshBasicMaterial(
+	{color: 0xcccccc});
+let plane = new THREE.Mesh(planeGeometry,planeMaterial);
+plane.rotation.x = -0.5*Math.PI;
+plane.position.x = 120;
+plane.position.y = -38;
+plane.position.z = 70;
+scene.add(plane)
+plane.receiveShadow = true
 
-var material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
-var material_eye = new THREE.MeshStandardMaterial({ color: 0x009900 })
-var material_nose = new THREE.MeshStandardMaterial({ color: 0x1a0d00 })
+let material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
+let material_eye = new THREE.MeshStandardMaterial({ color: 0x009900 })
+let material_nose = new THREE.MeshStandardMaterial({ color: 0x1a0d00 })
 
-var object
+let object
 
 // Голова
 object = new THREE.Mesh( new THREE.SphereGeometry( 75, 32, 32 ), material )
@@ -138,7 +151,7 @@ scene.add( object )
 
 
 camera.position.z = 600
-var controls = new THREE.OrbitControls( camera, renderer.domElement )
+let controls = new THREE.OrbitControls( camera, renderer.domElement )
 function animate() {
     requestAnimationFrame( animate )
     renderer.render( scene, camera )
