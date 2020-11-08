@@ -16,9 +16,9 @@ renderer.setClearColor( 0xffffff, 1 )
 document.body.appendChild( renderer.domElement )
 renderer.shadowMap.enabled = true
 scene.add(new THREE.AmbientLight(0xffffff, 0.6))
-let point_light = new THREE.PointLight(0xffffff, 0.5)
+let point_light = new THREE.PointLight(0xffffff, 1)
 // let point_light = new THREE.DirectionalLight(0xffffff, 5)
-point_light.position.set( -500, 700, 300 )
+point_light.position.set( -50, 70, 30 )
 point_light.castShadow = true
 scene.add(point_light)
 
