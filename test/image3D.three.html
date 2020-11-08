@@ -21,7 +21,6 @@ let point_light = new THREE.PointLight(0xffffff, 0.5)
 // let point_light = new THREE.DirectionalLight(0xffffff, 5)
 point_light.position.set( -500, 700, 300 )
 point_light.castShadow = true
-// point_light.castShadow = true
 scene.add(point_light)
 
 let planeGeometry = new THREE.PlaneGeometry(600,400);
@@ -32,8 +31,8 @@ plane.rotation.x = -0.5*Math.PI;
 plane.position.x = 120;
 plane.position.y = -38;
 plane.position.z = 70;
-scene.add(plane)
 plane.receiveShadow = true
+scene.add(plane)
 
 let material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
 let material_eye = new THREE.MeshStandardMaterial({ color: 0x009900 })
