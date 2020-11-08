@@ -12,6 +12,9 @@ let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHe
 
 //Create a WebGLRenderer and turn on shadows in the renderer
 const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
+renderer.setClearColor( 0xffffff, 1 )
+document.body.appendChild( renderer.domElement )
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
