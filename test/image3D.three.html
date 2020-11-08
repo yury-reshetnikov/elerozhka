@@ -23,14 +23,12 @@ point_light.castShadow = true
 point_light.shadow.camera.far = 5000
 scene.add(point_light)
 
-let planeGeometry = new THREE.PlaneBufferGeometry(600,400);
+let planeGeometry = new THREE.PlaneBufferGeometry(1200,800);
 let planeMaterial = new THREE.MeshStandardMaterial(
 	{color: 0xcccccc, side: THREE.DoubleSide});
 let plane = new THREE.Mesh(planeGeometry,planeMaterial);
 plane.rotation.x = -0.5*Math.PI;
-plane.position.x = 120;
-plane.position.y = -38;
-plane.position.z = 70;
+plane.position.set( 120, -38, 70 );
 plane.receiveShadow = true
 scene.add(plane)
 
