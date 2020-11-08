@@ -16,21 +16,21 @@ renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
 renderer.setClearColor( 0xffffff, 1 )
 document.body.appendChild( renderer.domElement )
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.2))
 
 //Create a PointLight and turn on shadows for the light
-const light = new THREE.PointLight( 0xffffff, 1, 1000 );
+const light = new THREE.PointLight( 0xffffff, 1 );
 light.position.set( 0, 50, 0 );
 light.castShadow = true; // default false
 scene.add( light );
 
-//Set up shadow properties for the light
-light.shadow.mapSize.width = 512; // default
-light.shadow.mapSize.height = 512; // default
-light.shadow.camera.near = 0.5; // default
-light.shadow.camera.far = 500; // default
+// //Set up shadow properties for the light
+// light.shadow.mapSize.width = 512; // default
+// light.shadow.mapSize.height = 512; // default
+// light.shadow.camera.near = 0.5; // default
+// light.shadow.camera.far = 500; // default
 
 //Create a sphere that cast shadows (but does not receive them)
 const sphereGeometry = new THREE.SphereBufferGeometry( 5, 32, 32 );
