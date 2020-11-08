@@ -97,6 +97,8 @@ function leg(x,y,z) {
     object = new THREE.Mesh( new THREE.SphereGeometry( 10, 8, 8, 0, Math.PI*2, 0, Math.PI ),
 			     material )
     object.position.set( x, y-59, z )
+    object.castShadow = true
+    object.receiveShadow = true
     scene.add( object )
 }
 
