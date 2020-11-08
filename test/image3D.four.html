@@ -39,17 +39,20 @@ sphere.receiveShadow = false; //default
 scene.add( sphere );
 
 //Create a plane that receives shadows (but does not cast them)
-const planeGeometry = new THREE.PlaneBufferGeometry( 20, 20, 32, 32 );
+const planeGeometry = new THREE.PlaneBufferGeometry( 200, 200, 32, 32 );
 const planeMaterial = new THREE.MeshStandardMaterial( { color: 0x00ff00 } )
 const plane = new THREE.Mesh( planeGeometry, planeMaterial );
 plane.receiveShadow = true;
+plane.rotation.x = -0.5*Math.PI;
+plane.position.y = -40;
 scene.add( plane );
 
 //Create a helper for the shadow camera (optional)
 const helper = new THREE.CameraHelper( light.shadow.camera );
 scene.add( helper );
 
-camera.position.z = 600
+camera.position.z = 60
+camera.position.y = 60
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
 function animate() {
     requestAnimationFrame( animate )
