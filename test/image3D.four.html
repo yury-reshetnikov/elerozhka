@@ -19,8 +19,8 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
 //Create a PointLight and turn on shadows for the light
-const light = new THREE.PointLight( 0xffffff, 1, 100 );
-light.position.set( 0, 10, 0 );
+const light = new THREE.PointLight( 0xffffff, 1, 1000 );
+light.position.set( 0, 50, 0 );
 light.castShadow = true; // default false
 scene.add( light );
 
