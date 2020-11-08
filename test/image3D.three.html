@@ -47,6 +47,8 @@ scene.add( object )
 function ear(x,y,z) {
     object = new THREE.Mesh( new THREE.ConeGeometry(20, 40, 16), material )
     object.position.set(x, y, z)
+    object.castShadow = true
+    object.receiveShadow = true
     scene.add( object )
 }
 ear(-10, 216, 90)
@@ -54,6 +56,8 @@ ear(-10, 216, 30)
 function eye(x,y,z) {
     object = new THREE.Mesh( new THREE.SphereGeometry( 20, 16, 16 ), material_eye )
     object.position.set(x,y,z)
+    object.castShadow = true
+    object.receiveShadow = true
     scene.add( object )
 }
 eye(-60,170,90)
@@ -65,6 +69,8 @@ object.rotateZ(Math.PI/2 + 0.2)
 */
 object = new THREE.Mesh( new THREE.SphereGeometry( 30, 16, 16 ), material )
 object.position.set( -90, 140, 60 )
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 
 // Туловище
@@ -91,6 +97,8 @@ function leg(x,y,z) {
     object = new THREE.Mesh(new THREE.TubeGeometry(
 	new THREE.LineCurve3(new THREE.Vector3(x, y-60, z), new THREE.Vector3(x, y, z)),
 	8, 10, 8, false), material)
+    object.castShadow = true
+    object.receiveShadow = true
     scene.add( object )
     object = new THREE.Mesh( new THREE.SphereGeometry( 10, 8, 8, 0, Math.PI*2, 0, Math.PI ),
 			     material )
@@ -119,6 +127,8 @@ object = new THREE.Mesh(new THREE.TubeGeometry(
 scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 5, 4, 4, Math.PI/2, Math.PI ), material )
 object.position.set( 349, 120, 60 )
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 
 
