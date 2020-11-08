@@ -124,6 +124,8 @@ object = new THREE.Mesh(new THREE.TubeGeometry(
 	new THREE.Vector3( 350, 120, 60 )
     ] ),
     8, 5, 32, false), material)
+object.castShadow = true
+object.receiveShadow = true
 scene.add( object )
 object = new THREE.Mesh( new THREE.SphereGeometry( 5, 4, 4, Math.PI/2, Math.PI ), material )
 object.position.set( 349, 120, 60 )
