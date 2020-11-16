@@ -44,6 +44,14 @@ object.position.set( -10, 140, 60 )
 object.castShadow = true
 object.receiveShadow = true
 scene.add( object )
+
+/*let radiusTop =  5.5
+let radiusBottom =  1.5
+let height =  7.0
+let radialSegments = 50
+let geometry = new THREE.CylinderBufferGeometry(
+    radiusTop, radiusBottom, height, radialSegments)*/
+
 function ear(x,y,z) {
     object = new THREE.Mesh( new THREE.ConeGeometry(20, 40, 16), material )
     object.position.set(x, y, z)
