@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Рисуем собакена. Первый опыт</title>
   <script src="https://threejs.org/build/three.js"></script>
   <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
   <script>
+// https://threejsfundamentals.org/threejs/lessons/ru/threejs-custom-buffergeometry.html
+// https://github.com/mrdoob/three.js/blob/master/src/geometries/BoxBufferGeometry.js
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
 
@@ -32,9 +35,72 @@ plane.position.set( 120, -38, 70 );
 plane.receiveShadow = true
 scene.add(plane)
 
+let mark_material = new THREE.MeshPhongMaterial({ color: 0xff0000 })
+let mark_material_std = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+class Mark extends THREE.BufferGeometry {
+    constructor() {
+	super()
+	this.type = 'Mark'
+	this.setAttribute('position', new THREE.BufferAttribute(
+	    new Float32Array([
+		10,-10,0, 0,-10,10, -10,-10,-10,
+		10,-10,0, 0,10,0, 0,-10,10,
+		0,-10,10, 0,10,0, -10,-10,-10,
+		-10,-10,-10, 0,10,0, 10,-10,0,
+	    ]), 3))
+	this.computeVertexNormals()
+    }
+}
+class Mark2 extends THREE.BufferGeometry {
+    constructor() {
+	super()
+	this.type = 'Mark'
+	this.setAttribute('position', new THREE.BufferAttribute(
+	    new Float32Array([
+		10,0,0, 0,10,0, 0,0,10,
+		0,0,10, 0,10,0, -10,0,0,
+		-10,0,0, 0,10,0, 0,0,-10,
+		0,0,-10, 0,10,0, 10,0,0,
+		10,0,0, 0,-10,0, 0,0,-10,
+		0,0,-10, 0,-10,0, -10,0,0,
+		-10,0,0, 0,-10,0, 0,0,10,
+		0,0,10, 0,-10,0, 10,0,0,
+	    ]), 3))
+	this.computeVertexNormals()
+    }
+}
+scene.add(new THREE.Mesh(new Mark(), mark_material))
+let mx01 = new THREE.Mesh(new Mark(), mark_material)
+mx01.position.x = 100;
+scene.add(mx01)
+let my01 = new THREE.Mesh(new Mark(), mark_material)
+my01.position.y = 100;
+scene.add(my01)
+let mz01 = new THREE.Mesh(new Mark2(), mark_material_std)
+mz01.position.z = 100;
+mz01.castShadow = true
+mz01.receiveShadow = true
+scene.add(mz01)
+
+let material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
+/*
+let tri01 = new THREE.Triangle(new THREE.Vector3(0,0,0),new THREE.Vector3(0,100,0),new THREE.Vector3(0,0,100))
+scene.add(new THREE.Mesh(tri01, material))
+*/
+const tri02 = new THREE.BufferGeometry()
+const vertices = new Float32Array( [
+	-100, -100,  100,
+	 100, -100,  100,
+	 100,  100,  100,
+] )
+tri02.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+tri02.computeVertexNormals()
+scene.add(new THREE.Mesh(tri02, material))
 
 camera.position.set(0, 600, 600)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
+scene.add( new THREE.CameraHelper( point_light.shadow.camera ) )
+scene.add( new THREE.AxesHelper( 500 ) )
 function animate() {
     requestAnimationFrame( animate )
     renderer.render( scene, camera )
