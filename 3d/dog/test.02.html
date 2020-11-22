@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Рисуем собакена. Второй опыт</title>
+  <script src="https://threejs.org/build/three.js"></script>
+  <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <script>
+let scene = new THREE.Scene()
+let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
+
+let renderer = new THREE.WebGLRenderer()
+renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
+renderer.setClearColor( 0xffffff, 1 )
+document.body.appendChild( renderer.domElement )
+renderer.shadowMap.enabled = true
+scene.add(new THREE.AmbientLight(0xffffff, 0.6))
+let point_light = new THREE.PointLight(0xffffff, 0.5)
+// let point_light = new THREE.DirectionalLight(0xffffff, 5)
+point_light.position.set( -500, 700, 300 )
+point_light.castShadow = true
+point_light.shadow.camera.far = 5000
+scene.add(point_light)
+
+let planeGeometry = new THREE.PlaneBufferGeometry(1200,800);
+let planeMaterial = new THREE.MeshStandardMaterial(
+	{color: 0xcccccc, side: THREE.DoubleSide});
+let plane = new THREE.Mesh(planeGeometry,planeMaterial);
+plane.rotation.x = -0.5*Math.PI;
+plane.position.set( 120, -38, 70 );
+plane.receiveShadow = true
+scene.add(plane)
+
+class Dog extends THREE.BufferGeometry {
+    constructor() {
+	super()
+	this.type = 'Dog'
+	this.setAttribute('position', new THREE.BufferAttribute(
+	    new Float32Array([
+		// верхняя челюсть
+		5,180,210, -5,180,210, -3,165,220,
+		-3,165,220, 3,165,220, 5,180,210,
+		5,180,210, 3,165,220, 5,162,220,
+		5,162,220, 10,164,205, 5,180,210,
+	    ]), 3))
+	this.computeVertexNormals()
+    }
+}
+
+let material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
+let dog01 = new THREE.Mesh(new Dog(), material)
+dog01.castShadow = true
+dog01.receiveShadow = true
+scene.add(dog01)
+
+camera.position.set(0, 300, 300)
+let controls = new THREE.OrbitControls( camera, renderer.domElement )
+scene.add( new THREE.CameraHelper( point_light.shadow.camera ) )
+scene.add( new THREE.AxesHelper( 500 ) )
+function animate() {
+    requestAnimationFrame( animate )
+    renderer.render( scene, camera )
+}
+animate()
+  </script>
+</body>
+</html>
