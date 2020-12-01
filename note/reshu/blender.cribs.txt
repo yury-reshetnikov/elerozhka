@@ -1,0 +1,85 @@
+blender.stackexchange.com
+
+list(filter(lambda v: v.select, C.scene.objects['Plane'].data.vertices))
+не работает
+
+len(C.scene.objects['Plane'].data.vertices)
+C.scene.objects['Plane'].data.vertices[0].co
+
+
+--
+bpy.ops.object.mode_set(mode = 'OBJECT')
+bpy.ops.object.mode_set(mode = 'EDIT') 
+bpy.ops.mesh.select_mode(type="VERT")
+bpy.ops.mesh.select_all(action = 'DESELECT')
+bpy.ops.object.mode_set(mode = 'OBJECT')
+C.object.data.vertices[1].select = True
+bpy.ops.object.mode_set(mode = 'EDIT') 
+--
+bpy.ops.object.mode_set(mode = 'OBJECT')
+C.object.data.vertices[0].select = True
+bpy.ops.object.mode_set(mode = 'EDIT') 
+
+len(C.object.data.vertices)
+
+
+bpy.ops.object.mode_set(mode = 'OBJECT')
+// середыш на пузике
+C.object.data.vertices[23].co.x = 0
+C.object.data.vertices[23].co.y = 0
+C.object.data.vertices[23].co.z = 1
+// пузико
+C.object.data.vertices[0].co = Vector((-2,-1.4,1))
+C.object.data.vertices[1].co = (2,-1.4,1)
+C.object.data.vertices[2].co = (-2,1.4,1)
+C.object.data.vertices[3].co = (2,1.4,1)
+// передняя планка между ног
+C.object.data.vertices[4].co = (2.5,-1.4,1)
+C.object.data.vertices[5].co = (2.5,1.4,1)
+// правая планка между ног
+C.object.data.vertices[6].co = (-2,-1.9,1)
+C.object.data.vertices[7].co = (2,-1.9,1)
+// левая планка между ног
+C.object.data.vertices[8].co = (-2,1.9,1)
+C.object.data.vertices[9].co = (2,1.9,1)
+// внешний угол правой передней ноги
+C.object.data.vertices[13].co = (2.5,-1.9,1)
+// ступня правой передней ноги
+C.object.data.vertices[10].co = (2,-1.4,-3)
+C.object.data.vertices[11].co = (2.5,-1.4,-3)
+C.object.data.vertices[12].co = (2,-1.9,-3)
+C.object.data.vertices[14].co = (2.5,-1.9,-3)
+// внешний угол левой передней ноги
+C.object.data.vertices[20].co = (2.5,1.9,1)
+// ступня левой передней ноги
+C.object.data.vertices[15].co = (2,1.4,-3)
+C.object.data.vertices[17].co = (2.5,1.4,-3)
+C.object.data.vertices[16].co = (2,1.9,-3)
+C.object.data.vertices[19].co = (2.5,1.9,-3)
+// задняя планка между ног
+C.object.data.vertices[18].co = (-2.5,1.4,1)
+C.object.data.vertices[22].co = (-2.5,-1.4,1)
+// грудь от передних ног до шеи
+C.object.data.vertices[21].co = (2.6,1.9,1.1)
+C.object.data.vertices[25].co = (2.6,-1.9,1.1)
+C.object.data.vertices[24].co = (2.6,-1.9,2)
+C.object.data.vertices[33].co = (2.6,1.9,2)
+// правая задняя нога - внешний угол
+C.object.data.vertices[30].co = (-2.5,-1.9,1)
+// правая задняя нога - ступня
+C.object.data.vertices[26].co = (-2,-1.4,-3)
+C.object.data.vertices[27].co = (-2,-1.9,-3)
+C.object.data.vertices[28].co = (-2.5,-1.4,-3)
+C.object.data.vertices[29].co = (-2.5,-1.9,-3)
+// левая задняя нога - внешний угол
+C.object.data.vertices[36].co = (-2.5,1.9,1)
+// левая задняя нога - ступня
+C.object.data.vertices[31].co = (-2,1.4,-3)
+C.object.data.vertices[32].co = (-2,1.9,-3)
+C.object.data.vertices[34].co = (-2.5,1.4,-3)
+C.object.data.vertices[35].co = (-2.5,1.9,-3)
+bpy.ops.object.mode_set(mode = 'EDIT') 
+
+bpy.ops.object.mode_set(mode = 'OBJECT')
+C.object.data.vertices[35].select = True
+bpy.ops.object.mode_set(mode = 'EDIT') 
