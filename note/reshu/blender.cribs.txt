@@ -1,7 +1,8 @@
 blender.stackexchange.com
 
-list(filter(lambda v: v.select, C.scene.objects['Plane'].data.vertices))
-не работает
+bpy.ops.object.mode_set(mode = 'OBJECT')
+-- list(filter(lambda v: v.select, C.scene.objects['Plane'].data.vertices))
+list(filter(lambda v: v.select, C.object.data.vertices))
 
 len(C.scene.objects['Plane'].data.vertices)
 C.scene.objects['Plane'].data.vertices[0].co
@@ -78,6 +79,9 @@ C.object.data.vertices[31].co = (-2,1.4,-3)
 C.object.data.vertices[32].co = (-2,1.9,-3)
 C.object.data.vertices[34].co = (-2.5,1.4,-3)
 C.object.data.vertices[35].co = (-2.5,1.9,-3)
+// попа
+C.object.data.vertices[38].co = (-2.5,1.9,3.7)
+C.object.data.vertices[39].co = (-2.5,-1.9,3.7)
 bpy.ops.object.mode_set(mode = 'EDIT') 
 
 bpy.ops.object.mode_set(mode = 'OBJECT')
