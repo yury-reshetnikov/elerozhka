@@ -82,6 +82,13 @@ C.object.data.vertices[35].co = (-2.5,1.9,-3)
 // попа
 C.object.data.vertices[38].co = (-2.5,1.9,3.7)
 C.object.data.vertices[39].co = (-2.5,-1.9,3.7)
+// центральная линия
+// под шеей
+C.object.data.vertices[52].co = (2.6, 0, 2)
+C.object.data.vertices[55].co = (2.6, 0, 1.1)
+// пузико
+C.object.data.vertices[58].co = (2.5, 0, 1)
+
 bpy.ops.object.mode_set(mode = 'EDIT') 
 
 bpy.ops.object.mode_set(mode = 'OBJECT')
