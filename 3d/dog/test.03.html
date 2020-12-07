@@ -26,7 +26,9 @@ scene.add(point_light)
 
 let planeGeometry = new THREE.PlaneBufferGeometry(1200,800);
 let planeMaterial = new THREE.MeshStandardMaterial(
-	{color: 0xcccccc, side: THREE.DoubleSide});
+    {color: 0xcccccc,
+     // side: THREE.DoubleSide
+    });
 let plane = new THREE.Mesh(planeGeometry,planeMaterial);
 plane.rotation.x = -0.5*Math.PI;
 plane.position.set( 120, -38, 70 );
@@ -97,6 +99,12 @@ class Dog extends THREE.BufferGeometry {
 -3,34,-25, -14,10,-25, -19,10,-25,  3,34,-25, 19,10,-25, 14,10,-25,
 -3,34,-25, -19,10,-25, -19,40,-25,  3,34,-25, 19,40,-25, 19,10,-25,
 -3,34,-25, -19,40,-25, -3,40,-25,  3,34,-25, 3,40,-25, 19,40,-25,
+// голова
+0,50,60, -10,40,30, -10,20,30,  0,50,60, 10,20,30, 10,40,30,
+0,50,60, 10,40,30, -10,40,30,  0,50,60, -10,20,30, 10,20,30,
+// хвост
+0,30,-40, -3,34,-25, -3,40,-25,  0,30,-40, 3,40,-25, 3,34,-25,
+0,30,-40, -3,40,-25, 3,40,-25,  0,30,-40, 3,34,-25, -3,34,-25,
 // ,,, ,,, ,,,  ,,, ,,, ,,,
 	    ]), 3))
 	this.computeVertexNormals()
