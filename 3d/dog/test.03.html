@@ -5,6 +5,7 @@
   <title>Рисуем собакена. Третьий опыт</title>
   <script src="https://threejs.org/build/three.js"></script>
   <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://github.com/mrdoob/three.js/blob/master/examples/jsm/exporters/GLTFExporter.js"></script>
 </head>
 <body>
   <script>
@@ -201,6 +202,20 @@ function animate() {
     renderer.render( scene, camera )
 }
 animate()
+function download() {
+    let exporter = new GLTFExporter()
+    exporter.parse(scene, function (gltf) {
+	let file = new Blob(gltf, {type: 'application/octet-binary'})
+	let a = document.createElement('a')
+	a.href = URL.createObjectURL(file)
+	a.download = 'dog.glb'
+	a.style.display = 'none'
+	document.body.appendChild(a)
+	a.click()
+    }, {binary: true})
+}
   </script>
+    <br />
+    <a href="javascript:download()">Загрузить</a>
 </body>
 </html>
