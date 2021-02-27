@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Грузим собакена</title>
+</head>
+<body>
+  <script type="module">
+    import { GLTFLoader } from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js'
+
+let loader = new GLTFLoader()
+loader.load('little-blocks.glb', function(gltf) {
+    console.log(gltf)
+})
+
+  </script>
+</body>
+</html>
