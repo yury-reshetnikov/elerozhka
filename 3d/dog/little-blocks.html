@@ -31,6 +31,23 @@ loader.load('little-blocks.glb', function(gltf) {
     console.log(gltf)
     let mesh = gltf.scene.children[2]
     mesh.scale.set(10, 10, 10)
+    let material = new THREE.MeshStandardMaterial({ color: 0x97612f })
+    let material_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
+    mesh.material = [material, material_red]
+    mesh.geometry.addGroup(0, 1632, 0)
+    // mesh.geometry.addGroup(1632, 60, 1)
+    mesh.geometry.addGroup(1632, 3, 0)
+    mesh.geometry.addGroup(1635, 3, 1)
+    mesh.geometry.addGroup(1638, 3, 0)
+    mesh.geometry.addGroup(1641, 3, 1)
+    mesh.geometry.addGroup(1644, 3, 0)
+    mesh.geometry.addGroup(1647, 3, 1)
+    mesh.geometry.addGroup(1650, 3, 0)
+    mesh.geometry.addGroup(1653, 3, 1)
+    mesh.geometry.addGroup(1656, 3, 0)
+    mesh.geometry.addGroup(1659, 3, 1)
+    mesh.geometry.addGroup(1662, 30, 1)
+    mesh.geometry.addGroup(1692, 1860, 0)
     scene.add(mesh)
 })
 

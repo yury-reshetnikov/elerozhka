@@ -11,6 +11,19 @@
 let loader = new GLTFLoader()
 loader.load('little-blocks.glb', function(gltf) {
     console.log(gltf)
+    let g = gltf.scene.children[2].geometry
+    for(let t = 1632; t < 1692; t = t + 3) {
+	let i = []
+	let c = []
+	for(let p = 0; p < 3; ++p) {
+	    let ii = g.index.array[t+p]
+	    i.push(ii)
+	    ii = ii * 3
+	    for(let ci = ii; ci < ii + 3; ++ci)
+		c.push(g.attributes.position.array[ci])
+	}
+	console.log(t, i, c)
+    }
 })
 
   </script>
