@@ -2,3 +2,5 @@
 /tmp
 *.blend1
 *~
+*.cdr
+/3d/dog/References/*.png
