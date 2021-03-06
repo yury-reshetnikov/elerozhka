@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>BufferGeometry material groups</title>
+  <script src="https://threejs.org/build/three.js"></script>
+</head>
+<body>
+  <script>
+let scene = new THREE.Scene()
+let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
+
+let renderer = new THREE.WebGLRenderer()
+renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
+renderer.setClearColor( 0xffffff, 1 )
+document.body.appendChild( renderer.domElement )
+renderer.shadowMap.enabled = true
+scene.add(new THREE.AmbientLight(0xffffff, 0.6))
+let point_light = new THREE.PointLight(0xffffff, 0.5)
+point_light.position.set( -500, 700, 300 )
+point_light.castShadow = true
+point_light.shadow.camera.far = 5000
+scene.add(point_light)
+
+let material = new THREE.MeshStandardMaterial({ color: 0xffcc80 })
+let material2 = new THREE.MeshStandardMaterial({ color: 0xff0000 })
+const tri02 = new THREE.BufferGeometry()
+const vertices = new Float32Array( [
+	-100, -100,  100,
+	 100, -100,  100,
+	 100,  100,  100,
+	-100,  100,  100,
+	-100,    0,  100,
+	   0,   30,  100,
+] )
+tri02.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+tri02.computeVertexNormals()
+tri02.addGroup(0, 3, 0)
+tri02.addGroup(3, 3, 1)
+let mesh = new THREE.Mesh(tri02, [material,material2])
+console.log(mesh)
+scene.add(mesh)
+
+camera.position.set(0, 0, 300)
+function animate() {
+    requestAnimationFrame( animate )
+    renderer.render( scene, camera )
+}
+animate()
+  </script>
+</body>
+</html>
