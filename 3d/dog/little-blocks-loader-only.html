@@ -10,7 +10,7 @@
 
 let loader = new GLTFLoader()
 loader.load('little-blocks.glb', function(gltf) {
-    console.log(gltf)
+    console.log('orig', gltf)
     let g = gltf.scene.children[2].geometry
     if(0) {
     for(let t = 1632; t < 1692; t = t + 3) {
@@ -26,7 +26,7 @@ loader.load('little-blocks.glb', function(gltf) {
 	console.log(t, i, c)
     }
     }
-    else {
+    else if(0) {
 	let ind = g.index.array
 	let pos = g.attributes.position.array
 	function cd(a, b) {
@@ -49,7 +49,53 @@ loader.load('little-blocks.glb', function(gltf) {
     }
 })
 loader.load('little-blocks-conv.glb', function(gltf) {
-    console.log(gltf)
+    console.log('conv', gltf)
+    let g = gltf.scene.children[0].geometry
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    if(0) {
+	let c = {}
+	for(let t = 1620; t < 1644; ++t) c[ind[t]] = (c[ind[t]] || 0) + 1
+	console.log(c)
+    }
+    // function r(a,b) {return Array.from({ length: b-a+1 }, (_,i) => i+a)}
+    function* r(a,b) { for(let i = a; i <= b; ++i) yield i }
+    let tail = [
+	[344],
+	// [343,r(345,351)].flat(),
+	[343,...r(345,351)],
+    ]
+    function lp(base, prev) { // linked points
+	let next = []
+	for(let t = 0; t < g.index.count; t = t + 3) {
+	    if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
+		for(let i = t; i < t + 3; ++i) {
+		    let p = ind[i]
+		    if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
+			next.push(p)
+		}
+	}
+	next.sort((a,b)=>a-b)
+	return next
+    }
+    tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
+    tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
+    console.log(tail)
+    console.log(tail.map(function(list) {
+	if(list.length == 0) return
+	else if(list.length == 1) {
+	    let a = list[0] * 3
+	    return Array.from(pos.slice(a, a + 3))
+	}
+	else {
+	    let s = [0,0,0]
+	    list.forEach(function(item) {
+		let a = item * 3
+		for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
+	    })
+	    return s.map((v) => v / list.length)
+	}
+    }))
 })
 
   </script>
