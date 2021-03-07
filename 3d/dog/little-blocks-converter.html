@@ -12,7 +12,7 @@
 let loader = new GLTFLoader()
 loader.load('little-blocks.glb', function(gltf) {
     let exporter = new GLTFExporter()
-    exporter.parse(gltf.scene.children[2].geometry, function(data) {
+    exporter.parse(gltf.scene.children[2], function(data) {
 	let link = document.createElement('a')
 	link.style.display = 'none'
 	document.body.appendChild(link)

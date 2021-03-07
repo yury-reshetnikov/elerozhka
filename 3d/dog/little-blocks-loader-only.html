@@ -12,6 +12,7 @@ let loader = new GLTFLoader()
 loader.load('little-blocks.glb', function(gltf) {
     console.log(gltf)
     let g = gltf.scene.children[2].geometry
+    if(0) {
     for(let t = 1632; t < 1692; t = t + 3) {
 	let i = []
 	let c = []
@@ -23,6 +24,27 @@ loader.load('little-blocks.glb', function(gltf) {
 		c.push(g.attributes.position.array[ci])
 	}
 	console.log(t, i, c)
+    }
+    }
+    else {
+	let ind = g.index.array
+	let pos = g.attributes.position.array
+	function cd(a, b) {
+	    let aa = ind[a]
+	    let bb = ind[b]
+	    if(aa == bb) return true
+	    aa = aa * 3
+	    bb = bb * 3
+	    return pos[aa] == pos[bb] && pos[aa+1] == pos[bb+1] && pos[aa+2] == pos[bb+2]
+	}
+	let lc = 0
+	for(let t = 0; t < g.index.count; t = t + 3) {
+	    if(cd(t,t+1) || cd(t,t+2) || cd(t+1,t+2)) {
+		console.log(t)
+		++lc
+	    }
+	}
+	console.log('lc',lc)
     }
 })
 loader.load('little-blocks-conv.glb', function(gltf) {
