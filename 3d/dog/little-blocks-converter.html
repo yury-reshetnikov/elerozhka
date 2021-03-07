@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Преобразуем собакена</title>
+</head>
+<body>
+  <script type="module">
+    import { GLTFLoader } from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js'
+    import { GLTFExporter } from 'https://threejs.org/examples/jsm/exporters/GLTFExporter.js'
+
+let loader = new GLTFLoader()
+loader.load('little-blocks.glb', function(gltf) {
+    let exporter = new GLTFExporter()
+    exporter.parse(gltf.scene.children[2].geometry, function(data) {
+	let link = document.createElement('a')
+	link.style.display = 'none'
+	document.body.appendChild(link)
+	link.href = URL.createObjectURL(new Blob([data],
+		{ type: 'application/octet-stream' } ))
+	link.download = 'little-blocks-conv.glb'
+	link.click()
+    }, { binary: true })
+})
+
+  </script>
+</body>
+</html>
