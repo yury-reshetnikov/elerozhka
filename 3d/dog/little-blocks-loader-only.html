@@ -35,7 +35,8 @@ loader.load('little-blocks.glb', function(gltf) {
 	    if(aa == bb) return true
 	    aa = aa * 3
 	    bb = bb * 3
-	    return pos[aa] == pos[bb] && pos[aa+1] == pos[bb+1] && pos[aa+2] == pos[bb+2]
+	    return pos[aa] == pos[bb] && pos[aa+1] == pos[bb+1] &&
+		pos[aa+2] == pos[bb+2]
 	}
 	let lc = 0
 	for(let t = 0; t < g.index.count; t = t + 3) {

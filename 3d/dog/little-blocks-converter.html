@@ -3,6 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Преобразуем собакена</title>
+  <script src="https://threejs.org/build/three.js"></script>
 </head>
 <body>
   <script type="module">
@@ -11,8 +12,49 @@
 
 let loader = new GLTFLoader()
 loader.load('little-blocks.glb', function(gltf) {
+    let g = gltf.scene.children[2].geometry
+    // let coord = Array.from(g.attributes.position.array)
+    // let index = Array.from(g.index.array)
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    let coord = []
+    let index = []
+    let cache = {}
+    function cd(a, b) { // compare dots
+	let aa = ind[a]
+	let bb = ind[b]
+	if(aa == bb) return true
+	aa = aa * 3
+	bb = bb * 3
+	return pos[aa] == pos[bb] && pos[aa+1] == pos[bb+1] &&
+	    pos[aa+2] == pos[bb+2]
+    }
+    function pi(t) { // point index
+	let tt = ind[t] * 3
+	let a = pos.slice(tt, tt+3)
+	let k = btoa(String.fromCodePoint.apply(null,
+			new Uint8Array(a.buffer)))
+	let i = cache[k]
+	if(i === undefined) {
+	    i = coord.length / 3
+	    Array.prototype.push.apply(coord, a)
+	    cache[k] = i
+	    return i
+	}
+	else return i
+    }
+    for(let t = 0; t < g.index.count; t = t + 3) {
+	if(cd(t,t+1) || cd(t,t+2) || cd(t+1,t+2)) ;
+	else index.push(pi(t), pi(t+1), pi(t+2))
+    }
+    let buf = new THREE.BufferGeometry()
+    buf.setAttribute('position', new THREE.BufferAttribute(new Float32Array(coord), 3))
+    // buf.setIndex(new THREE.BufferAttribute(new Uint16Array(index), 1))
+    buf.setIndex(index)
+    buf.computeVertexNormals()
+    let dog = new THREE.Mesh(buf, gltf.scene.children[2].material)
     let exporter = new GLTFExporter()
-    exporter.parse(gltf.scene.children[2], function(data) {
+    exporter.parse(dog, function(data) {
 	let link = document.createElement('a')
 	link.style.display = 'none'
 	document.body.appendChild(link)
