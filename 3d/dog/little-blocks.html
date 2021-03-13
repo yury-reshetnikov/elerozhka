@@ -38,6 +38,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(1620, 24, 1)
     mesh.geometry.addGroup(1644, 960, 0)
     scene.add(mesh)
+    window.dog = mesh.geometry
 })
 
 camera.position.set(-30, 0, 100)
@@ -47,6 +48,80 @@ function animate() {
     renderer.render( scene, camera )
 }
 animate()
+
+window.correct_tail = function() {
+    let g = window.dog
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    let tail = [
+	[344],
+    ]
+    function lp(base, prev) { // linked points
+	let next = []
+	for(let t = 0; t < g.index.count; t = t + 3) {
+	    if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
+		for(let i = t; i < t + 3; ++i) {
+		    let p = ind[i]
+		    if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
+			next.push(p)
+		}
+	}
+	next.sort((a,b)=>a-b)
+	return next
+    }
+    tail.push(lp(tail[tail.length-1], []))
+    for(let i = 2; i < 14; ++i)
+	tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
+    let centers = tail.map(function(list) {
+	if(list.length == 0) return
+	else if(list.length == 1) {
+	    let a = list[0] * 3
+	    return Array.from(pos.slice(a, a + 3))
+	}
+	else {
+	    let s = [0,0,0]
+	    list.forEach(function(item) {
+		let a = item * 3
+		for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
+	    })
+	    return s.map((v) => v / list.length)
+	}
+    })
+    let delta = 0.2
+    function check_segment(n) {
+	let s0 = n * 2, s1 = s0+1, s2 = s0+2, s3 = s0+3
+	let len0 = Math.sqrt(Math.pow(centers[s0][0] - centers[s1][0], 2) +
+			     Math.pow(centers[s0][1] - centers[s1][1], 2) +
+			     Math.pow(centers[s0][2] - centers[s1][2], 2))
+	let len1 = Math.sqrt(Math.pow(centers[s2][0] - centers[s3][0], 2) +
+			     Math.pow(centers[s2][1] - centers[s3][1], 2) +
+			     Math.pow(centers[s2][2] - centers[s3][2], 2))
+	// rp === Rotation Center
+	let rc0 = []
+	for(let i = 0; i < 3; ++i)
+	    rc0[i] = centers[s1][i] +
+	    (centers[s1][i] - centers[s0][i]) * delta / len0
+	let rc0a = []
+	for(let i = 0; i < 3; ++i)
+	    rc0a[i] = centers[s2][i] -
+	    (centers[s3][i] - centers[s2][i]) * delta / len1
+	let m = []
+	for(let i = 0; i < 3; ++i) m[i] = rc0a[i] - rc0[i]
+	return m
+    }
+    function mp(m, c) { // Move Points
+	// console.log(m)
+	for(let a = 0; a < c; ++a)
+	    for(let b = 0; b < tail[a].length; ++b) {
+		let p = tail[a][b] * 3
+		for(let i = 0; i < 3; ++i,++p)
+		    pos[p] = pos[p] + m[i]
+	    }
+    }
+    for(let i = 0; i < 6; ++i)
+	mp(check_segment(i), (i+1)*2)
+    g.attributes.position.needsUpdate = true
+}
 
   </script>
 </body>

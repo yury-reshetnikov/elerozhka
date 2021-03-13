@@ -78,10 +78,10 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	next.sort((a,b)=>a-b)
 	return next
     }
-    tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
-    tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
+    for(let i = 2; i < 14; ++i)
+	tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
     console.log(tail)
-    console.log(tail.map(function(list) {
+    let centers = tail.map(function(list) {
 	if(list.length == 0) return
 	else if(list.length == 1) {
 	    let a = list[0] * 3
@@ -95,7 +95,28 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	    })
 	    return s.map((v) => v / list.length)
 	}
-    }))
+    })
+    console.log(centers)
+    let delta = 0.3
+    let len0 = Math.sqrt(Math.pow(centers[0][0] - centers[1][0], 2) +
+			 Math.pow(centers[0][1] - centers[1][1], 2) +
+			 Math.pow(centers[0][2] - centers[1][2], 2))
+    let len1 = Math.sqrt(Math.pow(centers[2][0] - centers[3][0], 2) +
+			 Math.pow(centers[2][1] - centers[3][1], 2) +
+			 Math.pow(centers[2][2] - centers[3][2], 2))
+    // rp === Rotation Center
+    let rc0 = []
+    for(let i = 0; i < 3; ++i)
+	rc0[i] = centers[1][i] +
+	(centers[1][i] - centers[0][i]) * delta / len0
+    let rc0a = []
+    for(let i = 0; i < 3; ++i)
+	rc0a[i] = centers[2][i] -
+	(centers[3][i] - centers[2][i]) * delta / len1
+    let m = []
+    for(let i = 0; i < 3; ++i) m[i] = rc0a[i] - rc0[i]
+    console.log('seg_len', len0, len1)
+    console.log('rc', rc0, rc0a, 'm', m)
 })
 
   </script>
