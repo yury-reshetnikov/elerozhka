@@ -43,19 +43,15 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 
 camera.position.set(-30, 0, 100)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
-function animate() {
-    requestAnimationFrame( animate )
-    renderer.render( scene, camera )
-}
-animate()
 
-window.correct_tail = function() {
-    let g = window.dog
-    let ind = g.index.array
-    let pos = g.attributes.position.array
-    let tail = [
+let tail = {
+    points: [
 	[344],
-    ]
+    ],
+    delta: 0.2,
+}
+
+(function(){
     function lp(base, prev) { // linked points
 	let next = []
 	for(let t = 0; t < g.index.count; t = t + 3) {
@@ -69,10 +65,11 @@ window.correct_tail = function() {
 	next.sort((a,b)=>a-b)
 	return next
     }
-    tail.push(lp(tail[tail.length-1], []))
+    tail.points.push(lp(tail[tail.points.length-1], []))
     for(let i = 2; i < 14; ++i)
-	tail.push(lp(tail[tail.length-1], tail[tail.length-2]))
-    let centers = tail.map(function(list) {
+	tail.points.push(lp(tail[tail.points.length-1],
+			    tail[tail.points.length-2]))
+    tail.centers = tail.points.map(function(list) {
 	if(list.length == 0) return
 	else if(list.length == 1) {
 	    let a = list[0] * 3
@@ -87,24 +84,38 @@ window.correct_tail = function() {
 	    return s.map((v) => v / list.length)
 	}
     })
-    let delta = 0.2
+})()
+
+function animate() {
+    requestAnimationFrame( animate )
+    renderer.render( scene, camera )
+}
+animate()
+
+window.correct_tail = function() {
+    let g = window.dog
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    function leg(a,b,c,d) {
+	return Math.pow(tail.centers[a][b] - tail.centers[c][d], 2)
+    }
     function check_segment(n) {
 	let s0 = n * 2, s1 = s0+1, s2 = s0+2, s3 = s0+3
-	let len0 = Math.sqrt(Math.pow(centers[s0][0] - centers[s1][0], 2) +
-			     Math.pow(centers[s0][1] - centers[s1][1], 2) +
-			     Math.pow(centers[s0][2] - centers[s1][2], 2))
-	let len1 = Math.sqrt(Math.pow(centers[s2][0] - centers[s3][0], 2) +
-			     Math.pow(centers[s2][1] - centers[s3][1], 2) +
-			     Math.pow(centers[s2][2] - centers[s3][2], 2))
+	let len0 = Math.sqrt(leg(s0, 0, s1, 0) +
+			     leg(s0, 1, s1, 1) +
+			     leg(s0, 2, s1, 2))
+	let len1 = Math.sqrt(leg(s2, 0, s3, 0) +
+			     leg(s2, 1, s3, 1) +
+			     leg(s2, 2, s3, 2))
 	// rp === Rotation Center
 	let rc0 = []
 	for(let i = 0; i < 3; ++i)
-	    rc0[i] = centers[s1][i] +
-	    (centers[s1][i] - centers[s0][i]) * delta / len0
+	    rc0[i] = tail.centers[s1][i] +
+	    (tail.centers[s1][i] - tail.centers[s0][i]) * tail.delta / len0
 	let rc0a = []
 	for(let i = 0; i < 3; ++i)
-	    rc0a[i] = centers[s2][i] -
-	    (centers[s3][i] - centers[s2][i]) * delta / len1
+	    rc0a[i] = tail.centers[s2][i] -
+	    (tail.centers[s3][i] - tail.centers[s2][i]) * tail.delta / len1
 	let m = []
 	for(let i = 0; i < 3; ++i) m[i] = rc0a[i] - rc0[i]
 	return m
@@ -112,8 +123,8 @@ window.correct_tail = function() {
     function mp(m, c) { // Move Points
 	// console.log(m)
 	for(let a = 0; a < c; ++a)
-	    for(let b = 0; b < tail[a].length; ++b) {
-		let p = tail[a][b] * 3
+	    for(let b = 0; b < tail.points[a].length; ++b) {
+		let p = tail.points[a][b] * 3
 		for(let i = 0; i < 3; ++i,++p)
 		    pos[p] = pos[p] + m[i]
 	    }
