@@ -26,6 +26,50 @@ point_light.castShadow = true
 point_light.shadow.camera.far = 5000
 scene.add(point_light)
 
+let tail = {
+    points: [
+	[344],
+    ],
+    delta: 0.2,
+    init: function() {
+	let g = window.dog
+	let ind = g.index.array
+	let pos = g.attributes.position.array
+	function lp(base, prev) { // linked points
+	    let next = []
+	    for(let t = 0; t < g.index.count; t = t + 3) {
+		if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
+		    for(let i = t; i < t + 3; ++i) {
+			let p = ind[i]
+			if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
+			    next.push(p)
+		    }
+	    }
+	    next.sort((a,b)=>a-b)
+	    return next
+	}
+	tail.points.push(lp(tail.points[tail.points.length-1], []))
+	for(let i = 2; i < 14; ++i)
+	    tail.points.push(lp(tail.points[tail.points.length-1],
+				tail.points[tail.points.length-2]))
+	tail.centers = tail.points.map(function(list) {
+	    if(list.length == 0) return
+	    else if(list.length == 1) {
+		let a = list[0] * 3
+		return Array.from(pos.slice(a, a + 3))
+	    }
+	    else {
+		let s = [0,0,0]
+		list.forEach(function(item) {
+		    let a = item * 3
+		    for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
+		})
+		return s.map((v) => v / list.length)
+	    }
+	})
+    },
+}
+
 let loader = new GLTFLoader()
 loader.load('little-blocks-conv.glb', function(gltf) {
     console.log(gltf)
@@ -39,52 +83,11 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(1644, 960, 0)
     scene.add(mesh)
     window.dog = mesh.geometry
+    tail.init()
 })
 
 camera.position.set(-30, 0, 100)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
-
-let tail = {
-    points: [
-	[344],
-    ],
-    delta: 0.2,
-}
-
-(function(){
-    function lp(base, prev) { // linked points
-	let next = []
-	for(let t = 0; t < g.index.count; t = t + 3) {
-	    if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
-		for(let i = t; i < t + 3; ++i) {
-		    let p = ind[i]
-		    if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
-			next.push(p)
-		}
-	}
-	next.sort((a,b)=>a-b)
-	return next
-    }
-    tail.points.push(lp(tail[tail.points.length-1], []))
-    for(let i = 2; i < 14; ++i)
-	tail.points.push(lp(tail[tail.points.length-1],
-			    tail[tail.points.length-2]))
-    tail.centers = tail.points.map(function(list) {
-	if(list.length == 0) return
-	else if(list.length == 1) {
-	    let a = list[0] * 3
-	    return Array.from(pos.slice(a, a + 3))
-	}
-	else {
-	    let s = [0,0,0]
-	    list.forEach(function(item) {
-		let a = item * 3
-		for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
-	    })
-	    return s.map((v) => v / list.length)
-	}
-    })
-})()
 
 function animate() {
     requestAnimationFrame( animate )
