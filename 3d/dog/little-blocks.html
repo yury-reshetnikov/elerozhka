@@ -68,6 +68,21 @@ let tail = {
 	    }
 	})
     },
+    rotation_center: function(n) {
+	function leg(a,b,c,d) {
+	    return Math.pow(tail.centers[a][b] - tail.centers[c][d], 2)
+	}
+	let s0 = n * 2, s1 = s0+1
+	let len0 = Math.sqrt(leg(s0, 0, s1, 0) +
+			     leg(s0, 1, s1, 1) +
+			     leg(s0, 2, s1, 2))
+	// rc === Rotation Center
+	let rc0 = []
+	for(let i = 0; i < 3; ++i)
+	    rc0[i] = tail.centers[s1][i] +
+	    (tail.centers[s1][i] - tail.centers[s0][i]) * tail.delta / len0
+	return rc0	
+    },
 }
 
 let loader = new GLTFLoader()
@@ -137,10 +152,31 @@ window.correct_tail = function() {
     g.attributes.position.needsUpdate = true
 }
 
-window.rotate_tail = function(angle_hor, angle_vert){
-    
+window.rotate_tail = function(segment, angle_hor, angle_vert){
+    let g = window.dog
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    let rc = tail.rotation_center(segment)
+    let c = (segment+1)*2
+    for(let a = 0; a < c; ++a)
+	for(let b = 0; b < tail.points[a].length; ++b) {
+	    let p = tail.points[a][b] * 3
+	    function rot(yz, angle) {
+		let x1 = pos[p] - rc[0]
+		let y1 = pos[p+yz] - rc[yz]
+		let g = Math.sqrt(x1*x1 + y1*y1)
+		let a0 = Math.asin(y1 / g)
+		if(x1 < 0) a0 = Math.PI - a0
+		let a1 = a0 + angle * Math.PI / 180
+		pos[p] = rc[0] + g * Math.cos(a1)
+		pos[p+yz] = rc[yz] + g * Math.sin(a1)
+	    }
+	    rot(2, angle_hor)
+	    rot(1, angle_vert)
+	}
+    g.attributes.position.needsUpdate = true
 }
-    
+
   </script>
 </body>
 </html>
