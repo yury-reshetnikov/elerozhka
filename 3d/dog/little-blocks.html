@@ -52,7 +52,12 @@ let tail = {
 	for(let i = 2; i < 14; ++i)
 	    tail.points.push(lp(tail.points[tail.points.length-1],
 				tail.points[tail.points.length-2]))
-	tail.centers = tail.points.map(function(list) {
+    },
+    centers: function() {
+	let g = window.dog
+	let ind = g.index.array
+	let pos = g.attributes.position.array
+	return tail.points.map(function(list) {
 	    if(list.length == 0) return
 	    else if(list.length == 1) {
 		let a = list[0] * 3
@@ -68,9 +73,9 @@ let tail = {
 	    }
 	})
     },
-    rotation_center: function(n) {
+    rotation_center: function(centers, n) {
 	function leg(a,b,c,d) {
-	    return Math.pow(tail.centers[a][b] - tail.centers[c][d], 2)
+	    return Math.pow(centers[a][b] - centers[c][d], 2)
 	}
 	let s0 = n * 2, s1 = s0+1
 	let len0 = Math.sqrt(leg(s0, 0, s1, 0) +
@@ -79,8 +84,8 @@ let tail = {
 	// rc === Rotation Center
 	let rc0 = []
 	for(let i = 0; i < 3; ++i)
-	    rc0[i] = tail.centers[s1][i] +
-	    (tail.centers[s1][i] - tail.centers[s0][i]) * tail.delta / len0
+	    rc0[i] = centers[s1][i] +
+	    (centers[s1][i] - centers[s0][i]) * tail.delta / len0
 	return rc0	
     },
 }
@@ -114,8 +119,9 @@ window.correct_tail = function() {
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
+    let centers = tail.centers()
     function leg(a,b,c,d) {
-	return Math.pow(tail.centers[a][b] - tail.centers[c][d], 2)
+	return Math.pow(centers[a][b] - centers[c][d], 2)
     }
     function check_segment(n) {
 	let s0 = n * 2, s1 = s0+1, s2 = s0+2, s3 = s0+3
@@ -128,12 +134,12 @@ window.correct_tail = function() {
 	// rp === Rotation Center
 	let rc0 = []
 	for(let i = 0; i < 3; ++i)
-	    rc0[i] = tail.centers[s1][i] +
-	    (tail.centers[s1][i] - tail.centers[s0][i]) * tail.delta / len0
+	    rc0[i] = centers[s1][i] +
+	    (centers[s1][i] - centers[s0][i]) * tail.delta / len0
 	let rc0a = []
 	for(let i = 0; i < 3; ++i)
-	    rc0a[i] = tail.centers[s2][i] -
-	    (tail.centers[s3][i] - tail.centers[s2][i]) * tail.delta / len1
+	    rc0a[i] = centers[s2][i] -
+	    (centers[s3][i] - centers[s2][i]) * tail.delta / len1
 	let m = []
 	for(let i = 0; i < 3; ++i) m[i] = rc0a[i] - rc0[i]
 	return m
@@ -152,11 +158,51 @@ window.correct_tail = function() {
     g.attributes.position.needsUpdate = true
 }
 
+window.get_angles = function() {
+    let g = window.dog
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    let centers = tail.centers()
+    let angles = []
+    function ang(yz, rc, angle_center) {
+	let x1 = angle_center[0] - rc[0]
+	let y1 = angle_center[yz] - rc[yz]
+	if(x1 == 0 && y1 == 0) return 0
+	let g = Math.sqrt(x1*x1 + y1*y1)
+	let a0 = Math.asin(y1 / g)
+	if(x1 < 0) a0 = Math.PI - a0
+	let a = Math.round(a0 * 180 / Math.PI)
+	return a
+    }
+    for(let s = 0; s < 6; ++s) {
+	let rc = tail.rotation_center(centers, s)
+	let angle_center = centers[s * 2]
+	angles.push([ang(2, rc, angle_center), ang(1, rc, angle_center)])
+    }
+    angles.push([ang(2, centers[13], centers[12]),
+		 ang(1, centers[13], centers[12])])
+    return angles
+}
+
 window.rotate_tail = function(segment, angle_hor, angle_vert){
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
-    let rc = tail.rotation_center(segment)
+    let centers = tail.centers()
+    let rc = tail.rotation_center(centers, segment)
+    let angle_center = centers[segment * 2]
+    // console.log('rc:', rc, 'ac:', angle_center); return;
+    function ang(yz) {
+	let x1 = angle_center[0] - rc[0]
+	let y1 = angle_center[yz] - rc[yz]
+	if(x1 == 0 && y1 == 0) return 0
+	let g = Math.sqrt(x1*x1 + y1*y1)
+	let a0 = Math.asin(y1 / g)
+	if(x1 < 0) a0 = Math.PI - a0
+	return a0 * 180 / Math.PI
+    }
+    angle_hor = angle_hor - ang(2)
+    angle_vert = angle_vert - ang(1)
     let c = (segment+1)*2
     for(let a = 0; a < c; ++a)
 	for(let b = 0; b < tail.points[a].length; ++b) {
@@ -165,7 +211,44 @@ window.rotate_tail = function(segment, angle_hor, angle_vert){
 		let x1 = pos[p] - rc[0]
 		let y1 = pos[p+yz] - rc[yz]
 		let g = Math.sqrt(x1*x1 + y1*y1)
-		let a0 = Math.asin(y1 / g)
+		let a0 = x1 == 0 && y1 == 0 ? 0 : Math.asin(y1 / g)
+		if(x1 < 0) a0 = Math.PI - a0
+		let a1 = a0 + angle * Math.PI / 180
+		pos[p] = rc[0] + g * Math.cos(a1)
+		pos[p+yz] = rc[yz] + g * Math.sin(a1)
+	    }
+	    rot(2, angle_hor)
+	    rot(1, angle_vert)
+	}
+    g.attributes.position.needsUpdate = true
+}
+
+window.rotate_tail_base = function(angle_hor, angle_vert){
+    let g = window.dog
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    let centers = tail.centers()
+    let rc = centers[13]
+    let angle_center = centers[12]
+    function ang(yz) {
+	let x1 = angle_center[0] - rc[0]
+	let y1 = angle_center[yz] - rc[yz]
+	if(x1 == 0 && y1 == 0) return 0
+	let g = Math.sqrt(x1*x1 + y1*y1)
+	let a0 = Math.asin(y1 / g)
+	if(x1 < 0) a0 = Math.PI - a0
+	return a0 * 180 / Math.PI
+    }
+    angle_hor = angle_hor - ang(2)
+    angle_vert = angle_vert - ang(1)
+    for(let a = 0; a < 13; ++a)
+	for(let b = 0; b < tail.points[a].length; ++b) {
+	    let p = tail.points[a][b] * 3
+	    function rot(yz, angle) {
+		let x1 = pos[p] - rc[0]
+		let y1 = pos[p+yz] - rc[yz]
+		let g = Math.sqrt(x1*x1 + y1*y1)
+		let a0 = x1 == 0 && y1 == 0 ? 0 : Math.asin(y1 / g)
 		if(x1 < 0) a0 = Math.PI - a0
 		let a1 = a0 + angle * Math.PI / 180
 		pos[p] = rc[0] + g * Math.cos(a1)
