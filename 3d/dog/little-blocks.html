@@ -94,7 +94,7 @@ let loader = new GLTFLoader()
 loader.load('little-blocks-conv.glb', function(gltf) {
     console.log(gltf)
     let mesh = gltf.scene.children[0]
-    mesh.scale.set(10, 10, 10)
+    // mesh.scale.set(10, 10, 10)
     let material = new THREE.MeshStandardMaterial({ color: 0x97612f })
     let material_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
     mesh.material = [material, material_red]
@@ -106,7 +106,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     tail.init()
 })
 
-camera.position.set(-30, 0, 100)
+camera.position.set(-4, 0, 14)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
 
 function animate() {
@@ -163,24 +163,38 @@ window.get_angles = function() {
     let ind = g.index.array
     let pos = g.attributes.position.array
     let centers = tail.centers()
+    // console.log('centers.length', centers.length)
     let angles = []
-    function ang(yz, rc, angle_center) {
-	let x1 = angle_center[0] - rc[0]
-	let y1 = angle_center[yz] - rc[yz]
-	if(x1 == 0 && y1 == 0) return 0
-	let g = Math.sqrt(x1*x1 + y1*y1)
-	let a0 = Math.asin(y1 / g)
-	if(x1 < 0) a0 = Math.PI - a0
-	let a = Math.round(a0 * 180 / Math.PI)
-	return a
-    }
+    function a(v) { return Math.round(THREE.MathUtils.radToDeg(v)) }
     for(let s = 0; s < 6; ++s) {
-	let rc = tail.rotation_center(centers, s)
-	let angle_center = centers[s * 2]
-	angles.push([ang(2, rc, angle_center), ang(1, rc, angle_center)])
+	let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[s*2]), (new THREE.Vector3()).fromArray(centers[s*2+1]))
+	let pre = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[(s+1)*2]), (new THREE.Vector3()).fromArray(centers[(s+1)*2+1]))
+	// console.log('s', s, 'cur', cur, 'pre', pre)
+	let angle = (new THREE.Euler()).setFromQuaternion((new THREE.Quaternion()).setFromUnitVectors(pre.normalize(), cur.normalize()), 'XYZ')
+	let angle2 = (new THREE.Euler()).setFromQuaternion((new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()), 'XYZ')
+	angles.push([a(angle.x), a(angle.y), a(angle.z), a(angle2.x), a(angle2.y), a(angle2.z)])
     }
-    angles.push([ang(2, centers[13], centers[12]),
-		 ang(1, centers[13], centers[12])])
+    /*
+    console.log(tail.points[13])
+    tail.points[13].forEach(function(p){
+	let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+	console.log('p', p, 'v', v, 'pos', pos[p*3], pos[p*3+1], pos[p*3+2])
+    })
+    */
+    // 3 - 248 - верх | 4 - 251 - максимально положительная z
+    let up = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][3]), (new THREE.Vector3()).fromArray(centers[13]))
+    let side = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][4]), (new THREE.Vector3()).fromArray(centers[13]))
+    let a1 = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(0,-1,0), up.normalize())
+    // в начальном состоянии собакена нет поворота вокруг вектора up, поэтому пока не будем учитывать поворот для вектора side. его надо будет учесть, когда научим собакена вилять всей попой.
+    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
+    let a1e = (new THREE.Euler()).setFromQuaternion(a1, 'XYZ')
+    let c1 = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize())
+    // c1 = a1 * c2
+    let c2 = c1.clone().multiply(a1.conjugate())
+    let angle = (new THREE.Euler()).setFromQuaternion(c2, 'XYZ')
+    let angle2 = (new THREE.Euler()).setFromQuaternion(c1, 'XYZ')
+    angles.push([a(angle.x), a(angle.y), a(angle.z), a(angle2.x), a(angle2.y), a(angle2.z)])
+    angles.push([a(a1e.x), a(a1e.y), a(a1e.z)])
     return angles
 }
 
