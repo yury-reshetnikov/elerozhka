@@ -30,6 +30,7 @@ let tail = {
     points: [
 	[344],
     ],
+    bases: [], // 0..6
     delta: 0.2,
     init: function() {
 	let g = window.dog
@@ -52,6 +53,22 @@ let tail = {
 	for(let i = 2; i < 14; ++i)
 	    tail.points.push(lp(tail.points[tail.points.length-1],
 				tail.points[tail.points.length-2]))
+	// считаем bases
+	let centers = tail.centers()
+	for(let s = 0; s < 6; ++s) {
+	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[s*2]), (new THREE.Vector3()).fromArray(centers[s*2+1]))
+	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
+	    let rc = (new THREE.Vector3()).fromArray(tail.rotation_center(centers, s))
+	    let bases_points = []
+	    for(let n = 0; n < 2; ++n) {
+		tail.points[s*2+n].forEach(function(p) {
+		    let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
+		    bases_points.push(v.x, v.y, v.z)
+		})
+	    }
+	    tail.bases.push(bases_points)
+	}
+	// +++ bases[6]
     },
     centers: function() {
 	let g = window.dog
