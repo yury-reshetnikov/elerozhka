@@ -54,6 +54,7 @@ let tail = {
 	    tail.points.push(lp(tail.points[tail.points.length-1],
 				tail.points[tail.points.length-2]))
 	// считаем bases
+	let prev_rc
 	let centers = tail.centers()
 	for(let s = 0; s < 6; ++s) {
 	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[s*2]), (new THREE.Vector3()).fromArray(centers[s*2+1]))
@@ -66,7 +67,12 @@ let tail = {
 		    bases_points.push(v.x, v.y, v.z)
 		})
 	    }
+	    if(s) {
+		let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
+		bases_points.push(v.x, v.y, v.z)
+	    }
 	    tail.bases.push(bases_points)
+	    prev_rc = rc
 	}
 	// bases[6]
 	{
@@ -78,28 +84,30 @@ let tail = {
 		let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
 		bases_points.push(v.x, v.y, v.z)
 	    })
+	    {   let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
+		bases_points.push(v.x, v.y, v.z)
+	    }
 	    tail.bases.push(bases_points)
 	}
     },
+    calc_center: function(list) {
+	let pos = window.dog.attributes.position.array
+	if(list.length == 0) return
+	else if(list.length == 1) {
+	    let a = list[0] * 3
+	    return Array.from(pos.slice(a, a + 3))
+	}
+	else {
+	    let s = [0,0,0]
+	    list.forEach(function(item) {
+		let a = item * 3
+		for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
+	    })
+	    return s.map((v) => v / list.length)
+	}
+    },
     centers: function() {
-	let g = window.dog
-	let ind = g.index.array
-	let pos = g.attributes.position.array
-	return tail.points.map(function(list) {
-	    if(list.length == 0) return
-	    else if(list.length == 1) {
-		let a = list[0] * 3
-		return Array.from(pos.slice(a, a + 3))
-	    }
-	    else {
-		let s = [0,0,0]
-		list.forEach(function(item) {
-		    let a = item * 3
-		    for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
-		})
-		return s.map((v) => v / list.length)
-	    }
-	})
+	return tail.points.map(tail.calc_center)
     },
     rotation_center: function(centers, n) {
 	function leg(a,b,c,d) {
@@ -132,6 +140,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     scene.add(mesh)
     window.dog = mesh.geometry
     tail.init()
+    window.tail = tail
 })
 
 camera.position.set(-4, 0, 14)
@@ -214,8 +223,8 @@ window.get_angles = function() {
     let side = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][4]), (new THREE.Vector3()).fromArray(centers[13]))
     let a1 = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(0,-1,0), up.normalize())
     // в начальном состоянии собакена нет поворота вокруг вектора up, поэтому пока не будем учитывать поворот для вектора side. его надо будет учесть, когда научим собакена вилять всей попой.
-    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
     let a1e = (new THREE.Euler()).setFromQuaternion(a1, 'XYZ')
+    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
     let c1 = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize())
     // c1 = a1 * c2
     let c2 = c1.clone().multiply(a1.conjugate())
@@ -226,7 +235,7 @@ window.get_angles = function() {
     return angles
 }
 
-window.rotate_tail = function(segment, angle_hor, angle_vert){
+window.rotate_tail_v1 = function(segment, angle_hor, angle_vert){
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
@@ -299,6 +308,49 @@ window.rotate_tail_base = function(angle_hor, angle_vert){
 	    rot(2, angle_hor)
 	    rot(1, angle_vert)
 	}
+    g.attributes.position.needsUpdate = true
+}
+
+// начальное состояние
+// rotate_tail(0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30)
+window.rotate_tail = function() {
+    let g = window.dog
+    let angle
+    let rc = (new THREE.Vector3()).fromArray(tail.calc_center(tail.points[13]))
+    {
+	let up = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][3]), (new THREE.Vector3()).fromArray(rc))
+	let side = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][4]), (new THREE.Vector3()).fromArray(rc))
+	angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(0,-1,0), up.normalize())
+	// в начальном состоянии собакена нет поворота вокруг вектора up, поэтому пока не будем учитывать поворот для вектора side. его надо будет учесть, когда научим собакена вилять всей попой.
+    }
+    {
+	let euler = new THREE.Euler(0, arguments[0], arguments[1], 'XYZ')
+	angle = angle.multiply((new THREE.Quaternion()).setFromEuler(euler))
+	tail.points[12].forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(tail.bases[6], i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(rc, v)
+	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	})
+	{
+	    let v = (new THREE.Vector3()).fromArray(tail.bases[6], 8*3).applyQuaternion(angle)
+	    rc = (new THREE.Vector3()).addVectors(rc, v)
+	}
+    }
+    for(let s = 5; s >= 0; --s) {
+	let euler = new THREE.Euler(0, arguments[(6-s)*2], arguments[(6-s)*2+1], 'XYZ')
+	angle = angle.multiply((new THREE.Quaternion()).setFromEuler(euler))
+	for(let n = 0; n < 2; ++n) {
+	    tail.points[s*2+n].forEach(function(p,i) {
+		let v = (new THREE.Vector3()).fromArray(tail.bases[s], i*3).applyQuaternion(angle)
+		let d = (new THREE.Vector3()).addVectors(rc, v)
+		g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	    })
+	}
+	if(s) {
+	    let v = (new THREE.Vector3()).fromArray(tail.bases[s], 16*3).applyQuaternion(angle)
+	    rc = (new THREE.Vector3()).addVectors(rc, v)
+	}
+    }
     g.attributes.position.needsUpdate = true
 }
 
