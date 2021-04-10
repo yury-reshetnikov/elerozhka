@@ -26,6 +26,12 @@ point_light.castShadow = true
 point_light.shadow.camera.far = 5000
 scene.add(point_light)
 
+function euler_xyz(quat) {
+    let euler = (new THREE.Euler()).setFromQuaternion(quat, 'XYZ')
+    function a(v) { return Math.round(THREE.MathUtils.radToDeg(v)) }
+    return [a(euler.x), a(euler.y), a(euler.z)]
+}
+
 let tail = {
     points: [
 	[344],
@@ -315,35 +321,50 @@ window.rotate_tail_base = function(angle_hor, angle_vert){
 // rotate_tail(0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30)
 window.rotate_tail = function() {
     let g = window.dog
+    let pos = g.attributes.position.array
     let angle
     let rc = (new THREE.Vector3()).fromArray(tail.calc_center(tail.points[13]))
     {
-	let up = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][3]), (new THREE.Vector3()).fromArray(rc))
-	let side = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][4]), (new THREE.Vector3()).fromArray(rc))
+	let up = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][3]), rc)
+	// console.log('rc', rc, 'up', up, '13_3', tail.points[13][3], 'v', (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][3]))
+	let side = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, tail.points[13][4]), rc)
 	angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(0,-1,0), up.normalize())
 	// в начальном состоянии собакена нет поворота вокруг вектора up, поэтому пока не будем учитывать поворот для вектора side. его надо будет учесть, когда научим собакена вилять всей попой.
+	// console.log('angle', angle, euler_xyz(angle))
     }
     {
-	let euler = new THREE.Euler(0, arguments[0], arguments[1], 'XYZ')
+	let euler = new THREE.Euler(0, THREE.MathUtils.degToRad(arguments[0]), THREE.MathUtils.degToRad(arguments[1]), 'XYZ')
 	angle = angle.multiply((new THREE.Quaternion()).setFromEuler(euler))
 	tail.points[12].forEach(function(p,i) {
 	    let v = (new THREE.Vector3()).fromArray(tail.bases[6], i*3).applyQuaternion(angle)
 	    let d = (new THREE.Vector3()).addVectors(rc, v)
+	    // console.log('i', i, 'p', p, 'old', (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), 'new', d, 'v', v, 'rc', rc, 'angle', angle, euler_xyz(angle))
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	    // let pi = p * 3
+	    // pos[pi] = d.x
+	    // pos[++pi] = d.y
+	    // pos[++pi] = d.z
 	})
 	{
 	    let v = (new THREE.Vector3()).fromArray(tail.bases[6], 8*3).applyQuaternion(angle)
 	    rc = (new THREE.Vector3()).addVectors(rc, v)
 	}
     }
+    // g.attributes.position.needsUpdate = true
+    // return
     for(let s = 5; s >= 0; --s) {
-	let euler = new THREE.Euler(0, arguments[(6-s)*2], arguments[(6-s)*2+1], 'XYZ')
+	let euler = new THREE.Euler(0, THREE.MathUtils.degToRad(arguments[(6-s)*2]), THREE.MathUtils.degToRad(arguments[(6-s)*2+1]), 'XYZ')
 	angle = angle.multiply((new THREE.Quaternion()).setFromEuler(euler))
 	for(let n = 0; n < 2; ++n) {
 	    tail.points[s*2+n].forEach(function(p,i) {
-		let v = (new THREE.Vector3()).fromArray(tail.bases[s], i*3).applyQuaternion(angle)
+		let v = (new THREE.Vector3()).fromArray(tail.bases[s],
+			(n*8+i)*3).applyQuaternion(angle)
 		let d = (new THREE.Vector3()).addVectors(rc, v)
 		g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+		// let pi = p * 3
+		// pos[pi] = d.x
+		// pos[++pi] = d.y
+		// pos[++pi] = d.z
 	    })
 	}
 	if(s) {
