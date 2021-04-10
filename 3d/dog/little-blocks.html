@@ -67,7 +67,7 @@ let tail = {
 	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
 	    let rc = (new THREE.Vector3()).fromArray(tail.rotation_center(centers, s))
 	    let bases_points = []
-	    for(let n = 0; n < 2; ++n) {
+	    for(let n = 1; n >= 0; --n) {
 		tail.points[s*2+n].forEach(function(p) {
 		    let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
 		    bases_points.push(v.x, v.y, v.z)
@@ -358,8 +358,9 @@ window.rotate_tail = function() {
 	for(let n = 0; n < 2; ++n) {
 	    tail.points[s*2+n].forEach(function(p,i) {
 		let v = (new THREE.Vector3()).fromArray(tail.bases[s],
-			(n*8+i)*3).applyQuaternion(angle)
+			((1-n)*8+i)*3).applyQuaternion(angle)
 		let d = (new THREE.Vector3()).addVectors(rc, v)
+		// if(!s) console.log('n', n, 'i', i, 'p', p, 'old', (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), 'new', d, 'v', v, 'rc', rc, 'angle', angle, euler_xyz(angle))
 		g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 		// let pi = p * 3
 		// pos[pi] = d.x
