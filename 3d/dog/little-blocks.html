@@ -68,7 +68,18 @@ let tail = {
 	    }
 	    tail.bases.push(bases_points)
 	}
-	// +++ bases[6]
+	// bases[6]
+	{
+	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
+	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
+	    let rc = (new THREE.Vector3()).fromArray(centers[13])
+	    let bases_points = []
+	    tail.points[12].forEach(function(p) {
+		let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
+		bases_points.push(v.x, v.y, v.z)
+	    })
+	    tail.bases.push(bases_points)
+	}
     },
     centers: function() {
 	let g = window.dog
