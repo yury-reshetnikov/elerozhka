@@ -5,6 +5,7 @@
   <title>Рисуем собакена</title>
   <script src="https://threejs.org/build/three.js"></script>
   <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+  <script src="three-animate.js"></script>
 </head>
 <body>
   <script type="module">
@@ -128,7 +129,7 @@ let tail = {
 	for(let i = 0; i < 3; ++i)
 	    rc0[i] = centers[s1][i] +
 	    (centers[s1][i] - centers[s0][i]) * tail.delta / len0
-	return rc0	
+	return rc0
     },
 }
 
