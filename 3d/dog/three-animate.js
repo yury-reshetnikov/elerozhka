@@ -9,9 +9,10 @@ function Animate4() {
 	let count = 0
 	let t = (new Date).getTime() - this.started
 	if(this.time_modifier) t *= this.time_modifier
-	if(this.exit_time && t > this.exit_time) return
+	if(this.exit_now || (this.exit_time && t > this.exit_time)) return
 	actions.forEach(function(item) {
 	    if(item.draw(t)) ++count
+	    else item.finish()
 	})
 	if(count)
 	    requestAnimationFrame(this.draw.bind(this))
@@ -42,17 +43,27 @@ function Animate4() {
 	    }
 	}
     }
-    function Tail(callback, angle_from, angle_to, time_from, time_to) {
-	this.draw = gen_draw(time_from, time_to, this, function(k) {
-            let a = []
-	    angle_from.forEach(function(item, n) {
-                a.push(item + (angle_to[n] - item) * k)
-            })
-            callback(...a)
-	})
+    function Tail(callback, angle_from, angle_to, time_from, time_to, time_period) {
+	this.init = function(time_from, time_to) {
+	    this.draw = gen_draw(time_from, time_to, this, function(k) {
+		let a = []
+		angle_from.forEach(function(item, n) {
+                    a.push(item + (angle_to[n] - item) * k)
+		})
+		callback(...a)
+	    })
+	}
+	this.init(time_from, time_to)
+	if(time_period)
+	    this.finish = function() {
+		time_from += time_period
+		time_to += time_period
+		this.init(time_from, time_to)
+	    }
+	else this.finish = function() {}
     }
-    this.tail = function(callback, angle_from, angle_to, time_from, time_to) {
-        actions.push(new Tail(callback, angle_from, angle_to, time_from, time_to))
+    this.tail = function(callback, angle_from, angle_to, time_from, time_to, time_period) {
+        actions.push(new Tail(callback, angle_from, angle_to, time_from, time_to, time_period))
     }
 
 }
