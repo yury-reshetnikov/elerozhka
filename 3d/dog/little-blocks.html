@@ -142,7 +142,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
     mesh.material = [material, material_red]
     mesh.geometry.addGroup(0, 1620, 0)
-    mesh.geometry.addGroup(1620, 24, 1)
+    mesh.geometry.addGroup(1620, 24, 0) // конус кончика хвоста
     mesh.geometry.addGroup(1644, 960, 0)
     scene.add(mesh)
     window.dog = mesh.geometry
