@@ -29,3 +29,7 @@ a.start()
 let a = wag_tail()
 let a = wag_tail(0.1)
 a.exit_now = true
+
+let a = new Animate4
+a.tail(rotate_tail, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30], [0,90,0,20,0,30,0,30,0,30,0,30,0,10], 100, 400)
+a.start()
