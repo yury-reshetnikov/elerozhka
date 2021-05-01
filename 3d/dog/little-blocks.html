@@ -33,7 +33,7 @@ function euler_xyz(quat) {
     return [a(euler.x), a(euler.y), a(euler.z)]
 }
 
-let tail = {
+window.tail = {
     points: [
 	[344],
     ],
@@ -320,7 +320,8 @@ window.rotate_tail_base = function(angle_hor, angle_vert){
 
 // начальное состояние
 // rotate_tail(0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30)
-window.rotate_tail = function() {
+tail.rotate = function() {
+    tail.current_angles = [...arguments]
     let g = window.dog
     let pos = g.attributes.position.array
     let angle
@@ -377,27 +378,30 @@ window.rotate_tail = function() {
     g.attributes.position.needsUpdate = true
 }
 
-window.wag_tail = function(tm) {
+tail.wag = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    a.tail(rotate_tail,
+    a.tail(tail.rotate,
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
 	   100, 300, 800)
-    a.tail(rotate_tail,
+    a.tail(tail.rotate,
 	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   300, 500, 800)
-    a.tail(rotate_tail,
+    a.tail(tail.rotate,
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
 	   500, 700, 800)
-    a.tail(rotate_tail,
+    a.tail(tail.rotate,
 	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   700, 900, 800)
     a.start()
     return a
+}
+
+tail.to_basic = function() {
 }
 
   </script>
