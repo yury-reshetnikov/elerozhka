@@ -33,6 +33,24 @@ function euler_xyz(quat) {
     return [a(euler.x), a(euler.y), a(euler.z)]
 }
 
+function lip(g, ind, base_i, prev_i) { // linked index points
+    let next = []
+    let base = base_i.map(function(p) { return ind[p] })
+    let prev = prev_i.map(function(p) { return ind[p] })
+    for(let t = 0; t < g.index.count; t = t + 3) {
+	if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
+	    for(let i = t; i < t + 3; ++i) {
+		let p = ind[i]
+		if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
+		    next.push(p)
+	    }
+    }
+    let next_i = []
+    ind.forEach(function(p,i) { if(next.includes(p)) next_i.push(i) })
+    next_i.sort((a,b)=>a-b)
+    return next_i
+}
+
 window.tail = {
     points: [
 	[344],
@@ -141,14 +159,36 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     // mesh.scale.set(10, 10, 10)
     let material = new THREE.MeshStandardMaterial({ color: 0x97612f })
     let material_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
-    mesh.material = [material, material_red]
-    mesh.geometry.addGroup(0, 1620, 0)
+    let material_black = new THREE.MeshStandardMaterial({ color: 0x000000 })
+    mesh.material = [material, material_red, material_black]
+    mesh.geometry.addGroup(0, 36, 0)
+    mesh.geometry.addGroup(36, 3, 0)
+    mesh.geometry.addGroup(39, 51, 0)
+    mesh.geometry.addGroup(90, 36, 0)
+    mesh.geometry.addGroup(126, 3, 0)
+    mesh.geometry.addGroup(129, 51, 0)
+    mesh.geometry.addGroup(180, 9, 0)
+    mesh.geometry.addGroup(189, 3, 2) // пятачок
+    mesh.geometry.addGroup(192, 3, 2) // нос
+    mesh.geometry.addGroup(195, 9, 2) // пятачок
+    mesh.geometry.addGroup(204, 9, 2) // нос
+    mesh.geometry.addGroup(213, 27, 0)
+    mesh.geometry.addGroup(240, 24, 2) // нос
+    mesh.geometry.addGroup(264, 3, 0)
+    mesh.geometry.addGroup(267, 6, 2) // нос
+    mesh.geometry.addGroup(273, 27, 0)
+    mesh.geometry.addGroup(300, 1320, 0)
     mesh.geometry.addGroup(1620, 24, 0) // конус кончика хвоста
     mesh.geometry.addGroup(1644, 960, 0)
     scene.add(mesh)
     window.dog = mesh.geometry
     tail.init()
     window.tail = tail
+    // нос
+    let g = window.dog
+    let ind = g.index.array
+    let pos = g.attributes.position.array
+    console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
 })
 
 camera.position.set(-4, 0, 14)
