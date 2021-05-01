@@ -401,7 +401,24 @@ tail.wag = function(tm) {
     return a
 }
 
-tail.to_basic = function() {
+tail.to_basic = function(duration) {
+    let a = new Animate4
+    a.tail(tail.rotate,
+        tail.current_angles,
+        [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+        0, duration)
+    a.start()
+    return a
+}
+
+tail.to_down = function(duration) {
+    let a = new Animate4
+    a.tail(tail.rotate,
+        tail.current_angles,
+        [0,90,0,20,0,30,0,30,0,30,0,30,0,10],
+        0, duration)
+    a.start()
+    return a
 }
 
   </script>
