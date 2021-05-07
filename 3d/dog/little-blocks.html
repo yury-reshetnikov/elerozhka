@@ -51,6 +51,39 @@ function lip(g, ind, base_i, prev_i) { // linked index points
     return next_i
 }
 
+function lp(g, base, prev) { // linked points
+    let ind = g.index.array
+    let next = []
+    for(let t = 0; t < g.index.count; t = t + 3) {
+	if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
+	    for(let i = t; i < t + 3; ++i) {
+		let p = ind[i]
+		if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
+		    next.push(p)
+	    }
+    }
+    next.sort((a,b)=>a-b)
+    return next
+}
+
+function lp_eq_y(g, base, prev) {
+    let next = []
+    let y = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, base[0]).y
+    lp(g, base, prev).forEach(function(p) {
+	if((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p).y == y) next.push(p)
+    })
+    return next
+}
+
+function lp_lt_y(g, base, prev) {
+    let next = []
+    let y = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, base[0]).y
+    lp(g, base, prev).forEach(function(p) {
+	if((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p).y < y) next.push(p)
+    })
+    return next
+}
+
 window.tail = {
     points: [
 	[344],
@@ -197,11 +230,29 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog = mesh.geometry
     tail.init()
     window.tail = tail
-    // нос
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
-    console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
+    // // нос
+    // console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
+    // правая передняя нога
+    // ind[567] == 106
+    console.log(ind[567],
+		(new THREE.Vector3()).fromBufferAttribute(g.attributes.position, ind[567]),
+		lp(g, [106, 107, 116], []),
+		lp_eq_y(g, [106, 107, 109, 110, 112, 113, 115, 116], []),
+		lp_lt_y(g, [106, 107, 109, 110, 112, 113, 115, 116], []),
+		lp(g, [108, 111, 114, 117, 201, 202, 203, 204], [106, 107, 109, 110, 112, 113, 115, 116]))
+    let paw = [[106, 107, 109, 110, 112, 113, 115, 116],
+	       [108, 111, 114, 117, 201, 202, 203, 204]
+	      ]
+    for(;;) {
+	let next = lp(g, paw[paw.length - 1], paw[paw.length - 2])
+	if(!next.length) break
+	paw.push(next)
+	console.log(next)
+    }
+    // В следующий раз подсветить треугольники для каждой пары уровней в paw
 })
 
 camera.position.set(-4, 0, 14)
