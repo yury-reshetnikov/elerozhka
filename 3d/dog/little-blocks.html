@@ -160,11 +160,20 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material = new THREE.MeshStandardMaterial({ color: 0x97612f })
     let material_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
     let material_black = new THREE.MeshStandardMaterial({ color: 0x000000 })
+    let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x4d4d4d })
     mesh.material = [material, material_red, material_black]
-    mesh.geometry.addGroup(0, 36, 0)
-    mesh.geometry.addGroup(36, 3, 0)
-    mesh.geometry.addGroup(39, 51, 0)
-    mesh.geometry.addGroup(90, 36, 0)
+    mesh.geometry.addGroup(0, 54, 0)
+    mesh.geometry.addGroup(54, 12, 1) // левый глаз
+    mesh.geometry.addGroup(66, 30, 0)
+    mesh.geometry.addGroup(96, 3, 1) // часть правого глаза
+    mesh.geometry.addGroup(99, 3, 0)
+    mesh.geometry.addGroup(102, 3, 1) // часть правого глаза
+    mesh.geometry.addGroup(105, 3, 0)
+    mesh.geometry.addGroup(108, 3, 0)
+    mesh.geometry.addGroup(111, 3, 1) // часть правого глаза
+    mesh.geometry.addGroup(114, 6, 0)
+    mesh.geometry.addGroup(120, 3, 1) // часть правого глаза
+    mesh.geometry.addGroup(123, 3, 0)
     mesh.geometry.addGroup(126, 3, 0)
     mesh.geometry.addGroup(129, 51, 0)
     mesh.geometry.addGroup(180, 9, 0)
