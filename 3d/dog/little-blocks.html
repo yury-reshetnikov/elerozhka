@@ -84,6 +84,15 @@ function lp_lt_y(g, base, prev) {
     return next
 }
 
+function count_triangles(g, points) {
+    let ind = g.index.array
+    let count = 0
+    for(let t = 0; t < g.index.count; t = t + 3) {
+	if(points.includes(ind[t]) || points.includes(ind[t+1]) || points.includes(ind[t+2])) ++count
+    }
+    return count
+}
+
 window.tail = {
     points: [
 	[344],
@@ -253,6 +262,9 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	console.log(next)
     }
     // В следующий раз подсветить треугольники для каждой пары уровней в paw
+    tail.points.forEach(function(pp,i) {
+	console.log('i', i, 't', count_triangles(window.dog, pp))
+    })
 })
 
 camera.position.set(-4, 0, 14)
