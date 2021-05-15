@@ -185,6 +185,56 @@ window.tail = {
     },
 }
 
+window.frpaw = { //front right paw
+    points: [
+	[106, 107, 116],
+    ],
+    bases: [],
+    //delta: 0.2,
+    init: function() {
+	let g = window.dog
+	let ind = g.index.array
+	let pos = g.attributes.position.array
+	// считаем bases
+	let prev_rc
+	let centers = frpaw.centers()
+	for(let s = 0; s < 2; ++s) {
+	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[s*2]), (new THREE.Vector3()).fromArray(centers[s*2+1]))
+	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
+	    let rc = (new THREE.Vector3()).fromArray(frpaw.rotation_center(centers, s))
+	    let bases_points = []
+	    for(let n = 1; n >= 0; --n) {
+		frpaw.points[s*2+n].forEach(function(p) {
+		    let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
+		    bases_points.push(v.x, v.y, v.z)
+		})
+	    }
+	    if(s) {
+		let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
+		bases_points.push(v.x, v.y, v.z)
+	    }
+	    frpaw.bases.push(bases_points)
+	    prev_rc = rc
+	}
+	{
+	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
+	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
+	    let rc = (new THREE.Vector3()).fromArray(centers[13])
+	    let bases_points = []
+	    tail.points[12].forEach(function(p) {
+		let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
+		bases_points.push(v.x, v.y, v.z)
+	    })
+	    {   let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
+		bases_points.push(v.x, v.y, v.z)
+	    }
+	    tail.bases.push(bases_points)
+	}
+	frpaw.current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+    // В следующий раз - разобраться с этим куском кода
+}
+
 let loader = new GLTFLoader()
 loader.load('little-blocks-conv.glb', function(gltf) {
     console.log(gltf)
