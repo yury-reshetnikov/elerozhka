@@ -230,7 +230,7 @@ window.frpaw = { //front right paw
 	    centers[6][0], centers[6][1] + 0.6, centers[6][2] ]
 	// console.log('frpaw', frpaw, 'centers', centers, 'segments', frpaw.segments)
 	let prev_rc
-	for(let s = 0; s < 2; ++s) {
+	for(let s = 0; s <= 2; ++s) {
 	    let rc = (new THREE.Vector3()).fromArray(frpaw.segments[s].rc)
 	    let bases_points = []
 	    frpaw.segments[s].pl.forEach(function(n) {
@@ -247,7 +247,38 @@ window.frpaw = { //front right paw
 	    prev_rc = rc
 	}
 	frpaw.current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    }
+    },
+    rotate: function() {
+	frpaw.current_angles = [...arguments]
+	let g = window.dog
+	let pos = g.attributes.position.array
+	let angle = new THREE.Quaternion() // +++ TODO учесть текущий поворот корпуса
+	let rc = (new THREE.Vector3()).fromArray(frpaw.segments[2].rc)
+	for(let s = 2; s >= 0; --s) {
+	    let euler = new THREE.Euler(
+		THREE.MathUtils.degToRad(arguments[(2-s)*3]),
+		THREE.MathUtils.degToRad(arguments[(2-s)*3+1]),
+		THREE.MathUtils.degToRad(arguments[(2-s)*3+2]),
+		'XYZ')
+	    angle = angle.multiply((new THREE.Quaternion()).setFromEuler(euler))
+	    // console.log('s', s, 'euler', euler, 'angle', angle, 'frpaw', frpaw)
+	    let k = 0
+	    frpaw.segments[s].pl.forEach(function(n) {
+		frpaw.points[n].forEach(function(p,i) {
+		    // console.log('s', s, 'k', k, 'frpaw', frpaw)
+		    let v = (new THREE.Vector3()).fromArray(frpaw.bases[s],
+			(k++)*3).applyQuaternion(angle)
+		    let d = (new THREE.Vector3()).addVectors(rc, v)
+		    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+		})
+	    })
+	    if(s) {
+		let v = (new THREE.Vector3()).fromArray(frpaw.bases[s], k*3).applyQuaternion(angle)
+		rc = (new THREE.Vector3()).addVectors(rc, v)
+	    }
+	}
+	g.attributes.position.needsUpdate = true
+    },
 }
 
 let loader = new GLTFLoader()
