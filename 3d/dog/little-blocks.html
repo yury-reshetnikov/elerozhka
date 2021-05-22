@@ -84,6 +84,23 @@ function lp_lt_y(g, base, prev) {
     return next
 }
 
+function calc_center(list) {
+    let pos = window.dog.attributes.position.array
+    if(list.length == 0) return
+    else if(list.length == 1) {
+	let a = list[0] * 3
+	return Array.from(pos.slice(a, a + 3))
+    }
+    else {
+	let s = [0,0,0]
+	list.forEach(function(item) {
+	    let a = item * 3
+	    for(let i = 0; i < 3; ++i,++a) s[i] = s[i] + pos[a]
+	})
+	return s.map((v) => v / list.length)
+    }
+}
+
 window.tail = {
     points: [
 	[344],
@@ -187,7 +204,12 @@ window.tail = {
 
 window.frpaw = { //front right paw
     points: [
-	[106, 107, 116],
+	[209, 212, 219],
+    ],
+    segments: [
+	{pl:[0,1,2]}, // pl === points level
+	{pl:[3,4]},
+	{pl:[5,6]},
     ],
     bases: [],
     //delta: 0.2,
@@ -195,49 +217,42 @@ window.frpaw = { //front right paw
 	let g = window.dog
 	let ind = g.index.array
 	let pos = g.attributes.position.array
+	frpaw.points.push(lp(g, frpaw.points[frpaw.points.length-1], []))
+	for(let i = 2; i < 7; ++i)
+	    frpaw.points.push(lp(g, frpaw.points[frpaw.points.length-1],
+				frpaw.points[frpaw.points.length-2]))
 	// считаем bases
+	let centers = frpaw.points.map(calc_center)
+	frpaw.segments[0].rc = centers[3]
+	frpaw.segments[1].rc = [0,1,2].map(function(n) {
+	    return (centers[4][n] + centers[5][n]) / 2 })
+	frpaw.segments[2].rc = [
+	    centers[6][0], centers[6][1] + 0.6, centers[6][2] ]
+	// console.log('frpaw', frpaw, 'centers', centers, 'segments', frpaw.segments)
 	let prev_rc
-	let centers = frpaw.centers()
 	for(let s = 0; s < 2; ++s) {
-	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[s*2]), (new THREE.Vector3()).fromArray(centers[s*2+1]))
-	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
-	    let rc = (new THREE.Vector3()).fromArray(frpaw.rotation_center(centers, s))
+	    let rc = (new THREE.Vector3()).fromArray(frpaw.segments[s].rc)
 	    let bases_points = []
-	    for(let n = 1; n >= 0; --n) {
-		frpaw.points[s*2+n].forEach(function(p) {
-		    let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
+	    frpaw.segments[s].pl.forEach(function(n) {
+		frpaw.points[n].forEach(function(p) {
+		    let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc)
 		    bases_points.push(v.x, v.y, v.z)
 		})
-	    }
+	    })
 	    if(s) {
-		let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
+		let v = (new THREE.Vector3()).subVectors(prev_rc, rc)
 		bases_points.push(v.x, v.y, v.z)
 	    }
 	    frpaw.bases.push(bases_points)
 	    prev_rc = rc
 	}
-	{
-	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
-	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
-	    let rc = (new THREE.Vector3()).fromArray(centers[13])
-	    let bases_points = []
-	    tail.points[12].forEach(function(p) {
-		let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
-		bases_points.push(v.x, v.y, v.z)
-	    })
-	    {   let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
-		bases_points.push(v.x, v.y, v.z)
-	    }
-	    tail.bases.push(bases_points)
-	}
 	frpaw.current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
-    // В следующий раз - разобраться с этим куском кода
 }
 
 let loader = new GLTFLoader()
 loader.load('little-blocks-conv.glb', function(gltf) {
-    console.log(gltf)
+    // console.log(gltf)
     let mesh = gltf.scene.children[0]
     // mesh.scale.set(10, 10, 10)
     let material = new THREE.MeshStandardMaterial({ color: 0x97612f })
@@ -268,9 +283,9 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(267, 6, 3) // нос
     mesh.geometry.addGroup(273, 27, 0)
     mesh.geometry.addGroup(300, 267, 0) // -
-    mesh.geometry.addGroup(567, 21, 1) // часть ноги
+    mesh.geometry.addGroup(567, 21, 0) // часть ноги
     mesh.geometry.addGroup(588, 3, 0) // -
-    mesh.geometry.addGroup(591, 3, 1) // часть ноги
+    mesh.geometry.addGroup(591, 3, 0) // часть ноги
     mesh.geometry.addGroup(594, 36, 0) // -
     mesh.geometry.addGroup(630, 330, 0)
     mesh.geometry.addGroup(960, 660, 0)
@@ -280,12 +295,14 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog = mesh.geometry
     tail.init()
     window.tail = tail
+    window.frpaw.init()
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
     // // нос
     // console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
     // правая передняя нога
+    if(0) {
     // ind[567] == 106
     console.log(ind[567],
 		(new THREE.Vector3()).fromBufferAttribute(g.attributes.position, ind[567]),
@@ -302,7 +319,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	paw.push(next)
 	console.log(next)
     }
-    // В следующий раз подсветить треугольники для каждой пары уровней в paw
+    }
 })
 
 camera.position.set(-4, 0, 14)
