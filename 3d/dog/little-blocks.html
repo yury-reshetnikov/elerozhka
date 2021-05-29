@@ -248,10 +248,10 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog = mesh.geometry
     tail.init()
     window.tail = tail
-    window.frpaw = new Paw(g, [209, 212, 219]) // front right paw
-    window.flpaw = new Paw(g, [176, 178, 186])
-    window.brpaw = new Paw(g, [378, 379, 422]) // back right paw
-    window.blpaw = new Paw(g, [369, 370, 385])
+    window.frpaw = new Paw(mesh.geometry, [209, 212, 219]) // front right paw
+    window.flpaw = new Paw(mesh.geometry, [176, 178, 186])
+    window.brpaw = new Paw(mesh.geometry, [378, 379, 422]) // back right paw
+    window.blpaw = new Paw(mesh.geometry, [369, 370, 385])
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
