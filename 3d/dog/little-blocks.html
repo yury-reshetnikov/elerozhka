@@ -355,7 +355,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     console.log(g.attributes.position.count)
     for(let p = 0; p < g.attributes.position.count; ++p) {
         let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
-        if(v.y <= -6.9) console.log (p, v)
+        if(v.y > -6.86 && v.y < -6.84) console.log (p, v)
     }
     //console.log(g)
 })
