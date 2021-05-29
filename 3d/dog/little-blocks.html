@@ -351,6 +351,13 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	console.log(next)
     }
     }
+    console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 209))
+    console.log(g.attributes.position.count)
+    for(let p = 0; p < g.attributes.position.count; ++p) {
+        let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+        if(v.y <= -6.9) console.log (p, v)
+    }
+    //console.log(g)
 })
 
 camera.position.set(-4, 0, 14)
