@@ -6,6 +6,7 @@
   <script src="https://threejs.org/build/three.js"></script>
   <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
   <script src="three-animate.js"></script>
+  <script src="dog-paw.js"></script>
 </head>
 <body>
   <script type="module">
@@ -202,85 +203,6 @@ window.tail = {
     },
 }
 
-window.frpaw = { //front right paw
-    points: [
-	[209, 212, 219],
-    ],
-    segments: [
-	{pl:[0,1,2]}, // pl === points level
-	{pl:[3,4]},
-	{pl:[5,6]},
-    ],
-    bases: [],
-    //delta: 0.2,
-    init: function() {
-	let g = window.dog
-	let ind = g.index.array
-	let pos = g.attributes.position.array
-	frpaw.points.push(lp(g, frpaw.points[frpaw.points.length-1], []))
-	for(let i = 2; i < 7; ++i)
-	    frpaw.points.push(lp(g, frpaw.points[frpaw.points.length-1],
-				frpaw.points[frpaw.points.length-2]))
-	// считаем bases
-	let centers = frpaw.points.map(calc_center)
-	frpaw.segments[0].rc = centers[3]
-	frpaw.segments[1].rc = [0,1,2].map(function(n) {
-	    return (centers[4][n] + centers[5][n]) / 2 })
-	frpaw.segments[2].rc = [
-	    centers[6][0], centers[6][1] + 0.9, centers[6][2] ]
-	// console.log('frpaw', frpaw, 'centers', centers, 'segments', frpaw.segments)
-	let prev_rc
-	for(let s = 0; s <= 2; ++s) {
-	    let rc = (new THREE.Vector3()).fromArray(frpaw.segments[s].rc)
-	    let bases_points = []
-	    frpaw.segments[s].pl.forEach(function(n) {
-		frpaw.points[n].forEach(function(p) {
-		    let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc)
-		    bases_points.push(v.x, v.y, v.z)
-		})
-	    })
-	    if(s) {
-		let v = (new THREE.Vector3()).subVectors(prev_rc, rc)
-		bases_points.push(v.x, v.y, v.z)
-	    }
-	    frpaw.bases.push(bases_points)
-	    prev_rc = rc
-	}
-	frpaw.current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    },
-    rotate: function() {
-	frpaw.current_angles = [...arguments]
-	let g = window.dog
-	let pos = g.attributes.position.array
-	let angle = new THREE.Quaternion() // +++ TODO учесть текущий поворот корпуса
-	let rc = (new THREE.Vector3()).fromArray(frpaw.segments[2].rc)
-	for(let s = 2; s >= 0; --s) {
-	    let euler = new THREE.Euler(
-		THREE.MathUtils.degToRad(arguments[(2-s)*3]),
-		THREE.MathUtils.degToRad(arguments[(2-s)*3+1]),
-		THREE.MathUtils.degToRad(arguments[(2-s)*3+2]),
-		'XYZ')
-	    angle = angle.multiply((new THREE.Quaternion()).setFromEuler(euler))
-	    // console.log('s', s, 'euler', euler, 'angle', angle, 'frpaw', frpaw)
-	    let k = 0
-	    frpaw.segments[s].pl.forEach(function(n) {
-		frpaw.points[n].forEach(function(p,i) {
-		    // console.log('s', s, 'k', k, 'frpaw', frpaw)
-		    let v = (new THREE.Vector3()).fromArray(frpaw.bases[s],
-			(k++)*3).applyQuaternion(angle)
-		    let d = (new THREE.Vector3()).addVectors(rc, v)
-		    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
-		})
-	    })
-	    if(s) {
-		let v = (new THREE.Vector3()).fromArray(frpaw.bases[s], k*3).applyQuaternion(angle)
-		rc = (new THREE.Vector3()).addVectors(rc, v)
-	    }
-	}
-	g.attributes.position.needsUpdate = true
-    },
-}
-
 let loader = new GLTFLoader()
 loader.load('little-blocks-conv.glb', function(gltf) {
     // console.log(gltf)
@@ -326,7 +248,10 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog = mesh.geometry
     tail.init()
     window.tail = tail
-    window.frpaw.init()
+    window.frpaw = new Paw(g, [209, 212, 219]) // front right paw
+    window.flpaw = new Paw(g, [176, 178, 186])
+    window.brpaw = new Paw(g, [378, 379, 422]) // back right paw
+    window.blpaw = new Paw(g, [369, 370, 385])
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
@@ -350,7 +275,6 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	paw.push(next)
 	console.log(next)
     }
-    }
     console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 209))
     console.log(g.attributes.position.count)
     for(let p = 0; p < g.attributes.position.count; ++p) {
@@ -358,6 +282,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
         if(v.y > -6.86 && v.y < -6.84) console.log (p, v)
     }
     //console.log(g)
+    }
 })
 
 camera.position.set(-4, 0, 14)
