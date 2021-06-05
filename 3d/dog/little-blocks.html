@@ -297,7 +297,7 @@ animate()
 window.frpaw_go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let period = 800
+    let period = 1000
     a.rotate_array_callback(frpaw.rotate,
           [0,0,0,0,0,0,0,0,0],
           [0,0,5,0,0,-15,0,0,10],
@@ -329,11 +329,11 @@ window.frpaw_go = function(tm) {
     a.rotate_array_callback(frpaw.rotate,
           [0,0,-15,0,0,-35,0,0,10],
           [0,0,10,0,0,-55,0,0,10],
-          750, 800, period)
+          750, 900, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,10,0,0,-55,0,0,10],
           [0,0,0,0,0,0,0,0,0],
-          800, 900, period)
+          900, 1100, period)
     a.start()
     return a
 }
