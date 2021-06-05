@@ -294,41 +294,41 @@ function animate() {
 }
 animate()
 
-frpaw.go = function(tm) {
+window.frpaw_go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    a.frpaw(frpaw.rotate,
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,0,0,0,0,0,0,0],
           [0,0,5,0,0,-15,0,0,10],
-          100, 200, 1000)
-    a.frpaw(frpaw.rotate,
+          100, 200, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,5,0,0,-15,0,0,10],
           [0,0,15,0,0,0,0,0,0],
-          200, 300, 1000)
-    a.frpaw(frpaw.rotate,
+          200, 300, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,15,0,0,0,0,0,0],
           [0,0,25,0,0,0,0,0,-25],
-          300, 400, 1000)
-    a.frpaw(frpaw.rotate,
+          300, 400, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,25,0,0,0,0,0,-25],
           [0,0,15,0,0,-15,0,0,0],
-          400, 500, 1000)
-    a.frpaw(frpaw.rotate,
+          400, 500, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,15,0,0,-15,0,0,0],
           [0,0,5,0,0,-25,0,0,10],
-          500, 600, 1000)
-    a.frpaw(frpaw.rotate,
+          500, 600, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,5,0,0,-25,0,0,10],
           [0,0,0,0,0,-35,0,0,10],
-          600, 700, 1000)
-    a.frpaw(frpaw.rotate,
+          600, 700, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,0,0,0,-35,0,0,10],
           [0,0,-15,0,0,-35,0,0,10],
-          700, 800, 1000)
-    a.frpaw(frpaw.rotate,
+          700, 800, 800)
+    a.rotate_array_callback(frpaw.rotate,
           [0,0,-15,0,0,-35,0,0,10],
           [0,0,10,0,0,-55,0,0,10],
-          800, 900, 1000)
+          800, 900, 800)
     a.start()
     return a
 }
@@ -555,19 +555,19 @@ tail.rotate = function() {
 tail.wag = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    a.tail(tail.rotate,
+    a.rotate_array_callback(tail.rotate,
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
 	   100, 300, 800)
-    a.tail(tail.rotate,
+    a.rotate_array_callback(tail.rotate,
 	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   300, 500, 800)
-    a.tail(tail.rotate,
+    a.rotate_array_callback(tail.rotate,
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
 	   500, 700, 800)
-    a.tail(tail.rotate,
+    a.rotate_array_callback(tail.rotate,
 	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
 	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
 	   700, 900, 800)
@@ -577,7 +577,7 @@ tail.wag = function(tm) {
 
 tail.to_basic = function(duration) {
     let a = new Animate4
-    a.tail(tail.rotate,
+    a.rotate_array_callback(tail.rotate,
         tail.current_angles,
         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
         0, duration)
@@ -587,7 +587,7 @@ tail.to_basic = function(duration) {
 
 tail.to_down = function(duration) {
     let a = new Animate4
-    a.tail(tail.rotate,
+    a.rotate_array_callback(tail.rotate,
         tail.current_angles,
         [0,90,0,20,0,30,0,30,0,30,0,30,0,10],
         0, duration)

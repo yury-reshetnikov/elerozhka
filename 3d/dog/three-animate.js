@@ -43,7 +43,7 @@ function Animate4() {
 	    }
 	}
     }
-    function Tail(callback, angle_from, angle_to, time_from, time_to, time_period) {
+    function RotateArrayCallback(callback, angle_from, angle_to, time_from, time_to, time_period) {
 	this.init = function(time_from, time_to) {
 	    this.draw = gen_draw(time_from, time_to, this, function(k) {
 		let a = []
@@ -62,8 +62,8 @@ function Animate4() {
 	    }
 	else this.finish = function() {}
     }
-    this.tail = function(callback, angle_from, angle_to, time_from, time_to, time_period) {
-        actions.push(new Tail(callback, angle_from, angle_to, time_from, time_to, time_period))
+    this.rotate_array_callback = function(callback, angle_from, angle_to, time_from, time_to, time_period) {
+        actions.push(new RotateArrayCallback(callback, angle_from, angle_to, time_from, time_to, time_period))
     }
 
 }
