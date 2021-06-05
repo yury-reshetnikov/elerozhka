@@ -297,43 +297,43 @@ animate()
 window.frpaw_go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let period = 900
+    let period = 800
     a.rotate_array_callback(frpaw.rotate,
           [0,0,0,0,0,0,0,0,0],
           [0,0,5,0,0,-15,0,0,10],
-          100, 200, period)
+          100, 150, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,5,0,0,-15,0,0,10],
           [0,0,15,0,0,0,0,0,0],
-          200, 300, period)
+          150, 250, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,15,0,0,0,0,0,0],
           [0,0,25,0,0,0,0,0,-25],
-          300, 400, period)
+          250, 350, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,25,0,0,0,0,0,-25],
           [0,0,15,0,0,-15,0,0,0],
-          400, 500, period)
+          350, 450, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,15,0,0,-15,0,0,0],
           [0,0,5,0,0,-25,0,0,10],
-          500, 600, period)
+          450, 550, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,5,0,0,-25,0,0,10],
           [0,0,0,0,0,-35,0,0,10],
-          600, 700, period)
+          550, 600, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,0,0,0,-35,0,0,10],
           [0,0,-15,0,0,-35,0,0,10],
-          700, 800, period)
+          600, 750, period)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,-15,0,0,-35,0,0,10],
           [0,0,10,0,0,-55,0,0,10],
+          750, 800, period)
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,10,0,0,-55,0,0,10],
+          [0,0,0,0,0,0,0,0,0],
           800, 900, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,10,0,0,-55,0,0,10],
-          [0,0,0,0,0,0,0,0,0],
-          900, 1000, period)
     a.start()
     return a
 }
