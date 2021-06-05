@@ -68,6 +68,7 @@ function Paw(g, foot_points) {
 	prev_rc = rc
     }
     let current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    this.current_angles = function() { return current_angles }
     this.rotate = function() {
 	current_angles = [...arguments]
 	let angle = new THREE.Quaternion() // +++ TODO учесть текущий поворот корпуса

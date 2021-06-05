@@ -294,48 +294,80 @@ function animate() {
 }
 animate()
 
-window.frpaw_go = function(tm) {
+window.go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let period = 1000
-    a.rotate_array_callback(frpaw.rotate,
+    let period = 900
+    let one = function(paw) {
+    a.rotate_array_callback(paw.rotate,
           [0,0,0,0,0,0,0,0,0],
-          [0,0,5,0,0,-15,0,0,10],
-          100, 150, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,5,0,0,-15,0,0,10],
-          [0,0,15,0,0,0,0,0,0],
-          150, 250, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,15,0,0,0,0,0,0],
+          [0,0,10,0,0,-35,0,0,20],
+          100, 200)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,10,0,0,-35,0,0,20],
+          [0,0,20,0,0,-55,0,0,20],
+          200, 300)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,20,0,0,-55,0,0,20],
           [0,0,25,0,0,0,0,0,-25],
-          250, 350, period)
-    a.rotate_array_callback(frpaw.rotate,
+          300, 500, period)
+    a.rotate_array_callback(paw.rotate,
           [0,0,25,0,0,0,0,0,-25],
-          [0,0,15,0,0,-15,0,0,0],
-          350, 450, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,15,0,0,-15,0,0,0],
-          [0,0,5,0,0,-25,0,0,10],
-          450, 550, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,5,0,0,-25,0,0,10],
-          [0,0,0,0,0,-35,0,0,10],
-          550, 600, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,0,0,0,-35,0,0,10],
-          [0,0,-15,0,0,-35,0,0,10],
-          600, 750, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,-15,0,0,-35,0,0,10],
-          [0,0,10,0,0,-55,0,0,10],
-          750, 900, period)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,10,0,0,-55,0,0,10],
           [0,0,0,0,0,0,0,0,0],
-          900, 1100, period)
+          500, 700, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-25,0,0,0,0,0,15],
+          700, 900, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,-25,0,0,0,0,0,15],
+          [0,0,0,0,0,-55,0,0,20],
+          900, 1000, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,-55,0,0,20],
+          [0,0,20,0,0,-55,0,0,20],
+	  1000, 1200, period)
+    }
+    let two = function(paw) {
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-25,0,0,0,0,0,15],
+          300, 500, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,-25,0,0,0,0,0,15],
+          [0,0,0,0,0,-55,0,0,20],
+          500, 600, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,-55,0,0,20],
+          [0,0,20,0,0,-55,0,0,20],
+	  600, 800, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,20,0,0,-55,0,0,20],
+          [0,0,25,0,0,0,0,0,-25],
+          800, 1000, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,25,0,0,0,0,0,-25],
+          [0,0,0,0,0,0,0,0,0],
+          1000, 1200, period)
+    }
+    one(frpaw)
+    one(blpaw)
+    two(flpaw)
+    two(brpaw)
     a.start()
     return a
+}
+
+window.stop = function(a) {
+    a.exit_now = true
+    let b = new Animate4;
+    [frpaw,flpaw,brpaw,blpaw].forEach(function(paw) {
+	b.rotate_array_callback(paw.rotate,
+				[...paw.current_angles()],
+				[0,0,0,0,0,0,0,0,0],
+				0, 200)
+    })
+    b.start()
 }
 
 window.correct_tail = function() {
