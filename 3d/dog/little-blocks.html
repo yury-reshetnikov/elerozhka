@@ -286,9 +286,10 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 })
 
 loader.load('tile.glb', function(gltf) {
-    console.log(gltf)
-    let mesh = gltf.scene.children[0]
-    let material = new THREE.MeshStandardMaterial({ color: 0x202020 })
+    let mesh = gltf.scene.children[1]
+    let material = new THREE.MeshStandardMaterial({ color: 0x404030 })
+    mesh.material = material
+    mesh.position.set(0,-7,0)
     scene.add(mesh)
 })
 
