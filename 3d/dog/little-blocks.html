@@ -285,6 +285,13 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
 })
 
+loader.load('tile.glb', function(gltf) {
+    console.log(gltf)
+    let mesh = gltf.scene.children[0]
+    let material = new THREE.MeshStandardMaterial({ color: 0x202020 })
+    scene.add(mesh)
+}
+
 camera.position.set(-4, 0, 14)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
 
