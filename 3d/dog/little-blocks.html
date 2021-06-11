@@ -289,8 +289,15 @@ loader.load('tile.glb', function(gltf) {
     let mesh = gltf.scene.children[1]
     let material = new THREE.MeshStandardMaterial({ color: 0x404030 })
     mesh.material = material
-    mesh.position.set(0,-7,0)
-    scene.add(mesh)
+    mesh.receiveShadow = true
+    // mesh.position.set(0,-7,0)
+    // scene.add(mesh)
+    let mesh1 = mesh.clone()
+    mesh1.position.set(0,-7,0)
+    scene.add(mesh1)
+    let mesh2 = mesh.clone()
+    mesh2.position.set(3.4,-7,0)
+    scene.add(mesh2)
 })
 
 camera.position.set(-4, 0, 14)
