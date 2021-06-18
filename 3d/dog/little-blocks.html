@@ -213,6 +213,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_black = new THREE.MeshStandardMaterial({ color: 0x000000 })
     let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x190707 })
     mesh.material = [material, material_red, material_black, material_almostblack]
+    mesh.castShadow = true
     mesh.geometry.addGroup(0, 54, 0)
     mesh.geometry.addGroup(54, 12, 3) // левый глаз
     mesh.geometry.addGroup(66, 30, 0)
@@ -287,8 +288,9 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 
 loader.load('tile.glb', function(gltf) {
     let mesh = gltf.scene.children[1]
-    let material = new THREE.MeshStandardMaterial({ color: 0x404030 })
+    let material = new THREE.MeshStandardMaterial({ color: 0x404030 /*map: loader.load('../elerozhka/3d/dog/texture.jpg')*/})
     mesh.material = material
+    //let texture = loader.load('../elerozhka/3d/dog/texture.jpg')
     mesh.receiveShadow = true
     // mesh.position.set(0,-7,0)
     // scene.add(mesh)
