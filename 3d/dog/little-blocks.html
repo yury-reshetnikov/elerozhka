@@ -286,9 +286,12 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
 })
 
+let loadManager = new THREE.LoadingManager()
+let texture_loader = new THREE.TextureLoader(loadManager)
+
 loader.load('tile.glb', function(gltf) {
     let mesh = gltf.scene.children[1]
-    let material = new THREE.MeshStandardMaterial({ color: 0x404030 /*map: loader.load('../elerozhka/3d/dog/texture.jpg')*/})
+    let material = new THREE.MeshStandardMaterial({/* color: 0x404030,*/ map: texture_loader.load('texture.jpg')})
     mesh.material = material
     //let texture = loader.load('../elerozhka/3d/dog/texture.jpg')
     mesh.receiveShadow = true
