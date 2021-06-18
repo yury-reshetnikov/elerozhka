@@ -247,6 +247,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(1644, 960, 0)
     scene.add(mesh)
     window.dog = mesh.geometry
+    window.dog_mesh = mesh
     tail.init()
     window.tail = tail
     window.frpaw = new Paw(mesh.geometry, [209, 212, 219]) // front right paw
@@ -321,6 +322,11 @@ function animate() {
 }
 animate()
 
+let tile_delta_x = 0
+function dog_updown(y) {
+    dog_mesh.position.y = y
+}
+
 window.go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
@@ -385,17 +391,20 @@ window.go = function(tm) {
     let tile_period = 417.68
     a.rotate_array_callback(function(x) {
         tiles.forEach(function(tile) {
-            tile.m.position.x = tile.x - x
+            tile.m.position.x = tile.x + tile_delta_x - x
         })
     },
     [0], [3.42], tile_start, tile_start + tile_period, tile_period
     )
+    a.rotate_array_callback(dog_updown, [0], [-0.4], 300, 550, 500)
+    a.rotate_array_callback(dog_updown, [-0.4], [0], 550, 800, 500)
     a.start()
     return a
 }
 
 window.stop = function(a) {
     a.exit_now = true
+    tile_delta_x = tiles[0].m.position.x - tiles[0].x
     let b = new Animate4;
     [frpaw,flpaw,brpaw,blpaw].forEach(function(paw) {
 	b.rotate_array_callback(paw.rotate,
@@ -403,6 +412,7 @@ window.stop = function(a) {
 				[0,0,0,0,0,0,0,0,0],
 				0, 200)
     })
+    b.rotate_array_callback(dog_updown, [dog_mesh.position.y], [0], 0, 200)
     b.start()
 }
 
