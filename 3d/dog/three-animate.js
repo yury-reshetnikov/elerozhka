@@ -11,8 +11,7 @@ function Animate4() {
 	if(this.time_modifier) t *= this.time_modifier
 	if(this.exit_now || (this.exit_time && t > this.exit_time)) return
 	actions.forEach(function(item) {
-	    if(item.draw(t)) ++count
-	    else item.finish()
+	    if(item.draw(t) || !item.finish()) ++count
 	})
 	if(count)
 	    requestAnimationFrame(this.draw.bind(this))
@@ -59,8 +58,9 @@ function Animate4() {
 		time_from += time_period
 		time_to += time_period
 		this.init(time_from, time_to)
+		return false
 	    }
-	else this.finish = function() {}
+	else this.finish = function() { return true }
     }
     this.rotate_array_callback = function(callback, angle_from, angle_to, time_from, time_to, time_period) {
         actions.push(new RotateArrayCallback(callback, angle_from, angle_to, time_from, time_to, time_period))
