@@ -289,6 +289,8 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 let loadManager = new THREE.LoadingManager()
 let texture_loader = new THREE.TextureLoader(loadManager)
 
+let tiles = []
+
 loader.load('tile.glb', function(gltf) {
     let mesh = gltf.scene.children[1]
     let material = new THREE.MeshStandardMaterial({/* color: 0x404030,*/ map: texture_loader.load('texture.jpg')})
@@ -302,9 +304,11 @@ loader.load('tile.glb', function(gltf) {
 	    let mesh1 = mesh.clone()
 	    mesh1.position.set(x * 3.42, -7, y * 2 * 1.666)
 	    scene.add(mesh1)
+	    tiles.push({x: mesh1.position.x, y: mesh1.position.y, z: mesh1.position.z, m: mesh1})
 	    let mesh2 = mesh.clone()
 	    mesh2.position.set(x * 3.42 + 1.71, -7, (y * 2 + 1) * 1.666)
 	    scene.add(mesh2)
+	    tiles.push({x: mesh2.position.x, y: mesh2.position.y, z: mesh2.position.z, m: mesh2})
 	}
 })
 
@@ -377,6 +381,13 @@ window.go = function(tm) {
     one(blpaw)
     two(flpaw)
     two(brpaw)
+    a.rotate_array_callback(function(x) {
+        tiles.forEach(function(tile) {
+            tile.m.position.x = tile.x - x
+        })
+    },
+    [0], [3.42], 100, 500, 400
+    )
     a.start()
     return a
 }
