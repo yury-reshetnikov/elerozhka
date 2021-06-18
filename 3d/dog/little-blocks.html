@@ -324,7 +324,7 @@ animate()
 window.go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let period = 900
+    let period = 1000
     let one = function(paw) {
     a.rotate_array_callback(paw.rotate,
           [0,0,0,0,0,0,0,0,0],
@@ -341,52 +341,54 @@ window.go = function(tm) {
     a.rotate_array_callback(paw.rotate,
           [0,0,25,0,0,0,0,0,-25],
           [0,0,0,0,0,0,0,0,0],
-          500, 700, period)
+          500, 750, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,0,0,0,0,0,0,0],
           [0,0,-25,0,0,0,0,0,15],
-          700, 900, period)
+          750, 1000, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,-25,0,0,0,0,0,15],
           [0,0,0,0,0,-55,0,0,20],
-          900, 1000, period)
+          1000, 1100, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,0,0,0,-55,0,0,20],
           [0,0,20,0,0,-55,0,0,20],
-	  1000, 1200, period)
+	  1100, 1300, period)
     }
     let two = function(paw) {
     a.rotate_array_callback(paw.rotate,
           [0,0,0,0,0,0,0,0,0],
           [0,0,-25,0,0,0,0,0,15],
-          300, 500, period)
+          300, 550, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,-25,0,0,0,0,0,15],
           [0,0,0,0,0,-55,0,0,20],
-          500, 600, period)
+          550, 650, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,0,0,0,-55,0,0,20],
           [0,0,20,0,0,-55,0,0,20],
-	  600, 800, period)
+	  650, 850, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,20,0,0,-55,0,0,20],
           [0,0,25,0,0,0,0,0,-25],
-          800, 1000, period)
+          850, 1050, period)
     a.rotate_array_callback(paw.rotate,
           [0,0,25,0,0,0,0,0,-25],
           [0,0,0,0,0,0,0,0,0],
-          1000, 1200, period)
+          1050, 1300, period)
     }
     one(frpaw)
     one(blpaw)
     two(flpaw)
     two(brpaw)
+    let tile_start = 300
+    let tile_period = 417.68
     a.rotate_array_callback(function(x) {
         tiles.forEach(function(tile) {
             tile.m.position.x = tile.x - x
         })
     },
-    [0], [3.42], 100, 500, 400
+    [0], [3.42], tile_start, tile_start + tile_period, tile_period
     )
     a.start()
     return a
