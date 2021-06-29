@@ -400,13 +400,13 @@ window.go = function(tm) {
     a.rotate_array_callback(dog_updown, [-0.4], [0], 550, 800, 500)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
                                          [0,8,0,-9,0,-25,0,-20,0,-45,0,-35,0,-20],
-                                         400, 500, 500)
+                                         300, 400, 500)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-35,0,-20],
                                          [0,8,0,-9,0,-25,0,-20,0,-45,0,-55,0,-40],
-                                         500, 700, 500)
+                                         400, 600, 500)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-55,0,-40],
                                          [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
-                                         700, 900, 500)
+                                         600, 800, 500)
     a.start()
     return a
 }
@@ -422,6 +422,10 @@ window.stop = function(a) {
 				0, 200)
     })
     b.rotate_array_callback(dog_updown, [dog_mesh.position.y], [0], 0, 200)
+    b.rotate_array_callback(tail.rotate,
+        tail.current_angles,
+        [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+        0, 200)
     b.start()
 }
 
