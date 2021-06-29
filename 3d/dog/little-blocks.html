@@ -684,10 +684,13 @@ window.go_stop_button_click = function() {
 	stop(go_animate)
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
+	if(!tail_wag)
+	    document.getElementById('stop_all_par').style.display = 'none'
     }
     else {
 	go_animate = go()
 	document.getElementById('go_stop_button').textContent = 'Стой!'
+	document.getElementById('stop_all_par').style.display = ''
     }
 }
 
@@ -698,19 +701,29 @@ window.tail_wag_button_click = function() {
 	tail.to_basic(100)
         document.getElementById('tail_wag_button').textContent = ':)'
         tail_wag = undefined
+	if(!go_animate)
+	    document.getElementById('stop_all_par').style.display = 'none'
     }
     else {
         tail_wag = tail.wag()
         document.getElementById('tail_wag_button').textContent = ':|'
+	document.getElementById('stop_all_par').style.display = ''
     }
 }
 
 window.stop_all_button_click = function() {
-    stop(go_animate)
-    tail_wag.exit_now = true
-    tail.to_basic(100)
-    document.getElementById('go_stop_button').textContent = 'Пойдём!'
-    document.getElementById('tail_wag_button').textContent = ':)'
+    document.getElementById('stop_all_par').style.display = 'none'
+    if(go_animate) {
+	stop(go_animate)
+	document.getElementById('go_stop_button').textContent = 'Пойдём!'
+	go_animate = undefined
+    }
+    if(tail_wag) {
+	tail_wag.exit_now = true
+	tail.to_basic(100)
+	document.getElementById('tail_wag_button').textContent = ':)'
+        tail_wag = undefined
+    }
 }
 
   </script>
@@ -718,7 +731,7 @@ window.stop_all_button_click = function() {
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
   <!-- <input type="button" value="Пошли!" /> -->
     <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
-    <p><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
+    <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
   </div>
 </body>
 </html>
