@@ -678,6 +678,7 @@ tail.to_down = function(duration) {
     return a
 }
 
+window.animate_speed = 1
 let go_animate
 window.go_stop_button_click = function() {
     if(go_animate) {
@@ -688,7 +689,7 @@ window.go_stop_button_click = function() {
 	    document.getElementById('stop_all_par').style.display = 'none'
     }
     else {
-	go_animate = go()
+	go_animate = go(window.animate_speed)
 	document.getElementById('go_stop_button').textContent = 'Стой!'
 	document.getElementById('stop_all_par').style.display = ''
     }
@@ -705,7 +706,7 @@ window.tail_wag_button_click = function() {
 	    document.getElementById('stop_all_par').style.display = 'none'
     }
     else {
-        tail_wag = tail.wag()
+        tail_wag = tail.wag(window.animate_speed)
         document.getElementById('tail_wag_button').textContent = ':|'
 	document.getElementById('stop_all_par').style.display = ''
     }
