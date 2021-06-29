@@ -694,7 +694,8 @@ window.go_stop_button_click = function() {
 let tail_wag
 window.tail_wag_button_click = function() {
     if(tail_wag) {
-        exit_now(tail_wag)
+	tail_wag.exit_now = true
+	tail.to_basic(100)
         document.getElementById('tail_wag_button').textContent = ':)'
         tail_wag = undefined
     }
@@ -706,9 +707,9 @@ window.tail_wag_button_click = function() {
 
   </script>
   <div align="center" style="position:absolute;right:10px">
-    <p><button id="go_stop_button" onclick="go_stop_button_click()">Пошли!</button></p>
+    <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
   <!-- <input type="button" value="Пошли!" /> -->
-    <p><button id="tail_wag_button" onclick="tail_wag_button_click">:)</button></p>
+    <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
   </div>
 </body>
 </html>
