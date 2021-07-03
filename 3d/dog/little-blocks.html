@@ -651,66 +651,31 @@ tail.rotate = function() {
 tail.wag = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    a.rotate_array_callback(tail.rotate,
-	   [ 0,8, 0, -9, 0,-25, 0,-20, 0,-45, 0,-45, 0,-30],
-	   [2.5,8, 5,-9,2.5,-25,7.5,-20, 5,-45,10,-45,10,-30],
-	   100, 150, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [2.5,8, 5,-9,2.5,-25,7.5,-20, 5,-45,10,-45,10,-30],
-	   [ 5,8,10, -9, 5,-25,15,-20,10,-45,20,-45,20,-30],
-	   150, 200, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [ 5,8,10, -9, 5,-25,15,-20,10,-45,20,-45,20,-30],
-	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
-	   200, 300, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [ 10,0,20,  -10, 10,   -10, 30,-20,20,   -20,40,   -20,40,-10],
+    let base    = [  0,8, 0, -9,  0,-25,  0,-20, 0,-45, 0,-45, 0,-30]
+    let quarter = [2.5,8, 5, -9,2.5,-25,7.5,-20, 5,-45,10,-40,10,-27]
 	   // [2.5,6, 5,-9.25,2.5,-21.25,7.5,-20, 5,-38.75,10,-38.75,10,-25],
-	   [ 5,8,10, -9, 5,-25,15,-20,10,-45,20,-45,20,-30],
-	   300, 400, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [ 5,8,10, -9, 5,-25,15,-20,10,-45,20,-45,20,-30],
-	   [2.5,8, 5,-9,2.5,-25,7.5,-20, 5,-45,10,-45,10,-30],
-	   400, 450, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [2.5,8, 5,-9,2.5,-25,7.5,-20, 5,-45,10,-45,10,-30],
-	   [  0,8, 0,-9,  0,-25,  0,-20, 0,-45, 0,-45, 0,-30],
-	   450, 500, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [ 0,8,  0,-9, 0,-25,  0,-20,  0,-45,  0,-45,  0,-30],
-	   [-2.5,8, -5,-9,-2.5,-25,-7.5,-20, -5,-45,-10,-45,-10,-30],
-	   500, 550, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [-2.5,8, -5,-9,-2.5,-25,-7.5,-20, -5,-45,-10,-45,-10,-30],
-	   [-5,8,-10,-9,-5,-25,-15,-20,-10,-45,-20,-45,-20,-30],
-	   550, 600, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [-5,8,-10,-9,-5,-25,-15,-20,-10,-45,-20,-45,-20,-30],
-	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
-	   600, 700, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
-	   [-5,8,-10,-9,-5,-25,-15,-20,-10,-45,-20,-45,-20,-30],
-	   700, 800, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [-5,8,-10,-9,-5,-25,-15,-20,-10,-45,-20,-45,-20,-30],
-	   [-2.5,8, -5,-9,-2.5,-25,-7.5,-20, -5,-45,-10,-45,-10,-30],
-	   800, 850, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [-2.5,8, -5,-9,-2.5,-25,-7.5,-20, -5,-45,-10,-45,-10,-30],
-	   [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
-	   850, 900, 800)
-/*
-	   100, 300)
-    a.rotate_array_callback(tail.rotate,
-	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
-	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
-	   300, 700, 800)
-    a.rotate_array_callback(tail.rotate,
-	   [-10,0,-20,-10,-10,-10,-30,-20,-20,-20,-40,-20,-40,-10],
-	   [10,0,20,-10,10,-10,30,-20,20,-20,40,-20,40,-10],
-	   700, 1100, 800)
-*/
+    let half    = [  5,8,10, -9,  5,-25, 15,-20,10,-45,20,-30,20,-20]
+    let full    = [ 10,0,20,-10, 10,-10, 30,-20,20,-20,40,-20,40,-10]
+    function neg(a) {
+	a = [...a]
+	for(let i = 0; i < a.length; i += 2) a[i] = -a[i]
+	return a
+    }
+    a.rotate_array_callback(tail.rotate, base, quarter, 100, 150, 800)
+    a.rotate_array_callback(tail.rotate, quarter, half, 150, 200, 800)
+    a.rotate_array_callback(tail.rotate, half, full, 200, 300, 800)
+    a.rotate_array_callback(tail.rotate, full, half, 300, 400, 800)
+    a.rotate_array_callback(tail.rotate, half, quarter, 400, 450, 800)
+    a.rotate_array_callback(tail.rotate, quarter, base, 450, 500, 800)
+    quarter = neg(quarter)
+    half = neg(half)
+    full = neg(full)
+    a.rotate_array_callback(tail.rotate, base, quarter, 500, 550, 800)
+    a.rotate_array_callback(tail.rotate, quarter, half, 550, 600, 800)
+    a.rotate_array_callback(tail.rotate, half, full, 600, 700, 800)
+    a.rotate_array_callback(tail.rotate, full, half, 700, 800, 800)
+    a.rotate_array_callback(tail.rotate, half, quarter, 800, 850, 800)
+    a.rotate_array_callback(tail.rotate, quarter, base, 850, 900, 800)
     a.start()
     return a
 }
