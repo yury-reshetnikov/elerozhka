@@ -85,6 +85,30 @@ function lp_lt_y(g, base, prev) {
     return next
 }
 
+function range(start, length) {
+    return Array.from({length:length},(v,k)=>start+k)
+}
+function ri(ind, start, length) { // Range Index
+    return range(start, length).map(i=>ind[i])
+}
+function rp(exclude, ind) { // Range points
+    let res1 = []
+    for(let i = 1; i < arguments.length; ) {
+	let start = arguments[++i]
+	let length = arguments[++i]
+	res1.push(ri(ind, start, length))
+    }
+    res1 = res1.flat()
+    res1.sort((a,b)=>a-b)
+    let res = []
+    res1.forEach(function(v) {
+	if(!res.length || res[res.length-1] != v)
+	    if(!exclude.includes(v))
+		res.push(v)
+    })
+    return res
+}
+
 function calc_center(list) {
     let pos = window.dog.attributes.position.array
     if(list.length == 0) return
@@ -283,6 +307,18 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     // 1362, 3 // попа
     // 1374, 51 // попа
     // 1449, 51 // попа
+    // console.log(ri(ind, 1350, 9))
+    console.log(rp([window.tail.points[13],
+		    window.brpaw.get_points()[6],
+		    window.blpaw.get_points()[6],
+		   ].flat(), ind,
+		   351, 33, 606, 27, // цилиндр тела
+		   1248, 90, // попа
+		   1350, 9, // попа
+		   1362, 3, // попа
+		   1374, 51, // попа
+		   1449, 51, // попа
+		  ))
 
     if(0) {
     // ind[567] == 106
