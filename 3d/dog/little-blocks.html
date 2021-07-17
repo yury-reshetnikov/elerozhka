@@ -297,7 +297,8 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     // правая передняя нога
 
     // console.log(ri(ind, 1350, 9))
-    console.log(rp([window.tail.points[13],
+    if(0) {
+        console.log(rp([window.tail.points[13],
 		    window.brpaw.get_points()[6],
 		    window.blpaw.get_points()[6],
 		   ].flat(), ind,
@@ -308,6 +309,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 		   1374, 51, // попа
 		   1449, 51, // попа
 		  ))
+    }
 
     if(0) {
     // ind[567] == 106
@@ -338,7 +340,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 
 window.body = {
     points: [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 119, 120, 121, 122, 232, 233, 234, 235, 236, 237, 238, 239, 240, 242, 256, 257, 260, 261, 262, 263],
-    let body_center = new THREE.Vector3(0.65, -0.6, 0)
+    center: new THREE.Vector3(0.65, -0.6, 0)
 }
 
 let loadManager = new THREE.LoadingManager()
