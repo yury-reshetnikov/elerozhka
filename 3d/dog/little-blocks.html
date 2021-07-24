@@ -351,6 +351,12 @@ window.body = {
             let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), body.center)
             body.bases.push(v.x, v.y, v.z)
         })
+	function paw_bases(paw) {
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(paw.get_base_rotation_center()), body.center)
+            return [v.x, v.y, v.z]
+	}
+	body.brpaw_bases = paw_bases(brpaw)
+	body.blpaw_bases = paw_bases(blpaw)
     },
     rotate: function(angle_z) {
 	let g = window.dog
@@ -361,6 +367,16 @@ window.body = {
 	    let d = (new THREE.Vector3()).addVectors(body.center, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
+	function paw_center(paw, bases) {
+	    let v = (new THREE.Vector3()).fromArray(bases).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(body.center, v)
+	    let rc = paw.get_base_rotation_center()
+	    rc[0] = d.x
+	    rc[1] = d.y
+	    rc[2] = d.z
+	}
+	paw_center(brpaw, body.brpaw_bases)
+	paw_center(blpaw, body.blpaw_bases)
         g.attributes.position.needsUpdate = true
     },
 }
