@@ -341,49 +341,26 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 window.body = {
     points: [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 119, 120, 121, 122, 232, 233, 234, 235, 236, 237, 238, 239, 240, 242, 256, 257, 260, 261, 262, 263],
     center: new THREE.Vector3(0.65, -0.6, 0),
+    bases: [],
+    current_angle: 0,
     init: function() {
-	let g = window.body
-	let ind = g.index.array
-	let pos = g.attributes.position.array
-	/*
-	function lp(base, prev) { // linked points
-	    let next = []
-	    for(let t = 0; t < g.index.count; t = t + 3) {
-		if(base.includes(ind[t]) || base.includes(ind[t+1]) || base.includes(ind[t+2]))
-		    for(let i = t; i < t + 3; ++i) {
-			let p = ind[i]
-			if(!base.includes(p) && !prev.includes(p) && !next.includes(p))
-			    next.push(p)
-		    }
-	    }
-	    next.sort((a,b)=>a-b)
-	    return next
-	}
-	body.points.push(lp(body.points[body.points.length-1], []))
-	for(let i = 2; i < 14; ++i)
-	    body.points.push(lp(body.points[body.points.length-1],
-				body.points[body.points.length-2]))
-	// bases[6]
-	{
-	    let cur = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(centers[12]), (new THREE.Vector3()).fromArray(centers[13]))
-	    let angle = (new THREE.Quaternion()).setFromUnitVectors(new THREE.Vector3(1,0,0), cur.normalize()).conjugate()
-	    let rc = (new THREE.Vector3()).fromArray(centers[13])
-	    let bases_points = []
-	    body.points[12].forEach(function(p) {
-		let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), rc).applyQuaternion(angle)
-		bases_points.push(v.x, v.y, v.z)
-	    })
-	    {   let v = (new THREE.Vector3()).subVectors(prev_rc, rc).applyQuaternion(angle)
-		bases_points.push(v.x, v.y, v.z)
-	    }
-	    body.bases.push(bases_points)
-	}
-	body.current_angles =
+	let g = window.dog
+        body.points.forEach(function(p) {
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), body.center)
+            body.bases.push(v.x, v.y, v.z)
+        })
     },
-        */
-    //rotate: function() {
-
-    //}
+    rotate: function(angle_z) {
+	let g = window.dog
+        body.current_angle = angle_z
+        let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
+	body.points.forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(body.bases, i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(rc, v)
+	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	})
+        g.attributes.position.needsUpdate = true
+    },
 }
 
 let loadManager = new THREE.LoadingManager()
