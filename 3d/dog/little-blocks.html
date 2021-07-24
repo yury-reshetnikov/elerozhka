@@ -356,7 +356,7 @@ window.body = {
         let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
 	body.points.forEach(function(p,i) {
 	    let v = (new THREE.Vector3()).fromArray(body.bases, i*3).applyQuaternion(angle)
-	    let d = (new THREE.Vector3()).addVectors(rc, v)
+	    let d = (new THREE.Vector3()).addVectors(body.center, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
         g.attributes.position.needsUpdate = true
