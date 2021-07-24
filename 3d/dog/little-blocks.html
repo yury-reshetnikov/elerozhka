@@ -284,12 +284,12 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog = mesh.geometry
     window.dog_mesh = mesh
     tail.init()
-    body.init()
     window.tail = tail
     window.frpaw = new Paw(mesh.geometry, [209, 212, 219]) // front right paw
     window.flpaw = new Paw(mesh.geometry, [176, 178, 186])
     window.brpaw = new Paw(mesh.geometry, [378, 379, 422]) // back right paw
     window.blpaw = new Paw(mesh.geometry, [369, 370, 385])
+    body.init()
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
@@ -346,6 +346,7 @@ window.body = {
     current_angle: 0,
     init: function() {
 	let g = window.dog
+	body.points = body.points.concat(tail.points.flat()).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat())
         body.points.forEach(function(p) {
             let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), body.center)
             body.bases.push(v.x, v.y, v.z)
