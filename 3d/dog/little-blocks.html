@@ -128,7 +128,7 @@ function calc_center(list) {
 
 window.tail = {
     points: [
-	[344],
+	[342],
     ],
     bases: [], // 0..6
     delta: 0.2,
@@ -312,10 +312,15 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 		   1449, 51, // попа
 		  ))
     }
-    // console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 235))
+    console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 342))
     if(0) rare.points.forEach(function(p) {
 	let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
 	if(v.x <= -5.29 && v.x >= -5.31 && v.y >= 0.69) console.log('p', p, 'v', v)
+    })
+    // console.log(tail.points)
+    if(0) tail.points[1].forEach(function(p) {
+	let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+	console.log(p, v.x)
     })
 
     if(0) {
