@@ -312,6 +312,11 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 		   1449, 51, // попа
 		  ))
     }
+    // console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 235))
+    if(0) rare.points.forEach(function(p) {
+	let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+	if(v.x <= -5.29 && v.x >= -5.31 && v.y >= 0.69) console.log('p', p, 'v', v)
+    })
 
     if(0) {
     // ind[567] == 106
@@ -341,6 +346,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 })
 
 function Rare() {
+    // 235, 240, 256 - спина попы
     this.points = [232, 233, 234, 235, 236, 237, 238, 239, 240, 242, 256, 257, 260, 261, 262, 263]
     let center = new THREE.Vector3(-4, -0.3, 0) // -5.5, -0.4, 0
     let bases
