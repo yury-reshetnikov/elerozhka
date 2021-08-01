@@ -342,9 +342,30 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 
 function Rare() {
     this.points = [232, 233, 234, 235, 236, 237, 238, 239, 240, 242, 256, 257, 260, 261, 262, 263]
-    this.center = new THREE.Vector3(-5.5, -0.4, 0)
-    this.bases = []
+    let center = new THREE.Vector3(-4, -0.3, 0) // -5.5, -0.4, 0
+    let bases
     this.current_angle = 0
+    let g = window.dog
+    this.points = this.points.concat(tail.points.flat()).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat())
+    this.calc_bases = function() {
+	bases = []
+	this.points.forEach(function(p) {
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center)
+            bases.push(v.x, v.y, v.z)
+	})
+    }
+    this.calc_bases()
+    this.rotate = function(angle_z) {
+        this.current_angle = angle_z
+        let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
+	this.points.forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(center, v)
+	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	})
+        g.attributes.position.needsUpdate = true
+    }
+    this.get_center = function() { return center }
 }
 
 function Body() {
@@ -364,6 +385,7 @@ function Body() {
     }
     this.brpaw_bases = paw_bases(brpaw)
     this.blpaw_bases = paw_bases(blpaw)
+    let rare_center_base = (new THREE.Vector3()).subVectors(rare.get_center(), center)
     this.rotate = function(angle_z) {
         this.current_angle = angle_z
         let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
@@ -382,6 +404,8 @@ function Body() {
 	}
 	paw_center(brpaw, this.brpaw_bases)
 	paw_center(blpaw, this.blpaw_bases)
+	rare.get_center().copy((new THREE.Vector3()).addVectors(center, (new THREE.Vector3()).copy(rare_center_base).applyQuaternion(angle)))
+	rare.calc_bases()
         g.attributes.position.needsUpdate = true
     }
 }
