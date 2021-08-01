@@ -89,3 +89,4 @@ blpaw.rotate(-30,0,135,0,0,0,0,0,0)
 
 body.rotate(45)
 rare.rotate(15)
+brpaw.rotate(30,0,135,0,30,-135,0,0,0)
