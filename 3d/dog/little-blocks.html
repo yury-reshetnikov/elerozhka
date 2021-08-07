@@ -979,49 +979,43 @@ window.sit = function() {
     a.rotate_array_callback(brpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [0,0,10,0,0,-35,0,0,20],
-        100, 200, 1500)
+        100, 200, 1100)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,10,0,0,-35,0,0,20],
         [0,0,20,0,0,-55,0,0,20],
-        200, 300, 1500)
+        200, 300, 1100)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,20,0,0,-55,0,0,20],
         [0,0,25,0,0,0,0,0,-25],
-        300, 500, 1500)
-    a.rotate_array_callback(brpaw.rotate,
-        [0,0,25,0,0,0,0,0,-25],
-        [0,0,0,0,0,0,0,0,0],
-        500, 750, 1500)
+        300, 500, 1100)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [0,0,10,0,0,-35,0,0,20],
-        750, 850, 1500)
+        500, 600, 1100)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,10,0,0,-35,0,0,20],
         [0,0,20,0,0,-55,0,0,20],
-        850, 950, 1500)
+        600, 700, 1100)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,20,0,0,-55,0,0,20],
         [0,0,25,0,0,0,0,0,-25],
-        950, 1050, 1500)
-    a.rotate_array_callback(blpaw.rotate,
-        [0,0,25,0,0,0,0,0,-25],
-        [0,0,0,0,0,0,0,0,0],
-        1050, 1300, 1500)
-    a.rotate_array_callback(body.rotate, 0, 55, 1300, 1500, 1500)
-    a.rotate_array_callback(rare.rotate, 0, 30, 1300, 1500, 1500)
+        700, 900, 1100)
+    a.rotate_array_callback(body.rotate, [0], [55], 900, 1100, 1100)
+    a.rotate_array_callback(rare.rotate, [0], [30], 900, 1100, 1100)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [30,0,135,0,30,-135,0,0,0],
-        1300, 1500, 1500)
+        900, 1100, 1100)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [-30,0,135,0,-30,-135,0,0,0],
-        1300, 1500, 1500)
+        900, 1100, 1100)
     a.rotate_array_callback(tail.rotate,
         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
-        1300, 1500, 1500)
+        900, 1100, 1100)
+    a.start()
+    return a
 }
 
   </script>
