@@ -974,6 +974,41 @@ window.test_sit = function(sit) {
     }
 }
 
+window.sit = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    a.rotate_array_callback(brpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,10,0,0,-35,0,0,20],
+        100, 200, 900)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,0,10,0,0,-35,0,0,20],
+        [0,0,20,0,0,-55,0,0,20],
+        200, 300, 900)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,0,20,0,0,-55,0,0,20],
+        [0,0,25,0,0,0,0,0,-25],
+        300, 500, 900)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,0,25,0,0,0,0,0,-25],
+        [0,0,0,0,0,0,0,0,0],
+        500, 750, 900)
+    a.rotate_array_callback(body.rotate, 0, 55, 750, 900, 900)
+    a.rotate_array_callback(rare.rotate, 0, 30, 750, 900, 900)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [30,0,135,0,30,-135,0,0,0],
+        750, 900, 900)
+    a.rotate_array_callback(blpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [-30,0,135,0,-30,-135,0,0,0],
+        750, 900, 900)
+    a.rotate_array_callback(tail.rotate,
+        [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        750, 900, 900)
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
