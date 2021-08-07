@@ -87,6 +87,8 @@ brpaw.rotate(30,0,135,0,0,0,0,0,0)
 blpaw.rotate(-30,0,135,0,0,0,0,0,0)
 
 
-body.rotate(45)
-rare.rotate(15)
+body.rotate(55)
+rare.rotate(30)
 brpaw.rotate(30,0,135,0,30,-135,0,0,0)
+blpaw.rotate(-30,0,135,0,-30,-135,0,0,0)
+tail.rotate(0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0)
