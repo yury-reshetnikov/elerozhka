@@ -298,10 +298,10 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog_mesh = mesh
     tail.init()
     window.tail = tail
-    window.frpaw = new Paw(mesh.geometry, [209, 212, 219]) // front right paw
-    window.flpaw = new Paw(mesh.geometry, [176, 178, 186])
-    window.brpaw = new Paw(mesh.geometry, [378, 379, 422]) // back right paw
-    window.blpaw = new Paw(mesh.geometry, [369, 370, 385])
+    window.frpaw = new Paw(mesh.geometry, [207, 210, 217]) // front right paw
+    window.flpaw = new Paw(mesh.geometry, [174, 176, 184])
+    window.brpaw = new Paw(mesh.geometry, [376, 377, 420]) // back right paw
+    window.blpaw = new Paw(mesh.geometry, [367, 368, 383])
     window.rare = new Rare()
     window.body = new Body()
     let g = window.dog
@@ -325,7 +325,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 		   1449, 51, // попа
 		  ))
     }
-    console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 342))
+    // console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 342))
     if(0) rare.points.forEach(function(p) {
 	let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
 	if(v.x <= -5.29 && v.x >= -5.31 && v.y >= 0.69) console.log('p', p, 'v', v)
@@ -361,11 +361,28 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
     //console.log(g)
     }
+    if(0) { // ищем базовые точки для ступней
+	for(let p = 0; p < g.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+            if(v.y == -7 && (v.z == 1 || v.z == -1 || (v.z > 0.759 && v.z < 0.761) || (v.z < -0.759 && v.z > -0.761))) console.log (p, v)
+	}
+	for(let p = 0; p < g.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+            if(v.y > -6.86 && v.y < -6.84 && (v.z == 1 || v.z == -1 || (v.z > 0.759 && v.z < 0.761) || (v.z < -0.759 && v.z > -0.761))) console.log ('+', p, v)
+	}
+    }
+    if(0) { // ищем туловище
+	let n = 0
+	for(let p = 0; p < g.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+            if((v.x > 0.62 && v.x < 0.66) || (v.x > -3.1 && v.x < -2.9)) console.log (++n, p, v)
+	}
+    }
 })
 
 function Rare() {
-    // 235, 240, 256 - спина попы
-    this.points = [232, 233, 234, 235, 236, 237, 238, 239, 240, 242, 256, 257, 260, 261, 262, 263]
+    // 233, 238, 254 - спина попы
+    this.points = [230, 231, 232, 233, 234, 235, 236, 237, 238, 240, 254, 255, 258, 259, 260, 261]
     let center = new THREE.Vector3(-4, -0.3, 0) // -5.5, -0.4, 0
     let bases
     this.current_angle = 0
@@ -393,7 +410,8 @@ function Rare() {
 }
 
 function Body() {
-    this.points = [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 119, 120, 121, 122]
+    // были удалены точки 81 и 82
+    this.points = [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 117, 118, 119, 120]
     let center = new THREE.Vector3(2, -0.6, 0)
     let bases = []
     this.current_angle = 0
