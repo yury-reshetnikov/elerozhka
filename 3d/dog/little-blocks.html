@@ -1016,12 +1016,20 @@ window.sit = function(tm) {
     a.rotate_array_callback(rare.rotate.bind(rare), [0], [30], 900, 1500)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
-        [30,0,135,0,30,-135,0,0,0],
-        900, 1500)
+        [30,0,80,0,30,-100,0,0,0],
+        900, 1150)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
+        [-30,0,80,0,-30,-100,0,0,0],
+        900, 1150)
+    a.rotate_array_callback(brpaw.rotate,
+        [30,0,80,0,30,-100,0,0,0],
+        [30,0,135,0,30,-135,0,0,0],
+        1150, 1500)
+    a.rotate_array_callback(blpaw.rotate,
+        [-30,0,80,0,-30,-100,0,0,0],
         [-30,0,135,0,-30,-135,0,0,0],
-        900, 1500)
+        1150, 1500)
     a.rotate_array_callback(tail.rotate,
         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
