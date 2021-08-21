@@ -974,8 +974,9 @@ window.test_sit = function(sit) {
     }
 }
 
-window.sit = function() {
+window.sit = function(tm) {
     let a = new Animate4
+    if(tm) a.time_modifier = tm
     a.rotate_array_callback(brpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [0,0,10,0,0,-35,0,0,20],
@@ -1018,8 +1019,9 @@ window.sit = function() {
     return a
 }
 
-window.stand = function() {
+window.stand = function(tm) {
     let a = new Animate4
+    if(tm) a.time_modifier = tm
     a.rotate_array_callback(body.rotate.bind(body), [55], [0], 0, 600)
     a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 600)
     a.rotate_array_callback(brpaw.rotate,
