@@ -1043,14 +1043,34 @@ window.stand = function(tm) {
     if(tm) a.time_modifier = tm
     a.rotate_array_callback(body.rotate.bind(body), [55], [0], 0, 600)
     a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 600)
+    let first_rare_rotate_call = true
+    function rare_rotate(angle_z) {
+	if(first_rare_rotate_call) {
+	    first_rare_rotate_call = false
+	    rare.calc_tail_bases()
+	}
+	rare.rotate(angle_z)
+    }
+    a.rotate_array_callback(tail.rotate,
+        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+        0, 600)
     a.rotate_array_callback(brpaw.rotate,
         [30,0,135,0,30,-135,0,0,0],
-        [0,0,25,0,0,0,0,0,-25],
-        0, 600)
+        [30,0,80,0,30,-100,0,0,0],
+        0, 350)
     a.rotate_array_callback(blpaw.rotate,
         [-30,0,135,0,-30,-135,0,0,0],
+        [-30,0,80,0,-30,-100,0,0,0],
+        0, 350)
+    a.rotate_array_callback(brpaw.rotate,
+        [30,0,80,0,30,-100,0,0,0],
         [0,0,25,0,0,0,0,0,-25],
-        0, 600)
+        350, 600)
+    a.rotate_array_callback(blpaw.rotate,
+        [-30,0,80,0,-30,-100,0,0,0],
+        [0,0,25,0,0,0,0,0,-25],
+        350, 600)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [0,0,10,0,0,-35,0,0,20],
@@ -1074,29 +1094,29 @@ window.stand = function(tm) {
     a.rotate_array_callback(flpaw.rotate,
         [0,0,20,0,0,-55,0,0,20],
         [0,0,25,0,0,0,0,0,-25],
-        1200, 1400)
+        1100, 1400)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1200, 1400)
+        1100, 1500)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1200, 1400)
+        1100, 1500)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1200, 1400)
+        1100, 1500)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1200, 1400)
+        1100, 1500)
     a.rotate_array_callback(function(x) {
         tiles.forEach(function(tile) {
             tile.m.position.x = tile.x + tile_delta_x - x
         })
     },
-    [0], [3.42], 1200, 1400
+    [0], [3.42], 1100, 1500
     )
     a.start()
     return a
