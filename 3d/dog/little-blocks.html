@@ -425,8 +425,11 @@ function Body() {
         let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(paw.get_base_rotation_center()), center)
         return [v.x, v.y, v.z]
     }
-    this.brpaw_bases = paw_bases(brpaw)
-    this.blpaw_bases = paw_bases(blpaw)
+    this.calc_paw_bases = function() {
+	this.brpaw_bases = paw_bases(brpaw)
+	this.blpaw_bases = paw_bases(blpaw)
+    }
+    this.calc_paw_bases()
     let rare_center_base = (new THREE.Vector3()).subVectors(rare.get_center(), center)
     this.rotate = function(angle_z) {
         this.current_angle = angle_z
@@ -1001,8 +1004,16 @@ window.sit = function(tm) {
         [0,0,20,0,0,-55,0,0,20],
         [0,0,25,0,0,0,0,0,-25],
         700, 900)
-    a.rotate_array_callback(body.rotate.bind(body), [0], [55], 880, 1500)
-    a.rotate_array_callback(rare.rotate.bind(rare), [0], [30], 880, 1500)
+    let first_body_rotate_call = true
+    function body_rotate(angle_z) {
+	if(first_body_rotate_call) {
+	    first_body_rotate_call = false
+	    body.calc_paw_bases()
+	}
+	body.rotate(angle_z)
+    }
+    a.rotate_array_callback(body_rotate, [0], [55], 900, 1500)
+    a.rotate_array_callback(rare.rotate.bind(rare), [0], [30], 900, 1500)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [30,0,135,0,30,-135,0,0,0],
