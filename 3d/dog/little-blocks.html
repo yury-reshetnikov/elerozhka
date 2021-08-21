@@ -1057,24 +1057,26 @@ window.stand = function() {
     a.rotate_array_callback(frpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1400, 1600)
+        1200, 1400)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1400, 1600)
+        1200, 1400)
     a.rotate_array_callback(brpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1400, 1600)
+        1200, 1400)
     a.rotate_array_callback(blpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
-        1400, 1600)
-    /* a.rotate_array_callback(function(x) {
+        1200, 1400)
+    a.rotate_array_callback(function(x) {
         tiles.forEach(function(tile) {
             tile.m.position.x = tile.x + tile_delta_x - x
         })
-    } */
+    },
+    [0], [3.42], 1200, 1400
+    )
     a.start()
     return a
 }
