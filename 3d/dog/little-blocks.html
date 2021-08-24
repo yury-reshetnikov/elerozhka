@@ -888,6 +888,12 @@ tail.wag = function(tm) {
     a.rotate_array_callback(tail.rotate, full, half, 700, 800, 800)
     a.rotate_array_callback(tail.rotate, half, quarter, 800, 850, 800)
     a.rotate_array_callback(tail.rotate, quarter, base, 850, 900, 800)
+    if(sit) {
+        a.rotate_array_callback(tail.rotate, [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0], [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], 100, 400)
+        a.rotate_array_callback(tail.rotate, [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], [0,-40,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], 400, 800, 800)
+        a.rotate_array_callback(tail.rotate, [0,-40,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], 800, 1200, 800)
+        a.rotate_array_callback(tail.rotate, [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0], 1200, 1500)
+    }
     a.start()
     return a
 }
@@ -1122,12 +1128,26 @@ window.stand = function(tm) {
     return a
 }
 
+let sit_animate
+window.sit_stand_button_click = function() {
+    if(sit_animate) {
+	stop(sit_animate)
+	document.getElementById('sit_stand_button').textContent = 'Сидеть'
+	sit_animate = undefined
+    }
+    else {
+	sit_animate = sit(window.animate_speed)
+	document.getElementById('sit_stand_button').textContent = 'Стоять'
+	document.getElementById('stop_all_par').style.display = ''
+    }
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
-  <!-- <input type="button" value="Пошли!" /> -->
     <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
     <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
+    <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
   </div>
 </body>
 </html>
