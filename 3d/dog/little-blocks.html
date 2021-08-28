@@ -1152,6 +1152,16 @@ window.stand = function(tm) {
 }
 
 window.sit_stand_button_click = function() {
+    if(go_animate) {
+        stop(go_animate)
+        go_animate = undefined
+    }
+    if(tail_wag) {
+        tail_wag.exit_now = true
+	tail.to_basic(100)
+	document.getElementById('tail_wag_button').textContent = ':)'
+        tail_wag = undefined
+    }
     if(sitting) {
 	sitting = false
 	stand(window.animate_speed)
