@@ -62,6 +62,7 @@ function Animate4() {
 	    }
 	else this.finish = function() { return true }
     }
+    this.finish = function(cb) { finalization.push(cb) }
     this.rotate_array_callback = function(callback, angle_from, angle_to, time_from, time_to, time_period) {
         actions.push(new RotateArrayCallback(callback, angle_from, angle_to, time_from, time_to, time_period))
     }
