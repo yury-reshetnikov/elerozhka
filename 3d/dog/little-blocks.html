@@ -904,10 +904,18 @@ tail.wag = function(tm) {
 
 tail.to_basic = function(duration) {
     let a = new Animate4
-    a.rotate_array_callback(tail.rotate,
+    if(sitting) {
+        a.rotate_array_callback(tail.rotate,
+        tail.current_angles,
+        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        0, duration)
+    }
+    else {
+        a.rotate_array_callback(tail.rotate,
         tail.current_angles,
         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
         0, duration)
+    }
     a.start()
     return a
 }
@@ -943,8 +951,7 @@ let tail_wag
 window.tail_wag_button_click = function() {
     if(tail_wag) {
 	tail_wag.exit_now = true
-	if(sitting) a.rotate_array_callback(tail.rotate, tail.current_angles, [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0], 0, 200)
-	else tail.to_basic(100)
+	tail.to_basic(100)
         document.getElementById('tail_wag_button').textContent = ':)'
         tail_wag = undefined
 	if(!go_animate)
@@ -1049,6 +1056,7 @@ window.sit = function(tm) {
 	document.getElementById('sit_stand_button').textContent = 'Стоять'
 	document.getElementById('sit_stand_button').style.display = ''
 	document.getElementById('tail_wag_button').style.display = ''
+	document.getElementById('go_stop_button').style.display = ''
     })
     a.start()
     return a
