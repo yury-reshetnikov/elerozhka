@@ -1181,6 +1181,64 @@ window.sit_stand_button_click = function() {
     }
 }
 
+window.liedown = function() {
+    let a = new Animate4
+    // dog_mesh.position.y = -4
+    let first_body_rotate_call = true
+    function body_rotate(angle_z) {
+	if(first_body_rotate_call) {
+	    first_body_rotate_call = false
+	    body.calc_paw_bases()
+	}
+	body.rotate(angle_z)
+    }
+    a.rotate_array_callback(body_rotate, [55], [0], 0, 500)
+    a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 500)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [30,0,135,0,30,-135,0,0,0],
+        100, 800)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [-30,0,135,0,-30,-135,0,0,0],
+        100, 800)
+    a.rotate_array_callback(brpaw.rotate,
+        [30,0,135,0,30,-135,0,0,0],
+        [30,-5,135,0,30,-135,0,0,0],
+        100, 800)
+    a.rotate_array_callback(blpaw.rotate,
+        [-30,0,135,0,-30,-135,0,0,0],
+        [-30,-5,135,0,-30,-135,0,0,0],
+        100, 800)
+    a.rotate_array_callback(tail.rotate,
+        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        [0,40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        500, 800)
+    // ---
+    a.rotate_array_callback(frpaw.rotate,
+        [30,0,135,0,30,-135,0,0,0],
+        [0,0,90,0,0,0,0,0,-50],
+        800, 1200)
+    a.rotate_array_callback(flpaw.rotate,
+        [-30,0,135,0,-30,-135,0,0,0],
+        [0,0,90,0,0,0,0,0,-50],
+        800, 1200)
+    a.rotate_array_callback(brpaw.rotate,
+        [30,-5,135,0,30,-135,0,0,0],
+        [0,0,-80,0,0,0,0,0,-70],
+        800, 1200)
+    a.rotate_array_callback(blpaw.rotate,
+        [-30,-5,135,0,-30,-135,0,0,0],
+        [0,0,-80,0,0,0,0,0,-70],
+        800, 1200)
+    a.rotate_array_callback(tail.rotate,
+        [0,40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        [0,90,0,20,0,-40,0,-10,0,-10,0,0,0,0],
+        800, 1000)
+    a.start()
+    return a
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
