@@ -1184,42 +1184,46 @@ window.sit_stand_button_click = function() {
 window.liedown = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    // dog_mesh.position.y = -4
     function dog_mesh_position(y) { dog_mesh.position.y = y }
-    a.rotate_array_callback(dog_mesh_position, [0], [-0.9], 0, 150)
-    a.rotate_array_callback(dog_mesh_position, [-0.9], [-4.8], 150, 500)
+    a.rotate_array_callback(dog_mesh_position, [0], [-0.9], 0, 225)
+    a.rotate_array_callback(dog_mesh_position, [-0.9], [-4.8], 225, 750)
     //a.rotate_array_callback(dog_mesh_position, [-3], [-4.8], 500, 800)
-    a.rotate_array_callback(body.rotate.bind(body), [55], [5], 0, 500)
-    a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 500)
+    a.rotate_array_callback(body.rotate.bind(body), [55], [5], 0, 750)
+    a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 750)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [30,0,135,0,30,-110,0,0,0],
-        0, 500)
+        0, 750)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [-30,0,135,0,-30,-110,0,0,0],
-        0, 500)
+        0, 750)
+    a.rotate_array_callback(tail.rotate,
+        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
+        0, 750)
     a.rotate_array_callback(brpaw.rotate,
         [30,0,135,0,30,-110,0,0,0],
         [30,-5,135,0,30,-110,0,0,0],
-        0, 800)
+        0, 1200)
     a.rotate_array_callback(blpaw.rotate,
         [-30,0,135,0,-30,-110,0,0,0],
         [-30,-5,135,0,-30,-110,0,0,0],
-        0, 800)
+        0, 1200)
+    /*
     a.rotate_array_callback(tail.rotate,
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
         [0,40,0,0,0,0,0,0,-20,0,-30,0,-40,0],
-        500, 800)
-    // ---
+        0, 800)
+    */
     a.rotate_array_callback(frpaw.rotate,
         [30,0,135,0,30,-110,0,0,0],
         [0,0,90,0,0,0,0,0,-50],
-        600, 1000)
+        800, 1400)
     a.rotate_array_callback(flpaw.rotate,
         [-30,0,135,0,-30,-110,0,0,0],
         [0,0,90,0,0,0,0,0,-50],
-        600, 1000)
+        800, 1400)
     /*
     a.rotate_array_callback(brpaw.rotate,
         [30,-5,135,0,30,-135,0,0,0],
@@ -1230,10 +1234,6 @@ window.liedown = function(tm) {
         [0,0,-80,0,0,0,0,0,-70],
         800, 1200)
     */
-    a.rotate_array_callback(tail.rotate,
-        [0,40,0,0,0,0,0,0,-20,0,-30,0,-40,0],
-        [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
-        800, 1000)
     a.start()
     return a
 }
