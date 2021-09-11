@@ -1191,7 +1191,6 @@ window.stand = function(tm) {
 	document.getElementById('sit_stand_button').style.display = ''
 	document.getElementById('tail_wag_button').style.display = ''
 	document.getElementById('go_stop_button').style.display = ''
-	document.getElementById('liedown_par').style.display = 'none'
     })
     a.start()
     return a
@@ -1213,7 +1212,6 @@ window.sit_stand_button_click = function() {
     }
     if(sitting || lying) {
 	sitting = false
-	lying = false
 	stand(window.animate_speed)
 	document.getElementById('sit_stand_button').style.display = 'none'
 	document.getElementById('tail_wag_button').style.display = 'none'
@@ -1269,8 +1267,6 @@ window.liedown = function(tm) {
         800, 1400)
     a.start()
     a.finish(function() {
-	document.getElementById('go_stop_button').style.display = 'none'
-	document.getElementById('liedown_par').style.display = 'none'
         document.getElementById('sit_stand_button').style.display = ''
         document.getElementById('tail_wag_button').style.display = ''
     })
@@ -1280,7 +1276,7 @@ window.liedown_button_click = function() {
     document.getElementById('sit_stand_button').style.display = 'none'
     document.getElementById('go_stop_button').style.display = 'none'
     document.getElementById('tail_wag_button').style.display = 'none'
-    document.getElementById('liedown_button').style.display = 'none'
+    document.getElementById('liedown_par').style.display = 'none'
     liedown(window.animate_speed)
 }
 
