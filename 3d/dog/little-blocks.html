@@ -1067,6 +1067,7 @@ window.stand = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
     if(lying) {
+        lying = false
         function dog_mesh_position(y) { dog_mesh.position.y = y }
         a.rotate_array_callback(dog_mesh_position, [-4.8], [-2], 0, 500)
         a.rotate_array_callback(dog_mesh_position, [-2], [0], 500, 1100)
