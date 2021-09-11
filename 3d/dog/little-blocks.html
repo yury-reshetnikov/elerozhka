@@ -954,6 +954,11 @@ window.go_stop_button_click = function() {
 	    document.getElementById('stop_all_par').style.display = 'none'
     }
     else {
+        if(tail_wag) {
+            tail_wag.exit_now = true
+            tail_wag = undefined
+	    document.getElementById('tail_wag_button').textContent = ':)'
+        }
 	go_animate = go(window.animate_speed)
 	document.getElementById('go_stop_button').textContent = 'Стой!'
 	document.getElementById('stop_all_par').style.display = ''
