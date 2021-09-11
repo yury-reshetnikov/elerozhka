@@ -1211,8 +1211,9 @@ window.sit_stand_button_click = function() {
         tail_wag = undefined
         document.getElementById('stop_all_par').style.display = 'none'
     }
-    if(sitting) {
+    if(sitting || lying) {
 	sitting = false
+	lying = false
 	stand(window.animate_speed)
 	document.getElementById('sit_stand_button').style.display = 'none'
 	document.getElementById('tail_wag_button').style.display = 'none'
