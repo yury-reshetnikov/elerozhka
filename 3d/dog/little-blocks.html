@@ -872,8 +872,7 @@ tail.wag = function(tm) {
         a.rotate_array_callback(tail.rotate, [0,-40,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], 800, 1200, 800)
         a.rotate_array_callback(tail.rotate, [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0], 1200, 1500)
     }
-    else (
-    if(lying) {
+    else if(lying) {
         a.rotate_array_callback(tail.rotate, [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 100, 400)
         a.rotate_array_callback(tail.rotate, [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], 400, 800, 800)
         a.rotate_array_callback(tail.rotate, [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 800, 1200, 800)
@@ -906,7 +905,6 @@ tail.wag = function(tm) {
 	a.rotate_array_callback(tail.rotate, half, quarter, 800, 850, 800)
 	a.rotate_array_callback(tail.rotate, quarter, base, 850, 900, 800)
     }
-    )
     a.start()
     return a
 }
@@ -919,8 +917,7 @@ tail.to_basic = function(duration) {
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
         0, duration)
     }
-    else {
-    if(lying) {
+    else if(lying) {
         a.rotate_array_callback(tail.rotate,
         tail.current_angles,
         [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
@@ -931,7 +928,6 @@ tail.to_basic = function(duration) {
         tail.current_angles,
         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
         0, duration)
-    }
     }
     a.start()
     return a
