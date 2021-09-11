@@ -1106,6 +1106,7 @@ window.stand = function(tm) {
             0, 1000)
     }
     else {
+        sitting = false
         a.rotate_array_callback(body.rotate.bind(body), [55], [0], 0, 600)
         a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 600)
         let first_rare_rotate_call = true
@@ -1228,6 +1229,7 @@ window.sit_stand_button_click = function() {
 
 window.liedown = function(tm) {
     lying = true
+    sitting = false
     let a = new Animate4
     if(tm) a.time_modifier = tm
     function dog_mesh_position(y) { dog_mesh.position.y = y }
