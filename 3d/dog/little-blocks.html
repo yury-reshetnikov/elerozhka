@@ -1057,6 +1057,7 @@ window.sit = function(tm) {
 	document.getElementById('sit_stand_button').textContent = 'Стоять'
 	document.getElementById('sit_stand_button').style.display = ''
 	document.getElementById('tail_wag_button').style.display = ''
+	document.getElementById('liedown_par').style.display = ''
     })
     a.start()
     return a
@@ -1253,9 +1254,6 @@ window.liedown = function(tm) {
     return a
 }
 window.liedown_button_click = function() {
-    if (sitting == true) {
-	document.getElementById('liedown_par').style.display = ''
-    }
     liedown(window.animate_speed)
 }
 
