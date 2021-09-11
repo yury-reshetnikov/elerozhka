@@ -1278,6 +1278,13 @@ window.liedown_button_click = function() {
     document.getElementById('tail_wag_button').style.display = 'none'
     document.getElementById('liedown_par').style.display = 'none'
     liedown(window.animate_speed)
+    if(tail_wag) {
+        tail_wag.exit_now = true
+	tail.to_basic(100)
+	document.getElementById('tail_wag_button').textContent = ':)'
+        tail_wag = undefined
+        document.getElementById('stop_all_par').style.display = 'none'
+    }
 }
 
   </script>
