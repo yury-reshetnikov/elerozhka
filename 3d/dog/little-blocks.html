@@ -1067,64 +1067,87 @@ window.stand = function(tm) {
     if(tm) a.time_modifier = tm
     if(lying) {
         function dog_mesh_position(y) { dog_mesh.position.y = y }
-        a.rotate_array_callback(dog_mesh_position, [-4.8], [-2.5], 0, 300)
-        a.rotate_array_callback(dog_mesh_position, [-2.5], [0], 300, 1000)
-        // попа и передние ноги, поработать с else
+        a.rotate_array_callback(dog_mesh_position, [-4.8], [-2], 0, 500)
+        a.rotate_array_callback(dog_mesh_position, [-2], [0], 500, 1100)
+        a.rotate_array_callback(body.rotate.bind(body), [5], [0], 0, 600)
+        a.rotate_array_callback(tail.rotate,
+            [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
+            [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+            0, 600)
+        a.rotate_array_callback(frpaw.rotate,
+            [0,0,90,0,0,0,0,0,-50],
+            [0,0,25,0,0,0,0,0,-25],
+            0, 1100)
+        a.rotate_array_callback(flpaw.rotate,
+            [0,0,90,0,0,0,0,0,-50],
+            [0,0,25,0,0,0,0,0,-25],
+            0, 1100)
+        a.rotate_array_callback(brpaw.rotate,
+            [30,-5,135,0,30,-110,0,0,0],
+            [0,0,25,0,0,0,0,0,-25],
+            0, 1000)
+        a.rotate_array_callback(blpaw.rotate,
+            [-30,-5,135,0,-30,-110,0,0,0],
+            [0,0,25,0,0,0,0,0,-25],
+            0, 1000)
     }
-    a.rotate_array_callback(body.rotate.bind(body), [55], [0], 0, 600)
-    a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 600)
-    let first_rare_rotate_call = true
-    function rare_rotate(angle_z) {
-	if(first_rare_rotate_call) {
-	    first_rare_rotate_call = false
-	    rare.calc_tail_bases()
-	}
-	rare.rotate(angle_z)
+    else {
+        a.rotate_array_callback(body.rotate.bind(body), [55], [0], 0, 600)
+        a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 600)
+        let first_rare_rotate_call = true
+        function rare_rotate(angle_z) {
+	    if(first_rare_rotate_call) {
+	        first_rare_rotate_call = false
+                rare.calc_tail_bases()
+            }
+	    rare.rotate(angle_z)
+        }
+        a.rotate_array_callback(tail.rotate,
+            [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+            [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+            0, 600)
+        a.rotate_array_callback(frpaw.rotate,
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,10,0,0,-35,0,0,20],
+            600, 700)
+        a.rotate_array_callback(frpaw.rotate,
+            [0,0,10,0,0,-35,0,0,20],
+            [0,0,20,0,0,-55,0,0,20],
+            700, 800)
+        a.rotate_array_callback(frpaw.rotate,
+            [0,0,20,0,0,-55,0,0,20],
+            [0,0,25,0,0,0,0,0,-25],
+            800, 1000)
+        a.rotate_array_callback(flpaw.rotate,
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,10,0,0,-35,0,0,20],
+            1000, 1100)
+        a.rotate_array_callback(flpaw.rotate,
+            [0,0,10,0,0,-35,0,0,20],
+            [0,0,20,0,0,-55,0,0,20],
+            1100, 1200)
+        a.rotate_array_callback(flpaw.rotate,
+            [0,0,20,0,0,-55,0,0,20],
+            [0,0,25,0,0,0,0,0,-25],
+            1100, 1400)
+        a.rotate_array_callback(brpaw.rotate,
+            [30,0,135,0,30,-135,0,0,0],
+            [30,0,80,0,30,-100,0,0,0],
+            0, 350)
+        a.rotate_array_callback(blpaw.rotate,
+            [-30,0,135,0,-30,-135,0,0,0],
+            [-30,0,80,0,-30,-100,0,0,0],
+            0, 350)
+        a.rotate_array_callback(brpaw.rotate,
+            [30,0,80,0,30,-100,0,0,0],
+            [0,0,25,0,0,0,0,0,-25],
+            350, 600)
+        a.rotate_array_callback(blpaw.rotate,
+            [-30,0,80,0,-30,-100,0,0,0],
+            [0,0,25,0,0,0,0,0,-25],
+            350, 600)
     }
-    a.rotate_array_callback(tail.rotate,
-        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
-        [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
-        0, 600)
-    a.rotate_array_callback(brpaw.rotate,
-        [30,0,135,0,30,-135,0,0,0],
-        [30,0,80,0,30,-100,0,0,0],
-        0, 350)
-    a.rotate_array_callback(blpaw.rotate,
-        [-30,0,135,0,-30,-135,0,0,0],
-        [-30,0,80,0,-30,-100,0,0,0],
-        0, 350)
-    a.rotate_array_callback(brpaw.rotate,
-        [30,0,80,0,30,-100,0,0,0],
-        [0,0,25,0,0,0,0,0,-25],
-        350, 600)
-    a.rotate_array_callback(blpaw.rotate,
-        [-30,0,80,0,-30,-100,0,0,0],
-        [0,0,25,0,0,0,0,0,-25],
-        350, 600)
-    a.rotate_array_callback(frpaw.rotate,
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,10,0,0,-35,0,0,20],
-        600, 700)
-    a.rotate_array_callback(frpaw.rotate,
-        [0,0,10,0,0,-35,0,0,20],
-        [0,0,20,0,0,-55,0,0,20],
-        700, 800)
-    a.rotate_array_callback(frpaw.rotate,
-        [0,0,20,0,0,-55,0,0,20],
-        [0,0,25,0,0,0,0,0,-25],
-        800, 1000)
-    a.rotate_array_callback(flpaw.rotate,
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,10,0,0,-35,0,0,20],
-        1000, 1100)
-    a.rotate_array_callback(flpaw.rotate,
-        [0,0,10,0,0,-35,0,0,20],
-        [0,0,20,0,0,-55,0,0,20],
-        1100, 1200)
-    a.rotate_array_callback(flpaw.rotate,
-        [0,0,20,0,0,-55,0,0,20],
-        [0,0,25,0,0,0,0,0,-25],
-        1100, 1400)
+    // общее
     a.rotate_array_callback(frpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
@@ -1218,12 +1241,6 @@ window.liedown = function(tm) {
         [-30,0,135,0,-30,-110,0,0,0],
         [-30,-5,135,0,-30,-110,0,0,0],
         0, 1200)
-    /*
-    a.rotate_array_callback(tail.rotate,
-        [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
-        [0,40,0,0,0,0,0,0,-20,0,-30,0,-40,0],
-        0, 800)
-    */
     a.rotate_array_callback(frpaw.rotate,
         [30,0,135,0,30,-110,0,0,0],
         [0,0,90,0,0,0,0,0,-50],
@@ -1232,18 +1249,14 @@ window.liedown = function(tm) {
         [-30,0,135,0,-30,-110,0,0,0],
         [0,0,90,0,0,0,0,0,-50],
         800, 1400)
-    /*
-    a.rotate_array_callback(brpaw.rotate,
-        [30,-5,135,0,30,-135,0,0,0],
-        [0,0,-80,0,0,0,0,0,-70],
-        800, 1200)
-    a.rotate_array_callback(blpaw.rotate,
-        [-30,-5,135,0,-30,-135,0,0,0],
-        [0,0,-80,0,0,0,0,0,-70],
-        800, 1200)
-    */
     a.start()
     return a
+}
+window.liedown_button_click = function() {
+    if (sitting == true) {
+	document.getElementById('liedown_par').style.display = ''
+    }
+    liedown(window.animate_speed)
 }
 
   </script>
@@ -1252,6 +1265,7 @@ window.liedown = function(tm) {
     <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
     <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
     <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
+    <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать</button></p>
   </div>
 </body>
 </html>
