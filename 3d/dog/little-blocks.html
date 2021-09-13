@@ -14,6 +14,9 @@
 
 let sitting = false
 let lying = false
+let paw_up = false
+let paw_down = false
+let an_paw_up = false
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -1292,6 +1295,77 @@ window.liedown_button_click = function() {
     }
 }
 
+window.paw = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,90,0,0,-60,0,0,0],
+        0, 500)
+    a.start()
+    a.finish(function() {
+        paw_up = true
+    })
+    return a
+}
+window.paw_down = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,90,0,0,-60,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        0, 500)
+    a.start()
+    a.finish(function() {
+        paw_down = true
+    })
+    return a
+}
+window.an_paw = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,90,0,0,-60,0,0,0],
+        0, 500)
+    a.start()
+    a.finish(function() {
+        an_paw_up = true
+    })
+    return a
+}
+window.an_paw_down = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,90,0,0,-60,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        0, 500)
+    a.start()
+    return a
+}
+window.paw_button_click = function() {
+    document.getElementById('sit_stand_button').style.display = 'none'
+    document.getElementById('go_stop_button').style.display = 'none'
+    document.getElementById('tail_wag_button').style.display = 'none'
+    if(paw_up == false) {
+        paw(window.animate_speed)
+	document.getElementById('paw_button').textContent = 'Опусти лапу'
+    }
+    else if (paw_up == true) {
+        paw_down(window.animate_speed)
+	document.getElementById('paw_button').textContent = 'Другую лапу'
+    }
+    else if (paw_down == true) {
+        an_paw(window.animate_speed)
+	document.getElementById('paw_button').textContent = 'Опусти лапу'
+    }
+    else if (an_paw_up == true) {
+        an_paw_down(window.animate_speed)
+	document.getElementById('paw_button').textContent = 'Лапу'
+    }
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
@@ -1299,6 +1373,7 @@ window.liedown_button_click = function() {
     <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
     <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
     <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать</button></p>
+    <p><button id="paw_button" onclick="paw_button_click()">Лапу</button></p>
   </div>
 </body>
 </html>
