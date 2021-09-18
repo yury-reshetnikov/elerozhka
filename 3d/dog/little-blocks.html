@@ -15,8 +15,7 @@
 let sitting = false
 let lying = false
 let paw_up = false
-let paw_down = false
-let an_paw_up = false
+let left_paw = false
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -1295,6 +1294,12 @@ window.liedown_button_click = function() {
     }
 }
 
+function btn_show_title(id, title) {
+    let btn = document.getElementById(id)
+    btn.textContent = title
+    btn.style.display = ''
+}
+
 window.paw = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
@@ -1302,10 +1307,10 @@ window.paw = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         [0,0,90,0,0,-60,0,0,0],
         0, 500)
-    a.start()
     a.finish(function() {
-        paw_up = true
+	btn_show_title('paw_button', 'Опусти лапу')
     })
+    a.start()
     return a
 }
 window.paw_down = function(tm) {
@@ -1315,10 +1320,10 @@ window.paw_down = function(tm) {
         [0,0,90,0,0,-60,0,0,0],
         [0,0,0,0,0,0,0,0,0],
         0, 500)
-    a.start()
     a.finish(function() {
-        paw_down = true
+	btn_show_title('paw_button', 'Другую лапу')
     })
+    a.start()
     return a
 }
 window.an_paw = function(tm) {
@@ -1328,10 +1333,10 @@ window.an_paw = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         [0,0,90,0,0,-60,0,0,0],
         0, 500)
-    a.start()
     a.finish(function() {
-        an_paw_up = true
+	btn_show_title('paw_button', 'Опусти лапу')
     })
+    a.start()
     return a
 }
 window.an_paw_down = function(tm) {
@@ -1341,6 +1346,12 @@ window.an_paw_down = function(tm) {
         [0,0,90,0,0,-60,0,0,0],
         [0,0,0,0,0,0,0,0,0],
         0, 500)
+    a.finish(function() {
+	btn_show_title('paw_button', 'Лапу')
+	document.getElementById('sit_stand_button').style.display = ''
+	document.getElementById('go_stop_button').style.display = ''
+	document.getElementById('tail_wag_button').style.display = ''
+    })
     a.start()
     return a
 }
@@ -1348,21 +1359,24 @@ window.paw_button_click = function() {
     document.getElementById('sit_stand_button').style.display = 'none'
     document.getElementById('go_stop_button').style.display = 'none'
     document.getElementById('tail_wag_button').style.display = 'none'
-    if(paw_up == false) {
+    document.getElementById('paw_button').style.display = 'none'
+    if(!paw_up && !left_paw) {
+        paw_up = true
         paw(window.animate_speed)
-	document.getElementById('paw_button').textContent = 'Опусти лапу'
     }
-    else if (paw_up == true) {
+    else if(paw_up && !left_paw) {
+	paw_up = false
+	left_paw = true
         paw_down(window.animate_speed)
-	document.getElementById('paw_button').textContent = 'Другую лапу'
     }
-    else if (paw_down == true) {
+    else if(!paw_up && left_paw) {
+        paw_up = true
         an_paw(window.animate_speed)
-	document.getElementById('paw_button').textContent = 'Опусти лапу'
     }
-    else if (an_paw_up == true) {
+    else { // if(paw_up && left_paw) {
+	paw_up = false
+	left_paw = false
         an_paw_down(window.animate_speed)
-	document.getElementById('paw_button').textContent = 'Лапу'
     }
 }
 
