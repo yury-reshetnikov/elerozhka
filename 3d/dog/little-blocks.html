@@ -948,10 +948,12 @@ tail.to_down = function(duration) {
 window.animate_speed = 1
 let go_animate
 window.go_stop_button_click = function() {
+    document.getElementById('paw_button').style.display = 'none'
     if(go_animate) {
 	stop(go_animate)
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
+        document.getElementById('paw_button').style.display = ''
 	if(!tail_wag)
 	    document.getElementById('stop_all_par').style.display = 'none'
     }
@@ -1198,6 +1200,7 @@ window.stand = function(tm) {
 	document.getElementById('sit_stand_button').style.display = ''
 	document.getElementById('tail_wag_button').style.display = ''
 	document.getElementById('go_stop_button').style.display = ''
+	document.getElementById('paw_button').style.display = ''
     })
     a.start()
     return a
@@ -1285,6 +1288,7 @@ window.liedown_button_click = function() {
     document.getElementById('go_stop_button').style.display = 'none'
     document.getElementById('tail_wag_button').style.display = 'none'
     document.getElementById('liedown_par').style.display = 'none'
+    document.getElementById('paw_button').style.display = 'none'
     liedown(window.animate_speed)
     if(tail_wag) {
         tail_wag.exit_now = true
