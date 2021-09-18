@@ -945,6 +945,24 @@ tail.to_down = function(duration) {
     return a
 }
 
+function show_buttons() {
+    document.getElementById('sit_stand_button').style.display = ''
+    if(!sitting && !lying)
+	document.getElementById('go_stop_button').style.display = ''
+    document.getElementById('tail_wag_button').style.display = ''
+    if(sitting)
+	document.getElementById('liedown_par').style.display = ''
+    if(!lying)
+	document.getElementById('paw_button').style.display = ''
+}
+
+function hide_buttons() {
+    ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
+     'liedown_par', 'paw_button'].forEach(function(id) {
+	document.getElementById(id).style.display = 'none'
+    })
+}
+
 window.animate_speed = 1
 let go_animate
 window.go_stop_button_click = function() {
@@ -1076,9 +1094,7 @@ window.sit = function(tm) {
         900, 1500)
     a.finish(function() {
 	document.getElementById('sit_stand_button').textContent = 'Стоять'
-	document.getElementById('sit_stand_button').style.display = ''
-	document.getElementById('tail_wag_button').style.display = ''
-	document.getElementById('liedown_par').style.display = ''
+	show_buttons()
     })
     a.start()
     return a
@@ -1197,10 +1213,7 @@ window.stand = function(tm) {
     )
     a.finish(function() {
 	document.getElementById('sit_stand_button').textContent = 'Сидеть'
-	document.getElementById('sit_stand_button').style.display = ''
-	document.getElementById('tail_wag_button').style.display = ''
-	document.getElementById('go_stop_button').style.display = ''
-	document.getElementById('paw_button').style.display = ''
+	show_buttons()
     })
     a.start()
     return a
@@ -1220,20 +1233,14 @@ window.sit_stand_button_click = function() {
         tail_wag = undefined
         document.getElementById('stop_all_par').style.display = 'none'
     }
+    hide_buttons();
     if(sitting || lying) {
 	sitting = false
 	stand(window.animate_speed)
-	document.getElementById('sit_stand_button').style.display = 'none'
-	document.getElementById('tail_wag_button').style.display = 'none'
-	document.getElementById('liedown_par').style.display = 'none'
-	// document.getElementById('sit_stand_button').textContent = 'Сидеть'
     }
     else {
 	sitting = true
 	sit(window.animate_speed)
-	document.getElementById('sit_stand_button').style.display = 'none'
-	document.getElementById('go_stop_button').style.display = 'none'
-	document.getElementById('tail_wag_button').style.display = 'none'
     }
 }
 
@@ -1278,17 +1285,12 @@ window.liedown = function(tm) {
         800, 1400)
     a.start()
     a.finish(function() {
-        document.getElementById('sit_stand_button').style.display = ''
-        document.getElementById('tail_wag_button').style.display = ''
+	show_buttons()
     })
     return a
 }
 window.liedown_button_click = function() {
-    document.getElementById('sit_stand_button').style.display = 'none'
-    document.getElementById('go_stop_button').style.display = 'none'
-    document.getElementById('tail_wag_button').style.display = 'none'
-    document.getElementById('liedown_par').style.display = 'none'
-    document.getElementById('paw_button').style.display = 'none'
+    hide_buttons()
     liedown(window.animate_speed)
     if(tail_wag) {
         tail_wag.exit_now = true
@@ -1325,6 +1327,7 @@ window.paw_down = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         0, 500)
     a.finish(function() {
+	show_buttons();
 	btn_show_title('paw_button', 'Другую лапу')
     })
     a.start()
@@ -1351,19 +1354,14 @@ window.an_paw_down = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         0, 500)
     a.finish(function() {
+	show_buttons();
 	btn_show_title('paw_button', 'Лапу')
-	document.getElementById('sit_stand_button').style.display = ''
-	document.getElementById('go_stop_button').style.display = ''
-	document.getElementById('tail_wag_button').style.display = ''
     })
     a.start()
     return a
 }
 window.paw_button_click = function() {
-    document.getElementById('sit_stand_button').style.display = 'none'
-    document.getElementById('go_stop_button').style.display = 'none'
-    document.getElementById('tail_wag_button').style.display = 'none'
-    document.getElementById('paw_button').style.display = 'none'
+    hide_buttons()
     if(!paw_up && !left_paw) {
         paw_up = true
         paw(window.animate_speed)
