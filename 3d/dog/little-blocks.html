@@ -1010,6 +1010,7 @@ window.stop_all_button_click = function() {
 	stop(go_animate)
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
+        document.getElementById('paw_button').style.display = ''
     }
     if(tail_wag) {
 	tail_wag.exit_now = true
