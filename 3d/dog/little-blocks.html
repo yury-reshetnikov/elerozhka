@@ -1363,6 +1363,7 @@ window.an_paw_down = function(tm) {
 }
 window.paw_button_click = function() {
     hide_buttons()
+    document.getElementById('tail_wag_button').style.display = ''
     if(!paw_up && !left_paw) {
         paw_up = true
         paw(window.animate_speed)
