@@ -1384,6 +1384,147 @@ window.paw_button_click = function() {
     }
 }
 
+window.run = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    let period = 1000
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,60,0,0,-110,0,0,0],
+          0, 500)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,60,0,0,-110,0,0,0],
+          0, 500)
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,60,0,0,-110,0,0,0],
+          [0,0,-30,0,0,0,0,0,0],
+          500, 1000)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,60,0,0,-110,0,0,0],
+          [0,0,-30,0,0,0,0,0,0],
+          500, 1000)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-60,0,0,-20,0,0,0],
+          0, 500)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-60,0,0,-20,0,0,0],
+          0, 500)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-60,0,0,-20,0,0,0],
+          [0,0,-15,0,0,-80,0,0,0],
+          500, 700)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,-60,0,0,-20,0,0,0],
+          [0,0,-15,0,0,-80,0,0,0],
+          500, 700)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-15,0,0,-80,0,0,0],
+          [0,0,30,0,0,-20,0,0,0],
+          700, 1000)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,-15,0,0,-80,0,0,0],
+          [0,0,30,0,0,-20,0,0,0],
+          700, 1000)
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,-30,0,0,0,0,0,0],
+          [0,0,60,0,0,-110,0,0,0],
+          1000, 1500, period)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,-30,0,0,0,0,0,0],
+          [0,0,60,0,0,-110,0,0,0],
+          1000, 1500, period)
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,60,0,0,-110,0,0,0],
+          [0,0,-30,0,0,0,0,0,0],
+          1500, 2000, period)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,60,0,0,-110,0,0,0],
+          [0,0,-30,0,0,0,0,0,0],
+          1500, 2000, period)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,30,0,0,-20,0,0,0],
+          [0,0,-60,0,0,-20,0,0,0],
+          1000, 1500, period)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,30,0,0,-20,0,0,0],
+          [0,0,-60,0,0,-20,0,0,0],
+          1000, 1500, period)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-60,0,0,-20,0,0,0],
+          [0,0,-15,0,0,-80,0,0,0],
+          1500, 1700, period)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,-60,0,0,-20,0,0,0],
+          [0,0,-15,0,0,-80,0,0,0],
+          1500, 1700, period)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-15,0,0,-80,0,0,0],
+          [0,0,30,0,0,20,0,0,0],
+          1700, 2000, period)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,-15,0,0,-80,0,0,0],
+          [0,0,30,0,0,20,0,0,0],
+          1700, 2000, period)
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,-30,0,0,0,0,0,0],
+          [0,0,60,0,0,-110,0,0,0],
+          2000, 2500)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,-30,0,0,0,0,0,0],
+          [0,0,60,0,0,-110,0,0,0],
+          2000, 2500)
+    a.rotate_array_callback(frpaw.rotate,
+          [0,0,60,0,0,-110,0,0,0],
+          [0,0,0,0,0,0,0,0,0],
+          2500, 3000)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,60,0,0,-110,0,0,0],
+          [0,0,0,0,0,0,0,0,0],
+          2500, 3000)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,30,0,0,-20,0,0,0],
+          [0,0,-60,0,0,-20,0,0,0],
+          2000, 2500)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,30,0,0,-20,0,0,0],
+          [0,0,-60,0,0,-20,0,0,0],
+          2000, 2500)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-60,0,0,-20,0,0,0],
+          [0,0,-15,0,0,-80,0,0,0],
+          2500, 2700)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,-60,0,0,-20,0,0,0],
+          [0,0,-15,0,0,-80,0,0,0],
+          2500, 2700)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-15,0,0,-80,0,0,0],
+          [0,0,0,0,0,0,0,0,0],
+          2700, 3000)
+    a.rotate_array_callback(blpaw.rotate,
+          [0,0,-15,0,0,-80,0,0,0],
+          [0,0,0,0,0,0,0,0,0],
+          2700, 2000)
+    let tile_start = 0
+    let tile_period = 417.68
+    a.rotate_array_callback(function(x) {
+        tiles.forEach(function(tile) {
+            tile.m.position.x = tile.x + tile_delta_x - x
+        })
+    },
+    [0], [6], tile_start, tile_start + tile_period, tile_period
+    )
+    a.rotate_array_callback(dog_updown, [0], [1], 0, 500, 1000)
+    a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
+    a.finish(function() {
+    })
+    a.start()
+    return a
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
