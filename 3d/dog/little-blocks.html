@@ -947,8 +947,10 @@ tail.to_down = function(duration) {
 
 function show_buttons() {
     document.getElementById('sit_stand_button').style.display = ''
-    if(!sitting && !lying)
+    if(!sitting && !lying) {
 	document.getElementById('go_stop_button').style.display = ''
+        document.getElementById('run_button').style.display = ''
+    }
     document.getElementById('tail_wag_button').style.display = ''
     if(sitting)
 	document.getElementById('liedown_par').style.display = ''
@@ -958,7 +960,7 @@ function show_buttons() {
 
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
-     'liedown_par', 'paw_button'].forEach(function(id) {
+     'liedown_par', 'paw_button', 'run_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -972,6 +974,7 @@ window.go_stop_button_click = function() {
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
         document.getElementById('paw_button').style.display = ''
+        document.getElementById('run_button').style.display = ''
 	if(!tail_wag)
 	    document.getElementById('stop_all_par').style.display = 'none'
     }
@@ -1011,6 +1014,7 @@ window.stop_all_button_click = function() {
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
         document.getElementById('paw_button').style.display = ''
+        document.getElementById('run_button').style.display = ''
     }
     if(tail_wag) {
 	tail_wag.exit_now = true
@@ -1469,13 +1473,25 @@ window.run = function(tm) {
     a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
     a.finish(function() {
     })
+    a.finish(function() {
+	show_buttons();
+    })
     a.start()
     return a
+}
+
+window.run_button_click = function() {
+    go_animate = run()
+    document.getElementById('go_stop_button').textContent = 'Стой!'
+    document.getElementById('stop_all_par').style.display = ''
+    document.getElementById('run_button').style.display = 'none'
+    document.getElementById('paw_button').style.display = 'none'
 }
 
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
+    <p><button id="run_button" onclick="run_button_click()">Побежали!</button></p>
     <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
     <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
     <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
