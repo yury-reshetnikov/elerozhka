@@ -1444,48 +1444,18 @@ window.run = function(tm) {
     }
     back(brpaw)
     back(blpaw)
-    /*
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,-30,0,0,0,0,0,0],
-          [0,0,60,0,0,-110,0,0,0],
-          2000, 2500)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,-30,0,0,0,0,0,0],
-          [0,0,60,0,0,-110,0,0,0],
-          2000, 2500)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,60,0,0,-110,0,0,0],
-          [0,0,0,0,0,0,0,0,0],
-          2500, 3000)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,60,0,0,-110,0,0,0],
-          [0,0,0,0,0,0,0,0,0],
-          2500, 3000)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,30,0,0,-20,0,0,0],
-          [0,0,-60,0,0,-20,0,0,0],
-          2000, 2500)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,30,0,0,-20,0,0,0],
-          [0,0,-60,0,0,-20,0,0,0],
-          2000, 2500)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,-60,0,0,-20,0,0,0],
-          [0,0,-15,0,0,-80,0,0,0],
-          2500, 2700)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,-60,0,0,-20,0,0,0],
-          [0,0,-15,0,0,-80,0,0,0],
-          2500, 2700)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,-15,0,0,-80,0,0,0],
-          [0,0,0,0,0,0,0,0,0],
-          2700, 3000)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,-15,0,0,-80,0,0,0],
-          [0,0,0,0,0,0,0,0,0],
-          2700, 3000)
-    */
+    a.rotate_array_callback(tail.rotate,
+        [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+        [0,20,0,20,0,-20,0,20,0,-20,0,20,0,-20],
+        0, 500)
+    a.rotate_array_callback(tail.rotate,
+        [0,20,0,20,0,-20,0,20,0,-20,0,20,0,-20],
+        [0,10,0,17,0,-23,0,17,0,-23,0,17,0,-23],
+        500, 1000, period)
+    a.rotate_array_callback(tail.rotate,
+        [0,10,0,17,0,-23,0,17,0,-23,0,17,0,-23],
+        [0,20,0,20,0,-20,0,20,0,-20,0,20,0,-20],
+        1000, 1500, period)
     let tile_start = 0
     let tile_period = 417.68
     a.rotate_array_callback(function(x) {
