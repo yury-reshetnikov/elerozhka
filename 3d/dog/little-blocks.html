@@ -950,6 +950,7 @@ function show_buttons() {
     if(!sitting && !lying) {
 	document.getElementById('go_stop_button').style.display = ''
         document.getElementById('run_button').style.display = ''
+        document.getElementById('standup_button').style.display = ''
     }
     document.getElementById('tail_wag_button').style.display = ''
     if(sitting)
@@ -960,7 +961,7 @@ function show_buttons() {
 
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
-     'liedown_par', 'paw_button', 'run_button'].forEach(function(id) {
+     'liedown_par', 'paw_button', 'run_button', 'standup_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -1572,6 +1573,24 @@ window.standup = function(tm) {
     return a
 }
 
+window.standup_button_click = function() {
+    go_animate = standup()
+    hide_buttons()
+}
+
+window.turn = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    //a.rotate_array_callback(body.rotate.bind(body), [0], [180], 0, 500) -как повернуть тело по другой оси???
+    function dog_mesh_position(y) { dog_mesh.position.y = y }
+    a.rotate_array_callback(dog_mesh_position, [0], [-5], 0, 500)
+    a.finish(function() {
+	show_buttons();
+    })
+    a.start()
+    return a
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
@@ -1581,6 +1600,7 @@ window.standup = function(tm) {
     <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
     <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать</button></p>
     <p><button id="paw_button" onclick="paw_button_click()">Лапу</button></p>
+    <p><button id="standup_button" onclick="standup_button_click()">Вверх! (?)</button></p>
   </div>
 </body>
 </html>
