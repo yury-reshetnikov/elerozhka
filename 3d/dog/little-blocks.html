@@ -628,7 +628,7 @@ window.go = function(tm) {
     return a
 }
 
-window.stop = function(a) {
+window.stop = function(a, fincb) {
     a.exit_now = true
     tile_delta_x = tiles[0].m.position.x - tiles[0].x
     let b = new Animate4;
@@ -643,6 +643,7 @@ window.stop = function(a) {
         tail.current_angles,
         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
         0, 200)
+    if(fincb) b.finish(fincb)
     b.start()
 }
 
@@ -1225,13 +1226,14 @@ window.stand = function(tm) {
     return a
 }
 
-function stop_current() {
+function stop_current(fincb) {
     if(go_animate) {
-        stop(go_animate)
+        stop(go_animate, fincb)
         go_animate = undefined
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
         document.getElementById('stop_all_par').style.display = 'none'
     }
+    else fincb()
     if(tail_wag) {
         tail_wag.exit_now = true
 	tail.to_basic(100)
@@ -1579,8 +1581,7 @@ window.standup = function(tm) {
 }
 
 window.standup_button_click = function() {
-    stop_current()
-    standup()
+    stop_current(standup)
     hide_buttons()
 }
 
