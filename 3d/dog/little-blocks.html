@@ -1225,7 +1225,7 @@ window.stand = function(tm) {
     return a
 }
 
-window.sit_stand_button_click = function() {
+function stop_current() {
     if(go_animate) {
         stop(go_animate)
         go_animate = undefined
@@ -1239,6 +1239,10 @@ window.sit_stand_button_click = function() {
         tail_wag = undefined
         document.getElementById('stop_all_par').style.display = 'none'
     }
+}
+
+window.sit_stand_button_click = function() {
+    stop_current()
     hide_buttons();
     if(sitting || lying) {
 	sitting = false
@@ -1574,7 +1578,8 @@ window.standup = function(tm) {
 }
 
 window.standup_button_click = function() {
-    go_animate = standup()
+    stop_current()
+    standup()
     hide_buttons()
 }
 
