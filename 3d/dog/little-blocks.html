@@ -1235,7 +1235,7 @@ function stop_current(fincb) {
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
         document.getElementById('stop_all_par').style.display = 'none'
     }
-    else fincb()
+    else if(fincb) fincb()
     if(tail_wag) {
         tail_wag.exit_now = true
 	tail.to_basic(100)
