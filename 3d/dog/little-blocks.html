@@ -1486,6 +1486,7 @@ window.run = function(tm) {
 }
 
 window.run_button_click = function() {
+    if(go_animate) go_animate.exit_now = true
     go_animate = run()
     document.getElementById('go_stop_button').textContent = 'Стой!'
     document.getElementById('stop_all_par').style.display = ''
