@@ -1625,13 +1625,28 @@ window.turn = function(tm) {
     a.rotate_array_callback(dog_mesh_rotation, [0], [-Math.PI], 0, 500)
     function dog_mesh_position(y) { dog_mesh.position.y = y }
     a.rotate_array_callback(dog_mesh_position, [-4.8], [-6], 0, 500)
-    // +++ ??? body.calc_paw_bases()
     a.rotate_array_callback(body.rotate.bind(body), [5], [-2], 0, 500)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-75], 0, 200)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-75], [-65], 400, 500)
     a.rotate_array_callback(tail.rotate,
         [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
         [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        0, 500)
+    a.rotate_array_callback(brpaw.rotate,
+        [30,-5,135,0,30,-110,0,0,0],
+        [0,-20,75,0,0,-90,0,0,-10],
+        0, 500)
+    a.rotate_array_callback(blpaw.rotate,
+        [-30,5,135,0,-30,-110,0,0,0],
+        [0,20,75,0,0,-90,0,0,-10],
+        0, 500)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,90,0,0,0,0,0,-50],
+        [0,0,75,0,0,-90,0,0,-10],
+        0, 500)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,90,0,0,0,0,0,-50],
+        [0,0,75,0,0,-90,0,0,-10],
         0, 500)
     a.finish(function() {
 	show_buttons();
