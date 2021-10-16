@@ -272,44 +272,29 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(267, 6, 3) // нос
     mesh.geometry.addGroup(273, 45, 0) // шея
     mesh.geometry.addGroup(318, 33, 0) // ГОЛОВА
-    //
     mesh.geometry.addGroup(351, 33, 0) // передняя часть цилиндра тела
-    //
     mesh.geometry.addGroup(384, 9, 0) // соединение шеи с телом
-    //
     mesh.geometry.addGroup(393, 3, 0) // нога
-    //
     mesh.geometry.addGroup(396, 3, 0) // соединение шеи с телом
-    //
     mesh.geometry.addGroup(399, 15, 0) // нога
-    //
     mesh.geometry.addGroup(414, 6, 0) // соединение шеи с телом
-    //
     mesh.geometry.addGroup(420, 3, 0) // нога
-    //
     mesh.geometry.addGroup(423, 6, 0) // соединение шеи с телом
     mesh.geometry.addGroup(429, 33, 0) // соединение шеи с телом
     mesh.geometry.addGroup(462, 12, 0) // соединение шеи с телом
     mesh.geometry.addGroup(474, 12, 0) // голова + соединение шеи с телом
-    //
     mesh.geometry.addGroup(486, 6, 0) // нога
     mesh.geometry.addGroup(492, 12, 0) // нога
     mesh.geometry.addGroup(504, 6, 0) // нога
-    //
     mesh.geometry.addGroup(510, 24, 0) // голова
     mesh.geometry.addGroup(534, 24, 0) // шея
-    //
     mesh.geometry.addGroup(558, 9, 0) // нога
     mesh.geometry.addGroup(567, 12, 0) // часть ноги
-    //
     mesh.geometry.addGroup(579, 3, 0) // соединение шеи
-    //
     mesh.geometry.addGroup(582, 3, 0) // часть ноги
-    //
     mesh.geometry.addGroup(585, 3, 0) // соединение шеи
     mesh.geometry.addGroup(588, 3, 0)
     mesh.geometry.addGroup(591, 6, 0) // соединение шеи
-    //
     mesh.geometry.addGroup(597, 9, 0) // задняя часть цилиндра тела
     mesh.geometry.addGroup(606, 27, 0) // задняя часть цилиндра тела
     mesh.geometry.addGroup(633, 39, 0)
@@ -349,6 +334,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.blpaw = new Paw(mesh.geometry, [367, 368, 383])
     window.rare = new Rare()
     window.body = new Body()
+    window.head_neck = new HeadNeck()
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
@@ -541,56 +527,35 @@ function Body() {
     }
 }
 
-/*
-window.body = {
-    points: [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 119, 120, 121, 122, 232, 233, 234, 235, 236, 237, 238, 239, 240, 242, 256, 257, 260, 261, 262, 263],
-    center: new THREE.Vector3(2, -0.6, 0),
-    bases: [],
-    current_angle: 0,
-    init: function() {
-	let g = window.dog
-	body.points = body.points.concat(tail.points.flat()).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat())
-        body.points.forEach(function(p) {
-            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), body.center)
-            body.bases.push(v.x, v.y, v.z)
-        })
-	function paw_bases(paw) {
-            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(paw.get_base_rotation_center()), body.center)
-            return [v.x, v.y, v.z]
-	}
-	body.brpaw_bases = paw_bases(brpaw)
-	body.blpaw_bases = paw_bases(blpaw)
-    },
-    rotate: function(angle_z) {
-	let g = window.dog
-        body.current_angle = angle_z
+function HeadNeck() {
+    let chest = [93, 95, 96]
+    let lower_neck_circle = [53, 56, 57, 59, 63, 65, 66, 67]
+    let upper_neck_circle = [54, 55, 58, 60, 61, 62, 64, 68]
+    let head = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
+    this.points = head.concat(upper_neck_circle).concat(lower_neck_circle).concat(chest)
+    let center = new THREE.Vector3(1.9, -0.6, 0)
+    let bases
+    this.current_angle = 0
+    let g = window.dog
+    this.calc_bases = function() {
+	bases = []
+	this.points.forEach(function(p) {
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center)
+            bases.push(v.x, v.y, v.z)
+	})
+    }
+    this.calc_bases()
+    this.rotate = function(angle_z) {
+        this.current_angle = angle_z
         let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
-	body.points.forEach(function(p,i) {
-	    let v = (new THREE.Vector3()).fromArray(body.bases, i*3).applyQuaternion(angle)
-	    let d = (new THREE.Vector3()).addVectors(body.center, v)
+	this.points.forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(center, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
-	function paw_center(paw, bases) {
-	    let v = (new THREE.Vector3()).fromArray(bases).applyQuaternion(angle)
-	    let d = (new THREE.Vector3()).addVectors(body.center, v)
-	    let rc = paw.get_base_rotation_center()
-	    rc[0] = d.x
-	    rc[1] = d.y
-	    rc[2] = d.z
-	}
-	paw_center(brpaw, body.brpaw_bases)
-	paw_center(blpaw, body.blpaw_bases)
         g.attributes.position.needsUpdate = true
-    },
-}
-*/
-
-window.head = {
-    points: []
-}
-
-window.neck = {
-    points: []
+    }
+    this.get_center = function() { return center }
 }
 
 let loadManager = new THREE.LoadingManager()
