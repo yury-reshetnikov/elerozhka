@@ -114,6 +114,12 @@ function rp(exclude, ind) { // Range points
     return res
 }
 
+function map_points_to_vectors(g,p) {
+    return p.map(function(p) {
+	return (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+    })
+}
+
 function calc_center(list) {
     let pos = window.dog.attributes.position.array
     if(list.length == 0) return
@@ -417,6 +423,47 @@ loader.load('little-blocks-conv.glb', function(gltf) {
             if((v.x > 0.62 && v.x < 0.66) || (v.x > -3.1 && v.x < -2.9)) console.log (++n, p, v)
 	}
     }
+    if(0) { // ищем шею и голову
+	let body_front_circle = [69, 70, 72, 74, 75, 77, 78, 80]
+	let body_back_circle = [71, 73, 76, 79, 117, 118, 119, 120]
+	let l1 = lp(g, body_front_circle,
+		    body_back_circle.concat(frpaw.get_points()[6]).concat(flpaw.get_points()[6]))
+	console.log(l1)
+	console.log(map_points_to_vectors(g, l1))
+	// l1 === [59, 63, 65, 66, 67, 94, 97, 98, 99, 116]
+	// 59, 63, 65, 66, 67 - часть нижнего ободка шеи
+	// 94,97,98 - низ груди между передних ног
+	// 99, 116 - боковые точки над передними ногами
+	let l2 = lp(g, l1, body_front_circle.concat(frpaw.get_points()[6]).concat(flpaw.get_points()[6]))
+	console.log(l2)
+	console.log(map_points_to_vectors(g, l2))
+	// l2 === [53, 54, 56, 60, 61, 62, 64, 93, 95, 96]
+	// 53, 56 - часть нижнего ободка шеи
+	// 54, 60, 61, 62, 64 - часть верхнего ободка шеи
+	// 93, 95, 96 - центр груди
+	let l3 = lp(g, l2, l1)
+	console.log(l3)
+	console.log(map_points_to_vectors(g, l3))
+	// 57 - часть нижнего ободка шеи
+	// 55, 58, 68 - часть верхнего ободка шеи
+	let lower_neck_circle = [53, 56, 57, 59, 63, 65, 66, 67]
+	let upper_neck_circle = [54, 55, 58, 60, 61, 62, 64, 68]
+	let head = []
+	let base = upper_neck_circle, prev = lower_neck_circle
+	console.log('head')
+	for(;;) {
+	    let next = lp(g, base, prev)
+	    if(!next.length) break;
+	    head = head.concat(next)
+	    prev = base
+	    base = next
+	    console.log(next)
+	    console.log(map_points_to_vectors(g, next))
+	}
+	head.sort((a,b)=>a-b)
+	console.log(head)
+	// head === [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
+    }
 })
 
 function Rare() {
@@ -450,7 +497,7 @@ function Rare() {
 
 function Body() {
     // были удалены точки 81 и 82
-    this.points = [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 117, 118, 119, 120]
+    this.points = [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 117, 118, 119, 120] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
     let center = new THREE.Vector3(2, -1.2, 0)
     let bases = []
     this.current_angle = 0
