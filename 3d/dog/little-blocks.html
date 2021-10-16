@@ -533,7 +533,7 @@ function HeadNeck() {
     let upper_neck_circle = [54, 55, 58, 60, 61, 62, 64, 68]
     let head = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52]
     this.points = head.concat(upper_neck_circle).concat(lower_neck_circle).concat(chest)
-    let center = new THREE.Vector3(1.9, -0.6, 0)
+    let center = new THREE.Vector3(1.9, 0, 0)
     let bases
     this.current_angle = 0
     let g = window.dog
@@ -1625,7 +1625,10 @@ window.turn = function(tm) {
     a.rotate_array_callback(dog_mesh_rotation, [0], [-Math.PI], 0, 500)
     function dog_mesh_position(y) { dog_mesh.position.y = y }
     a.rotate_array_callback(dog_mesh_position, [-4.8], [-6], 0, 500)
+    // +++ ??? body.calc_paw_bases()
     a.rotate_array_callback(body.rotate.bind(body), [5], [-2], 0, 500)
+    a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-75], 0, 200)
+    a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-75], [-65], 400, 500)
     a.rotate_array_callback(tail.rotate,
         [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
         [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0],
