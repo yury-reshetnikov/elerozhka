@@ -243,34 +243,68 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x190707 })
     mesh.material = [material, material_red, material_black, material_almostblack]
     mesh.castShadow = true
-    mesh.geometry.addGroup(0, 54, 0)
+    mesh.geometry.addGroup(0, 54, 0) // голова
     mesh.geometry.addGroup(54, 12, 3) // левый глаз
-    mesh.geometry.addGroup(66, 30, 0)
+    mesh.geometry.addGroup(66, 30, 0) // голова
     mesh.geometry.addGroup(96, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(99, 3, 0)
+    mesh.geometry.addGroup(99, 3, 0) // голова
     mesh.geometry.addGroup(102, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(105, 3, 0)
-    mesh.geometry.addGroup(108, 3, 0)
+    mesh.geometry.addGroup(105, 3, 0) // голова
+    mesh.geometry.addGroup(108, 3, 0) // голова
     mesh.geometry.addGroup(111, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(114, 6, 0)
+    mesh.geometry.addGroup(114, 6, 0) // голова
     mesh.geometry.addGroup(120, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(123, 57, 0)
-    mesh.geometry.addGroup(180, 9, 0)
+    mesh.geometry.addGroup(123, 57, 0) // голова
+    mesh.geometry.addGroup(180, 9, 0) // голова
     mesh.geometry.addGroup(189, 3, 3) // пятачок
     mesh.geometry.addGroup(192, 3, 3) // нос
     mesh.geometry.addGroup(195, 9, 3) // пятачок
     mesh.geometry.addGroup(204, 9, 3) // нос
-    mesh.geometry.addGroup(213, 27, 0)
+    mesh.geometry.addGroup(213, 27, 0) // голова
     mesh.geometry.addGroup(240, 24, 3) // нос
-    mesh.geometry.addGroup(264, 3, 0)
+    mesh.geometry.addGroup(264, 3, 0) // один треугольник шеи
     mesh.geometry.addGroup(267, 6, 3) // нос
-    mesh.geometry.addGroup(273, 78, 0)
+    mesh.geometry.addGroup(273, 45, 0) // шея
+    mesh.geometry.addGroup(318, 33, 0) // ГОЛОВА
+    //
     mesh.geometry.addGroup(351, 33, 0) // передняя часть цилиндра тела
-    mesh.geometry.addGroup(384, 183, 0)
-    mesh.geometry.addGroup(567, 21, 0) // часть ноги
+    //
+    mesh.geometry.addGroup(384, 9, 0) // соединение шеи с телом
+    //
+    mesh.geometry.addGroup(393, 3, 0) // нога
+    //
+    mesh.geometry.addGroup(396, 3, 0) // соединение шеи с телом
+    //
+    mesh.geometry.addGroup(399, 15, 0) // нога
+    //
+    mesh.geometry.addGroup(414, 6, 0) // соединение шеи с телом
+    //
+    mesh.geometry.addGroup(420, 3, 0) // нога
+    //
+    mesh.geometry.addGroup(423, 6, 0) // соединение шеи с телом
+    mesh.geometry.addGroup(429, 33, 0) // соединение шеи с телом
+    mesh.geometry.addGroup(462, 12, 0) // соединение шеи с телом
+    mesh.geometry.addGroup(474, 12, 0) // голова + соединение шеи с телом
+    //
+    mesh.geometry.addGroup(486, 6, 0) // нога
+    mesh.geometry.addGroup(492, 12, 0) // нога
+    mesh.geometry.addGroup(504, 6, 0) // нога
+    //
+    mesh.geometry.addGroup(510, 24, 0) // голова
+    mesh.geometry.addGroup(534, 24, 0) // шея
+    //
+    mesh.geometry.addGroup(558, 9, 0) // нога
+    mesh.geometry.addGroup(567, 12, 0) // часть ноги
+    //
+    mesh.geometry.addGroup(579, 3, 0) // соединение шеи
+    //
+    mesh.geometry.addGroup(582, 3, 0) // часть ноги
+    //
+    mesh.geometry.addGroup(585, 3, 0) // соединение шеи
     mesh.geometry.addGroup(588, 3, 0)
-    mesh.geometry.addGroup(591, 3, 0) // часть ноги
-    mesh.geometry.addGroup(594, 12, 0)
+    mesh.geometry.addGroup(591, 6, 0) // соединение шеи
+    //
+    mesh.geometry.addGroup(597, 9, 0) // задняя часть цилиндра тела
     mesh.geometry.addGroup(606, 27, 0) // задняя часть цилиндра тела
     mesh.geometry.addGroup(633, 39, 0)
     mesh.geometry.addGroup(672, 3, 0) // начало левой задней ноги 2.0
@@ -503,6 +537,14 @@ window.body = {
     },
 }
 */
+
+window.head = {
+    points: []
+}
+
+window.neck = {
+    points: []
+}
 
 let loadManager = new THREE.LoadingManager()
 let texture_loader = new THREE.TextureLoader(loadManager)
@@ -1567,9 +1609,15 @@ window.standup_button_click = function() {
 window.turn = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    //a.rotate_array_callback(body.rotate.bind(body), [0], [180], 0, 500) -как повернуть тело по другой оси???
+    function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
+    a.rotate_array_callback(dog_mesh_rotation, [0], [-Math.PI], 0, 500)
     function dog_mesh_position(y) { dog_mesh.position.y = y }
-    a.rotate_array_callback(dog_mesh_position, [0], [-5], 0, 500)
+    a.rotate_array_callback(dog_mesh_position, [-4.8], [-6], 0, 500)
+    a.rotate_array_callback(body.rotate.bind(body), [5], [-2], 0, 500)
+    a.rotate_array_callback(tail.rotate,
+        [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
+        [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        0, 500)
     a.finish(function() {
 	show_buttons();
     })
