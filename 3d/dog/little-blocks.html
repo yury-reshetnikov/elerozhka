@@ -983,6 +983,12 @@ tail.to_basic = function(duration) {
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
         0, duration)
     }
+    else if(turned) {
+        a.rotate_array_callback(tail.rotate,
+        tail.current_angles,
+        [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        0, duration)
+    }
     else if(lying) {
         a.rotate_array_callback(tail.rotate,
         tail.current_angles,
@@ -1710,6 +1716,7 @@ window.turnback = function(tm) {
 
 window.turn_button_click = function() {
     hide_buttons()
+    stop_current()
     if(!turned) turn(window.animate_speed)
     else if(turned) turnback(window.animate_speed)
 }
