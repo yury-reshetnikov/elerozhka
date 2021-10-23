@@ -1628,8 +1628,8 @@ window.standup_button_click = function() {
 }
 
 window.turn = function(tm) {
-    let lying = false
-    let turned = true
+    lying = false
+    turned = true
     let a = new Animate4
     if(tm) a.time_modifier = tm
     function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
@@ -1681,7 +1681,7 @@ window.turn_button_click = function() {
     <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать!</button></p>
     <p><button id="paw_button" onclick="paw_button_click()">Лапу!</button></p>
     <p><button id="standup_button" onclick="standup_button_click()">Вверх!</button></p>
-    <p><button id="turn_button" onclick="turn_button_click()">Поворот!</button></p>
+    <p><button id="turn_button" style="display:none" onclick="turn_button_click()">Поворот!</button></p>
   </div>
 </body>
 </html>
