@@ -16,6 +16,7 @@ let sitting = false
 let lying = false
 let paw_up = false
 let left_paw = false
+let turned = false
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -963,6 +964,12 @@ tail.wag = function(tm) {
         a.rotate_array_callback(tail.rotate, [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 800, 1200, 800)
         a.rotate_array_callback(tail.rotate, [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0], 1200, 1500)
     }
+    else if(turned) {
+        a.rotate_array_callback(tail.rotate, [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0], [0,50,0,0,10,0,20,0,30,0,40,0,50,0], 100, 400)
+        a.rotate_array_callback(tail.rotate, [0,50,0,0,10,0,20,0,30,0,40,0,50,0], [0,50,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], 400, 800, 800)
+        a.rotate_array_callback(tail.rotate, [0,50,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], [0,50,0,0,10,0,20,0,30,0,40,0,50,0], 800, 1200, 800)
+        a.rotate_array_callback(tail.rotate, [0,50,0,0,10,0,20,0,30,0,40,0,50,0], [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0], 1200, 1500)
+    }
     else tail.wag_body(a, 100, 800);
     a.start()
     return a
@@ -1012,13 +1019,15 @@ function show_buttons() {
     document.getElementById('tail_wag_button').style.display = ''
     if(sitting)
 	document.getElementById('liedown_par').style.display = ''
+    if(lying)
+        document.getElementById('turn_button').style.display = ''
     if(!lying)
 	document.getElementById('paw_button').style.display = ''
 }
 
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
-     'liedown_par', 'paw_button', 'run_button', 'standup_button'].forEach(function(id) {
+     'liedown_par', 'paw_button', 'run_button', 'standup_button', 'turn_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -1619,6 +1628,8 @@ window.standup_button_click = function() {
 }
 
 window.turn = function(tm) {
+    let lying = false
+    let turned = true
     let a = new Animate4
     if(tm) a.time_modifier = tm
     function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
@@ -1655,16 +1666,22 @@ window.turn = function(tm) {
     return a
 }
 
+window.turn_button_click = function() {
+    hide_buttons()
+    turn(window.animate_speed)
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
     <p><button id="run_button" onclick="run_button_click()">Побежали!</button></p>
     <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
     <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
-    <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
-    <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать</button></p>
-    <p><button id="paw_button" onclick="paw_button_click()">Лапу</button></p>
+    <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть!</button></p>
+    <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать!</button></p>
+    <p><button id="paw_button" onclick="paw_button_click()">Лапу!</button></p>
     <p><button id="standup_button" onclick="standup_button_click()">Вверх!</button></p>
+    <p><button id="turn_button" onclick="turn_button_click()">Поворот!</button></p>
   </div>
 </body>
 </html>
