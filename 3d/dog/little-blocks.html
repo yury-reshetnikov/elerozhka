@@ -1733,6 +1733,8 @@ window.movingpaws = function(tm) {
 }
 
 window.turnback = function(tm) {
+    movingpaws_animate.exit_now = true
+    movingpaws_animate = undefined
     let a = new Animate4
     if(tm) a.time_modifier = tm
     function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
@@ -1776,11 +1778,7 @@ window.turn_button_click = function() {
     hide_buttons()
     stop_current()
     if(!turned) turn(window.animate_speed)
-    else {
-        movingpaws_animate.exit_now = true
-        movingpaws_animate = undefined
-        turnback(window.animate_speed)
-    }
+    else turnback(window.animate_speed)
 }
 
   </script>
