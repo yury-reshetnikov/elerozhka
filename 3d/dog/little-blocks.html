@@ -17,6 +17,7 @@ let lying = false
 let paw_up = false
 let left_paw = false
 let turned = false
+let movingpaws_animate
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -1669,7 +1670,64 @@ window.turn = function(tm) {
     a.finish(function() {
         turned = true
 	show_buttons();
+	movingpaws()
     })
+    a.start()
+    return a
+}
+
+window.movingpaws = function(tm) {
+    let a = movingpaws_animate = new Animate4
+    if(tm) a.time_modifier = tm
+        let period = 2000
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,75,0,0,-90,0,0,-10],
+        [0,0,75,0,0,-130,0,0,-10],
+        0, 500, period)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,75,0,0,-130,0,0,-10],
+        [0,0,75,0,0,-50,0,0,-10],
+        500, 1500, period)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,75,0,0,-50,0,0,-10],
+        [0,0,75,0,0,-90,0,0,-10],
+        1500, 2000, period)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,-20,75,0,0,-90,0,0,-10],
+        [0,-20,75,0,0,-130,0,0,-10],
+        0, 500, period)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,-20,75,0,0,-130,0,0,-10],
+        [0,-20,75,0,0,-50,0,0,-10],
+        500, 1500, period)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,-20,75,0,0,-50,0,0,-10],
+        [0,-20,75,0,0,-90,0,0,-10],
+        1500, 2000, period)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,75,0,0,-90,0,0,-10],
+        [0,0,75,0,0,-50,0,0,-10],
+        0, 500, period)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,75,0,0,-50,0,0,-10],
+        [0,0,75,0,0,-130,0,0,-10],
+        500, 1500, period)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,75,0,0,-130,0,0,-10],
+        [0,0,75,0,0,-90,0,0,-10],
+        1500, 2000, period)
+    a.rotate_array_callback(blpaw.rotate,
+        [0,20,75,0,0,-90,0,0,-10],
+        [0,20,75,0,0,-50,0,0,-10],
+        0, 500, period)
+    a.rotate_array_callback(blpaw.rotate,
+        [0,20,75,0,0,-50,0,0,-10],
+        [0,20,75,0,0,-130,0,0,-10],
+        500, 1500, period)
+    a.rotate_array_callback(blpaw.rotate,
+        [0,20,75,0,0,-130,0,0,-10],
+        [0,20,75,0,0,-90,0,0,-10],
+        1500, 2000, period)
     a.start()
     return a
 }
@@ -1718,7 +1776,11 @@ window.turn_button_click = function() {
     hide_buttons()
     stop_current()
     if(!turned) turn(window.animate_speed)
-    else if(turned) turnback(window.animate_speed)
+    else {
+        movingpaws_animate.exit_now = true
+        movingpaws_animate = undefined
+        turnback(window.animate_speed)
+    }
 }
 
   </script>
