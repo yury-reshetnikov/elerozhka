@@ -1010,7 +1010,8 @@ tail.to_down = function(duration) {
 }
 
 function show_buttons() {
-    document.getElementById('sit_stand_button').style.display = ''
+    if(!turned)
+        document.getElementById('sit_stand_button').style.display = ''
     if(!sitting && !lying) {
 	document.getElementById('go_stop_button').style.display = ''
         document.getElementById('run_button').style.display = ''
@@ -1632,8 +1633,10 @@ window.turn = function(tm) {
     if(tm) a.time_modifier = tm
     function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
     a.rotate_array_callback(dog_mesh_rotation, [0], [-Math.PI], 0, 500)
-    function dog_mesh_position(y) { dog_mesh.position.y = y }
-    a.rotate_array_callback(dog_mesh_position, [-4.8], [-6], 0, 500)
+    function dog_mesh_position_y(y) { dog_mesh.position.y = y }
+    a.rotate_array_callback(dog_mesh_position_y, [-4.8], [-6], 0, 500)
+    function dog_mesh_position_z(z) { dog_mesh.position.z = z }
+    a.rotate_array_callback(dog_mesh_position_z, [0], [-5], 0, 500)
     a.rotate_array_callback(body.rotate.bind(body), [5], [-2], 0, 500)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-75], 0, 200)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-75], [-65], 400, 500)
@@ -1658,8 +1661,8 @@ window.turn = function(tm) {
         [0,0,75,0,0,-90,0,0,-10],
         0, 500)
     a.finish(function() {
-	show_buttons();
         turned = true
+	show_buttons();
     })
     a.start()
     return a
@@ -1670,8 +1673,10 @@ window.turnback = function(tm) {
     if(tm) a.time_modifier = tm
     function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
     a.rotate_array_callback(dog_mesh_rotation, [-Math.PI], [0], 0, 500)
-    function dog_mesh_position(y) { dog_mesh.position.y = y }
-    a.rotate_array_callback(dog_mesh_position, [-6], [-4.8], 0, 500)
+    function dog_mesh_position_y(y) { dog_mesh.position.y = y }
+    a.rotate_array_callback(dog_mesh_position_y, [-6], [-4.8], 0, 500)
+    function dog_mesh_position_z(z) { dog_mesh.position.z = z }
+    a.rotate_array_callback(dog_mesh_position_z, [-5], [0], 0, 500)
     a.rotate_array_callback(body.rotate.bind(body), [-2], [5], 0, 500)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-65], [-75], 0, 200)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-75], [0], 200, 500)
@@ -1696,8 +1701,8 @@ window.turnback = function(tm) {
         [0,0,90,0,0,0,0,0,-50],
         0, 500)
     a.finish(function() {
-	show_buttons();
         turned = false
+	show_buttons();
     })
     a.start()
     return a
