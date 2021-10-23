@@ -958,17 +958,17 @@ tail.wag = function(tm) {
         a.rotate_array_callback(tail.rotate, [0,-40,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], 800, 1200, 800)
         a.rotate_array_callback(tail.rotate, [0,-40,0,0,10,0,20,0,30,0,40,0,50,0], [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0], 1200, 1500)
     }
-    else if(lying) {
-        a.rotate_array_callback(tail.rotate, [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 100, 400)
-        a.rotate_array_callback(tail.rotate, [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], 400, 800, 800)
-        a.rotate_array_callback(tail.rotate, [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 800, 1200, 800)
-        a.rotate_array_callback(tail.rotate, [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0], 1200, 1500)
-    }
     else if(turned) {
         a.rotate_array_callback(tail.rotate, [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0], [0,50,0,0,10,0,20,0,30,0,40,0,50,0], 100, 400)
         a.rotate_array_callback(tail.rotate, [0,50,0,0,10,0,20,0,30,0,40,0,50,0], [0,50,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], 400, 800, 800)
         a.rotate_array_callback(tail.rotate, [0,50,0,0,-10,0,-20,0,-30,0,-40,0,-50,0], [0,50,0,0,10,0,20,0,30,0,40,0,50,0], 800, 1200, 800)
         a.rotate_array_callback(tail.rotate, [0,50,0,0,10,0,20,0,30,0,40,0,50,0], [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0], 1200, 1500)
+    }
+    else if(lying) {
+        a.rotate_array_callback(tail.rotate, [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 100, 400)
+        a.rotate_array_callback(tail.rotate, [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], 400, 800, 800)
+        a.rotate_array_callback(tail.rotate, [0,90,0,20,10,-55,20,-10,30,-10,40,0,50,0], [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], 800, 1200, 800)
+        a.rotate_array_callback(tail.rotate, [0,90,0,20,-10,-55,-20,-10,-30,-10,-40,0,-50,0], [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0], 1200, 1500)
     }
     else tail.wag_body(a, 100, 800);
     a.start()
@@ -1165,7 +1165,7 @@ window.sit = function(tm) {
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
         900, 1500)
     a.finish(function() {
-	document.getElementById('sit_stand_button').textContent = 'Стоять'
+	document.getElementById('sit_stand_button').textContent = 'Стоять!'
 	show_buttons()
     })
     a.start()
@@ -1628,8 +1628,6 @@ window.standup_button_click = function() {
 }
 
 window.turn = function(tm) {
-    lying = false
-    turned = true
     let a = new Animate4
     if(tm) a.time_modifier = tm
     function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
@@ -1661,6 +1659,45 @@ window.turn = function(tm) {
         0, 500)
     a.finish(function() {
 	show_buttons();
+        turned = true
+    })
+    a.start()
+    return a
+}
+
+window.turnback = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    function dog_mesh_rotation(x) { dog_mesh.rotation.x = x }
+    a.rotate_array_callback(dog_mesh_rotation, [-Math.PI], [0], 0, 500)
+    function dog_mesh_position(y) { dog_mesh.position.y = y }
+    a.rotate_array_callback(dog_mesh_position, [-6], [-4.8], 0, 500)
+    a.rotate_array_callback(body.rotate.bind(body), [-2], [5], 0, 500)
+    a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-65], [-75], 0, 200)
+    a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-75], [0], 200, 500)
+    a.rotate_array_callback(tail.rotate,
+        [0,50,0,0,0,0,0,0,-30,0,-40,0,-50,0],
+        [0,90,0,20,0,-55,0,-10,0,-10,0,0,0,0],
+        0, 500)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,-20,75,0,0,-90,0,0,-10],
+        [30,-5,135,0,30,-110,0,0,0],
+        0, 500)
+    a.rotate_array_callback(blpaw.rotate,
+        [0,20,75,0,0,-90,0,0,-10],
+        [-30,5,135,0,-30,-110,0,0,0],
+        0, 500)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,75,0,0,-90,0,0,-10],
+        [0,0,90,0,0,0,0,0,-50],
+        0, 500)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,75,0,0,-90,0,0,-10],
+        [0,0,90,0,0,0,0,0,-50],
+        0, 500)
+    a.finish(function() {
+	show_buttons();
+        turned = false
     })
     a.start()
     return a
@@ -1668,7 +1705,8 @@ window.turn = function(tm) {
 
 window.turn_button_click = function() {
     hide_buttons()
-    turn(window.animate_speed)
+    if(!turned) turn(window.animate_speed)
+    else if(turned) turnback(window.animate_speed)
 }
 
   </script>
