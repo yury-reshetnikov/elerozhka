@@ -92,6 +92,23 @@ function lp_lt_y(g, base, prev) {
     return next
 }
 
+function p2t(g, points) { // Points to Triangles
+    let ind = g.index.array
+    let triangles = []
+    for(let t = 0; t < g.index.count; t = t + 3) {
+	if(points.includes(ind[t]) &&
+	   points.includes(ind[t+1]) &&
+	   points.includes(ind[t+2])) {
+	    if(triangles.length &&
+	       t == triangles[triangles.length - 2] +
+	       triangles[triangles.length - 1])
+		triangles[triangles.length - 1] += 3
+	    else triangles.push(t, 3)
+	}
+    }
+    return triangles
+}
+
 function range(start, length) {
     return Array.from({length:length},(v,k)=>start+k)
 }
@@ -251,28 +268,24 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x190707 })
     mesh.material = [material, material_red, material_black, material_almostblack]
     mesh.castShadow = true
-    mesh.geometry.addGroup(0, 54, 0) // голова
-    mesh.geometry.addGroup(54, 12, 3) // левый глаз
-    mesh.geometry.addGroup(66, 30, 0) // голова
-    mesh.geometry.addGroup(96, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(99, 3, 0) // голова
-    mesh.geometry.addGroup(102, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(105, 3, 0) // голова
-    mesh.geometry.addGroup(108, 3, 0) // голова
-    mesh.geometry.addGroup(111, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(114, 6, 0) // голова
-    mesh.geometry.addGroup(120, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(123, 57, 0) // голова
-    mesh.geometry.addGroup(180, 9, 0) // голова
-    mesh.geometry.addGroup(189, 3, 3) // пятачок
-    mesh.geometry.addGroup(192, 3, 3) // нос
-    mesh.geometry.addGroup(195, 9, 3) // пятачок
-    mesh.geometry.addGroup(204, 9, 3) // нос
-    mesh.geometry.addGroup(213, 27, 0) // голова
-    mesh.geometry.addGroup(240, 24, 3) // нос
-    mesh.geometry.addGroup(264, 3, 0) // один треугольник шеи
-    mesh.geometry.addGroup(267, 6, 3) // нос
-    mesh.geometry.addGroup(273, 45, 0) // шея
+    mesh.geometry.addGroup(0, 51, 0) // голова
+    mesh.geometry.addGroup(51, 12, 3) // левый глаз
+    mesh.geometry.addGroup(63, 30, 0) // голова
+    mesh.geometry.addGroup(93, 3, 3) // часть правого глаза
+    mesh.geometry.addGroup(96, 3, 0) // голова
+    mesh.geometry.addGroup(99, 3, 3) // часть правого глаза
+    mesh.geometry.addGroup(102, 6, 0) // голова
+    mesh.geometry.addGroup(108, 3, 3) // часть правого глаза
+    mesh.geometry.addGroup(111, 6, 0) // голова
+    mesh.geometry.addGroup(117, 3, 3) // часть правого глаза
+    mesh.geometry.addGroup(120, 60, 0) // голова
+    mesh.geometry.addGroup(180, 6, 0)
+    mesh.geometry.addGroup(186, 24, 3) // нос
+    mesh.geometry.addGroup(210, 27, 0)
+    mesh.geometry.addGroup(237, 24, 3) // нос
+    mesh.geometry.addGroup(261, 3, 0) // один треугольник шеи
+    mesh.geometry.addGroup(264, 6, 3) // нос
+    mesh.geometry.addGroup(270, 48, 0) // шея
     mesh.geometry.addGroup(318, 33, 0) // ГОЛОВА
     mesh.geometry.addGroup(351, 33, 0) // передняя часть цилиндра тела
     mesh.geometry.addGroup(384, 9, 0) // соединение шеи с телом
@@ -325,6 +338,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(1500, 120, 0)
     mesh.geometry.addGroup(1620, 24, 0) // конус кончика хвоста
     mesh.geometry.addGroup(1644, 960, 0)
+    mesh.geometry.addGroup(2604, 144, 0)
     scene.add(mesh)
     window.dog = mesh.geometry
     window.dog_mesh = mesh
@@ -340,10 +354,41 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
+    if(0) { // общее число точек
+	console.log(ind)
+	console.log(pos)
+    }
     // // нос
     // console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
+    if(1) { // ищем заново нос после добавления рта
+	let n = 0, nose_points = []
+	for(let p = 0; p < g.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(
+		g.attributes.position, p)
+            if(v.x > 5.9) {
+		console.log (n++, p, v)
+		nose_points.push(p)
+	    }
+	}
+	console.log('nose_points', nose_points)
+	console.log('nose_triangles', p2t(g, nose_points))
+    }
+    if(0) { // ищем заново глаза после добавления рта
+	let n = 0, eye_points = []
+	for(let p = 0; p < g.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(
+		g.attributes.position, p)
+            if(v.x > 4.71 && v.x <= 4.72) {
+		console.log (n++, p, v)
+		eye_points.push(p)
+	    }
+	}
+	console.log('eye_points', eye_points)
+	console.log(lp(g, eye_points, []))
+	eye_points = eye_points.concat(lp(g, eye_points, []))
+	console.log('eye_triangles', p2t(g, eye_points))
+    }
     // правая передняя нога
-
     // console.log(ri(ind, 1350, 9))
     if(0) {
         console.log(rp([window.tail.points[13],
