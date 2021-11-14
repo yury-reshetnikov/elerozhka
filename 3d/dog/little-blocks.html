@@ -268,77 +268,44 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x190707 })
     mesh.material = [material, material_red, material_black, material_almostblack]
     mesh.castShadow = true
-    mesh.geometry.addGroup(0, 51, 0) // голова
+    mesh.geometry.addGroup(0, 51, 0)
     mesh.geometry.addGroup(51, 12, 3) // левый глаз
-    mesh.geometry.addGroup(63, 30, 0) // голова
+    mesh.geometry.addGroup(63, 30, 0)
     mesh.geometry.addGroup(93, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(96, 3, 0) // голова
+    mesh.geometry.addGroup(96, 3, 0)
     mesh.geometry.addGroup(99, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(102, 6, 0) // голова
+    mesh.geometry.addGroup(102, 6, 0)
     mesh.geometry.addGroup(108, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(111, 6, 0) // голова
+    mesh.geometry.addGroup(111, 6, 0)
     mesh.geometry.addGroup(117, 3, 3) // часть правого глаза
-    mesh.geometry.addGroup(120, 60, 0) // голова
+    mesh.geometry.addGroup(120, 60, 0)
     mesh.geometry.addGroup(180, 6, 0)
-    mesh.geometry.addGroup(186, 24, 3) // нос
+    mesh.geometry.addGroup(186, 18, 3) // нос
+    mesh.geometry.addGroup(204, 6, 0) // нижняя челюсть
     mesh.geometry.addGroup(210, 27, 0)
-    mesh.geometry.addGroup(237, 24, 3) // нос
-    mesh.geometry.addGroup(261, 3, 0) // один треугольник шеи
+    mesh.geometry.addGroup(237, 9, 3) // нос
+    mesh.geometry.addGroup(246, 3, 0) // нижняя челюсть
+    mesh.geometry.addGroup(249, 12, 3) // нос
+    mesh.geometry.addGroup(261, 3, 0)
     mesh.geometry.addGroup(264, 6, 3) // нос
-    mesh.geometry.addGroup(270, 48, 0) // шея
-    mesh.geometry.addGroup(318, 33, 0) // ГОЛОВА
-    mesh.geometry.addGroup(351, 33, 0) // передняя часть цилиндра тела
-    mesh.geometry.addGroup(384, 9, 0) // соединение шеи с телом
-    mesh.geometry.addGroup(393, 3, 0) // нога
-    mesh.geometry.addGroup(396, 3, 0) // соединение шеи с телом
-    mesh.geometry.addGroup(399, 15, 0) // нога
-    mesh.geometry.addGroup(414, 6, 0) // соединение шеи с телом
-    mesh.geometry.addGroup(420, 3, 0) // нога
-    mesh.geometry.addGroup(423, 6, 0) // соединение шеи с телом
-    mesh.geometry.addGroup(429, 33, 0) // соединение шеи с телом
-    mesh.geometry.addGroup(462, 12, 0) // соединение шеи с телом
-    mesh.geometry.addGroup(474, 12, 0) // голова + соединение шеи с телом
-    mesh.geometry.addGroup(486, 6, 0) // нога
-    mesh.geometry.addGroup(492, 12, 0) // нога
-    mesh.geometry.addGroup(504, 6, 0) // нога
-    mesh.geometry.addGroup(510, 24, 0) // голова
-    mesh.geometry.addGroup(534, 24, 0) // шея
-    mesh.geometry.addGroup(558, 9, 0) // нога
-    mesh.geometry.addGroup(567, 12, 0) // часть ноги
-    mesh.geometry.addGroup(579, 3, 0) // соединение шеи
-    mesh.geometry.addGroup(582, 3, 0) // часть ноги
-    mesh.geometry.addGroup(585, 3, 0) // соединение шеи
-    mesh.geometry.addGroup(588, 3, 0)
-    mesh.geometry.addGroup(591, 6, 0) // соединение шеи
-    mesh.geometry.addGroup(597, 9, 0) // задняя часть цилиндра тела
-    mesh.geometry.addGroup(606, 27, 0) // задняя часть цилиндра тела
-    mesh.geometry.addGroup(633, 39, 0)
-    mesh.geometry.addGroup(672, 3, 0) // начало левой задней ноги 2.0
-    mesh.geometry.addGroup(675, 3, 0)
-    mesh.geometry.addGroup(678, 3, 0) // начало левой задней ноги 2.0
-    mesh.geometry.addGroup(681, 3, 0)
-    mesh.geometry.addGroup(684, 6, 0) // начало левой задней ноги 2.0
-    mesh.geometry.addGroup(690, 3, 0)
-    mesh.geometry.addGroup(693, 6, 0) // начало левой задней ноги 2.0
-    mesh.geometry.addGroup(699, 3, 0)
-    mesh.geometry.addGroup(702, 6, 0) // начало левой задней ноги 2.0
-    mesh.geometry.addGroup(708, 6, 0)
-    mesh.geometry.addGroup(714, 534, 0)
-    mesh.geometry.addGroup(1248, 90, 0) // попа
-    mesh.geometry.addGroup(1338, 12, 0)
-    mesh.geometry.addGroup(1350, 9, 0) // попа
-    mesh.geometry.addGroup(1359, 3, 0)
-    mesh.geometry.addGroup(1362, 3, 0) // попа
-    mesh.geometry.addGroup(1365, 9, 0)
-    // mesh.geometry.addGroup(1374, 51, 0) // попа
-    mesh.geometry.addGroup(1374, 39, 0)
-    mesh.geometry.addGroup(1413, 24, 0) // начало правой задней ноги 2.0
-    mesh.geometry.addGroup(1437, 12, 0)
-    mesh.geometry.addGroup(1449, 51, 0) // попа
-    mesh.geometry.addGroup(1500, 120, 0)
-    mesh.geometry.addGroup(1620, 24, 0) // конус кончика хвоста
-    mesh.geometry.addGroup(1644, 960, 0)
-    mesh.geometry.addGroup(2604, 144, 0)
+    mesh.geometry.addGroup(270, 1374, 0)
+    mesh.geometry.addGroup(1644, 954, 0)
+    mesh.geometry.addGroup(2598, 3, 3) // нос
+    mesh.geometry.addGroup(2601, 6, 0)
+    mesh.geometry.addGroup(2607, 3, 3) // нос
+    mesh.geometry.addGroup(2610, 3, 0)
+    mesh.geometry.addGroup(2613, 6, 3) // нос
+    mesh.geometry.addGroup(2619, 12, 0)
+    mesh.geometry.addGroup(2631, 3, 3) // нос
+    mesh.geometry.addGroup(2634, 9, 0)
+    mesh.geometry.addGroup(2643, 6, 3) // нос
+    mesh.geometry.addGroup(2649, 42, 0)
+    mesh.geometry.addGroup(2691, 3, 3) // нос
+    mesh.geometry.addGroup(2694, 3, 0)
+    mesh.geometry.addGroup(2697, 3, 3) // нос
+    mesh.geometry.addGroup(2700, 3, 0)
+    mesh.geometry.addGroup(2703, 6, 3) // нос
+    mesh.geometry.addGroup(2709, 39, 0)
     scene.add(mesh)
     window.dog = mesh.geometry
     window.dog_mesh = mesh
@@ -360,12 +327,12 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
     // // нос
     // console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
-    if(0) { // ищем заново нос после добавления рта
+    if(1) { // ищем заново нос после добавления рта
 	let n = 0, nose_points = []
 	for(let p = 0; p < g.attributes.position.count; ++p) {
             let v = (new THREE.Vector3()).fromBufferAttribute(
 		g.attributes.position, p)
-            if(v.x > 5.9) {
+            if(v.x > 5.9 && v.y > 3.18) {
 		console.log (n++, p, v)
 		nose_points.push(p)
 	    }
