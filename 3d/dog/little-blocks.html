@@ -360,7 +360,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
     // // нос
     // console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
-    if(1) { // ищем заново нос после добавления рта
+    if(0) { // ищем заново нос после добавления рта
 	let n = 0, nose_points = []
 	for(let p = 0; p < g.attributes.position.count; ++p) {
             let v = (new THREE.Vector3()).fromBufferAttribute(
@@ -439,7 +439,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
     //console.log(g)
     }
-    if(0) { // ищем базовые точки для ступней
+    if(0) { // ищем базовые точки для ступней // 223, 230 - левая передняя // 189, 197 - правая передняя
 	for(let p = 0; p < g.attributes.position.count; ++p) {
             let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
             if(v.y == -7 && (v.z == 1 || v.z == -1 || (v.z > 0.759 && v.z < 0.761) || (v.z < -0.759 && v.z > -0.761))) console.log (p, v)
@@ -449,14 +449,14 @@ loader.load('little-blocks-conv.glb', function(gltf) {
             if(v.y > -6.86 && v.y < -6.84 && (v.z == 1 || v.z == -1 || (v.z > 0.759 && v.z < 0.761) || (v.z < -0.759 && v.z > -0.761))) console.log ('+', p, v)
 	}
     }
-    if(0) { // ищем туловище
+    if(0) { // ищем туловище // 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 130, 131, 132, 133
 	let n = 0
 	for(let p = 0; p < g.attributes.position.count; ++p) {
             let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
             if((v.x > 0.62 && v.x < 0.66) || (v.x > -3.1 && v.x < -2.9)) console.log (++n, p, v)
 	}
     }
-    if(0) { // ищем шею и голову
+    if(1) { // ищем шею и голову
 	let body_front_circle = [69, 70, 72, 74, 75, 77, 78, 80]
 	let body_back_circle = [71, 73, 76, 79, 117, 118, 119, 120]
 	let l1 = lp(g, body_front_circle,
