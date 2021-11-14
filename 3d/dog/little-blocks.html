@@ -318,6 +318,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.rare = new Rare()
     window.body = new Body()
     window.head_neck = new HeadNeck()
+    window.jaw = new LowerJaw()
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
@@ -327,18 +328,25 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
     // // нос
     // console.log(lip(g, ind, [189,190,191,195,196,197,198,199,200,201,202,203], []))
-    if(1) { // ищем заново нос после добавления рта
+    if(0) { // ищем заново нос после добавления рта
 	let n = 0, nose_points = []
 	for(let p = 0; p < g.attributes.position.count; ++p) {
             let v = (new THREE.Vector3()).fromBufferAttribute(
 		g.attributes.position, p)
-            if(v.x > 5.9 && v.y > 3.18) {
+            if(v.x > 5.9 && v.y > 3.18) { // если поставим v.y < , найдём часть нижней челюсти
 		console.log (n++, p, v)
 		nose_points.push(p)
 	    }
 	}
 	console.log('nose_points', nose_points)
 	console.log('nose_triangles', p2t(g, nose_points))
+    }
+    if(0) { // ищем нижнюю челюсть
+        let base = [8, 14, 19, 53, 54, 55, 60, 61]
+        let next = lp(g, base, [])
+        console.log(next, map_points_to_vectors(g, next))
+        // next = [7, 9, 15, 17, 447, 451, 453, 454, 455]
+        // 452 - лишняя
     }
     if(0) { // ищем заново глаза после добавления рта
 	let n = 0, eye_points = []
@@ -581,6 +589,33 @@ function HeadNeck() {
     let head = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 65, 66, 67, 116, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459]
     this.points = head.concat(upper_neck_circle).concat(lower_neck_circle).concat(chest)
     let center = new THREE.Vector3(1.9, 0, 0)
+    let bases
+    this.current_angle = 0
+    let g = window.dog
+    this.calc_bases = function() {
+	bases = []
+	this.points.forEach(function(p) {
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center)
+            bases.push(v.x, v.y, v.z)
+	})
+    }
+    this.calc_bases()
+    this.rotate = function(angle_z) {
+        this.current_angle = angle_z
+        let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
+	this.points.forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(center, v)
+	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	})
+        g.attributes.position.needsUpdate = true
+    }
+    this.get_center = function() { return center }
+}
+
+function LowerJaw() {
+    this.points = [8, 14, 19, 53, 54, 55, 60, 61, 7, 9, 15, 17, 447, 451, 453, 454, 455]
+    let center = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 452)
     let bases
     this.current_angle = 0
     let g = window.dog
