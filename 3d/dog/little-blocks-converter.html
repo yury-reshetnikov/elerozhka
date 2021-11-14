@@ -14,7 +14,7 @@ function correct_tail(g, update) {
     let ind = g.index.array
     let pos = g.attributes.position.array
     let tail = [
-	[342],
+	[355],
     ]
     function lp(base, prev) { // linked points
 	let next = []
@@ -125,6 +125,18 @@ loader.load('little-blocks.glb', function(gltf) {
     // buf.setIndex(new THREE.BufferAttribute(new Uint16Array(index), 1))
     buf.setIndex(index)
     buf.computeVertexNormals()
+    if(0) { // ищем хвост
+	let n = 0, tail_points = []
+	for(let p = 0; p < buf.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(
+		buf.attributes.position, p)
+            if(v.x < -3.3 && v.x > -3.5 && v.y > 4.3 && v.y < 4.5) {
+		console.log (n++, p, v)
+		tail_points.push(p)
+	    }
+	}
+	console.log('tail_points', tail_points)
+    }
     correct_tail(buf, false)
     let dog = new THREE.Mesh(buf, gltf.scene.children[2].material)
     let exporter = new GLTFExporter()
