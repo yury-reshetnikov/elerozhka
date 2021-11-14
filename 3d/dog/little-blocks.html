@@ -403,6 +403,23 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 		   1449, 51, // попа
 		  ))
     }
+    if(0) {
+        let start = [window.tail.points[13],
+		    window.brpaw.get_points()[6],
+		    window.blpaw.get_points()[6],
+		   ].flat()
+        let prev = [window.tail.points[12],
+		    window.brpaw.get_points()[5],
+		    window.blpaw.get_points()[5],
+		    window.body.points
+		   ].flat()
+        let first = lp(g, start, prev)
+        console.log(first)
+        let second = lp(g, first, [start, prev].flat())
+        console.log(second)
+        let third = lp(g, second, [first, start, prev].flat())
+        console.log(third)
+    }
     // console.log((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 342))
     if(0) rare.points.forEach(function(p) {
 	let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
@@ -501,8 +518,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 })
 
 function Rare() {
-    // 233, 238, 254 - спина попы
-    this.points = [230, 231, 232, 233, 234, 235, 236, 237, 238, 240, 254, 255, 258, 259, 260, 261]
+    this.points = [243, 244, 245, 247, 248, 249, 250, 251, 253, 268, 271, 272, 273, 274, 246, 267]
     let center = new THREE.Vector3(-4, -0.3, 0) // -5.5, -0.4, 0
     let bases
     this.current_angle = 0
@@ -531,7 +547,7 @@ function Rare() {
 
 function Body() {
     // были удалены точки 81 и 82
-    this.points = [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 117, 118, 119, 120] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
+    this.points = [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 130, 131, 132, 133] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
     let center = new THREE.Vector3(2, -1.2, 0)
     let bases = []
     this.current_angle = 0
