@@ -1650,13 +1650,13 @@ window.run_button_click = function() {
 window.standup = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let delta_x = dog_mesh.geometry.attributes.position.array[376*3+0]
-    let delta_y = dog_mesh.geometry.attributes.position.array[376*3+1]
+    let delta_x = dog_mesh.geometry.attributes.position.array[389*3+0]
+    let delta_y = dog_mesh.geometry.attributes.position.array[389*3+1]
     function dog_mesh_position() {
 	dog_mesh.position.x = delta_x -
-	    dog_mesh.geometry.attributes.position.array[376*3+0]
+	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
-	    dog_mesh.geometry.attributes.position.array[376*3+1]
+	    dog_mesh.geometry.attributes.position.array[389*3+1]
     }
     a.rotate_array_callback(dog_mesh_position, [], [], 0, 2000)
     // function dog_mesh_position_x(x) { dog_mesh.position.x = x }
