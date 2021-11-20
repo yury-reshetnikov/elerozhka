@@ -506,6 +506,13 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	// head === [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 65, 66, 67, 116, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459]
     }
     // ищем хвост - хвост искать в converter
+    if(1) { // ищем сдвоенную точку в нижней челюсти // не 448
+        let n = 0
+	for(let p = 0; p < g.attributes.position.count; ++p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
+            if((v.x > 5.8 && v.x < 6.1 && v.y > 3.1 && v.y < 3.3 && v.z > 0.25 && v.z < 0.4)) console.log (++n, p, v)
+	}
+    }
 })
 
 function Rare() {
@@ -615,10 +622,10 @@ function HeadNeck() {
 
 function LowerJaw() {
     this.points = [8, 14, 19, 53, 54, 55, 60, 61, 7, 9, 15, 17, 447, 451, 453, 454, 455]
+    let g = window.dog
     let center = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 452)
     let bases
     this.current_angle = 0
-    let g = window.dog
     this.calc_bases = function() {
 	bases = []
 	this.points.forEach(function(p) {
