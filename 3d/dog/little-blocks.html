@@ -158,7 +158,7 @@ function calc_center(list) {
 
 window.tail = {
     points: [
-	[355],
+	[354],
     ],
     bases: [], // 0..6
     delta: 0.2,
@@ -463,9 +463,9 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	}
 	console.log('front',front,'back',back)
     }
-    if(0) { // ищем шею и голову
-	let body_front_circle = [81, 82, 84, 86, 87, 89, 90, 92]
-	let body_back_circle = [83, 85, 88, 91, 130, 131, 132, 133]
+    if(1) { // ищем шею и голову
+	let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
+	let body_back_circle = [82, 84, 87, 90, 129, 130, 131, 132]
 	let l1 = lp(g, body_front_circle,
 		    body_back_circle.concat(frpaw.get_points()[6]).concat(flpaw.get_points()[6]))
 	console.log(l1)
@@ -481,6 +481,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	// 62, 68 - часть нижнего ободка шеи
 	// 63, 72, 73, 74, 76 - часть верхнего ободка шеи
 	// 105, 107, 108 - центр груди
+	return
 	let l3 = lp(g, l2, l1)
 	console.log(l3)
 	console.log(map_points_to_vectors(g, l3))
