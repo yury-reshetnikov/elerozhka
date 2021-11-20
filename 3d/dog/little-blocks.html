@@ -311,10 +311,10 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.dog_mesh = mesh
     tail.init()
     window.tail = tail
-    window.frpaw = new Paw(mesh.geometry, [220, 223, 230]) // front right paw
-    window.flpaw = new Paw(mesh.geometry, [187, 189, 197])
-    window.brpaw = new Paw(mesh.geometry, [389, 390, 433]) // back right paw
-    window.blpaw = new Paw(mesh.geometry, [380, 381, 396])
+    window.frpaw = new Paw(mesh.geometry, [219, 222, 229]) // front right paw
+    window.flpaw = new Paw(mesh.geometry, [186, 188, 196])
+    window.brpaw = new Paw(mesh.geometry, [388, 389, 432]) // back right paw
+    window.blpaw = new Paw(mesh.geometry, [379, 380, 395])
     window.rare = new Rare()
     window.body = new Body()
     window.head_neck = new HeadNeck()
@@ -506,7 +506,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 	// head === [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 65, 66, 67, 116, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459]
     }
     // ищем хвост - хвост искать в converter
-    if(1) { // ищем сдвоенную точку в нижней челюсти // не 448
+    if(0) { // ищем сдвоенную точку в нижней челюсти // не 448
         let n = 0
 	for(let p = 0; p < g.attributes.position.count; ++p) {
             let v = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p)
@@ -516,7 +516,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
 })
 
 function Rare() {
-    this.points = [243, 244, 245, 247, 248, 249, 250, 251, 253, 268, 271, 272, 273, 274, 246, 267]
+    this.points = [242, 243, 244, 246, 247, 248, 249, 250, 252, 267, 270, 271, 272, 273, 245, 266]
     let center = new THREE.Vector3(-4, -0.3, 0) // -5.5, -0.4, 0
     let bases
     this.current_angle = 0
@@ -545,7 +545,7 @@ function Rare() {
 
 function Body() {
     // были удалены точки 81 и 82
-    this.points = [81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 130, 131, 132, 133] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
+    this.points = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 129, 130, 131, 132] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
     let center = new THREE.Vector3(2, -1.2, 0)
     let bases = []
     this.current_angle = 0
