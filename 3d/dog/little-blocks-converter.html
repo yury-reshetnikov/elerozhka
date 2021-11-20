@@ -83,6 +83,16 @@ function correct_tail(g, update) {
     if(update) g.attributes.position.needsUpdate = true
 }
 
+function correct_jaw(g) {
+    let pos = g.attributes.position.array
+    let lo = [17, 54, 52, 53, 59, 60, 446]
+    let up = [5, 65, 64, 449, 66, 448, 447]
+    lo.forEach(function(p,i) {
+	for(let n = 0; n < 3; ++n)
+	    pos[p*3+n] = pos[up[i]*3+n]
+    })
+}
+
 let loader = new GLTFLoader()
 loader.load('little-blocks.glb', function(gltf) {
     let g = gltf.scene.children[2].geometry
@@ -138,6 +148,7 @@ loader.load('little-blocks.glb', function(gltf) {
 	console.log('tail_points', tail_points)
     }
     correct_tail(buf, false)
+    correct_jaw(buf)
     let dog = new THREE.Mesh(buf, gltf.scene.children[2].material)
     let exporter = new GLTFExporter()
     exporter.parse(dog, function(data) {

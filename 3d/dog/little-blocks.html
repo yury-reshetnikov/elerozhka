@@ -346,6 +346,41 @@ loader.load('little-blocks-conv.glb', function(gltf) {
         // next = [7, 9, 15, 17, 446, 450, 452, 453, 454]
         // 451 - лишняя
     }
+    function sort_points_z(a,b) {
+        let av = (new THREE.Vector3()).fromBufferAttribute(
+	    g.attributes.position, a)
+        let bv = (new THREE.Vector3()).fromBufferAttribute(
+	    g.attributes.position, b)
+	return av.z - bv.z
+    }
+    if(0) { // ищем точки челюстей для корректировки - нижняя
+	let n = 0
+	let a = []
+	jaw.points.forEach(function(p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(
+		g.attributes.position, p)
+	    if(v.y >= 3.15 && v.x >= 6) {
+		a.push(p)
+		console.log(++n, p, v)
+	    }
+	})
+	console.log(a.sort((a,b)=>a-b)) // [17, 52, 53, 54, 59, 60, 446]
+	console.log(a.sort(sort_points_z)) // [17, 54, 52, 53, 59, 60, 446]
+    }
+    if(0) { // ищем точки челюстей для корректировки - верхняя
+	let n = 0
+	let a = []
+	head_neck.points.forEach(function(p) {
+            let v = (new THREE.Vector3()).fromBufferAttribute(
+		g.attributes.position, p)
+	    if(!jaw.points.includes(p) && v.y <= 3.25 && v.x >= 6) {
+		a.push(p)
+		console.log(++n, p, v)
+	    }
+	})
+	console.log(a.sort((a,b)=>a-b)) // [5, 64, 65, 66, 447, 448, 449]
+	console.log(a.sort(sort_points_z)) // [5, 65, 64, 449, 66, 448, 447]
+    }
     if(0) { // ищем заново глаза после добавления рта
 	let n = 0, eye_points = []
 	for(let p = 0; p < g.attributes.position.count; ++p) {
