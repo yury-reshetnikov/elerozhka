@@ -591,7 +591,7 @@ function Body() {
         let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center)
         bases.push(v.x, v.y, v.z)
         let vr = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center_rare)
-        bases_rare.push(v.x, v.y, v.z)
+        bases_rare.push(vr.x, vr.y, vr.z)
     })
     function paw_bases(paw) {
         let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(paw.get_base_rotation_center()), center)
