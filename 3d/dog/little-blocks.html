@@ -715,8 +715,7 @@ loader.load('bone.glb', function(gltf) {
     mesh.castShadow = true
     mesh.position.set(10,-6.6,0)
     mesh.rotation.set(0,Math.PI/2,0)
-    scene.add(mesh)
-    // bone.style.display = 'none'
+    // scene.add(mesh)
 })
 
 camera.position.set(-4, 0, 14)
@@ -1915,7 +1914,7 @@ window.turn_button_click = function() {
 }
 
 window.bone_button_click = function() {
-    bone.style.display = ''
+    window.bone.scene.add(mesh)
 }
 
   </script>
