@@ -707,6 +707,17 @@ loader.load('tile.glb', function(gltf) {
 	}
 })
 
+loader.load('bone.glb', function(gltf) {
+    let mesh = gltf.scene.children[1]
+    let material = new THREE.MeshStandardMaterial({ color: 0xCD853F })
+    mesh.material = material
+    mesh.receiveShadow = true
+    mesh.castShadow = true
+    mesh.position.set(0,-7,0)
+    scene.add(mesh)
+    // bone.style.display = 'none'
+})
+
 camera.position.set(-4, 0, 14)
 let controls = new THREE.OrbitControls( camera, renderer.domElement )
 
@@ -1902,6 +1913,10 @@ window.turn_button_click = function() {
     else turnback(window.animate_speed)
 }
 
+window.bone_button_click = function() {
+    bone.style.display = ''
+}
+
   </script>
   <div align="center" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
@@ -1913,6 +1928,7 @@ window.turn_button_click = function() {
     <p><button id="paw_button" onclick="paw_button_click()">Лапу!</button></p>
     <p><button id="standup_button" onclick="standup_button_click()">Вверх!</button></p>
     <p><button id="turn_button" style="display:none" onclick="turn_button_click()">Поворот!</button></p>
+    <p><button id="bone_button" onclick="bone_button_click()">Косточка</button></p>
   </div>
 </body>
 </html>
