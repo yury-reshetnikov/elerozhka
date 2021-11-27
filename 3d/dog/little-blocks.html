@@ -583,12 +583,15 @@ function Body() {
     let center = new THREE.Vector3(2, -1.2, 0)
     let center_rare = new THREE.Vector3(-3, -0.34, 0)
     let bases = []
+    let bases_rare = []
     this.current_angle = 0
     let g = window.dog
     this.points = this.points.concat(tail.points.flat()).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat()).concat(rare.points)
     this.points.forEach(function(p) {
         let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center)
         bases.push(v.x, v.y, v.z)
+        let vr = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center_rare)
+        bases_rare.push(v.x, v.y, v.z)
     })
     function paw_bases(paw) {
         let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromArray(paw.get_base_rotation_center()), center)
@@ -626,7 +629,7 @@ function Body() {
         this.current_angle = angle_z
         let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
 	this.points.forEach(function(p,i) {
-	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
+	    let v = (new THREE.Vector3()).fromArray(bases_rare, i*3).applyQuaternion(angle)
 	    let d = (new THREE.Vector3()).addVectors(center_rare, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
