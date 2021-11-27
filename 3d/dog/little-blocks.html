@@ -708,12 +708,13 @@ loader.load('tile.glb', function(gltf) {
 })
 
 loader.load('bone.glb', function(gltf) {
-    let mesh = gltf.scene.children[1]
+    let mesh = gltf.scene.children[2]
     let material = new THREE.MeshStandardMaterial({ color: 0xCD853F })
     mesh.material = material
     mesh.receiveShadow = true
     mesh.castShadow = true
-    mesh.position.set(0,-7,0)
+    mesh.position.set(10,-6.6,0)
+    mesh.rotation.set(0,Math.PI/2,0)
     scene.add(mesh)
     // bone.style.display = 'none'
 })
