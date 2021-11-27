@@ -581,6 +581,7 @@ function Body() {
     // были удалены точки 81 и 82
     this.points = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 129, 130, 131, 132] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
     let center = new THREE.Vector3(2, -1.2, 0)
+    let center_rare = new THREE.Vector3(-3, -0.34, 0)
     let bases = []
     this.current_angle = 0
     let g = window.dog
@@ -619,6 +620,16 @@ function Body() {
 	paw_center(blpaw, this.blpaw_bases)
 	rare.get_center().copy((new THREE.Vector3()).addVectors(center, (new THREE.Vector3()).copy(rare_center_base).applyQuaternion(angle)))
 	rare.calc_bases()
+        g.attributes.position.needsUpdate = true
+    }
+    this.rotate_around_rare = function(angle_z) {
+        this.current_angle = angle_z
+        let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
+	this.points.forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(center_rare, v)
+	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	})
         g.attributes.position.needsUpdate = true
     }
 }
@@ -1919,7 +1930,7 @@ window.bone = function(tm) {
     let time_from = 200
     let time_to = 700
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-90], time_from, time_to)
-    a.rotate_array_callback(body.rotate.bind(body), [0], [-15], time_from, time_to)
+    a.rotate_array_callback(body.rotate_around_rare.bind(body), [0], [-15], time_from, time_to)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [0,0,40,0,0,-50,0,0,0],
