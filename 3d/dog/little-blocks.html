@@ -713,7 +713,7 @@ loader.load('bone.glb', function(gltf) {
     mesh.material = material
     mesh.receiveShadow = true
     mesh.castShadow = true
-    mesh.position.set(10,-6.6,0)
+    mesh.position.set(6,-6.6,0)
     mesh.rotation.set(0,Math.PI/2,0)
     window.bone_mesh = mesh
 })
@@ -1913,8 +1913,28 @@ window.turn_button_click = function() {
     else turnback(window.animate_speed)
 }
 
+window.bone = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    let time_from = 200
+    let time_to = 700
+    a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-90], time_from, time_to)
+    a.rotate_array_callback(body.rotate.bind(body), [0], [-15], time_from, time_to)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,40,0,0,-50,0,0,0],
+        time_from, time_to)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,40,0,0,-50,0,0,0],
+        time_from, time_to)
+    a.start()
+    return a
+}
+
 window.bone_button_click = function() {
     scene.add(window.bone_mesh)
+    bone(window.animate_speed)
 }
 
   </script>
