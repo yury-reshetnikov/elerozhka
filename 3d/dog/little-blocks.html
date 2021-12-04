@@ -729,9 +729,12 @@ loader.load('bone.glb', function(gltf) {
     mesh.material = material
     mesh.receiveShadow = true
     mesh.castShadow = true
-    mesh.position.set(5.3,-6.6,0)
+    mesh.position.set(5.3 - 1.9, -6.6, 0)
     mesh.rotation.set(0,Math.PI/2,0)
     window.bone_mesh = mesh
+    window.bone_pivot = new THREE.Object3D()
+    window.bone_pivot.add(mesh)
+    window.bone_pivot.position.set(1.9, 0, 0)
 })
 
 camera.position.set(-4, 0, 14)
@@ -1985,7 +1988,7 @@ window.bone = function(tm) {
 }
 
 window.bone_button_click = function() {
-    scene.add(window.bone_mesh)
+    scene.add(window.bone_pivot)
     bone(window.animate_speed)
 }
 
