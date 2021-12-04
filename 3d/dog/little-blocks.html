@@ -1939,7 +1939,7 @@ window.bone = function(tm) {
     //a.rotate_array_callback(body.rotate.bind(body), [0], [-15], time_from+100, time_to)
     let delta_x = dog_mesh.geometry.attributes.position.array[389*3+0]
     let delta_y = dog_mesh.geometry.attributes.position.array[389*3+1]
-    let frpaw_footpoint = 219*3
+    let frpaw_footpoint = 222*3
     let leg_y = dog_mesh.geometry.attributes.position.array[frpaw_footpoint+1] - body.get_center().y
     let leg_x = delta_x - body.get_center().x
     let base_angle = Math.acos(leg_y / Math.sqrt(leg_y*leg_y + leg_x*leg_x))
@@ -1947,7 +1947,8 @@ window.bone = function(tm) {
         let leg_y = dog_mesh.geometry.attributes.position.array[frpaw_footpoint+1] - body.get_center().y
         let leg_x = dog_mesh.geometry.attributes.position.array[389*3+0] - body.get_center().x
         let current_angle = Math.acos(leg_y / Math.sqrt(leg_y*leg_y + leg_x*leg_x))
-        body.rotate(current_angle - base_angle)
+	// console.log('c', current_angle, 'b', base_angle, 'd', current_angle - base_angle)
+        body.rotate(THREE.MathUtils.radToDeg(current_angle - base_angle))
 	dog_mesh.position.x = delta_x -
 	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
@@ -1972,7 +1973,7 @@ window.bone = function(tm) {
     }
     a.rotate_array_callback(jaw_rotate, [0], [-30], 800, 900)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-100], [0], time_to+200, time_final)
-    a.rotate_array_callback(body.rotate.bind(body), [-15], [0], time_to+100, time_final)
+    // a.rotate_array_callback(body.rotate.bind(body), [-15], [0], time_to+100, time_final)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,20,0,0,-105,0,0,65],
         [0,0,0,0,0,0,0,0,0],
