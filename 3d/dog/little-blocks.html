@@ -671,10 +671,11 @@ function HeadNeck() {
 function LowerJaw() {
     this.points = [8, 14, 18, 52, 53, 54, 59, 60, 7, 9, 15, 17, 446, 450, 452, 453, 454]
     let g = window.dog
-    let center = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 451)
+    let center
     let bases
     this.current_angle = 0
     this.calc_bases = function() {
+        center = (new THREE.Vector3()).fromBufferAttribute(g.attributes.position, 451)
 	bases = []
 	this.points.forEach(function(p) {
             let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), center)
@@ -1952,7 +1953,8 @@ window.bone = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         [0,0,20,0,0,-105,0,0,65],
         time_from, time_to)
-    //a.rotate_array_callback(jaw.rotate, [0], [-30], 700, 900)
+    jaw.calc_bases()
+    a.rotate_array_callback(jaw.rotate.bind(jaw), [0], [-30], 700, 900)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-100], [0], time_to+100, time_final)
     a.rotate_array_callback(body.rotate.bind(body), [-15], [0], time_to, time_final)
     a.rotate_array_callback(frpaw.rotate,
