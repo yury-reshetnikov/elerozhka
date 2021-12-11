@@ -729,12 +729,12 @@ loader.load('bone.glb', function(gltf) {
     mesh.material = material
     mesh.receiveShadow = true
     mesh.castShadow = true
-    mesh.position.set(5.3 - 1.9, -6.6, 0)
+    mesh.position.set(5.3 + 3.5, -6.6 + 1.5, 0)
     mesh.rotation.set(0,Math.PI/2,0)
     window.bone_mesh = mesh
     window.bone_pivot = new THREE.Object3D()
     window.bone_pivot.add(mesh)
-    window.bone_pivot.position.set(1.9, 0, 0)
+    window.bone_pivot.position.set(-3.5, -1.5, 0)
 })
 
 camera.position.set(-4, 0, 14)
@@ -1955,8 +1955,11 @@ window.bone = function(tm) {
 	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
 	    dog_mesh.geometry.attributes.position.array[389*3+1]
-        bone_pivot.position.x = dog_mesh.position.x + 1.9
-        bone_pivot.position.y = dog_mesh.position.y
+	// console.log(dog_mesh.position.x)
+	if(!first_jaw_rotate_call) {
+            bone_pivot.position.x = dog_mesh.position.x - 1.224 - 3.5
+            bone_pivot.position.y = dog_mesh.position.y + 1.5 - 1.5
+	}
     }
     function fpaw_rotate(a,b,c,d,e,f,g,h,i) {
 	frpaw.rotate(a,b,c,d,e,f,g,h,i)
@@ -1982,9 +1985,7 @@ window.bone = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         time_to+200, time_final)
     function bone_pivot_rotation(z) { bone_pivot.rotation.z = z }
-    if(!first_jaw_rotate_call) {
-        a.rotate_array_callback(bone_pivot_rotation, [0], [Math.PI/4], time_to+200, time_final)
-    }
+    a.rotate_array_callback(bone_pivot_rotation, [0], [Math.PI/4], time_to+200, time_final)
     a.start()
     return a
 }
