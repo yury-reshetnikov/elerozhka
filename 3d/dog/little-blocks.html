@@ -735,7 +735,6 @@ loader.load('bone.glb', function(gltf) {
     window.bone_pivot = new THREE.Object3D()
     window.bone_pivot.add(mesh)
     window.bone_pivot.position.set(1.9, 0, 0)
-    //bone_pivot.add(bone)
 })
 
 camera.position.set(-4, 0, 14)
@@ -1956,6 +1955,8 @@ window.bone = function(tm) {
 	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
 	    dog_mesh.geometry.attributes.position.array[389*3+1]
+        bone_pivot.position.x = dog_mesh.position.x + 1.9
+        bone_pivot.position.y = dog_mesh.position.y
     }
     function fpaw_rotate(a,b,c,d,e,f,g,h,i) {
 	frpaw.rotate(a,b,c,d,e,f,g,h,i)
@@ -1980,32 +1981,10 @@ window.bone = function(tm) {
         [0,0,20,0,0,-105,0,0,65],
         [0,0,0,0,0,0,0,0,0],
         time_to+200, time_final)
-    /*
-    let geometry = new THREE.PlaneGeometry( 0.2, 0.5, 0.2 );
-    mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(0, -.25, 0);
-    scene.add(mesh);
-
-    let geo2 = geometry.clone();
-    geo2.rotateZ(THREE.Math.degToRad(90)); // ROTATE GEOMETRY SO IT'S IN THE CORRECT ORIENTATION
-    let mesh2 = new THREE.Mesh( geo2, material );
-    mesh2.position.set( 0, .25, 0 ); // MOVE THE GEOMOETRY UP BY HALF SO PIVOT IS AT THE BOTTOM OF THE GEO
-    mesh2.rotation.set(0, 0, Math.PI / 2);
-    mesh.add(mesh2);
-
-    pivot = new THREE.Group();
-    pivot.position.set( 0.0, 0.25, 0 ); // MOVE THE PIVOT BACK TO WORLD ORIGN
-    mesh.add( pivot ); // THIS ADDS THE PIVOT TO THE CENTRE OF THE GEOMOETRY, WHICH WAS THEN ADDING MESH2 IN THE WRONG PLACE
-    pivot.add( mesh2 );
-
-    scene.add( new THREE.AxesHelper() );
-
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
-
-    a.rotate_array_callback(pivot.rotation.z, [0], [90], time_to+200, time_final)
-    */
+    function bone_pivot_rotation(z) { bone_pivot.rotation.z = z }
+    if(!first_jaw_rotate_call) {
+        a.rotate_array_callback(bone_pivot_rotation, [0], [Math.PI/4], time_to+200, time_final)
+    }
     a.start()
     return a
 }
