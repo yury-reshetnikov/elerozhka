@@ -730,12 +730,12 @@ loader.load('bone.glb', function(gltf) {
     mesh.material = material
     mesh.receiveShadow = true
     mesh.castShadow = true
-    // mesh.position.set(5.3 - bone_pivot_x, -6.6 - bone_pivot_y, 0)
+    mesh.position.set(-1, 0, 0)
     mesh.rotation.set(0,Math.PI/2,0)
     window.bone_mesh = mesh
     window.bone_pivot2 = new THREE.Object3D()
     window.bone_pivot2.add(mesh)
-    window.bone_pivot2.position.set(5.3 - bone_pivot_x, -6.6 - bone_pivot_y, 0)
+    window.bone_pivot2.position.set(5.3 - bone_pivot_x + 1, -6.6 - bone_pivot_y, 0)
     window.bone_pivot = new THREE.Object3D()
     window.bone_pivot.add(window.bone_pivot2)
     window.bone_pivot.position.set(bone_pivot_x, bone_pivot_y, 0)
@@ -1999,7 +1999,7 @@ window.bone = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         time_to+200+200, time_final+200)
     function bone_pivot_rotation(z) { bone_pivot.rotation.z = z }
-    a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(100)], time_to+200+200, time_final+200)
+    a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(90)], time_to+200+200, time_final+200)
     a.start()
     return a
 }
