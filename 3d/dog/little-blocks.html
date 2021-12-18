@@ -730,12 +730,12 @@ loader.load('bone.glb', function(gltf) {
     mesh.material = material
     mesh.receiveShadow = true
     mesh.castShadow = true
-    mesh.position.set(-1, 0, 0)
+    // mesh.position.set(0, 0, 0)
     mesh.rotation.set(0,Math.PI/2,0)
     window.bone_mesh = mesh
     window.bone_pivot2 = new THREE.Object3D()
     window.bone_pivot2.add(mesh)
-    window.bone_pivot2.position.set(5.3 - bone_pivot_x + 1, -6.6 - bone_pivot_y, 0)
+    window.bone_pivot2.position.set(5.3 - bone_pivot_x, -6.6 - bone_pivot_y, 0)
     window.bone_pivot = new THREE.Object3D()
     window.bone_pivot.add(window.bone_pivot2)
     window.bone_pivot.position.set(bone_pivot_x, bone_pivot_y, 0)
@@ -1991,15 +1991,20 @@ window.bone = function(tm) {
 	}
     }
     // a.rotate_array_callback(second_jaw_rotate, [0], [0], time_to+200, time_to+400)
-    function bone_mesh_rotation(z) { bone_pivot2.rotation.z = z }
-    a.rotate_array_callback(bone_mesh_rotation, [0], [-Math.PI/2], time_to+200, time_to+400)
+    function bone_mesh_rotation(rz,px,py) {
+	bone_pivot2.rotation.z = rz
+	bone_mesh.position.x = px
+	bone_mesh.position.y = py
+    }
+    a.rotate_array_callback(bone_mesh_rotation, [0,0,0], [-Math.PI*5/16,0,0.5], time_to+200, time_to+300)
+    a.rotate_array_callback(bone_mesh_rotation, [-Math.PI*5/16,0,0.5], [-Math.PI/2-Math.PI/8,-0.7,0], time_to+300, time_to+400)
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [-100], [0], time_to+200+200, time_final+200)
     a.rotate_array_callback(fpaw_rotate,
         [0,0,20,0,0,-105,0,0,65],
         [0,0,0,0,0,0,0,0,0],
         time_to+200+200, time_final+200)
     function bone_pivot_rotation(z) { bone_pivot.rotation.z = z }
-    a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(90)], time_to+200+200, time_final+200)
+    a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(100)], time_to+200+200, time_final+200)
     a.start()
     return a
 }
