@@ -2067,12 +2067,12 @@ window.throw_bone = function(tm) {
 	}
     }
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 0, 100)
-    a.rotate_array_callback(head.rotate.bind(head), [0], [45], 0, 100)
+    a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(45)], 0, 100)
     function bone_pivot_rotation(y) { bone_pivot.rotation.y = y }
     a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(30)], 0, 100)
     function bone_mesh_position(y) { bone_mesh.position.y = y }
     a.rotate_array_callback(bone_mesh_position, [0], [-10], 100, 500)
-    a.rotate_array_callback(head.rotate.bind(head), [45], [0], 500, 600)
+    a.rotate_array_callback(head.rotate.bind(head), [THREE.MathUtils.degToRad(45)], [0], 500, 600)
     a.start()
     return a
 }
