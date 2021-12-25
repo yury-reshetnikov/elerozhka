@@ -2070,10 +2070,12 @@ window.throw_bone = function(tm) {
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(45)], 0, 100)
     function bone_pivot_rotation(y) { bone_pivot.rotation.y = y }
     a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(30)], 0, 100)
-    function bone_pivot_position(y) { bone_pivot.position.y = y }
-    a.rotate_array_callback(bone_pivot_position, [0], [-10], 100, 500)
-    function bone_pivot2_rotation(z) { bone_pivot2.rotation.z = z }
-    a.rotate_array_callback(bone_pivot2_rotation, [THREE.MathUtils.degToRad(30)], [THREE.MathUtils.degToRad(0)], 100, 500)
+    function bone_pivot_position(rz,py,pz) {
+	bone_pivot2.rotation.z = THREE.MathUtils.degToRad(rz)
+	bone_pivot.position.y = py
+	bone_pivot.position.z = pz
+    }
+    a.rotate_array_callback(bone_pivot_position, [-112.5,0,0], [-100,-9.6,-3], 100, 500)
     a.rotate_array_callback(head.rotate.bind(head), [THREE.MathUtils.degToRad(45)], [0], 500, 600)
     a.start()
     return a
