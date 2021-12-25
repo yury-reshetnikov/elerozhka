@@ -2050,23 +2050,7 @@ window.bone_button_click = function() {
 window.throw_bone = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let first_jaw_rotate_call = true
-    function jaw_rotate(angle_z) {
-	if(first_jaw_rotate_call) {
-	    first_jaw_rotate_call = false
-	    jaw.calc_bases()
-	}
-	jaw.rotate(angle_z)
-    }
-    a.rotate_array_callback(jaw_rotate, [-30], [-30], 0, 100)
-    let second_jaw_rotate_call = true
-    function second_jaw_rotate() {
-	if(second_jaw_rotate_call) {
-	    second_jaw_rotate_call = false
-	    head_neck.calc_bases()
-	}
-    }
-    a.rotate_array_callback(second_jaw_rotate, [0], [0], 0, 100)
+    head.calc_bases()
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(45)], 0, 100)
     function bone_pivot_rotation(y) { bone_pivot.rotation.y = y }
     a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(30)], 0, 100)
