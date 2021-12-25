@@ -2060,7 +2060,24 @@ window.throw_bone = function(tm) {
 	bone_pivot.position.z = pz
     }
     a.rotate_array_callback(bone_pivot_position, [-112.5,0,0], [-100,-9.6,-3], 100, 500)
-    a.rotate_array_callback(head.rotate.bind(head), [THREE.MathUtils.degToRad(45)], [0], 500, 600)
+    let first_jaw_rotate_call = true
+    function jaw_rotate(angle_z) {
+	if(first_jaw_rotate_call) {
+	    first_jaw_rotate_call = false
+	    jaw.calc_bases()
+	}
+	jaw.rotate(angle_z)
+    }
+    a.rotate_array_callback(jaw_rotate, [-10], [35], 100, 250)
+    let second_jaw_rotate_call = true
+    function second_jaw_rotate() {
+	if(first_jaw_rotate_call) {
+	    first_jaw_rotate_call = false
+	    jaw.calc_bases()
+	}
+	second_jaw_rotate()
+    }
+    a.rotate_array_callback(head.rotate.bind(head), [THREE.MathUtils.degToRad(45)], [0], 350, 500)
     a.start()
     return a
 }
