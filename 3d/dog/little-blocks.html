@@ -2068,16 +2068,16 @@ window.throw_bone = function(tm) {
 	}
 	jaw.rotate(angle_z)
     }
-    a.rotate_array_callback(jaw_rotate, [-10], [35], 100, 250)
+    a.rotate_array_callback(jaw_rotate, [0], [35], 100, 250)
     let second_jaw_rotate_call = true
     function second_jaw_rotate() {
-	if(first_jaw_rotate_call) {
-	    first_jaw_rotate_call = false
-	    jaw.calc_bases()
+	if(second_jaw_rotate_call) {
+	    second_jaw_rotate_call = false
+	    head.calc_bases()
 	}
-	second_jaw_rotate()
     }
-    a.rotate_array_callback(head.rotate.bind(head), [THREE.MathUtils.degToRad(45)], [0], 350, 500)
+    a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
+    a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
     a.start()
     return a
 }
