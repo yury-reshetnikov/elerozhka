@@ -2050,7 +2050,29 @@ window.bone_button_click = function() {
 window.throw_bone = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
+    let first_jaw_rotate_call = true
+    function jaw_rotate(angle_z) {
+	if(first_jaw_rotate_call) {
+	    first_jaw_rotate_call = false
+	    jaw.calc_bases()
+	}
+	jaw.rotate(angle_z)
+    }
+    a.rotate_array_callback(jaw_rotate, [-30], [-30], 0, 100)
+    let second_jaw_rotate_call = true
+    function second_jaw_rotate() {
+	if(second_jaw_rotate_call) {
+	    second_jaw_rotate_call = false
+	    head_neck.calc_bases()
+	}
+    }
+    a.rotate_array_callback(second_jaw_rotate, [0], [0], 0, 100)
     a.rotate_array_callback(head.rotate.bind(head), [0], [45], 0, 100)
+    function bone_pivot_rotation(y) { bone_pivot.rotation.y = y }
+    a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(30)], 0, 100)
+    function bone_mesh_position(y) { bone_mesh.position.y = y }
+    a.rotate_array_callback(bone_mesh_position, [0], [-10], 100, 500)
+    a.rotate_array_callback(head.rotate.bind(head), [45], [0], 500, 600)
     a.start()
     return a
 }
@@ -2061,17 +2083,17 @@ window.throw_bone_button_click = function() {
 
   </script>
   <div align="center" style="position:absolute;right:10px">
-    <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём!</button></p>
-    <p><button id="run_button" onclick="run_button_click()">Побежали!</button></p>
+    <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём</button></p>
+    <p><button id="run_button" onclick="run_button_click()">Побежали</button></p>
     <p><button id="tail_wag_button" onclick="tail_wag_button_click()">:)</button></p>
-    <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри!</button></p>
-    <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть!</button></p>
-    <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать!</button></p>
-    <p><button id="paw_button" onclick="paw_button_click()">Лапу!</button></p>
-    <p><button id="standup_button" onclick="standup_button_click()">Вверх!</button></p>
-    <p><button id="turn_button" style="display:none" onclick="turn_button_click()">Поворот!</button></p>
+    <p id="stop_all_par" style="display:none"><button id="stop_all_button" onclick="stop_all_button_click()">Замри</button></p>
+    <p><button id="sit_stand_button" onclick="sit_stand_button_click()">Сидеть</button></p>
+    <p id="liedown_par" style="display:none"><button id="liedown_button" onclick="liedown_button_click()">Лежать</button></p>
+    <p><button id="paw_button" onclick="paw_button_click()">Лапу</button></p>
+    <p><button id="standup_button" onclick="standup_button_click()">Вверх</button></p>
+    <p><button id="turn_button" style="display:none" onclick="turn_button_click()">Поворот</button></p>
     <p><button id="bone_button" onclick="bone_button_click()">Косточка</button></p>
-    <p><button id="bone_button" onclick="throw_bone_button_click()">Брось косточку!</button></p>
+    <p><button id="bone_button" onclick="throw_bone_button_click()">Брось косточку</button></p>
   </div>
 </body>
 </html>
