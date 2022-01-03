@@ -682,6 +682,8 @@ function Head() {
     let bases
     this.current_angle = 0
     let g = window.dog
+    let z_axis_base = new THREE.Vector3(0,0,1)
+    this.z_axis = z_axis_base
     this.calc_bases = function() {
 	bases = []
 	this.points.forEach(function(p) {
@@ -691,6 +693,7 @@ function Head() {
     }
     this.calc_bases()
     this.rotate = function(angle_y) {
+	// console.log(THREE.MathUtils.radToDeg(angle_y))
         this.current_angle = angle_y
         let angle = (new THREE.Quaternion()).setFromAxisAngle(axis, angle_y)
 	this.points.forEach(function(p,i) {
@@ -698,6 +701,9 @@ function Head() {
 	    let d = (new THREE.Vector3()).addVectors(centre, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
+	this.z_axis = z_axis_base.clone()
+	this.z_axis.applyQuaternion(angle)
+	// console.log('a:', angle_y, 'b:', z_axis_base, 'axis:', this.z_axis)
         g.attributes.position.needsUpdate = true
     }
 }
@@ -717,15 +723,21 @@ function LowerJaw() {
 	})
     }
     this.calc_bases()
-    this.rotate = function(angle_z) {
-        this.current_angle = angle_z
-        let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
+    this.rotate_angle = function(angle) {
 	this.points.forEach(function(p,i) {
 	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
 	    let d = (new THREE.Vector3()).addVectors(centre, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
         g.attributes.position.needsUpdate = true
+    }
+    this.rotate = function(angle_z) {
+        this.current_angle = angle_z
+        this.rotate_angle((new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ')))
+    }
+    this.rotate_axis = function(axis, angle_z) {
+        this.current_angle = angle_z
+        this.rotate_angle((new THREE.Quaternion()).setFromAxisAngle(axis, angle_z))
     }
     this.get_centre = function() { return centre }
 }
@@ -2065,23 +2077,11 @@ window.throw_bone = function(tm) {
 	if(first_jaw_rotate_call) {
 	    first_jaw_rotate_call = false
 	    jaw.calc_bases()
+	    // console.log(THREE.MathUtils.radToDeg(head.current_angle), head.z_axis)
 	}
-	/*
-        let axis = (new THREE.Vector3(0,0,1)).normalize()
-        jaw.rotate = function(angle_z) {
-            jaw.current_angle = angle_z
-            let angle = (new THREE.Quaternion()).setFromAxisAngle(axis, angle_z)
-	    jaw.points.forEach(function(p,i) {
-		let v = (new THREE.Vector3()).fromArray(jaw.bases, i*3).applyQuaternion(angle)
-		let d = (new THREE.Vector3()).addVectors(jaw.centre, v)
-		g.attributes.position.setXYZ(p, d.x, d.y, d.z)
-	    })
-            g.attributes.position.needsUpdate = true
-	}
-	*/
-	jaw.rotate(angle_z)
+	jaw.rotate_axis(head.z_axis, THREE.MathUtils.degToRad(angle_z))
     }
-    a.rotate_array_callback(jaw_rotate, [0], [35], 100, 250)
+    a.rotate_array_callback(jaw_rotate, [0], [30], 100, 250)
     let second_jaw_rotate_call = true
     function second_jaw_rotate() {
 	if(second_jaw_rotate_call) {
