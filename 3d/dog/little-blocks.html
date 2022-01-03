@@ -18,7 +18,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
-let thrown_bone
+let thrown_bone, thrown_bone_start_x
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -747,6 +747,7 @@ let loadManager = new THREE.LoadingManager()
 let texture_loader = new THREE.TextureLoader(loadManager)
 
 let tiles = []
+let tile_x_size = 3.42
 
 loader.load('tile.glb', function(gltf) {
     let mesh = gltf.scene.children[1]
@@ -801,11 +802,18 @@ function dog_updown(y) {
     dog_mesh.position.y = y
 }
 
-window.move_tiles = function(x) {
+function move_tiles(x) {
     tiles.forEach(function(tile) {
         tile.m.position.x = tile.x + tile_delta_x - x
     })
-    if(thrown_bone) thrown_bone.position.x = bone_pivot.position.x - x
+    if(thrown_bone) {
+	let new_x = thrown_bone_start_x - x
+	if(thrown_bone.position.x >= new_x) thrown_bone.position.x = new_x
+	else {
+	    thrown_bone.position.x = new_x - tile_x_size
+	    thrown_bone_start_x -= tile_x_size
+	}
+    }
 }
 
 window.go = function(tm) {
@@ -870,7 +878,7 @@ window.go = function(tm) {
     two(brpaw)
     let tile_start = 300
     let tile_period = 417.68
-    a.rotate_array_callback(move_tiles, [0], [3.42], tile_start, tile_start + tile_period, tile_period)
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size], tile_start, tile_start + tile_period, tile_period)
     a.rotate_array_callback(dog_updown, [0], [-0.4], 300, 550, 500)
     a.rotate_array_callback(dog_updown, [-0.4], [0], 550, 800, 500)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
@@ -2082,6 +2090,7 @@ window.throw_bone = function(tm) {
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
     thrown_bone = bone_pivot
+    thrown_bone_start_x = bone_pivot.position.x
     a.start()
     return a
 }
