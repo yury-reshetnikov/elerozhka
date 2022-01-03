@@ -18,6 +18,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
+let thrown_bone
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -800,6 +801,13 @@ function dog_updown(y) {
     dog_mesh.position.y = y
 }
 
+window.move_tiles = function(x) {
+    tiles.forEach(function(tile) {
+        tile.m.position.x = tile.x + tile_delta_x - x
+    })
+    if(thrown_bone = true) bone.position.x = bone.x + tile_delta_x - x
+}
+
 window.go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
@@ -862,13 +870,7 @@ window.go = function(tm) {
     two(brpaw)
     let tile_start = 300
     let tile_period = 417.68
-    a.rotate_array_callback(function(x) {
-        tiles.forEach(function(tile) {
-            tile.m.position.x = tile.x + tile_delta_x - x
-        })
-    },
-    [0], [3.42], tile_start, tile_start + tile_period, tile_period
-    )
+    a.rotate_array_callback(move_tiles, [0], [3.42], tile_start, tile_start + tile_period, tile_period)
     a.rotate_array_callback(dog_updown, [0], [-0.4], 300, 550, 500)
     a.rotate_array_callback(dog_updown, [-0.4], [0], 550, 800, 500)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
@@ -1484,13 +1486,7 @@ window.stand = function(tm) {
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
         1100, 1500)
-    a.rotate_array_callback(function(x) {
-        tiles.forEach(function(tile) {
-            tile.m.position.x = tile.x + tile_delta_x - x
-        })
-    },
-    [0], [3.42], 1100, 1500
-    )
+    a.rotate_array_callback(move_tiles, [0], [3.42], 1100, 1500)
     a.finish(function() {
 	document.getElementById('sit_stand_button').textContent = 'Сидеть'
 	show_buttons()
@@ -1742,13 +1738,7 @@ window.run = function(tm) {
         1000, 1500, period)
     let tile_start = 0
     let tile_period = 417.68
-    a.rotate_array_callback(function(x) {
-        tiles.forEach(function(tile) {
-            tile.m.position.x = tile.x + tile_delta_x - x
-        })
-    },
-    [0], [6], tile_start, tile_start + tile_period, tile_period
-    )
+    a.rotate_array_callback(move_tiles, [0], [6], tile_start, tile_start + tile_period, tile_period)
     a.rotate_array_callback(dog_updown, [0], [1], 0, 500, 1000)
     a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
     a.finish(function() {
@@ -2091,6 +2081,7 @@ window.throw_bone = function(tm) {
     }
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
+    thrown_bone = true
     a.start()
     return a
 }
