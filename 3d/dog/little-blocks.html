@@ -2066,17 +2066,19 @@ window.throw_bone = function(tm) {
 	    first_jaw_rotate_call = false
 	    jaw.calc_bases()
 	}
+	/*
         let axis = (new THREE.Vector3(0,0,1)).normalize()
         jaw.rotate = function(angle_z) {
-        jaw.current_angle = angle_z
-        let angle = (new THREE.Quaternion()).setFromAxisAngle(axis, angle_z)
-	jaw.points.forEach(function(p,i) {
-	    let v = (new THREE.Vector3()).fromArray(jaw.bases, i*3).applyQuaternion(angle)
-	    let d = (new THREE.Vector3()).addVectors(jaw.centre, v)
-	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
-	})
-        g.attributes.position.needsUpdate = true
-    }
+            jaw.current_angle = angle_z
+            let angle = (new THREE.Quaternion()).setFromAxisAngle(axis, angle_z)
+	    jaw.points.forEach(function(p,i) {
+		let v = (new THREE.Vector3()).fromArray(jaw.bases, i*3).applyQuaternion(angle)
+		let d = (new THREE.Vector3()).addVectors(jaw.centre, v)
+		g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	    })
+            g.attributes.position.needsUpdate = true
+	}
+	*/
 	jaw.rotate(angle_z)
     }
     a.rotate_array_callback(jaw_rotate, [0], [35], 100, 250)

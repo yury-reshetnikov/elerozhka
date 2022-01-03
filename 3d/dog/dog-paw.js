@@ -30,7 +30,7 @@ function Paw(g, foot_points) {
 	points.push(lp(points[points.length-1],
 		       points[points.length-2]))
     // считаем bases
-    let centers = points.map(function(list) {
+    let centres = points.map(function(list) {
 	if(list.length == 0) return
 	else if(list.length == 1) {
 	    let a = list[0] * 3
@@ -45,11 +45,11 @@ function Paw(g, foot_points) {
 	    return s.map((v) => v / list.length)
 	}
     })
-    segments[0].rc = centers[3]
+    segments[0].rc = centres[3]
     segments[1].rc = [0,1,2].map(function(n) {
-	return (centers[4][n] + centers[5][n]) / 2 })
+	return (centres[4][n] + centres[5][n]) / 2 })
     segments[2].rc = [
-	centers[6][0], centers[6][1] + 0.9, centers[6][2] ]
+	centres[6][0], centres[6][1] + 0.9, centres[6][2] ]
     let prev_rc
     for(let s = 0; s <= 2; ++s) {
 	let rc = (new THREE.Vector3()).fromArray(segments[s].rc)
@@ -70,7 +70,7 @@ function Paw(g, foot_points) {
     let current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     this.current_angles = function() { return current_angles }
     this.get_points = function() { return points }
-    this.get_base_rotation_center = function() { return segments[2].rc }
+    this.get_base_rotation_centre = function() { return segments[2].rc }
     this.rotate = function() {
 	current_angles = [...arguments]
 	let angle = new THREE.Quaternion() // +++ TODO учесть текущий поворот корпуса
