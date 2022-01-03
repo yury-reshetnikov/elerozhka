@@ -805,7 +805,7 @@ window.move_tiles = function(x) {
     tiles.forEach(function(tile) {
         tile.m.position.x = tile.x + tile_delta_x - x
     })
-    if(thrown_bone = true) bone.position.x = bone.x + tile_delta_x - x
+    if(thrown_bone) thrown_bone.position.x = bone_pivot.position.x - x
 }
 
 window.go = function(tm) {
@@ -2081,7 +2081,7 @@ window.throw_bone = function(tm) {
     }
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
-    thrown_bone = true
+    thrown_bone = bone_pivot
     a.start()
     return a
 }
