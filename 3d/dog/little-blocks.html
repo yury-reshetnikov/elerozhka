@@ -18,7 +18,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
-let taken_bone, thrown_bone, thrown_bone_start_x
+let taken_bone, thrown_bone, thrown_bone_start_x, thrown_bone_max_x
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -760,11 +760,11 @@ loader.load('tile.glb', function(gltf) {
     for(let x = -20; x <= 20; ++x)
 	for(let y = -4; y <= 4; ++y) {
 	    let mesh1 = mesh.clone()
-	    mesh1.position.set(x * 3.42, -7, y * 2 * 1.666)
+	    mesh1.position.set(x * tile_x_size, -7, y * 2 * 1.666)
 	    scene.add(mesh1)
 	    tiles.push({x: mesh1.position.x, y: mesh1.position.y, z: mesh1.position.z, m: mesh1})
 	    let mesh2 = mesh.clone()
-	    mesh2.position.set(x * 3.42 + 1.71, -7, (y * 2 + 1) * 1.666)
+	    mesh2.position.set(x * tile_x_size + 1.71, -7, (y * 2 + 1) * 1.666)
 	    scene.add(mesh2)
 	    tiles.push({x: mesh2.position.x, y: mesh2.position.y, z: mesh2.position.z, m: mesh2})
 	}
@@ -811,10 +811,10 @@ function move_tiles(x) {
 	let new_x = thrown_bone_start_x - x
 	if(thrown_bone.position.x >= new_x) thrown_bone.position.x = new_x
 	else {
-	    thrown_bone.position.x = new_x - tile_x_size
-	    thrown_bone_start_x -= tile_x_size
+	    thrown_bone.position.x = new_x - thrown_bone_max_x
+	    thrown_bone_start_x -= thrown_bone_max_x
 	}
-	if(thrown_bone.position.x >= tile_x_size /* *? */) scene.remove(window.bone_pivot)
+	if(thrown_bone.position.x <= -20 * tile_x_size) scene.remove(window.bone_pivot)
     }
 }
 
@@ -880,6 +880,7 @@ window.go = function(tm) {
     two(brpaw)
     let tile_start = 300
     let tile_period = 417.68
+    thrown_bone_max_x = tile_x_size
     a.rotate_array_callback(move_tiles, [0], [tile_x_size], tile_start, tile_start + tile_period, tile_period)
     a.rotate_array_callback(dog_updown, [0], [-0.4], 300, 550, 500)
     a.rotate_array_callback(dog_updown, [-0.4], [0], 550, 800, 500)
@@ -1496,7 +1497,8 @@ window.stand = function(tm) {
         [0,0,25,0,0,0,0,0,-25],
         [0,0,0,0,0,0,0,0,0],
         1100, 1500)
-    a.rotate_array_callback(move_tiles, [0], [3.42], 1100, 1500)
+    thrown_bone_max_x = tile_x_size
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size], 1100, 1500)
     a.finish(function() {
 	document.getElementById('sit_stand_button').textContent = 'Сидеть'
 	show_buttons()
@@ -1748,7 +1750,8 @@ window.run = function(tm) {
         1000, 1500, period)
     let tile_start = 0
     let tile_period = 417.68
-    a.rotate_array_callback(move_tiles, [0], [3.42*2], tile_start, tile_start + tile_period, tile_period)
+    thrown_bone_max_x = tile_x_size*2
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size*2], tile_start, tile_start + tile_period, tile_period)
     a.rotate_array_callback(dog_updown, [0], [1], 0, 500, 1000)
     a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
     a.finish(function() {
@@ -2093,7 +2096,13 @@ window.throw_bone = function(tm) {
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
     thrown_bone = bone_pivot
+    taken_bone = false
     thrown_bone_start_x = bone_pivot.position.x
+    a.finish(function() {
+        head.calc_bases()
+        head_neck.calc_bases()
+        jaw.calc_bases()
+    })
     a.start()
     return a
 }
