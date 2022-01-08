@@ -772,6 +772,8 @@ loader.load('tile.glb', function(gltf) {
 })
 
 let bone_pivot_x = 1.9 + 1.224, bone_pivot_y = -1.5
+let bone_pivot_start_x = 10
+let bone_pivot_start_y = 16
 loader.load('bone.glb', function(gltf) {
     let mesh = gltf.scene.children[2]
     let material = new THREE.MeshStandardMaterial({ color: 0xCD853F })
@@ -1969,15 +1971,17 @@ window.turn_button_click = function() {
 window.bone = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let time_from = 200
-    bone_only(a, time_from)
+    a.rotate_array_callback(function(y){bone_pivot.position.y = y }, [bone_pivot_start_y], [bone_pivot_y], 0, 400)
+    //a.rotate_array_callback(function(x){bone_pivot.position.x = x }, [bone_pivot_start_x], [bone_pivot_x], 400, 800)
+
+    bone_only(a, 800)
     a.start()
     return a
 }
 
 function bone_only(a, time_from) {
-    let time_to = 800
-    let time_final = 1600
+    let time_to = time_from + 600
+    let time_final = time_from + 1400
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-100], time_from, time_to)
     let delta_x = dog_mesh.geometry.attributes.position.array[389*3+0]
     let delta_y = dog_mesh.geometry.attributes.position.array[389*3+1]
@@ -2018,7 +2022,7 @@ function bone_only(a, time_from) {
 	}
 	jaw.rotate(angle_z)
     }
-    a.rotate_array_callback(jaw_rotate, [0], [-30], 800, 900)
+    a.rotate_array_callback(jaw_rotate, [0], [-30], time_to, time_to + 100)
     let second_jaw_rotate_call = true
     function second_jaw_rotate() {
 	if(second_jaw_rotate_call) {
@@ -2051,7 +2055,7 @@ window.bone_button_click = function() {
     window.bone_pivot2.position.set(5.3 - bone_pivot_x, -6.6 - bone_pivot_y, 0)
     window.bone_pivot = new THREE.Object3D()
     window.bone_pivot.add(window.bone_pivot2)
-    window.bone_pivot.position.set(bone_pivot_x, bone_pivot_y, 0)
+    window.bone_pivot.position.set(bone_pivot_start_x, bone_pivot_start_y, 0)
     scene.add(window.bone_pivot)
     bone(window.animate_speed)
 }
