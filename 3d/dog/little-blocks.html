@@ -895,6 +895,7 @@ window.go = function(tm) {
 window.stop = function(a, fincb) {
     a.exit_now = true
     tile_delta_x = tiles[0].m.position.x - tiles[0].x
+    while(tile_delta_x < -tile_x_size) tile_delta_x += tile_x_size
     let b = new Animate4;
     [frpaw,flpaw,brpaw,blpaw].forEach(function(paw) {
 	b.rotate_array_callback(paw.rotate,
