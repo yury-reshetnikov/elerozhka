@@ -1970,6 +1970,12 @@ window.bone = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
     let time_from = 200
+    bone_only(a, time_from)
+    a.start()
+    return a
+}
+
+function bone_only(a, time_from) {
     let time_to = 800
     let time_final = 1600
     a.rotate_array_callback(head_neck.rotate.bind(head_neck), [0], [-100], time_from, time_to)
@@ -2036,8 +2042,6 @@ window.bone = function(tm) {
     function bone_pivot_rotation(z) { bone_pivot.rotation.z = z }
     a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(100)], time_to+200+200, time_final+200)
     taken_bone = true
-    a.start()
-    return a
 }
 
 window.bone_button_click = function() {
