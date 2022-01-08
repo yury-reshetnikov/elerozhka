@@ -18,7 +18,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
-let thrown_bone, thrown_bone_start_x
+let taken_bone, thrown_bone, thrown_bone_start_x
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -800,6 +800,7 @@ animate()
 let tile_delta_x = 0
 function dog_updown(y) {
     dog_mesh.position.y = y
+    if(taken_bone) bone_pivot.position.y = y
 }
 
 function move_tiles(x) {
@@ -813,6 +814,7 @@ function move_tiles(x) {
 	    thrown_bone.position.x = new_x - tile_x_size
 	    thrown_bone_start_x -= tile_x_size
 	}
+	if(thrown_bone.position.x >= tile_x_size /* *? */) scene.remove(window.bone_pivot)
     }
 }
 
@@ -1746,7 +1748,7 @@ window.run = function(tm) {
         1000, 1500, period)
     let tile_start = 0
     let tile_period = 417.68
-    a.rotate_array_callback(move_tiles, [0], [6], tile_start, tile_start + tile_period, tile_period)
+    a.rotate_array_callback(move_tiles, [0], [3.42*2], tile_start, tile_start + tile_period, tile_period)
     a.rotate_array_callback(dog_updown, [0], [1], 0, 500, 1000)
     a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
     a.finish(function() {
@@ -2048,6 +2050,7 @@ window.bone = function(tm) {
         time_to+200+200, time_final+200)
     function bone_pivot_rotation(z) { bone_pivot.rotation.z = z }
     a.rotate_array_callback(bone_pivot_rotation, [0], [THREE.MathUtils.degToRad(100)], time_to+200+200, time_final+200)
+    taken_bone = true
     a.start()
     return a
 }
