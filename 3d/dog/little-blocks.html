@@ -772,7 +772,7 @@ loader.load('tile.glb', function(gltf) {
 })
 
 let bone_pivot_x = 1.9 + 1.224, bone_pivot_y = -1.5
-let bone_pivot_start_x = 10
+let bone_pivot_start_x = 11
 let bone_pivot_start_y = 16
 loader.load('bone.glb', function(gltf) {
     let mesh = gltf.scene.children[2]
@@ -2003,7 +2003,7 @@ window.bone = function(tm) {
                 })
                 c.start()
             })
-        }, 1000)
+        }, 1250)
     })
     a.start()
     return a
