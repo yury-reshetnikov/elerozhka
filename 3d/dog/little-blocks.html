@@ -1244,7 +1244,7 @@ function show_buttons() {
 	document.getElementById('paw_button').style.display = ''
     if(!taken_bone)
         document.getElementById('bone_button').style.display = ''
-    if(!thrown_bone /*== undefined*/)
+    if(taken_bone)
         document.getElementById('throw_bone_button').style.display = ''
 }
 
@@ -1989,10 +1989,21 @@ window.bone = function(tm) {
     if(tm) a.time_modifier = tm
     a.rotate_array_callback(function(y){bone_pivot.position.y = y }, [bone_pivot_start_y], [bone_pivot_y], 0, 400)
     //a.rotate_array_callback(function(x){bone_pivot.position.x = x }, [bone_pivot_start_x], [bone_pivot_x], 400, 800)
-
-    bone_only(a, 800)
     a.finish(function() {
-        show_buttons()
+        thrown_bone = bone_pivot
+        thrown_bone_start_x = bone_pivot.position.x
+        let b = go()
+        setTimeout(function() {
+            stop(b, function() {
+                thrown_bone = false
+                let c = new Animate4
+                bone_only(c, 0)
+                c.finish(function() {
+                    show_buttons()
+                })
+                c.start()
+            })
+        }, 1000)
     })
     a.start()
     return a
