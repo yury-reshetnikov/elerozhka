@@ -19,7 +19,7 @@ let left_paw = false
 let turned = false
 let movingpaws_animate
 let bone_mesh_origin
-let taken_bone, thrown_bone, thrown_bone_start_x, thrown_bone_max_x
+let taken_bone, thrown_bone = [], thrown_bone_max_x
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -804,14 +804,18 @@ function move_tiles(x) {
     tiles.forEach(function(tile) {
         tile.m.position.x = tile.x + tile_delta_x - x
     })
-    if(thrown_bone) {
-	let new_x = thrown_bone_start_x - x
-	if(thrown_bone.position.x >= new_x) thrown_bone.position.x = new_x
+    thrown_bone.forEach(function(t) {
+	let new_x = t.start_x - x
+	if(t.bone.position.x >= new_x) t.bone.position.x = new_x
 	else {
-	    thrown_bone.position.x = new_x - thrown_bone_max_x
-	    thrown_bone_start_x -= thrown_bone_max_x
+	    t.bone.position.x = new_x - thrown_bone_max_x
+	    t.start_x -= thrown_bone_max_x
 	}
-	if(thrown_bone.position.x <= -20 * tile_x_size) scene.remove(window.bone_pivot)
+    })
+    while(thrown_bone.length &&
+	  thrown_bone[0].bone.position.x <= -20 * tile_x_size) {
+	scene.remove(thrown_bone[0].bone)
+	thrown_bone.shift()
     }
 }
 
@@ -1990,12 +1994,11 @@ window.bone = function(tm) {
     a.rotate_array_callback(function(y){bone_pivot.position.y = y }, [bone_pivot_start_y], [bone_pivot_y], 0, 400)
     //a.rotate_array_callback(function(x){bone_pivot.position.x = x }, [bone_pivot_start_x], [bone_pivot_x], 400, 800)
     a.finish(function() {
-        thrown_bone = bone_pivot
-        thrown_bone_start_x = bone_pivot.position.x
+        thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
         let b = go()
         setTimeout(function() {
             stop(b, function() {
-                thrown_bone = false
+                thrown_bone.pop()
                 let c = new Animate4
                 bone_only(c, 0)
                 c.finish(function() {
@@ -2123,9 +2126,8 @@ window.throw_bone = function(tm) {
     }
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
-    thrown_bone = bone_pivot
+    thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
     taken_bone = false
-    thrown_bone_start_x = bone_pivot.position.x
     a.finish(function() {
         head.calc_bases()
         head_neck.calc_bases()
