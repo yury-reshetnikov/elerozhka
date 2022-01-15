@@ -1995,21 +1995,29 @@ window.bone = function(tm) {
     //a.rotate_array_callback(function(x){bone_pivot.position.x = x }, [bone_pivot_start_x], [bone_pivot_x], 400, 800)
     a.finish(function() {
         thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
-        let b = go()
-        setTimeout(function() {
-            stop(b, function() {
-                thrown_bone.pop()
-                let c = new Animate4
-                bone_only(c, 0)
-                c.finish(function() {
-                    show_buttons()
-                })
-                c.start()
-            })
-        }, 1250)
+        if(sitting) {
+            let stand_animate = stand()
+            stand_animate.finish(function() {bone_step(850)})
+        }
+        else {bone_step(1250)}
     })
     a.start()
     return a
+}
+
+function bone_step(step_time) {
+    let b = go()
+    setTimeout(function() {
+        stop(b, function() {
+            thrown_bone.pop()
+            let c = new Animate4
+            bone_only(c, 0)
+            c.finish(function() {
+                show_buttons()
+            })
+            c.start()
+        })
+    }, step_time)
 }
 
 function bone_only(a, time_from) {
