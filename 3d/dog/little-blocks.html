@@ -1995,9 +1995,15 @@ window.bone = function(tm) {
     //a.rotate_array_callback(function(x){bone_pivot.position.x = x }, [bone_pivot_start_x], [bone_pivot_x], 400, 800)
     a.finish(function() {
         thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
-        if(sitting) {
+        if(sitting || lying) {
             let stand_animate = stand()
             stand_animate.finish(function() {bone_step(850)})
+            sitting = false
+            lying = false
+        }
+        else if(go_animate) {
+            bone_step_stop(go_animate, 800)
+            go_animate = false
         }
         else {bone_step(1250)}
     })
@@ -2007,6 +2013,10 @@ window.bone = function(tm) {
 
 function bone_step(step_time) {
     let b = go()
+    bone_step_stop(b, step_time)
+}
+
+function bone_step_stop(b, step_time) {
     setTimeout(function() {
         stop(b, function() {
             thrown_bone.pop()
