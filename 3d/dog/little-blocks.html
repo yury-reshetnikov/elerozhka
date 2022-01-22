@@ -20,6 +20,7 @@ let turned = false
 let movingpaws_animate
 let bone_mesh_origin
 let taken_bone, thrown_bone = [], thrown_bone_max_x
+let running = false
 
 let scene = new THREE.Scene()
 let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
@@ -1408,8 +1409,9 @@ window.stand = function(tm) {
         a.rotate_array_callback(dog_mesh_position, [-4.8], [-2], 0, 500)
         a.rotate_array_callback(dog_mesh_position, [-2], [0], 500, 1100)
         if(taken_bone) {
-            a.rotate_array_callback(bone_pivot_position.y, [-4.8], [-2], 0, 500)
-            a.rotate_array_callback(bone_pivot_position.y, [-2], [0], 500, 1100)
+            function bone_pivot_position(y) { bone_pivot.position.y = y }
+            a.rotate_array_callback(bone_pivot_position, [-4.8], [-2], 0, 500)
+            a.rotate_array_callback(bone_pivot_position, [-2], [0], 500, 1100)
         }
         a.rotate_array_callback(body.rotate.bind(body), [5], [0], 0, 600)
         a.rotate_array_callback(tail.rotate,
@@ -1557,8 +1559,9 @@ window.liedown = function(tm) {
     a.rotate_array_callback(dog_mesh_position, [-0.9], [-4.8], 225, 750)
     //a.rotate_array_callback(dog_mesh_position, [-3], [-4.8], 500, 800)
     if(taken_bone) {
-        a.rotate_array_callback(bone_pivot.position.y, [0], [-0.9], 0, 225)
-        a.rotate_array_callback(bone_pivot.position.y, [-0.9], [-4.8], 225, 750)
+        function bone_pivot_position(y) { bone_pivot.position.y = y }
+        a.rotate_array_callback(bone_pivot_position, [0], [-0.9], 0, 225)
+        a.rotate_array_callback(bone_pivot_position, [-0.9], [-4.8], 225, 750)
     }
     a.rotate_array_callback(body.rotate.bind(body), [55], [5], 0, 750)
     a.rotate_array_callback(rare.rotate.bind(rare), [30], [0], 0, 750)
@@ -1772,6 +1775,7 @@ window.run = function(tm) {
     })
     a.finish(function() {
 	show_buttons();
+	running = false
     })
     a.start()
     return a
@@ -1780,6 +1784,7 @@ window.run = function(tm) {
 window.run_button_click = function() {
     if(go_animate) go_animate.exit_now = true
     go_animate = run()
+    running = true
     document.getElementById('go_stop_button').textContent = 'Стой!'
     document.getElementById('stop_all_par').style.display = ''
     document.getElementById('run_button').style.display = 'none'
@@ -2001,9 +2006,17 @@ window.bone = function(tm) {
             sitting = false
             lying = false
         }
+        else if(running = true) {
+            bone_step_stop(go_animate, 200)
+            go_animate = false
+            document.getElementById('go_stop_button').textContent = 'Пойдём!'
+	    document.getElementById('stop_all_par').style.display = 'none'
+        }
         else if(go_animate) {
             bone_step_stop(go_animate, 800)
             go_animate = false
+            document.getElementById('go_stop_button').textContent = 'Пойдём!'
+	    document.getElementById('stop_all_par').style.display = 'none'
         }
         else {bone_step(1250)}
     })
