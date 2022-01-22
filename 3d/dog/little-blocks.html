@@ -2020,6 +2020,7 @@ window.bone = function(tm) {
         else if(running) {
             bone_step_stop(go_animate, 200)
             go_animate = false
+            running = false
             document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	    document.getElementById('stop_all_par').style.display = 'none'
         }
@@ -2132,7 +2133,7 @@ window.bone_button_click = function() {
     window.bone_pivot.add(window.bone_pivot2)
     window.bone_pivot.position.set(bone_pivot_start_x, bone_pivot_start_y, 0)
     scene.add(window.bone_pivot)
-    hide_buttons()
+    hide_all_buttons()
     bone(window.animate_speed)
 }
 
@@ -2168,9 +2169,9 @@ window.throw_bone = function(tm) {
     }
     a.rotate_array_callback(second_jaw_rotate, [0], [0], 250, 300)
     a.rotate_array_callback(head.rotate.bind(head), [0], [THREE.MathUtils.degToRad(-45)], 350, 500)
-    thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
     taken_bone = false
     a.finish(function() {
+        thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
         head.calc_bases()
         head_neck.calc_bases()
         jaw.calc_bases()
