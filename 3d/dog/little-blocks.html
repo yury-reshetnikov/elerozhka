@@ -1400,7 +1400,7 @@ window.sit = function(tm) {
     return a
 }
 
-window.stand = function(tm) {
+window.stand = function(tm, dont_show_buttons) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
     if(lying) {
@@ -1513,7 +1513,7 @@ window.stand = function(tm) {
     a.rotate_array_callback(move_tiles, [0], [tile_x_size], 1100, 1500)
     a.finish(function() {
 	document.getElementById('sit_stand_button').textContent = 'Сидеть'
-	show_buttons()
+	if(!dont_show_buttons) show_buttons()
     })
     a.start()
     return a
@@ -2001,12 +2001,12 @@ window.bone = function(tm) {
     a.finish(function() {
         thrown_bone.push({bone: bone_pivot, start_x: bone_pivot.position.x})
         if(sitting || lying) {
-            let stand_animate = stand()
+            let stand_animate = stand(tm, true)
             stand_animate.finish(function() {bone_step(850)})
             sitting = false
             lying = false
         }
-        else if(running = true) {
+        else if(running) {
             bone_step_stop(go_animate, 200)
             go_animate = false
             document.getElementById('go_stop_button').textContent = 'Пойдём!'
