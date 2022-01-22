@@ -1268,6 +1268,7 @@ window.go_stop_button_click = function() {
 	stop(go_animate)
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
+	running = false
         document.getElementById('paw_button').style.display = ''
         document.getElementById('run_button').style.display = ''
 	if(!tail_wag)
@@ -1308,6 +1309,7 @@ window.stop_all_button_click = function() {
 	stop(go_animate)
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
 	go_animate = undefined
+	running = false
         document.getElementById('paw_button').style.display = ''
         document.getElementById('run_button').style.display = ''
     }
@@ -1523,6 +1525,7 @@ function stop_current(fincb) {
     if(go_animate) {
         stop(go_animate, fincb)
         go_animate = undefined
+        running = false
 	document.getElementById('go_stop_button').textContent = 'Пойдём!'
         document.getElementById('stop_all_par').style.display = 'none'
     }
@@ -1772,8 +1775,6 @@ window.run = function(tm) {
     a.rotate_array_callback(dog_updown, [0], [1], 0, 500, 1000)
     a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
     a.finish(function() {
-    })
-    a.finish(function() {
 	show_buttons();
 	running = false
     })
@@ -2006,7 +2007,7 @@ window.bone = function(tm) {
             sitting = false
             lying = false
         }
-        else if(running = true) {
+        else if(running) {
             bone_step_stop(go_animate, 200)
             go_animate = false
             document.getElementById('go_stop_button').textContent = 'Пойдём!'
