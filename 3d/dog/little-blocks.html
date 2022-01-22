@@ -1237,9 +1237,12 @@ function show_buttons() {
         document.getElementById('sit_stand_button').style.display = ''
     if(!sitting && !lying) {
 	document.getElementById('go_stop_button').style.display = ''
-        document.getElementById('run_button').style.display = ''
+	if(!running)
+            document.getElementById('run_button').style.display = ''
         document.getElementById('standup_button').style.display = ''
     }
+    if(go_animate || tail_wag)
+	document.getElementById('stop_all_par').style.display = ''
     document.getElementById('tail_wag_button').style.display = ''
     if(sitting)
 	document.getElementById('liedown_par').style.display = ''
@@ -1256,6 +1259,13 @@ function show_buttons() {
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
      'liedown_par', 'paw_button', 'run_button', 'standup_button', 'turn_button', 'bone_button', 'throw_bone_button'].forEach(function(id) {
+	document.getElementById(id).style.display = 'none'
+    })
+}
+
+function hide_all_buttons() {
+    hide_buttons();
+    ['stop_all_par'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -2171,7 +2181,7 @@ window.throw_bone = function(tm) {
 }
 
 window.throw_bone_button_click = function() {
-    hide_buttons()
+    hide_all_buttons()
     throw_bone(window.animate_speed)
 }
 
