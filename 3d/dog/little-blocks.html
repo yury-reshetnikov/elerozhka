@@ -638,18 +638,6 @@ function Body() {
 	rare.calc_bases()
         g.attributes.position.needsUpdate = true
     }
-    this.rotate_normal_back_paws = function(angle_z) {
-	this.rotate(angle_z);
-	[brpaw, blpaw].forEach(function(paw) {
-	    paw.rotate(0,0,0,0,0,0,0,0,0)
-	})
-    }
-    this.rotate_body_and_back_paws = function(angle_z,x1,y1,z1,x2,y2,z2,x3,y3,z3) {
-	this.rotate(angle_z);
-	[brpaw, blpaw].forEach(function(paw) {
-	    paw.rotate(x1,y1,z1,x2,y2,z2,x3,y3,z3)
-	})
-    }
     this.rotate_around_rare = function(angle_z) {
         this.current_angle = angle_z
         let angle = (new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,0,THREE.MathUtils.degToRad(angle_z),'XYZ'))
@@ -2283,8 +2271,11 @@ window.stretch = function(tm) {
         1600, 1800)
     let delta_x = dog_mesh.geometry.attributes.position.array[389*3+0]
     let delta_y = dog_mesh.geometry.attributes.position.array[389*3+1]
-    function back_paw_rotate(angle_z) {
-	body.rotate_normal_back_paws(angle_z)
+    function rotate_body_normal_back_paws(angle_z) {
+	body.rotate(angle_z);
+	[brpaw, blpaw].forEach(function(paw) {
+	    paw.rotate(0,0,0,0,0,0,0,0,0)
+	})
 	dog_mesh.position.x = delta_x -
 	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
@@ -2294,8 +2285,11 @@ window.stretch = function(tm) {
             bone_pivot.position.y = dog_mesh.position.y
         }
     }
-    function back_paw_rotate_2(angle_z,x1,y1,z1,x2,y2,z2,x3,y3,z3) {
-	body.rotate_body_and_back_paws(angle_z,x1,y1,z1,x2,y2,z2,x3,y3,z3)
+    function rotate_body_and_back_paws(angle_z,x1,y1,z1,x2,y2,z2,x3,y3,z3) {
+	body.rotate(angle_z);
+	[brpaw, blpaw].forEach(function(paw) {
+	    paw.rotate(x1,y1,z1,x2,y2,z2,x3,y3,z3)
+	})
 	dog_mesh.position.x = delta_x -
 	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
@@ -2305,8 +2299,8 @@ window.stretch = function(tm) {
             bone_pivot.position.y = dog_mesh.position.y
         }
     }
-    a.rotate_array_callback(back_paw_rotate, [0], [-5], 400, 600)
-    a.rotate_array_callback(back_paw_rotate, [-5], [-30], 600, 1500)
+    a.rotate_array_callback(rotate_body_normal_back_paws, [0], [-5], 400, 600)
+    a.rotate_array_callback(rotate_body_normal_back_paws, [-5], [-30], 600, 1500)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,68,0,0,0,0,0,-45],
         [0,0,72,0,0,-90,0,0,20],
@@ -2315,7 +2309,7 @@ window.stretch = function(tm) {
         [0,0,68,0,0,0,0,0,-45],
         [0,0,72,0,0,-90,0,0,20],
         1800, 2000)
-    a.rotate_array_callback(back_paw_rotate, [-30], [-20], 1800, 2000)
+    a.rotate_array_callback(rotate_body_normal_back_paws, [-30], [-20], 1800, 2000)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,72,0,0,-90,0,0,20],
         [0,0,0,0,0,0,0,0,0],
@@ -2324,7 +2318,7 @@ window.stretch = function(tm) {
         [0,0,72,0,0,-90,0,0,20],
         [0,0,0,0,0,0,0,0,0],
         2000, 2500)
-    a.rotate_array_callback(back_paw_rotate_2,
+    a.rotate_array_callback(rotate_body_and_back_paws,
 	[-20, 0,0,0,0,0,0,0,0,0],
 	[0,   0,0,-25,0,0,0,0,0,-25],
 	2000, 2500)
