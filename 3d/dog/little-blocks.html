@@ -2216,7 +2216,7 @@ window.stretch = function(tm) {
     a.rotate_array_callback(flpaw.rotate,
         [0,0,0,0,0,0,0,0,0],
         [0,0,20,0,0,-45,0,0,45],
-        400, 600)
+        300, 600)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,20,0,0,-45,0,0,45],
         [0,0,55,0,0,-60,0,0,25],
@@ -2227,12 +2227,20 @@ window.stretch = function(tm) {
         800, 1500)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,25,0,0,0,0,0,-25],
-        [0,0,70,0,0,-70,0,0,0],
-        600, 1000)
+        [0,0,70,0,0,-90,0,0,25],
+        500, 1100)
     a.rotate_array_callback(frpaw.rotate,
-        [0,0,70,0,0,-70,0,0,0],
+        [0,0,70,0,0,-90,0,0,25],
+        [0,0,90,0,0,-110,0,0,25],
+        1100, 1500)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,90,0,0,-110,0,0,25],
+        [0,0,100,0,0,-90,0,0,0],
+        1500, 1600)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,100,0,0,-90,0,0,0],
         [0,0,68,0,0,0,0,0,-45],
-        1500, 1700)
+        1600, 1800)
     let delta_x = dog_mesh.geometry.attributes.position.array[389*3+0]
     let delta_y = dog_mesh.geometry.attributes.position.array[389*3+1]
     function back_paw_rotate() {
@@ -2253,6 +2261,34 @@ window.stretch = function(tm) {
         [0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0],
         0, 10000)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,68,0,0,0,0,0,-45],
+        [0,0,72,0,0,-90,0,0,20],
+        1800, 2000)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,68,0,0,0,0,0,-45],
+        [0,0,72,0,0,-90,0,0,20],
+        1800, 2000)
+    a.rotate_array_callback(body.rotate.bind(body), [-30], [-20], 1800, 2000)
+    a.rotate_array_callback(frpaw.rotate,
+        [0,0,72,0,0,-90,0,0,20],
+        [0,0,0,0,0,0,0,0,0],
+        2000, 2500)
+    a.rotate_array_callback(flpaw.rotate,
+        [0,0,72,0,0,-90,0,0,20],
+        [0,0,0,0,0,0,0,0,0],
+        2000, 2500)
+    a.rotate_array_callback(body.rotate.bind(body), [-20], [0], 2000, 2500)
+    a.rotate_array_callback(brpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,-25,0,0,0,0,0,-25],
+        2000, 2500)
+    a.rotate_array_callback(blpaw.rotate,
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,-25,0,0,0,0,0,-25],
+        2000, 2500)
+    thrown_bone_max_x = tile_x_size
+    //a.rotate_array_callback(move_tiles, [0], [tile_x_size], 2000, 2500)
     a.start()
     return a
 }
