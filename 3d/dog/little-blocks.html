@@ -2346,8 +2346,11 @@ window.stretch = function(tm) {
 	[0,0,20,0,0,-60,0,0,0],
 	[0,0,0,0,0,0,0,0,0],
 	3200, 3400)
+    // a.rotate_array_callback(function() {
+    // 	console.log(dog_mesh.geometry.attributes.position.array[219*3+0])
+    // }, [0], [0], 2600, 2800)
     thrown_bone_max_x = tile_x_size * 1/2
-    a.rotate_array_callback(move_tiles, [0], [tile_x_size], 2600, 3000)
+    a.rotate_array_callback(move_tiles, [0], [1.1], 2600, 2800)
     a.start()
     return a
 }
