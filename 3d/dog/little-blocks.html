@@ -2313,34 +2313,42 @@ window.stretch = function(tm) {
     a.rotate_array_callback(frpaw.rotate,
         [0,0,75,0,0,-85,0,0,20],
         [0,0,0,0,0,0,0,0,0],
-        2300, 2820)
+        2300, 2800)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,75,0,0,-85,0,0,20],
         [0,0,0,0,0,0,0,0,0],
-        2300, 2820)
+        2300, 2800)
     a.rotate_array_callback(rotate_body_and_back_paws,
 	[-20,0,0,0,0,0,0,0,0,0],
 	[0,0,0,-25,0,0,0,0,0,-25],
-	2300, 2800)
+	2100, 2600)
     a.rotate_array_callback(brpaw.rotate,
-	[0,0,-25,0,0,0,0,0,-25],
+	[0,0,0,0,0,0,0,0,0],
+	[0,0,-40,0,0,0,0,0,-25],
+	2100, 2600)
+    a.rotate_array_callback(blpaw.rotate,
+	[0,0,0,0,0,0,0,0,0],
+	[0,0,-40,0,0,0,0,0,-25],
+	2100, 2600)
+    a.rotate_array_callback(brpaw.rotate,
+	[0,0,-40,0,0,0,0,0,-25],
 	[0,0,20,0,0,-60,0,0,0],
-	2800, 3000)
+	2600, 2800)
     a.rotate_array_callback(brpaw.rotate,
 	[0,0,20,0,0,-60,0,0,0],
 	[0,0,0,0,0,0,0,0,0],
+	2800, 3000)
+    a.rotate_array_callback(blpaw.rotate,
+	[0,0,-40,0,0,0,0,0,-25],
+	[0,0,20,0,0,-60,0,0,0],
 	3000, 3200)
     a.rotate_array_callback(blpaw.rotate,
-	[0,0,-25,0,0,0,0,0,-25],
-	[0,0,20,0,0,-60,0,0,0],
-	3200, 3400)
-    a.rotate_array_callback(blpaw.rotate,
 	[0,0,20,0,0,-60,0,0,0],
 	[0,0,0,0,0,0,0,0,0],
-	3400, 3600)
+	3200, 3400)
     thrown_bone_max_x = tile_x_size * 1/2
     //в это время собаку тоже можно подвинуть назад (она двигается вперёд, так мы скомпенсируем)
-    a.rotate_array_callback(move_tiles, [0], [tile_x_size], 2120, 2300)
+    //a.rotate_array_callback(move_tiles, [0], [tile_x_size], 2120, 2300)
     a.start()
     return a
 }
