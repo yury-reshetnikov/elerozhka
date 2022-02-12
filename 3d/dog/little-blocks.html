@@ -2291,8 +2291,14 @@ window.stretch = function(tm) {
 	[brpaw, blpaw].forEach(function(paw) {
 	    paw.rotate(x1,y1,z1,x2,y2,z2,x3,y3,z3)
 	})
-	dog_mesh.position.x = delta_x -
-	    dog_mesh.geometry.attributes.position.array[389*3+0]
+	if(delta_x < dog_mesh.geometry.attributes.position.array[389*3+0])
+	    dog_mesh.position.x = delta_x -
+		dog_mesh.geometry.attributes.position.array[389*3+0]
+	else {
+	    dog_mesh.position.x = 0
+	    move_tiles(delta_x -
+		dog_mesh.geometry.attributes.position.array[389*3+0])
+	}
 	dog_mesh.position.y = delta_y -
 	    dog_mesh.geometry.attributes.position.array[389*3+1]
         if(taken_bone) {
@@ -2371,8 +2377,18 @@ window.stretch = function(tm) {
     // 	console.log(dog_mesh.geometry.attributes.position.array[219*3+0])
     // }, [0], [0], 2600, 2800)
     thrown_bone_max_x = tile_x_size * 1/2
-    a.rotate_array_callback(move_tiles, [0], [1.1], 2600, 2800)
+    let first_move_tiles = true
+    function local_move_tiles(x) {
+	if(first_move_tiles) {
+	    first_move_tiles = false
+	    tile_delta_x = tiles[0].m.position.x - tiles[0].x
+	}
+	move_tiles(x)
+    }
+    a.rotate_array_callback(local_move_tiles, [0], [1.1], 2600, 2800)
     a.finish(function() {
+	tile_delta_x = tiles[0].m.position.x - tiles[0].x
+	while(tile_delta_x < -tile_x_size) tile_delta_x += tile_x_size
         show_buttons()
     })
     a.start()
