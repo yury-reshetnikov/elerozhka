@@ -1289,11 +1289,12 @@ function show_buttons() {
         document.getElementById('bone_button').style.display = ''
     if(taken_bone)
         document.getElementById('throw_bone_button').style.display = ''
+    document.getElementById('stretch_button').style.display = ''
 }
 
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
-     'liedown_par', 'paw_button', 'run_button', 'standup_button', 'turn_button', 'bone_button', 'throw_bone_button'].forEach(function(id) {
+     'liedown_par', 'paw_button', 'run_button', 'standup_button', 'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -1311,7 +1312,7 @@ window.go_stop_button_click = function() {
     document.getElementById('paw_button').style.display = 'none'
     if(go_animate) {
 	stop(go_animate)
-	document.getElementById('go_stop_button').textContent = 'Пойдём!'
+	document.getElementById('go_stop_button').textContent = 'Пойдём'
 	go_animate = undefined
 	running = false
         document.getElementById('paw_button').style.display = ''
@@ -1326,7 +1327,7 @@ window.go_stop_button_click = function() {
 	    document.getElementById('tail_wag_button').textContent = ':)'
         }
 	go_animate = go(window.animate_speed)
-	document.getElementById('go_stop_button').textContent = 'Стой!'
+	document.getElementById('go_stop_button').textContent = 'Стой'
 	document.getElementById('stop_all_par').style.display = ''
     }
 }
@@ -1352,7 +1353,7 @@ window.stop_all_button_click = function() {
     document.getElementById('stop_all_par').style.display = 'none'
     if(go_animate) {
 	stop(go_animate)
-	document.getElementById('go_stop_button').textContent = 'Пойдём!'
+	document.getElementById('go_stop_button').textContent = 'Пойдём'
 	go_animate = undefined
 	running = false
         document.getElementById('paw_button').style.display = ''
@@ -1440,7 +1441,7 @@ window.sit = function(tm) {
         [0,-40,0,0,0,0,0,0,-30,0,-40,0,-50,0],
         900, 1500)
     a.finish(function() {
-	document.getElementById('sit_stand_button').textContent = 'Стоять!'
+	document.getElementById('sit_stand_button').textContent = 'Стоять'
 	show_buttons()
     })
     a.start()
@@ -1571,7 +1572,7 @@ function stop_current(fincb) {
         stop(go_animate, fincb)
         go_animate = undefined
         running = false
-	document.getElementById('go_stop_button').textContent = 'Пойдём!'
+	document.getElementById('go_stop_button').textContent = 'Пойдём'
         document.getElementById('stop_all_par').style.display = 'none'
     }
     else if(fincb) fincb()
@@ -1836,7 +1837,7 @@ window.run_button_click = function() {
     }
     go_animate = run()
     running = true
-    document.getElementById('go_stop_button').textContent = 'Стой!'
+    document.getElementById('go_stop_button').textContent = 'Стой'
     document.getElementById('stop_all_par').style.display = ''
     document.getElementById('run_button').style.display = 'none'
     document.getElementById('paw_button').style.display = 'none'
@@ -2061,13 +2062,13 @@ window.bone = function(tm) {
             bone_step_stop(go_animate, 200)
             go_animate = false
             running = false
-            document.getElementById('go_stop_button').textContent = 'Пойдём!'
+            document.getElementById('go_stop_button').textContent = 'Пойдём'
 	    document.getElementById('stop_all_par').style.display = 'none'
         }
         else if(go_animate) {
             bone_step_stop(go_animate, 800)
             go_animate = false
-            document.getElementById('go_stop_button').textContent = 'Пойдём!'
+            document.getElementById('go_stop_button').textContent = 'Пойдём'
 	    document.getElementById('stop_all_par').style.display = 'none'
         }
         else {bone_step(1250)}
@@ -2312,11 +2313,11 @@ window.stretch = function(tm) {
     //a.rotate_array_callback(rotate_body_normal_back_paws, [-30], [-20], 2100, 2300)
     a.rotate_array_callback(frpaw.rotate,
         [0,0,68,0,0,-85,0,0,20],
-        [0,0,20,0,0,-70,0,0,30],
+        [0,0,30,0,0,-70,0,0,30],
         2300, 2800)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,68,0,0,-85,0,0,20],
-        [0,0,20,0,0,-70,0,0,30],
+        [0,0,30,0,0,-70,0,0,30],
         2300, 2800)
     a.rotate_array_callback(rotate_body_and_back_paws,
 	[-30,0,0,0,0,0,0,0,0,0],
@@ -2324,53 +2325,58 @@ window.stretch = function(tm) {
 	2100, 2600)
     a.rotate_array_callback(brpaw.rotate,
 	[0,0,-40,0,0,0,0,0,-25],
-	[0,0,0,0,0,-80,0,0,0],
+	[0,0,0,0,0,-80,0,0,25],
 	2600, 2700)
     a.rotate_array_callback(brpaw.rotate,
-	[0,0,0,0,0,-80,0,0,0],
-	[0,0,40,0,0,-70,0,0,0],
+	[0,0,0,0,0,-80,0,0,25],
+	[0,0,40,0,0,-80,0,0,25],
 	2700, 2800)
     a.rotate_array_callback(brpaw.rotate,
-	[0,0,40,0,0,-70,0,0,0],
-	[0,0,28,0,0,-70,0,0,30],
+	[0,0,40,0,0,-80,0,0,25],
+	[0,0,35,0,0,-60,0,0,30],
 	2800, 3000)
     a.rotate_array_callback(frpaw.rotate,
-        [0,0,20,0,0,-70,0,0,30],
-        [0,0,30,0,0,-70,0,0,30],
-        2800, 3000)
-    a.rotate_array_callback(flpaw.rotate,
-        [0,0,20,0,0,-70,0,0,30],
-        [0,0,30,0,0,-70,0,0,30],
-        2800, 3000)
-    a.rotate_array_callback(frpaw.rotate,
         [0,0,30,0,0,-70,0,0,30],
         [0,0,0,0,0,0,0,0,0],
-        3000, 3400)
+        3100, 3500)
     a.rotate_array_callback(flpaw.rotate,
         [0,0,30,0,0,-70,0,0,30],
         [0,0,0,0,0,0,0,0,0],
-        3000, 3400)
+        3000, 3500)
     function dog_mesh_position(y) { dog_mesh.position.y = y }
     a.rotate_array_callback(dog_mesh_position, [-0.9], [0], 3000, 3400)
     a.rotate_array_callback(brpaw.rotate,
-	[0,0,30,0,0,-70,0,0,30],
+	[0,0,35,0,0,-60,0,0,30],
 	[0,0,0,0,0,0,0,0,0],
-	3000, 3400)
+	3100, 3500)
     a.rotate_array_callback(blpaw.rotate,
 	[0,0,-40,0,0,0,0,0,-25],
-	[0,0,20,0,0,-60,0,0,0],
-	3000, 3200)
+	[0,0,-20,0,0,-70,0,0,25],
+	3000, 3050)
     a.rotate_array_callback(blpaw.rotate,
-	[0,0,20,0,0,-60,0,0,0],
+	[0,0,-20,0,0,-70,0,0,25],
+	[0,0,40,0,0,-70,0,0,0],
+	3050, 3200)
+    a.rotate_array_callback(blpaw.rotate,
+	[0,0,40,0,0,-70,0,0,0],
 	[0,0,0,0,0,0,0,0,0],
-	3200, 3400)
+	3200, 3500)
     // a.rotate_array_callback(function() {
     // 	console.log(dog_mesh.geometry.attributes.position.array[219*3+0])
     // }, [0], [0], 2600, 2800)
     thrown_bone_max_x = tile_x_size * 1/2
     a.rotate_array_callback(move_tiles, [0], [1.1], 2600, 2800)
+    a.finish(function() {
+        show_buttons()
+    })
     a.start()
     return a
+}
+
+window.stretch_button_click = function() {
+    stop_current() //проблема дёргания собаки
+    hide_all_buttons()
+    stretch(window.animate_speed)
 }
 
   </script>
@@ -2386,6 +2392,7 @@ window.stretch = function(tm) {
     <p><button id="turn_button" style="display:none" onclick="turn_button_click()">Поворот</button></p>
     <p><button id="bone_button" onclick="bone_button_click()">Косточка</button></p>
     <p><button id="throw_bone_button" style="display:none" onclick="throw_bone_button_click()">Брось косточку</button></p>
+    <p><button id="stretch_button" onclick="stretch_button_click()">Потягушки</button></p>
   </div>
 </body>
 </html>
