@@ -267,6 +267,38 @@ window.tail = {
     },
 }
 
+function add_body_points(dog) {
+    // 459..466
+    let pos = dog.attributes.position
+    console.log(pos.count, pos.array.length)
+    let old_count = pos.count
+    pos.count += 8
+    let na = new Float32Array(pos.count * pos.itemSize)
+    na.set(pos.array)
+    pos.array = na
+    console.log(pos.count, pos.array.length)
+    let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
+    let body_back_circle = [82, 84, 87, 90, 129, 130, 131, 132]
+    body_front_circle.forEach(function(p,n) {
+        let v1 = (new THREE.Vector3()).fromBufferAttribute(pos, p)
+	// console.log(p, v)
+	let min_p = 0, min_len, min_v2
+	body_back_circle.forEach(function(p) {
+            let v2 = (new THREE.Vector3()).fromBufferAttribute(pos, p)
+	    // console.log(p, v)
+	    let len = (new THREE.Vector3()).subVectors(v1, v2).length()
+	    if(!min_p || min_len > len) {
+		min_p = p
+		min_len = len
+		min_v2 = v2
+	    }
+	})
+	// console.log(n, p, min_p, min_len, v1, min_v2)
+	pos.setXYZ(old_count + n, (v1.x + min_v2.x) / 2,
+		   (v1.y + min_v2.y) / 2, (v1.z + min_v2.z) / 2)
+    })
+}
+
 let loader = new GLTFLoader()
 loader.load('little-blocks-conv.glb', function(gltf) {
     // console.log(gltf)
@@ -278,6 +310,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x190707 })
     mesh.material = [material, material_red, material_black, material_almostblack]
     mesh.castShadow = true
+    add_body_points(mesh.geometry)
     mesh.geometry.addGroup(0, 48, 0)
     mesh.geometry.addGroup(48, 12, 3) // левый глаз
     mesh.geometry.addGroup(60, 30, 0)
