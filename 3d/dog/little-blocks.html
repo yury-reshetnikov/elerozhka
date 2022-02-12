@@ -841,8 +841,9 @@ function move_tiles(x) {
         tile.m.position.x = tile.x + tile_delta_x - x
     })
     thrown_bone.forEach(function(t) {
-	let new_x = t.start_x - x
-	if(t.bone.position.x >= new_x) t.bone.position.x = new_x
+	let new_x = t.start_x + tile_delta_x - x
+	if(t.bone.position.x >= new_x || !thrown_bone_max_x)
+	    t.bone.position.x = new_x
 	else {
 	    t.bone.position.x = new_x - thrown_bone_max_x
 	    t.start_x -= thrown_bone_max_x
@@ -2376,7 +2377,7 @@ window.stretch = function(tm) {
     // a.rotate_array_callback(function() {
     // 	console.log(dog_mesh.geometry.attributes.position.array[219*3+0])
     // }, [0], [0], 2600, 2800)
-    thrown_bone_max_x = tile_x_size * 1/2
+    thrown_bone_max_x = 0
     let first_move_tiles = true
     function local_move_tiles(x) {
 	if(first_move_tiles) {
@@ -2388,7 +2389,12 @@ window.stretch = function(tm) {
     a.rotate_array_callback(local_move_tiles, [0], [1.1], 2600, 2800)
     a.finish(function() {
 	tile_delta_x = tiles[0].m.position.x - tiles[0].x
-	while(tile_delta_x < -tile_x_size) tile_delta_x += tile_x_size
+	while(tile_delta_x < -tile_x_size) {
+	    tile_delta_x += tile_x_size
+	    thrown_bone.forEach(function(t) {
+		t.start_x -= tile_x_size
+	    })
+	}
         show_buttons()
     })
     a.start()
