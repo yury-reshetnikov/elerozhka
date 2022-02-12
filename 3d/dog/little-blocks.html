@@ -1272,6 +1272,7 @@ function show_buttons() {
         document.getElementById('sit_stand_button').style.display = ''
     if(!sitting && !lying) {
 	document.getElementById('go_stop_button').style.display = ''
+	document.getElementById('stretch_button').style.display = ''
 	if(!running)
             document.getElementById('run_button').style.display = ''
         document.getElementById('standup_button').style.display = ''
@@ -1285,11 +1286,10 @@ function show_buttons() {
         document.getElementById('turn_button').style.display = ''
     if(!lying)
 	document.getElementById('paw_button').style.display = ''
-    if(!taken_bone)
+    if(!taken_bone && !turned)
         document.getElementById('bone_button').style.display = ''
     if(taken_bone)
         document.getElementById('throw_bone_button').style.display = ''
-    document.getElementById('stretch_button').style.display = ''
 }
 
 function hide_buttons() {
@@ -2374,9 +2374,8 @@ window.stretch = function(tm) {
 }
 
 window.stretch_button_click = function() {
-    stop_current() //проблема дёргания собаки
+    stop_current(function() { stretch(window.animate_speed) })
     hide_all_buttons()
-    stretch(window.animate_speed)
 }
 
   </script>
