@@ -2295,7 +2295,7 @@ window.stretch = function(tm) {
 	    dog_mesh.geometry.attributes.position.array[389*3+0]
 	dog_mesh.position.y = delta_y -
 	    dog_mesh.geometry.attributes.position.array[389*3+1]
-        if(taken_bone) { //не проверено
+        if(taken_bone) {
             bone_pivot.position.x = dog_mesh.position.x + 1.9
             bone_pivot.position.y = dog_mesh.position.y
         }
@@ -2343,7 +2343,13 @@ window.stretch = function(tm) {
         [0,0,30,0,0,-70,0,0,30],
         [0,0,0,0,0,0,0,0,0],
         3000, 3500)
-    function dog_mesh_position(y) { dog_mesh.position.y = y }
+    function dog_mesh_position(y) {
+        dog_mesh.position.y = y
+        if(taken_bone) {
+            bone_pivot.position.x = dog_mesh.position.x + 1.9
+            bone_pivot.position.y = dog_mesh.position.y
+        }
+    }
     a.rotate_array_callback(dog_mesh_position, [-0.9], [0], 3000, 3400)
     a.rotate_array_callback(brpaw.rotate,
 	[0,0,35,0,0,-60,0,0,30],
