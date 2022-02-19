@@ -9,7 +9,12 @@ function Animate4() {
 	let count = 0
 	let t = (new Date).getTime() - this.started
 	if(this.time_modifier) t *= this.time_modifier
-	if(this.exit_now || (this.exit_time && t > this.exit_time)) return
+	if(this.exit_now || (this.exit_time && t > this.exit_time)) {
+	    actions = []
+	    finalization.forEach(function(item) { item() })
+	    finalization = []
+	    return
+	}
 	actions.forEach(function(item) {
 	    if(item.draw(t) || !item.finish()) ++count
 	})
