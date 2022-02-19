@@ -25,7 +25,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
-let bone_mesh_origin
+let bone_mesh_origin, barrier_mesh_origin
 let taken_bone, thrown_bone = [], thrown_bone_max_x
 let running = false
 
@@ -852,6 +852,20 @@ loader.load('bone.glb', function(gltf) {
     // mesh.position.set(0, 0, 0)
     mesh.rotation.set(0,Math.PI/2,0)
     bone_mesh_origin = mesh
+})
+
+loader.load('barrier.glb', function(gltf) {
+    let mesh = gltf.scene.children[2]
+    let material_white = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
+    let material_blue = new THREE.MeshStandardMaterial({ color: 0x1E90FF })
+    mesh.material = [material_white, material_blue]
+    mesh.geometry.addGroup(0, 21, 0)
+    mesh.geometry.addGroup(21, 3, 1)
+    mesh.geometry.addGroup(24, 108, 0)
+    mesh.receiveShadow = true
+    mesh.castShadow = true
+    scene.add(mesh)
+    barrier_mesh_origin = mesh
 })
 
 camera.position.set(-4, 0, 14)
