@@ -2504,7 +2504,10 @@ window.barrier = function(tm) {
 window.barrier_button_click = function() {
     window.barrier_mesh = barrier_mesh_origin.clone()
     hide_all_buttons()
-    barrier(window.animate_speed)
+    // barrier(window.animate_speed)
+    scene.add(barrier_mesh)
+    barrier_mesh.position.set(60, -7, 0)
+    thrown_bone.push({bone: barrier_mesh, start_x: barrier_mesh.position.x})
 }
 
   </script>
