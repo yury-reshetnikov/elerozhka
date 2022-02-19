@@ -861,10 +861,17 @@ loader.load('barrier.glb', function(gltf) {
     mesh.material = [material_white, material_blue]
     mesh.geometry.addGroup(0, 21, 0)
     mesh.geometry.addGroup(21, 3, 1)
-    mesh.geometry.addGroup(24, 108, 0)
+    mesh.geometry.addGroup(24, 21, 0)
+    mesh.geometry.addGroup(45, 3, 1)
+    mesh.geometry.addGroup(48, 3, 0)
+    mesh.geometry.addGroup(51, 12, 1)
+    mesh.geometry.addGroup(63, 12, 0)
+    mesh.geometry.addGroup(75, 6, 1)
+    mesh.geometry.addGroup(81, 51, 0)
     mesh.receiveShadow = true
     mesh.castShadow = true
     scene.add(mesh)
+    mesh.position.set(10, -7, 0)
     barrier_mesh_origin = mesh
 })
 
