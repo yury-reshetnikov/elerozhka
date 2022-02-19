@@ -2491,9 +2491,7 @@ window.stretch_button_click = function() {
 window.barrier = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    scene.add(barrier_mesh)
-    barrier_mesh.position.set(20, -7, 0)
-    a.rotate_array_callback(function(x){barrier_mesh.position.x = x }, [20], [10], 0, 1000)
+    //a.rotate_array_callback()
     a.finish(function() {
         show_buttons()
     })
@@ -2505,15 +2503,17 @@ window.barrier_button_click = function() {
     window.barrier_mesh = barrier_mesh_origin.clone()
     hide_all_buttons()
     // barrier(window.animate_speed)
+    let ta = (new Date).getTime() - go_animate.started
+    let tb = ta % 1000
+    let t = Math.floor(ta / 1000) * 1000
+    console.log(ta, tb, t)
     scene.add(barrier_mesh)
-    barrier_mesh.position.set(60, -7, 0)
+    barrier_mesh.position.set(64-tb/60, -7, 0)
     thrown_bone.push({bone: barrier_mesh, start_x: barrier_mesh.position.x})
-    let t = Math.floor(((new Date).getTime() - go_animate.started) / 1000) * 1000
-    console.log(t)
-    go_animate.exit_time = t + 3000 + 100
+    go_animate.exit_time = t + 3000 //  + 100
     go_animate.finish(function() {
-	show_buttons()
 	console.log((new Date).getTime() - go_animate.started)
+	barrier()
     })
 }
 
