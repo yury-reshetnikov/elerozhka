@@ -934,6 +934,16 @@ function move_tiles(x) {
     }
 }
 
+function update_tiles_in_finish() {
+    tile_delta_x = tiles[0].m.position.x - tiles[0].x
+    while(tile_delta_x < -tile_x_size) {
+	tile_delta_x += tile_x_size
+	thrown_bone.forEach(function(t) {
+	    t.start_x -= tile_x_size
+	})
+    }
+}
+
 window.go = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
@@ -2470,13 +2480,7 @@ window.stretch = function(tm) {
     }
     a.rotate_array_callback(local_move_tiles, [0], [1.1], 2600, 2800)
     a.finish(function() {
-	tile_delta_x = tiles[0].m.position.x - tiles[0].x
-	while(tile_delta_x < -tile_x_size) {
-	    tile_delta_x += tile_x_size
-	    thrown_bone.forEach(function(t) {
-		t.start_x -= tile_x_size
-	    })
-	}
+	update_tiles_in_finish()
         show_buttons()
     })
     a.start()
@@ -2529,10 +2533,11 @@ window.barrier = function(tm) {
     }
     back(brpaw)
     back(blpaw)
-    let tile_start = 0
-    thrown_bone_max_x = tile_x_size*3.6*2
-    a.rotate_array_callback(move_tiles, [0], [tile_x_size*3.6*2], 0, 1500)
+    thrown_bone_max_x = 0
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size*2*1500/417.68],
+			    0, 1500)
     a.finish(function() {
+	update_tiles_in_finish()
         go_animate = run()
         show_buttons()
     })
