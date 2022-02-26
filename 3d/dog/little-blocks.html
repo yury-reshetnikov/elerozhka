@@ -2560,6 +2560,7 @@ window.barrier_button_click = function() {
     go_animate.finish(function() {
 	console.log((new Date).getTime() - go_animate.started)
 	hide_all_buttons()
+	update_tiles_in_finish()
 	barrier()
     })
 }
