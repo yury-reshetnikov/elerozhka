@@ -2516,22 +2516,25 @@ window.barrier = function(tm) {
     let back = function(paw) {
         a.rotate_array_callback(paw.rotate,
             [0,0,30,0,0,-20,0,0,0],
-            [0,0,-30,0,0,-20,0,0,0],
+            [0,0,-30,0,0,-20,0,0,-20],
             0, 500)
         a.rotate_array_callback(paw.rotate,
-            [0,0,-30,0,0,-20,0,0,0],
+            [0,0,-30,0,0,-20,0,0,-20],
+            [0,0,-30,0,0,-20,0,0,-20],
+            500, 1000)
+        a.rotate_array_callback(paw.rotate,
+            [0,0,-30,0,0,-20,0,0,-20],
             [0,0,0,0,0,0,0,0,0],
             1000, 1500)
     }
     back(brpaw)
     back(blpaw)
     let tile_start = 0
-    let tile_period = 417.68
-    thrown_bone_max_x = tile_x_size*2
-    a.rotate_array_callback(move_tiles, [0], [tile_x_size*2], tile_start, tile_start + tile_period, tile_period)
+    thrown_bone_max_x = tile_x_size*3.6*2
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size*3.6*2], 0, 1500)
     a.finish(function() {
-        show_buttons()
         go_animate = run()
+        show_buttons()
     })
     a.start()
     return a
@@ -2551,6 +2554,7 @@ window.barrier_button_click = function() {
     go_animate.exit_time = t + 3000 //  + 100
     go_animate.finish(function() {
 	console.log((new Date).getTime() - go_animate.started)
+	hide_all_buttons()
 	barrier()
     })
 }
