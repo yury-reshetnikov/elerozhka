@@ -2592,8 +2592,9 @@ window.balk_button_click = function() {
     let t = Math.floor(ta / 1000) * 1000
     console.log(ta, tb, t)
     scene.add(balk_mesh)
-    balk_mesh.position.set(64-tb/60, -7, 1.5)
+    balk_mesh.position.set(65-tb/60, -7, 1.5)
     thrown_bone.push({bone: balk_mesh, start_x: balk_mesh.position.x})
+    go_animate.exit_time = t + 5000
 }
 
   </script>
