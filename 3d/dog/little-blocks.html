@@ -905,8 +905,10 @@ loader.load('balk.glb', function(gltf) {
     mesh.material = material_white
     mesh.receiveShadow = true
     mesh.castShadow = true
-    //mesh.position.set(0, 0, 0)
+    //mesh.position.set(14, -7, 1.5)
+    mesh.rotation.set(0,Math.PI/2,0)
     balk_mesh_origin = mesh
+    //scene.add(mesh)
 })
 
 camera.position.set(-4, 0, 14)
@@ -1400,7 +1402,8 @@ function show_buttons() {
 
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
-     'liedown_par', 'paw_button', 'run_button', 'standup_button', 'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button'].forEach(function(id) {
+     'liedown_par', 'paw_button', 'run_button', 'standup_button',
+     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'balk_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -1435,6 +1438,7 @@ window.go_stop_button_click = function() {
 	go_animate = go(window.animate_speed)
 	document.getElementById('go_stop_button').textContent = 'Стой'
 	document.getElementById('stop_all_par').style.display = ''
+	if(!running) document.getElementById('balk_button').style.display = ''
     }
 }
 
@@ -2580,6 +2584,18 @@ window.barrier_button_click = function() {
     })
 }
 
+window.balk_button_click = function() {
+    window.balk_mesh = balk_mesh_origin.clone()
+    hide_all_buttons()
+    let ta = (new Date).getTime() - go_animate.started
+    let tb = ta % 1000
+    let t = Math.floor(ta / 1000) * 1000
+    console.log(ta, tb, t)
+    scene.add(balk_mesh)
+    balk_mesh.position.set(64-tb/60, -7, 1.5)
+    thrown_bone.push({bone: balk_mesh, start_x: balk_mesh.position.x})
+}
+
   </script>
   <div align="centre" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём</button></p>
@@ -2595,6 +2611,7 @@ window.barrier_button_click = function() {
     <p><button id="throw_bone_button" style="display:none" onclick="throw_bone_button_click()">Брось косточку</button></p>
     <p><button id="stretch_button" onclick="stretch_button_click()">Потягушки</button></p>
     <p><button id="barrier_button" style="display:none" onclick="barrier_button_click()">Барьер</button></p>
+    <p><button id="balk_button" style="display:none" onclick="balk_button_click()">Брус</button></p>
   </div>
 </body>
 </html>
