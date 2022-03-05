@@ -2584,17 +2584,17 @@ window.barrier_button_click = function() {
     })
 }
 
-/*window.balk = function(tm) {
+window.balk = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
     a.finish(function() {
 	update_tiles_in_finish()
-        go_animate = go()
+        // go_animate = go()
         show_buttons()
     })
     a.start()
     return a
-}*/
+}
 
 window.balk_button_click = function() {
     window.balk_mesh = balk_mesh_origin.clone()
@@ -2604,9 +2604,15 @@ window.balk_button_click = function() {
     let t = Math.floor(ta / 1000) * 1000
     console.log(ta, tb, t)
     scene.add(balk_mesh)
-    balk_mesh.position.set(65-tb/60, -7, 1.5)
+    balk_mesh.position.set(61 - 3.42/417.68*tb, -7, 1.5)
     thrown_bone.push({bone: balk_mesh, start_x: balk_mesh.position.x})
     go_animate.exit_time = t + 5000
+    go_animate.finish(function() {
+	console.log((new Date).getTime() - go_animate.started)
+	hide_all_buttons()
+	update_tiles_in_finish()
+	balk()
+    })
 }
 
   </script>
