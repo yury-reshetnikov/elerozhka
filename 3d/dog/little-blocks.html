@@ -25,7 +25,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
-let bone_mesh_origin, barrier_mesh_origin
+let bone_mesh_origin, barrier_mesh_origin, balk_mesh_origin
 let taken_bone, thrown_bone = [], thrown_bone_max_x
 let running = false
 
@@ -897,6 +897,16 @@ loader.load('barrier.glb', function(gltf) {
     //mesh.position.set(10, -7, 0)
     barrier_mesh_origin = mesh
     // find_barrier_horizont(mesh)
+})
+
+loader.load('balk.glb', function(gltf) {
+    let mesh = gltf.scene.children[2]
+    let material_white = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
+    mesh.material = material_white
+    mesh.receiveShadow = true
+    mesh.castShadow = true
+    //mesh.position.set(0, 0, 0)
+    balk_mesh_origin = mesh
 })
 
 camera.position.set(-4, 0, 14)
@@ -1918,6 +1928,7 @@ window.run = function(tm) {
     a.rotate_array_callback(dog_updown, [1], [0], 500, 1000, 1000)
     a.finish(function() {
 	show_buttons();
+	document.getElementById('barrier_button').style.display = 'none'
 	running = false
     })
     a.start()
