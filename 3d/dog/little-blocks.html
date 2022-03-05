@@ -2587,6 +2587,32 @@ window.barrier_button_click = function() {
 window.balk = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
+    a.rotate_array_callback(body.rotate.bind(body), [0], [30], 200, 400)
+    function dog_mesh_position_y(y) { dog_mesh.position.y = y }
+    a.rotate_array_callback(dog_mesh_position_y, [0], [2], 200, 400)
+    a.rotate_array_callback(dog_mesh_position_y, [2], [5], 500, 1100)
+    let one = function(paw) {
+    a.rotate_array_callback(paw.rotate, [0,0,-30,0,0,0,0,0,0], [0,0,30,0,0,-55,0,0,20], 0, 200)
+    a.rotate_array_callback(paw.rotate, [0,0,30,0,0,-55,0,0,20], [0,0,30,0,0,0,0,0,0], 200, 300)
+    //
+    a.rotate_array_callback(paw.rotate, [0,0,0,30,0,0,0,0,0], [0,0,80,0,0,-55,0,0,20], 500, 700)
+    a.rotate_array_callback(paw.rotate, [0,0,80,0,0,-55,0,0,20], [0,0,80,0,0,0,0,0,0], 700, 900)
+    a.rotate_array_callback(paw.rotate, [0,0,80,0,0,0,0,0,0], [0,0,30,0,0,0,0,0,0], 900, 1100)
+    }
+    let two = function(paw) {
+    a.rotate_array_callback(paw.rotate, [0,0,0,30,0,0,0,0,0], [0,0,0,0,0,0,0,0,0], 0, 300)
+    a.rotate_array_callback(paw.rotate, [0,0,0,0,0,0,0,0,0], [0,0,30,0,0,-55,0,0,20], 300, 400)
+    a.rotate_array_callback(paw.rotate, [0,0,30,0,0,-55,0,0,20], [0,0,30,0,0,0,0,0,0], 400, 500)
+    //
+    a.rotate_array_callback(paw.rotate, [0,0,0,30,0,0,0,0,0], [0,0,80,0,0,-55,0,0,20], 1100, 1300)
+    a.rotate_array_callback(paw.rotate, [0,0,80,0,0,-55,0,0,20], [0,0,80,0,0,0,0,0,0], 1300, 1500)
+    a.rotate_array_callback(paw.rotate, [0,0,80,0,0,0,0,0,0], [0,0,30,0,0,0,0,0,0], 1500, 1700)
+    }
+    one(frpaw)
+    one(blpaw)
+    two(flpaw)
+    two(brpaw)
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size*1100/417.68], 0, 1100)
     a.finish(function() {
 	update_tiles_in_finish()
         // go_animate = go()
@@ -2604,7 +2630,7 @@ window.balk_button_click = function() {
     let t = Math.floor(ta / 1000) * 1000
     console.log(ta, tb, t)
     scene.add(balk_mesh)
-    balk_mesh.position.set(61 - 3.42/417.68*tb, -7, 1.5)
+    balk_mesh.position.set(60 - 3.42/417.68*tb, -7, 1.5)
     thrown_bone.push({bone: balk_mesh, start_x: balk_mesh.position.x})
     go_animate.exit_time = t + 5000
     go_animate.finish(function() {
