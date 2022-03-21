@@ -25,7 +25,7 @@ let paw_up = false
 let left_paw = false
 let turned = false
 let movingpaws_animate
-let bone_mesh_origin, barrier_mesh_origin, balk_mesh_origin
+let bone_mesh_origin, barrier_mesh_origin, bridge_mesh_origin
 let taken_bone, thrown_bone = [], thrown_bone_max_x
 let running = false
 
@@ -899,15 +899,30 @@ loader.load('barrier.glb', function(gltf) {
     // find_barrier_horizont(mesh)
 })
 
-loader.load('balk.glb', function(gltf) {
+loader.load('bridge.glb', function(gltf) {
     let mesh = gltf.scene.children[2]
     let material_white = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
-    mesh.material = material_white
+    let material_up = new THREE.MeshStandardMaterial({ color: 0xDEB887 })
+    let material_down = new THREE.MeshStandardMaterial({ color: 0x708090 })
+    mesh.material = [material_white, material_up, material_down]
+    mesh.geometry.addGroup(0, 6, 1) //1
+    mesh.geometry.addGroup(6, 3, 2) //2
+    mesh.geometry.addGroup(9, 33, 1) //1
+    mesh.geometry.addGroup(42, 12, 2) //2
+    mesh.geometry.addGroup(54, 30, 1) //1
+    mesh.geometry.addGroup(84, 3, 2) //2
+    mesh.geometry.addGroup(87, 3, 1) //1
+    mesh.geometry.addGroup(90, 6, 2) //2
+    mesh.geometry.addGroup(96, 3, 1) //1
+    mesh.geometry.addGroup(99, 21, 2) //2
+    mesh.geometry.addGroup(120, 3, 1) //1
+    mesh.geometry.addGroup(123, 15, 2) //2
+    mesh.geometry.addGroup(138, 42, 1) //1
     mesh.receiveShadow = true
     mesh.castShadow = true
-    //mesh.position.set(14, -7, 1.5)
+    mesh.position.set(14, -7, 1.5)
     mesh.rotation.set(0,Math.PI/2,0)
-    balk_mesh_origin = mesh
+    bridge_mesh_origin = mesh
     //scene.add(mesh)
 })
 
@@ -1403,7 +1418,7 @@ function show_buttons() {
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
      'liedown_par', 'paw_button', 'run_button', 'standup_button',
-     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'balk_button'].forEach(function(id) {
+     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'bridge_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -1438,7 +1453,7 @@ window.go_stop_button_click = function() {
 	go_animate = go(window.animate_speed)
 	document.getElementById('go_stop_button').textContent = 'Стой'
 	document.getElementById('stop_all_par').style.display = ''
-	if(!running) document.getElementById('balk_button').style.display = ''
+	if(!running) document.getElementById('bridge_button').style.display = ''
     }
 }
 
@@ -2584,7 +2599,7 @@ window.barrier_button_click = function() {
     })
 }
 
-window.balk = function(tm) {
+window.bridge = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
     a.rotate_array_callback(body.rotate.bind(body), [0], [30], 200, 400)
@@ -2622,22 +2637,22 @@ window.balk = function(tm) {
     return a
 }
 
-window.balk_button_click = function() {
-    window.balk_mesh = balk_mesh_origin.clone()
+window.bridge_button_click = function() {
+    window.bridge_mesh = bridge_mesh_origin.clone()
     hide_all_buttons()
     let ta = (new Date).getTime() - go_animate.started
     let tb = ta % 1000
     let t = Math.floor(ta / 1000) * 1000
     console.log(ta, tb, t)
-    scene.add(balk_mesh)
-    balk_mesh.position.set(60 - 3.42/417.68*tb, -7, 1.5)
-    thrown_bone.push({bone: balk_mesh, start_x: balk_mesh.position.x})
+    scene.add(bridge_mesh)
+    bridge_mesh.position.set(60 - 3.42/417.68*tb, -7, 1.5)
+    thrown_bone.push({bone: bridge_mesh, start_x: bridge_mesh.position.x})
     go_animate.exit_time = t + 5000
     go_animate.finish(function() {
 	console.log((new Date).getTime() - go_animate.started)
 	hide_all_buttons()
 	update_tiles_in_finish()
-	balk()
+	bridge()
     })
 }
 
@@ -2656,7 +2671,7 @@ window.balk_button_click = function() {
     <p><button id="throw_bone_button" style="display:none" onclick="throw_bone_button_click()">Брось косточку</button></p>
     <p><button id="stretch_button" onclick="stretch_button_click()">Потягушки</button></p>
     <p><button id="barrier_button" style="display:none" onclick="barrier_button_click()">Барьер</button></p>
-    <p><button id="balk_button" style="display:none" onclick="balk_button_click()">Брус</button></p>
+    <p><button id="bridge_button" style="display:none" onclick="bridge_button_click()">Мостик</button></p>
   </div>
 </body>
 </html>
