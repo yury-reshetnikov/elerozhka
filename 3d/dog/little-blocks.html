@@ -2643,16 +2643,16 @@ window.bridge_button_click = function() {
     let ta = (new Date).getTime() - go_animate.started
     let tb = ta % 1000
     let t = Math.floor(ta / 1000) * 1000
-    console.log(ta, tb, t)
+    // console.log(ta, tb, t)
     scene.add(bridge_mesh)
     bridge_mesh.position.set(60 - 3.42/417.68*tb, -7, 1.5)
     thrown_bone.push({bone: bridge_mesh, start_x: bridge_mesh.position.x})
-    go_animate.exit_time = t + 5000
+    go_animate.exit_time = t * window.animate_speed + 5000
     go_animate.finish(function() {
-	console.log((new Date).getTime() - go_animate.started)
+	// console.log((new Date).getTime() - go_animate.started)
 	hide_all_buttons()
 	update_tiles_in_finish()
-	bridge()
+	bridge(window.animate_speed)
     })
 }
 
