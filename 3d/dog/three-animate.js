@@ -19,15 +19,14 @@ function Animate4() {
 	    do_exit()
 	    return
 	}
+	else if(this.exit_time && this.draw_before_exit &&
+		t >= this.exit_time) {
+	    t = this.exit_time
+	    need_exit_adter_draw = true
+	}
 	else if(this.exit_time && t > this.exit_time) {
-	    if(this.draw_before_exit) {
-		t = this.exit_time
-		need_exit_adter_draw = true
-	    }
-	    else {
-		do_exit()
-		return
-	    }
+	    do_exit()
+	    return
 	}
 	actions.forEach(function(item) {
 	    if(item.draw(t) || !item.finish()) ++count
