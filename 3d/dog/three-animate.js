@@ -7,7 +7,7 @@ function Animate4() {
     }
     this.draw = function() {
 	let count = 0
-	let t = (new Date).getTime() - this.started
+	let t = (this.last_draw_time = (new Date).getTime()) - this.started
 	if(this.time_modifier) t *= this.time_modifier
 	if(this.exit_now || (this.exit_time && t > this.exit_time)) {
 	    actions = []

@@ -2650,10 +2650,6 @@ window.bridge1 = function(tm) {
 window.bridge_button_click = function() {
     window.bridge_mesh = bridge_mesh_origin.clone()
     hide_all_buttons()
-    let ta = (new Date).getTime() - go_animate.started
-    // let tb = ta % 1000
-    // let t = Math.floor(ta / 1000) * 1000
-    // // console.log(ta, tb, t)
     scene.add(bridge_mesh)
     let delta
     let a1 = frpaw.current_angles()[2]
@@ -2670,17 +2666,19 @@ window.bridge_button_click = function() {
 	else console.log(a1, a2);
     }
     console.log(a1,a2,delta)
+    // let ta = (new Date).getTime() - go_animate.started
+    let td = go_animate.last_draw_time - go_animate.started
     if(window.animate_speed < 1) {
 	bridge_mesh.position.set(25 - 3.42/417.68*tb, -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 			  start_x: bridge_mesh.position.x})
-	go_animate.exit_time = ta * window.animate_speed + delta
+	go_animate.exit_time = td * window.animate_speed + delta
     }
     else {
 	bridge_mesh.position.set(20 + 3.42/417.68 * (5000 + delta), -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 			  start_x: bridge_mesh.position.x})
-	go_animate.exit_time = ta * window.animate_speed + 5000 + delta
+	go_animate.exit_time = td * window.animate_speed + 5000 + delta
     }
     go_animate.finish(function() {
 	// console.log((new Date).getTime() - go_animate.started)
@@ -2688,7 +2686,8 @@ window.bridge_button_click = function() {
 	update_tiles_in_finish()
 	let ta2 = (new Date).getTime() - go_animate.started
 	console.log(frpaw.current_angles(), flpaw.current_angles(),
-		    ta2, (ta2 - 300) % 1000 - 200)
+		    ta2, (ta2 - 300) % 1000,
+		    (go_animate.last_draw_time - 300) % 100)
 	// bridge1(window.animate_speed)
     })
 }
