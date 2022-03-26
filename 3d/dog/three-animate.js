@@ -5,26 +5,37 @@ function Animate4() {
 	this.started = (new Date).getTime()
 	requestAnimationFrame(this.draw.bind(this))
     }
+    do_exit = function() {
+	actions = []
+	finalization.forEach(function(item) { item() })
+	finalization = []
+    }
     this.draw = function() {
 	let count = 0
 	let t = (this.last_draw_time = (new Date).getTime()) - this.started
 	if(this.time_modifier) t *= this.time_modifier
-	if(this.exit_now || (this.exit_time && t > this.exit_time)) {
-	    actions = []
-	    finalization.forEach(function(item) { item() })
-	    finalization = []
+	let need_exit_adter_draw = false
+	if(this.exit_now) {
+	    do_exit()
 	    return
+	}
+	else if(this.exit_time && t > this.exit_time) {
+	    if(this.draw_before_exit) {
+		t = this.exit_time
+		need_exit_adter_draw = true
+	    }
+	    else {
+		do_exit()
+		return
+	    }
 	}
 	actions.forEach(function(item) {
 	    if(item.draw(t) || !item.finish()) ++count
 	})
-	if(count)
+	if(need_exit_adter_draw) do_exit()
+	else if(count)
 	    requestAnimationFrame(this.draw.bind(this))
-	else {
-	    actions = []
-	    finalization.forEach(function(item) { item() })
-	    finalization = []
-	}
+	else do_exit()
     }
     function gen_draw(time_from, time_to, obj, cb) {
 	let done = false

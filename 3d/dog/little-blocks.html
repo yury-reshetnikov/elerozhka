@@ -2675,11 +2675,12 @@ window.bridge_button_click = function() {
 	go_animate.exit_time = td * window.animate_speed + delta
     }
     else {
-	bridge_mesh.position.set(20 + tile_delta_x + 3.42/417.68 * (5000 + delta), -7, 1.5)
+	bridge_mesh.position.set(20 - tile_delta_x + 3.42/417.68 * (5000 + delta), -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 			  start_x: bridge_mesh.position.x})
 	go_animate.exit_time = td * window.animate_speed + 5000 + delta
     }
+    go_animate.draw_before_exit = true
     go_animate.finish(function() {
 	// console.log((new Date).getTime() - go_animate.started)
 	hide_all_buttons()
