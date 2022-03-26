@@ -2665,7 +2665,7 @@ window.bridge_button_click = function() {
 	else if(a1 <= 25 && a1 > 0) delta = 500 + 250 + 250 / 25 * a1
 	else console.log(a1, a2);
     }
-    console.log(a1,a2,delta)
+    console.log(a1,a2,delta,tile_delta_x)
     // let ta = (new Date).getTime() - go_animate.started
     let td = go_animate.last_draw_time - go_animate.started
     if(window.animate_speed < 1) {
@@ -2675,7 +2675,7 @@ window.bridge_button_click = function() {
 	go_animate.exit_time = td * window.animate_speed + delta
     }
     else {
-	bridge_mesh.position.set(20 + 3.42/417.68 * (5000 + delta), -7, 1.5)
+	bridge_mesh.position.set(20 + tile_delta_x + 3.42/417.68 * (5000 + delta), -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 			  start_x: bridge_mesh.position.x})
 	go_animate.exit_time = td * window.animate_speed + 5000 + delta
@@ -2687,7 +2687,9 @@ window.bridge_button_click = function() {
 	let ta2 = (new Date).getTime() - go_animate.started
 	console.log(frpaw.current_angles(), flpaw.current_angles(),
 		    ta2, (ta2 - 300) % 1000,
-		    (go_animate.last_draw_time - 300) % 100)
+		    (go_animate.last_draw_time - 300) % 100,
+		    "tile_delta_x", tile_delta_x,
+		    "bridge_x", bridge_mesh.position.x)
 	// bridge1(window.animate_speed)
     })
 }
