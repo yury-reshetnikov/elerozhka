@@ -2637,22 +2637,59 @@ window.bridge = function(tm) {
     return a
 }
 
+window.bridge1 = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    let a1 = frpaw.current_angles()[2]
+    if(a1 <= 25 && a1 > 0) {
+	let rest = 250 / 25 * a1
+    }
+    else { console.log(a1); return }
+}
+
 window.bridge_button_click = function() {
     window.bridge_mesh = bridge_mesh_origin.clone()
     hide_all_buttons()
     let ta = (new Date).getTime() - go_animate.started
-    let tb = ta % 1000
-    let t = Math.floor(ta / 1000) * 1000
-    // console.log(ta, tb, t)
+    // let tb = ta % 1000
+    // let t = Math.floor(ta / 1000) * 1000
+    // // console.log(ta, tb, t)
     scene.add(bridge_mesh)
-    bridge_mesh.position.set(60 - 3.42/417.68*tb, -7, 1.5)
-    thrown_bone.push({bone: bridge_mesh, start_x: bridge_mesh.position.x})
-    go_animate.exit_time = t * window.animate_speed + 5000
+    let delta
+    let a1 = frpaw.current_angles()[2]
+    let a2 = frpaw.current_angles()[5]
+    if(a2) { // правая передняя нога движется вперед
+	if(a1 >= 20 && a1 <= 25) delta = 200 / (25 - 20) * (25 - a1)
+	else if(a1 >= 0 && a1 < 20) delta = 200 + 200 / 20 * (20 - a1)
+	else if(a1 >= -25 && a1 < 0) delta = 200 + 200 + 100 / 25 * -a1
+	else console.log(a1, a2);
+    }
+    else {
+	if(a1 <= 0 && a1 >= -25) delta = 500 + 250 / 25 * (25 + a1)
+	else if(a1 <= 25 && a1 > 0) delta = 500 + 250 + 250 / 25 * a1
+	else console.log(a1, a2);
+    }
+    console.log(a1,a2,delta)
+    if(window.animate_speed < 1) {
+	bridge_mesh.position.set(25 - 3.42/417.68*tb, -7, 1.5)
+	thrown_bone.push({bone: bridge_mesh,
+			  start_x: bridge_mesh.position.x})
+	go_animate.exit_time = ta * window.animate_speed + delta
+    }
+    else {
+	bridge_mesh.position.set(20 + 3.42/417.68 * (5000 + delta), -7, 1.5)
+	thrown_bone.push({bone: bridge_mesh,
+			  start_x: bridge_mesh.position.x})
+	go_animate.exit_time = ta * window.animate_speed + 5000 + delta
+    }
     go_animate.finish(function() {
 	// console.log((new Date).getTime() - go_animate.started)
 	hide_all_buttons()
 	update_tiles_in_finish()
-	bridge(window.animate_speed)
+	let ta2 = (new Date).getTime() - go_animate.started
+	console.log(frpaw.current_angles(), flpaw.current_angles(),
+		    ta2, (ta2 - 300) % 1000 - 200)
+	// bridge1(window.animate_speed)
     })
 }
 
