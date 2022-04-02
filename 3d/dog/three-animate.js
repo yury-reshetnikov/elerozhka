@@ -5,7 +5,7 @@ function Animate4() {
 	this.started = (new Date).getTime()
 	requestAnimationFrame(this.draw.bind(this))
     }
-    do_exit = function() {
+    let do_exit = function() {
 	actions = []
 	finalization.forEach(function(item) { item() })
 	finalization = []
@@ -14,7 +14,7 @@ function Animate4() {
 	let count = 0
 	let t = (this.last_draw_time = (new Date).getTime()) - this.started
 	if(this.time_modifier) t *= this.time_modifier
-	let need_exit_adter_draw = false
+	let need_exit_after_draw = false
 	if(this.exit_now) {
 	    do_exit()
 	    return
@@ -22,7 +22,7 @@ function Animate4() {
 	else if(this.exit_time && this.draw_before_exit &&
 		t >= this.exit_time) {
 	    t = this.exit_time
-	    need_exit_adter_draw = true
+	    need_exit_after_draw = true
 	}
 	else if(this.exit_time && t > this.exit_time) {
 	    do_exit()
@@ -31,7 +31,7 @@ function Animate4() {
 	actions.forEach(function(item) {
 	    if(item.draw(t) || !item.finish()) ++count
 	})
-	if(need_exit_adter_draw) do_exit()
+	if(need_exit_after_draw) do_exit()
 	else if(count)
 	    requestAnimationFrame(this.draw.bind(this))
 	else do_exit()
