@@ -1441,6 +1441,7 @@ window.go_stop_button_click = function() {
 	running = false
         document.getElementById('paw_button').style.display = ''
         document.getElementById('run_button').style.display = ''
+        document.getElementById('bridge_button').style.display = 'none'
 	if(!tail_wag)
 	    document.getElementById('stop_all_par').style.display = 'none'
     }
@@ -1483,6 +1484,7 @@ window.stop_all_button_click = function() {
 	running = false
         document.getElementById('paw_button').style.display = ''
         document.getElementById('run_button').style.display = ''
+        document.getElementById('bridge_button').style.display = 'none'
     }
     if(tail_wag) {
 	tail_wag.exit_now = true
