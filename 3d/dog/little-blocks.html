@@ -2642,11 +2642,43 @@ window.bridge = function(tm) {
 window.bridge1 = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let a1 = frpaw.current_angles()[2]
-    if(a1 <= 25 && a1 > 0) {
-	let rest = 250 / 25 * a1
+    // шаг 1
+    let one = function(paw) {
+    a.rotate_array_callback(paw.rotate,
+          [0,0,25,0,0,0,0,0,-25],
+          [0,0,0,0,0,0,0,0,0],
+          500, 750)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-25,0,0,0,0,0,15],
+          750, 1000)
     }
-    else { console.log(a1); return }
+    one(frpaw)
+    one(blpaw)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,-25,0,0,0,0,0,15],
+          [0,0,0,0,0,-55,0,0,20],
+          550, 650)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,0,0,0,-55,0,0,20],
+          [0,0,20,0,0,-55,0,0,20],
+	  650, 850)
+    a.rotate_array_callback(brpaw.rotate,
+          [0,0,20,0,0,-55,0,0,20],
+          [0,0,25,0,0,0,0,0,-25],
+          850, 1050)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,-25,0,0,0,0,0,15],
+          [0,0,10,0,0,-55,0,0,20],
+          550, 650)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,10,0,0,-55,0,0,20],
+          [0,0,40,0,0,-75,0,0,20],
+	  650, 850)
+    a.rotate_array_callback(flpaw.rotate,
+          [0,0,40,0,0,-75,0,0,20],
+          [0,0,25,0,0,0,0,0,0],
+          850, 1050)
 }
 
 window.bridge_button_click = function() {
@@ -2696,7 +2728,7 @@ window.bridge_button_click = function() {
 		    (go_animate.last_draw_time - 300) % 100,
 		    "tile_delta_x", tile_delta_x,
 		    "bridge_x", bridge_mesh.position.x)
-	// bridge1(window.animate_speed)
+	bridge1(window.animate_speed)
     })
 }
 
