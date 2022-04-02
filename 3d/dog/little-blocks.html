@@ -2679,10 +2679,10 @@ window.bridge1 = function(tm) {
           [0,0,40,0,0,-75,0,0,20],
           [0,0,25,0,0,0,0,0,0],
           300, 500)
-    let tile_start = 300
+    let tile_start = 0
     let tile_period = 417.68
     thrown_bone_max_x = tile_x_size
-    a.rotate_array_callback(move_tiles, [0], [tile_x_size], tile_start, tile_start + tile_period, tile_period)
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size], tile_start, tile_start + tile_period)
     a.start()
     return a
 }
