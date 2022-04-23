@@ -2740,7 +2740,7 @@ window.bridge1 = function(tm) {
 	  1100, 1300)
     a.rotate_array_callback(flpaw.rotate,
           [0,0,40,0,0,-100,0,0,20],
-          [0,0,25,0,0,-45,0,0,45],
+          [0,0,45,0,0,-65,0,0,45],
           1300, 1500)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,50,0,0,-65,0,0,45],
@@ -2754,8 +2754,8 @@ window.bridge1 = function(tm) {
     blps.step([0,0,30,0,0,-55,0,0,20], 1600)
     blps.step([0,0,40,0,0,-100,0,0,20], 1800)
     blps.step([0,0,65,0,0,-45,0,0,25], 2000)
-    let flps = new AnimateStep(a, flpaw.rotate, [0,0,65,0,0,-70,0,0,40], 1500)
-    flps.step([0,0,25,0,0,-60,0,0,45], 1750)
+    let flps = new AnimateStep(a, flpaw.rotate, [0,0,45,0,0,-65,0,0,45], 1500)
+    flps.step([0,0,30,0,0,-60,0,0,45], 1750)
     flps.step([0,0,32,0,0,-60,0,0,50], 2000)
     let frps = new AnimateStep(a, frpaw.rotate, [0,0,20,0,0,-30,0,0,55], 1500)
     frps.step([0,0,30,0,0,-80,0,0,45], 1600)
