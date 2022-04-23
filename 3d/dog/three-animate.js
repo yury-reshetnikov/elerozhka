@@ -84,3 +84,13 @@ function Animate4() {
 
 }
 
+function AnimateStep(a,callback,angle_from,time_from) {
+    this.angle_from = angle_from
+    this.time_from = time_from
+    this.step = function(angle_to,time_to) {
+	a.rotate_array_callback(callback, this.angle_from, angle_to,
+				this.time_from, time_to)
+	this.angle_from = angle_to
+	this.time_from = time_to
+    }
+}

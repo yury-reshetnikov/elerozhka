@@ -2723,26 +2723,15 @@ window.bridge1 = function(tm) {
     // шаг 3
     a.rotate_array_callback(body.rotate.bind(body), [20], [38], 1000, 1500)
     a.rotate_array_callback(dog_mesh_position, [1.7], [3.2], 1000, 1500)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,25,0,0,0,0,0,-25],
-          [0,0,0,0,0,0,0,0,0],
-          1000, 1250)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-25,0,0,0,0,0,15],
-          1250, 1500)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,-25,0,0,0,0,0,15],
-          [0,0,10,0,0,-55,0,0,20],
-          1000, 1100)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,10,0,0,-55,0,0,20],
-          [0,0,40,0,0,-100,0,0,20],
-	  1100, 1300)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,40,0,0,-100,0,0,20],
-          [0,0,45,0,0,-80,0,0,80],
-          1300, 1500)
+    let blps = new AnimateStep(a, blpaw.rotate,
+			       [0,0,25,0,0,0,0,0,-25], 1000)
+    blps.step([0,0,0,0,0,0,0,0,0], 1250)
+    blps.step([0,0,-25,0,0,0,0,0,15], 1500)
+    let brps = new AnimateStep(a, brpaw.rotate,
+			       [0,0,-25,0,0,0,0,0,15], 1000)
+    brps.step([0,0,10,0,0,-55,0,0,20], 1100)
+    brps.step([0,0,40,0,0,-100,0,0,20], 1300)
+    brps.step([0,0,45,0,0,-80,0,0,80], 1500)
     a.rotate_array_callback(flpaw.rotate,
           [0,0,0,0,0,0,0,0,30],
           [0,0,10,0,0,-55,0,0,20],
