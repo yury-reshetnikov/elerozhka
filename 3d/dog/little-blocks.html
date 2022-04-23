@@ -2642,7 +2642,7 @@ window.bridge = function(tm) {
 window.bridge1 = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let step = 7
+    let step = 3
     // шаг 1
     let one = function(paw) {
     a.rotate_array_callback(paw.rotate,
@@ -2721,8 +2721,8 @@ window.bridge1 = function(tm) {
           [0,0,60,0,0,-65,0,0,45],
           800, 1000)
     // шаг 3
-    a.rotate_array_callback(body.rotate.bind(body), [20], [38], 1000, 1500+250)
-    a.rotate_array_callback(dog_mesh_position, [1.7], [3.2], 1000, 1500+250)
+    a.rotate_array_callback(body.rotate.bind(body), [20], [38], 1000, 1500)
+    a.rotate_array_callback(dog_mesh_position, [1.7], [3.2], 1000, 1500)
     a.rotate_array_callback(blpaw.rotate,
           [0,0,25,0,0,0,0,0,-25],
           [0,0,0,0,0,0,0,0,0],
@@ -2741,7 +2741,7 @@ window.bridge1 = function(tm) {
 	  1100, 1300)
     a.rotate_array_callback(brpaw.rotate,
           [0,0,40,0,0,-100,0,0,20],
-          [0,0,85,0,0,-130,0,0,80],
+          [0,0,45,0,0,-80,0,0,80],
           1300, 1500)
     a.rotate_array_callback(flpaw.rotate,
           [0,0,0,0,0,0,0,0,30],
@@ -2753,15 +2753,16 @@ window.bridge1 = function(tm) {
 	  1100, 1300)
     a.rotate_array_callback(flpaw.rotate,
           [0,0,40,0,0,-100,0,0,20],
-          [0,0,85,0,0,-110,0,0,25],
+          [0,0,65,0,0,-70,0,0,40],
           1300, 1500)
     a.rotate_array_callback(frpaw.rotate,
           [0,0,50,0,0,-65,0,0,45],
-          [0,0,20,0,0,-90,0,0,55],
+          [0,0,20,0,0,-30,0,0,55],
           1000, 1500)
-    // шаг 4
-    a.rotate_array_callback(body.rotate.bind(body), [38], [20], 1500+250, 2000+500)
-    a.rotate_array_callback(dog_mesh_position, [3.2], [5.7], 1500+250, 2000+500)
+    // шаг 3.1
+    /* шаг 4
+    a.rotate_array_callback(body.rotate.bind(body), [38], [20], 1500, 2000)
+    a.rotate_array_callback(dog_mesh_position, [3.2], [5.7], 1500, 2000)
     a.rotate_array_callback(blpaw.rotate,
           [0,0,-25,0,0,0,0,0,15],
           [0,0,20,0,0,-55,0,0,20],
@@ -2922,13 +2923,13 @@ window.bridge1 = function(tm) {
     a.rotate_array_callback(brpaw.rotate,
           [0,0,30,0,0,-75,0,0,0],
           [0,0,13,0,0,-5,0,0,-45],
-          3300, 3500)
+          3300, 3500)*/
     let tile_period = 417.68
     thrown_bone_max_x = tile_x_size
     //a.rotate_array_callback(move_tiles, [0], [tile_x_size/tile_period*500*step], 0, 500*step)
     a.rotate_array_callback(move_tiles, [0], [tile_x_size/tile_period*500*2], 0, 500*2)
-    a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*500*2], [tile_x_size/tile_period*500*4], 500*2, 500*4+1000)
-    a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*500*4], [tile_x_size/tile_period*500*step], 500*4+1000, 500*step+1000)
+    a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*500*2], [tile_x_size/tile_period*1500], 500*2, 500*4)
+    //a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*500*4], [tile_x_size/tile_period*500*step], 500*4+1000, 500*step+1000)
     a.start()
     return a
 }
@@ -2956,7 +2957,7 @@ window.bridge_button_click = function() {
     let td = go_animate.last_draw_time - go_animate.started
     if(window.animate_speed < 1) {
 	let cur_tile_delta_x = tiles[0].m.position.x - tiles[0].x
-	bridge_mesh.position.set(20 - tile_delta_x +
+	bridge_mesh.position.set(18.4 - tile_delta_x +
 				 3.42/417.68 * (0 + delta), -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 		start_x: bridge_mesh.position.x - cur_tile_delta_x})
