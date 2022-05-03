@@ -2642,110 +2642,48 @@ window.bridge = function(tm) {
 window.bridge1 = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let step = 4
+    let step = 10
+    let frps = new AnimateStep(a, frpaw.rotate, [0,0,25,0,0,0,0,0,-25], 0)
+    let flps = new AnimateStep(a, flpaw.rotate, [0,0,-25,0,0,0,0,0,15], 0)
+    let brps = new AnimateStep(a, brpaw.rotate, [0,0,-25,0,0,0,0,0,15], 0)
+    let blps = new AnimateStep(a, blpaw.rotate, [0,0,25,0,0,0,0,0,-25], 0)
     // шаг 1
-    let one = function(paw) {
-    a.rotate_array_callback(paw.rotate,
-          [0,0,25,0,0,0,0,0,-25],
-          [0,0,0,0,0,0,0,0,0],
-          0, 250)
-    a.rotate_array_callback(paw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-25,0,0,0,0,0,15],
-          250, 500)
-    }
-    one(frpaw)
-    one(blpaw)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,-25,0,0,0,0,0,15],
-          [0,0,0,0,0,-55,0,0,20],
-          0, 100)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,0,0,0,-55,0,0,20],
-          [0,0,20,0,0,-55,0,0,20],
-	  100, 300)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,20,0,0,-55,0,0,20],
-          [0,0,25,0,0,0,0,0,-25],
-          300, 500)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,-25,0,0,0,0,0,15],
-          [0,0,10,0,0,-55,0,0,20],
-          0, 100)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,10,0,0,-55,0,0,20],
-          [0,0,40,0,0,-75,0,0,20],
-	  100, 300)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,40,0,0,-75,0,0,20],
-          [0,0,50,0,0,0,0,0,-10],
-          300, 500)
+    frps.step([0,0,0,0,0,0,0,0,0], 250)
+    frps.step([0,0,-25,0,0,0,0,0,15], 500)
+    blps.step([0,0,0,0,0,0,0,0,0], 250)
+    blps.step([0,0,-25,0,0,0,0,0,15], 500)
+    brps.step([0,0,0,0,0,-55,0,0,20], 100)
+    brps.step([0,0,20,0,0,-55,0,0,20], 300)
+    brps.step([0,0,25,0,0,0,0,0,-25], 500)
+    flps.step([0,0,10,0,0,-55,0,0,20], 100)
+    flps.step([0,0,40,0,0,-75,0,0,20], 300)
+    flps.step([0,0,50,0,0,0,0,0,15], 500)
     // шаг 2
     a.rotate_array_callback(body.rotate.bind(body), [0], [20], 500, 1000)
     function dog_mesh_position(y) { dog_mesh.position.y = y }
     a.rotate_array_callback(dog_mesh_position, [0], [1.7], 500, 1000)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,50,0,0,0,0,0,-10],
-          [0,0,0,0,0,0,0,0,30],
-          500, 1000)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,25,0,0,0,0,0,-25],
-          [0,0,0,0,0,0,0,0,0],
-          500, 750)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-25,0,0,0,0,0,15],
-          750, 1000)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,-25,0,0,0,0,0,15],
-          [0,0,0,0,0,-55,0,0,20],
-          500, 600)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,0,0,0,-55,0,0,20],
-          [0,0,20,0,0,-55,0,0,20],
-	  600, 800)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,20,0,0,-55,0,0,20],
-          [0,0,25,0,0,0,0,0,-25],
-          800, 1000)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,-25,0,0,0,0,0,15],
-          [0,0,10,0,0,-55,0,0,20],
-          500, 600)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,10,0,0,-55,0,0,20],
-          [0,0,40,0,0,-100,0,0,20],
-	  600, 800)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,40,0,0,-100,0,0,20],
-          [0,0,60,0,0,-65,0,0,45],
-          800, 1000)
+    flps.step([0,0,0,0,0,0,0,0,30], 1000)
+    brps.step([0,0,0,0,0,0,0,0,0], 750)
+    brps.step([0,0,-25,0,0,0,0,0,15], 1000)
+    blps.step([0,0,0,0,0,-55,0,0,20], 600)
+    blps.step([0,0,20,0,0,-55,0,0,20], 800)
+    blps.step([0,0,25,0,0,0,0,0,-25], 1000)
+    frps.step([0,0,10,0,0,-55,0,0,20], 600)
+    frps.step([0,0,40,0,0,-100,0,0,20], 800)
+    frps.step([0,0,60,0,0,-75,0,0,45], 1000)
     // шаг 3
     a.rotate_array_callback(body.rotate.bind(body), [20], [38], 1000, 1500)
     a.rotate_array_callback(dog_mesh_position, [1.7], [3.2], 1000, 1500)
-    let blps = new AnimateStep(a, blpaw.rotate, [0,0,25,0,0,0,0,0,-25], 1000)
     blps.step([0,0,0,0,0,0,0,0,0], 1250)
     blps.step([0,0,-25,0,0,0,0,0,15], 1500)
-    let brps = new AnimateStep(a, brpaw.rotate, [0,0,-25,0,0,0,0,0,15], 1000)
     brps.step([0,0,10,0,0,-55,0,0,20], 1100)
     brps.step([0,0,30,0,0,-100,0,0,20], 1300)
     brps.step([0,0,35,0,0,-80,0,0,65], 1500)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,0,0,0,0,0,0,30],
-          [0,0,10,0,0,-55,0,0,20],
-          1000, 1100)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,10,0,0,-55,0,0,20],
-          [0,0,40,0,0,-100,0,0,20],
-	  1100, 1300)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,40,0,0,-100,0,0,20],
-          [0,0,45,0,0,-65,0,0,45],
-          1300, 1500)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,50,0,0,-65,0,0,45],
-          [0,0,0,0,0,0,0,0,25],
-          1000, 1500)
+    flps.step([0,0,10,0,0,-55,0,0,20], 1100)
+    flps.step([0,0,40,0,0,-100,0,0,20], 1300)
+    flps.step([0,0,45,0,0,-65,0,0,45], 1500)
+    frps.step([0,0,40,0,0,-75,0,0,35], 1250)
+    frps.step([0,0,0,0,0,0,0,0,25], 1500)
     // шаг 4
     a.rotate_array_callback(body.rotate.bind(body), [38], [28], 1500, 2000)
     a.rotate_array_callback(dog_mesh_position, [3.2], [4.5], 1500, 2000)
@@ -2754,14 +2692,12 @@ window.bridge1 = function(tm) {
     blps.step([0,0,30,0,0,-55,0,0,20], 1600)
     blps.step([0,0,40,0,0,-100,0,0,20], 1800)
     blps.step([0,0,65,0,0,-45,0,0,25], 2000)
-    let flps = new AnimateStep(a, flpaw.rotate, [0,0,45,0,0,-65,0,0,45], 1500)
     flps.step([0,0,30,0,0,-60,0,0,45], 1750)
     flps.step([0,0,32,0,0,-60,0,0,50], 2000)
-    let frps = new AnimateStep(a, frpaw.rotate, [0,0,20,0,0,-30,0,0,55], 1500)
     frps.step([0,0,30,0,0,-80,0,0,45], 1600)
     frps.step([0,0,40,0,0,-90,0,0,40], 1800)
     frps.step([0,0,57,0,0,-60,0,0,15], 2000)
-    /* шаг 5
+    // шаг 5
     a.rotate_array_callback(body.rotate.bind(body), [28], [20], 2000, 2500)
     a.rotate_array_callback(dog_mesh_position, [4.5], [5.7], 2000, 2500)
     brps.step([0,0,20,0,0,-55,0,0,20], 2250)
@@ -2773,137 +2709,76 @@ window.bridge1 = function(tm) {
     blps.step([0,0,0,0,0,-10,0,0,15], 2500)
     frps.step([0,0,20,0,0,-80,0,0,25], 2250)
     frps.step([0,0,-15,0,0,0,0,0,25], 2500)
-    /* шаг 5
-    a.rotate_array_callback(body.rotate.bind(body), [20], [0], 2000+500, 2500+500)
-    a.rotate_array_callback(dog_mesh_position, [5.7], [5.6], 2000+500, 2500+500)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,20,0,0,0,0,0,-20],
-          [0,0,0,0,0,0,0,0,0],
-          2000, 2250)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-25,0,0,0,0,0,25],
-          2250, 2500)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,45,0,0,-75,0,0,45],
-          [0,0,0,0,0,0,0,0,0],
-          2000, 2250)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-10,0,0,-5,0,0,15],
-          2250, 2500)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,-15,0,0,0,0,0,25],
-          [0,0,0,0,0,-55,0,0,20],
-          2000, 2100)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,0,0,0,-55,0,0,20],
-          [0,0,15,0,0,-55,0,0,20],
-	  2100, 2300)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,15,0,0,-55,0,0,20],
-          [0,0,15,0,0,0,0,0,0],
-          2300, 2500)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,0,0,0,-10,0,0,15],
-          [0,0,30,0,0,-80,0,0,10],
-          2000, 2250)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,30,0,0,-80,0,0,10],
-          [0,0,25,0,0,0,0,0,-25],
-          2250, 2500)
     // шаг 6
-    a.rotate_array_callback(body.rotate.bind(body), [0], [-10], 2500, 3000)
-    a.rotate_array_callback(dog_mesh_position, [5.6], [4.4], 2500, 3000)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,15,0,0,0,0,0,0],
-          [0,0,0,0,0,0,0,0,0],
-          2500, 2750)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-5,0,0,-75,0,0,55],
-          2750, 3000)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,-25,0,0,0,0,0,25],
-          [0,0,0,0,0,-75,0,0,20],
-          2500, 2600)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,0,0,0,-75,0,0,20],
-          [0,0,30,0,0,-75,0,0,0],
-          2600, 2800)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,30,0,0,-75,0,0,0],
-          [0,0,5,0,0,-5,0,0,-35],
-          2800, 3000)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,25,0,0,0,0,0,-25],
-          [0,0,10,0,0,-10,0,0,0],
-          2500, 2750)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,10,0,0,-10,0,0,0],
-          [0,0,-25,0,0,0,0,0,15],
-          2750, 3000)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,-10,0,0,-5,0,0,15],
-          [0,0,0,0,0,-55,0,0,20],
-          2500, 2600)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,0,0,0,-55,0,0,20],
-          [0,0,20,0,0,-55,0,0,20],
-	  2600, 2800)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,20,0,0,-55,0,0,20],
-          [0,0,25,0,0,0,0,0,-20],
-          2800, 3000)
+    a.rotate_array_callback(body.rotate.bind(body), [20], [0], 2500, 3000)
+    a.rotate_array_callback(dog_mesh_position, [5.7], [5.6], 2500, 3000)
+    flps.step([0,0,0,0,0,0,0,0,0], 2750)
+    flps.step([0,0,-25,0,0,0,0,0,25], 3000)
+    brps.step([0,0,0,0,0,0,0,0,0], 2750)
+    brps.step([0,0,-10,0,0,-5,0,0,15], 3000)
+    frps.step([0,0,0,0,0,-55,0,0,20], 2600)
+    frps.step([0,0,15,0,0,-55,0,0,20], 2800)
+    frps.step([0,0,15,0,0,0,0,0,0], 3000)
+    blps.step([0,0,30,0,0,-80,0,0,10], 2750)
+    blps.step([0,0,25,0,0,0,0,0,-25], 3000)
     // шаг 7
-    a.rotate_array_callback(body.rotate.bind(body), [-10], [-30], 3000, 3500)
-    a.rotate_array_callback(dog_mesh_position, [4.4], [1.5], 3000, 3500)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,-5,0,0,-75,0,0,55],
-          [0,0,0,0,0,-90,0,0,20],
-          3000, 3100)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,0,0,0,-90,0,0,20],
-          [0,0,30,0,0,-90,0,0,0],
-          3100, 3300)
-    a.rotate_array_callback(flpaw.rotate,
-          [0,0,30,0,0,-75,0,0,0],
-          [0,0,5,0,0,-5,0,0,-35],
-          3300, 3500)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,5,0,0,-5,0,0,-35],
-          [0,0,0,0,0,0,0,0,0],
-          3000, 3250)
-    a.rotate_array_callback(frpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-5,0,0,-75,0,0,55],
-          3250, 3500)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,25,0,0,0,0,0,-20],
-          [0,0,0,0,0,0,0,0,0],
-          3000, 3250)
-    a.rotate_array_callback(blpaw.rotate,
-          [0,0,0,0,0,0,0,0,0],
-          [0,0,-5,0,0,-70,0,0,55],
-          3250, 3500)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,-25,0,0,0,0,0,15],
-          [0,0,0,0,0,-90,0,0,20],
-          3000, 3100)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,0,0,0,-90,0,0,20],
-          [0,0,30,0,0,-75,0,0,0],
-          3100, 3300)
-    a.rotate_array_callback(brpaw.rotate,
-          [0,0,30,0,0,-75,0,0,0],
-          [0,0,13,0,0,-5,0,0,-45],
-          3300, 3500)*/
+    a.rotate_array_callback(body.rotate.bind(body), [0], [-10], 3000, 3500)
+    a.rotate_array_callback(dog_mesh_position, [5.6], [4.4], 3000, 3500)
+    frps.step([0,0,0,0,0,0,0,0,0], 3250)
+    frps.step([0,0,-5,0,0,-75,0,0,55], 3500)
+    flps.step([0,0,0,0,0,-75,0,0,20], 3100)
+    flps.step([0,0,30,0,0,-75,0,0,0], 3300)
+    flps.step([0,0,5,0,0,-5,0,0,-35], 3500)
+    blps.step([0,0,10,0,0,-10,0,0,0], 3250)
+    blps.step([0,0,-25,0,0,0,0,0,15], 3500)
+    brps.step([0,0,0,0,0,-55,0,0,20], 3100)
+    brps.step([0,0,20,0,0,-55,0,0,20], 3300)
+    brps.step([0,0,25,0,0,0,0,0,-20], 3500)
+    // шаг 8
+    a.rotate_array_callback(body.rotate.bind(body), [-10], [-30], 3500, 4000)
+    a.rotate_array_callback(dog_mesh_position, [4.4], [1.5], 3500, 4000)
+    frps.step([0,0,0,0,0,-90,0,0,20], 3600)
+    frps.step([0,0,30,0,0,-90,0,0,0], 3800)
+    frps.step([0,0,5,0,0,-5,0,0,-35], 4000)
+    flps.step([0,0,0,0,0,0,0,0,0], 3750)
+    flps.step([0,0,-5,0,0,-75,0,0,55], 4000)
+    brps.step([0,0,0,0,0,0,0,0,0], 3750)
+    brps.step([0,0,-5,0,0,-70,0,0,55], 4000)
+    blps.step([0,0,0,0,0,-90,0,0,20], 3600)
+    blps.step([0,0,30,0,0,-75,0,0,0], 3800)
+    blps.step([0,0,13,0,0,-5,0,0,-45], 4000)
+    // шаг 9
+    a.rotate_array_callback(body.rotate.bind(body), [-30], [-20], 4000, 4500)
+    a.rotate_array_callback(dog_mesh_position, [1.5], [-0.5], 4000, 4500)
+    frps.step([0,0,0,0,0,0,0,0,0], 4250)
+    frps.step([0,0,-20,0,0,-25,0,0,15], 4500)
+    flps.step([0,0,0,0,0,-80,0,0,20], 4100)
+    flps.step([0,0,30,0,0,-80,0,0,0], 4300)
+    flps.step([0,0,25,0,0,0,0,0,-25], 4500)
+    blps.step([0,0,0,0,0,-50,0,0,0], 4250)
+    blps.step([0,0,-5,0,0,-107,0,0,70], 4500)
+    brps.step([0,0,0,0,0,-80,0,0,20], 4100)
+    brps.step([0,0,15,0,0,-80,0,0,0], 4300)
+    brps.step([0,0,15,0,0,0,0,0,-45], 4500)
+    // шаг 10
+    a.rotate_array_callback(body.rotate.bind(body), [-20], [-5], 4500, 5000)
+    a.rotate_array_callback(dog_mesh_position, [-0.5], [-0.5], 4500, 5000)
+    flps.step([0,0,0,0,0,0,0,0,0], 4750)
+    flps.step([0,0,-25,0,0,0,0,0,25], 5000)
+    frps.step([0,0,0,0,0,-55,0,0,20], 4600)
+    frps.step([0,0,20,0,0,-55,0,0,20], 4800)
+    frps.step([0,0,25,0,0,0,0,0,-25], 5000)
+    brps.step([0,0,0,0,0,0,0,0,0], 4750)
+    brps.step([0,0,-10,0,0,-75,0,0,55], 5000)
+    blps.step([0,0,0,0,0,-80,0,0,20], 4600)
+    blps.step([0,0,15,0,0,-80,0,0,0], 4800)
+    blps.step([0,0,15,0,0,0,0,0,-35], 5000)
     let tile_period = 417.68
     thrown_bone_max_x = tile_x_size
     //a.rotate_array_callback(move_tiles, [0], [tile_x_size/tile_period*500*step], 0, 500*step)
     a.rotate_array_callback(move_tiles, [0], [tile_x_size/tile_period*1000], 0, 1000)
     a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*1000], [tile_x_size/tile_period*1500], 1000, 2000)
-    //a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*1500], [tile_x_size/tile_period*2000], 2000, 500*step)
+    a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*1500], [tile_x_size/tile_period*500*(step-1)], 2000, 500*step)
     a.start()
     return a
 }
