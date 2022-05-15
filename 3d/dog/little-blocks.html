@@ -272,7 +272,7 @@ function add_body_points(dog) {
     let pos = dog.attributes.position
     // console.log(pos.count, pos.array.length)
     let old_count = pos.count
-    pos.count += 8
+    pos.count += 16
     let na = new Float32Array(pos.count * pos.itemSize)
     na.set(pos.array)
     pos.array = na
@@ -294,9 +294,29 @@ function add_body_points(dog) {
 	    }
 	})
 	// console.log(n, p, min_p, min_len, v1, min_v2)
-	pos.setXYZ(old_count + n, (v1.x + min_v2.x) / 2,
-		   (v1.y + min_v2.y) / 2, (v1.z + min_v2.z) / 2)
+	function v5(a,b) { return a + (b - a) / 5; }
+	pos.setXYZ(old_count + n, v5(v1.x, min_v2.x),
+		   v5(v1.y, min_v2.y), v5(v1.z, min_v2.z))
+	pos.setXYZ(old_count + 8 + n, v5(min_v2.x, v1.x),
+		   v5(min_v2.y, v1.y), v5(min_v2.z, v1.z))
     })
+    return // +++ TODO
+    function bp(n) {
+	return body_front_circle.includes(n) || body_back_circle.includes(n)
+    }
+    let ind = dog.index.array
+    for(let t = 0; t < dog.index.count; t = t + 3)
+	if(bp(ind[t]) && bp(ind[t+1]) && bp(ind[t+2])) {
+	    for(let p = 0; p < 3; ++p)
+		if(body_front_circle.includes(ind[t+p])) {
+	// 	    console.log('t',t,'p',p,'ind[t+p]',ind[t+p],
+	// 		'old_count',old_count,
+	// 		'indexOf',body_front_circle.indexOf(ind[t+p]),
+	// 'new', old_count + 8 + body_front_circle.indexOf(ind[t+p]))
+		    ind[t+p] = old_count + 8 + body_front_circle.indexOf(ind[t+p])
+		}
+	}
+    // dog.computeVertexNormals()
 }
 
 function find_barrier_horizont(mesh) {
