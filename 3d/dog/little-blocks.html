@@ -2642,7 +2642,7 @@ window.bridge = function(tm) {
 window.bridge1 = function(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    let step = 10
+    let step = 11
     let frps = new AnimateStep(a, frpaw.rotate, [0,0,25,0,0,0,0,0,-25], 0)
     let flps = new AnimateStep(a, flpaw.rotate, [0,0,-25,0,0,0,0,0,15], 0)
     let brps = new AnimateStep(a, brpaw.rotate, [0,0,-25,0,0,0,0,0,15], 0)
@@ -2699,7 +2699,7 @@ window.bridge1 = function(tm) {
     frps.step([0,0,57,0,0,-60,0,0,15], 2000)
     // шаг 5
     a.rotate_array_callback(body.rotate.bind(body), [28], [20], 2000, 2500)
-    a.rotate_array_callback(dog_mesh_position, [4.7], [5.9], 2000, 2500)
+    a.rotate_array_callback(dog_mesh_position, [4.7], [5.8], 2000, 2500)
     brps.step([0,0,20,0,0,-55,0,0,20], 2250)
     brps.step([0,0,45,0,0,-75,0,0,45], 2500)
     flps.step([0,0,60,0,0,-120,0,0,55], 2100)
@@ -2710,8 +2710,8 @@ window.bridge1 = function(tm) {
     frps.step([0,0,20,0,0,-80,0,0,25], 2250)
     frps.step([0,0,-15,0,0,0,0,0,25], 2500)
     // шаг 6
-    a.rotate_array_callback(body.rotate.bind(body), [20], [0], 2500, 3000)
-    a.rotate_array_callback(dog_mesh_position, [5.9], [6], 2500, 3000)
+    a.rotate_array_callback(body.rotate.bind(body), [20], [5], 2500, 3000)
+    a.rotate_array_callback(dog_mesh_position, [5.8], [5.8], 2500, 3000)
     flps.step([0,0,0,0,0,0,0,0,0], 2750)
     flps.step([0,0,-25,0,0,0,0,0,25], 3000)
     brps.step([0,0,0,0,0,0,0,0,0], 2750)
@@ -2722,8 +2722,8 @@ window.bridge1 = function(tm) {
     blps.step([0,0,30,0,0,-80,0,0,10], 2750)
     blps.step([0,0,25,0,0,0,0,0,-25], 3000)
     // шаг 7
-    a.rotate_array_callback(body.rotate.bind(body), [0], [-10], 3000, 3500)
-    a.rotate_array_callback(dog_mesh_position, [6], [4.8], 3000, 3500)
+    a.rotate_array_callback(body.rotate.bind(body), [5], [-10], 3000, 3500)
+    a.rotate_array_callback(dog_mesh_position, [5.8], [4.8], 3000, 3500)
     frps.step([0,0,0,0,0,0,0,0,0], 3250)
     frps.step([0,0,-5,0,0,-75,0,0,55], 3500)
     flps.step([0,0,0,0,0,-75,0,0,20], 3100)
@@ -2735,8 +2735,8 @@ window.bridge1 = function(tm) {
     brps.step([0,0,20,0,0,-55,0,0,20], 3300)
     brps.step([0,0,25,0,0,0,0,0,-20], 3500)
     // шаг 8
-    a.rotate_array_callback(body.rotate.bind(body), [-10], [-30], 3500, 4000)
-    a.rotate_array_callback(dog_mesh_position, [4.8], [2.2], 3500, 4000)
+    a.rotate_array_callback(body.rotate.bind(body), [-10], [-35], 3500, 4000)
+    a.rotate_array_callback(dog_mesh_position, [4.8], [2], 3500, 4000)
     frps.step([0,0,0,0,0,-90,0,0,20], 3600)
     frps.step([0,0,30,0,0,-90,0,0,0], 3800)
     frps.step([0,0,5,0,0,-5,0,0,-35], 4000)
@@ -2748,8 +2748,8 @@ window.bridge1 = function(tm) {
     blps.step([0,0,30,0,0,-75,0,0,0], 3800)
     blps.step([0,0,13,0,0,-5,0,0,-45], 4000)
     // шаг 9
-    a.rotate_array_callback(body.rotate.bind(body), [-30], [-20], 4000, 4500)
-    a.rotate_array_callback(dog_mesh_position, [2.2], [0.2], 4000, 4500)
+    a.rotate_array_callback(body.rotate.bind(body), [-35], [-20], 4000, 4500)
+    a.rotate_array_callback(dog_mesh_position, [2], [0.2], 4000, 4500)
     frps.step([0,0,0,0,0,0,0,0,0], 4250)
     frps.step([0,0,-20,0,0,-25,0,0,15], 4500)
     flps.step([0,0,0,0,0,-80,0,0,20], 4100)
@@ -2773,6 +2773,19 @@ window.bridge1 = function(tm) {
     blps.step([0,0,0,0,0,-80,0,0,20], 4600)
     blps.step([0,0,15,0,0,-80,0,0,0], 4800)
     blps.step([0,0,15,0,0,0,0,0,-35], 5000)
+    // шаг 11
+    a.rotate_array_callback(body.rotate.bind(body), [-5], [0], 5000, 5500)
+    a.rotate_array_callback(dog_mesh_position, [-0.5], [0], 5000, 5500)
+    frps.step([0,0,0,0,0,0,0,0,0], 5250)
+    frps.step([0,0,-25,0,0,0,0,0,15], 5500)
+    blps.step([0,0,0,0,0,0,0,0,0], 5250)
+    blps.step([0,0,-25,0,0,0,0,0,15], 5500)
+    flps.step([0,0,0,0,0,-55,0,0,20], 5100)
+    flps.step([0,0,20,0,0,-55,0,0,20], 5300)
+    flps.step([0,0,25,0,0,0,0,0,-25], 5500)
+    brps.step([0,0,0,0,0,-75,0,0,20], 5100)
+    brps.step([0,0,20,0,0,-75,0,0,20], 5300)
+    brps.step([0,0,25,0,0,0,0,0,-25], 5500)
     let tile_period = 417.68
     thrown_bone_max_x = tile_x_size
     //a.rotate_array_callback(move_tiles, [0], [tile_x_size/tile_period*500*step], 0, 500*step)
