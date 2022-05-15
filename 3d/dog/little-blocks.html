@@ -1050,6 +1050,77 @@ window.go = function(tm) {
     return a
 }
 
+window.go2 = function(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    let period = 1000
+    let one = function(paw) {
+    a.rotate_array_callback(paw.rotate,
+          [0,0,20,0,0,-55,0,0,20],
+          [0,0,25,0,0,0,0,0,-25],
+          0, 200, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,25,0,0,0,0,0,-25],
+          [0,0,0,0,0,0,0,0,0],
+          200, 450, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-25,0,0,0,0,0,15],
+          450, 700, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,-25,0,0,0,0,0,15],
+          [0,0,0,0,0,-55,0,0,20],
+          700, 800, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,-55,0,0,20],
+          [0,0,20,0,0,-55,0,0,20],
+	  800, 1000, period)
+    }
+    let two = function(paw) {
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,0,0,0,0],
+          [0,0,-25,0,0,0,0,0,15],
+          0, 250, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,-25,0,0,0,0,0,15],
+          [0,0,0,0,0,-55,0,0,20],
+          250, 350, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,0,0,0,-55,0,0,20],
+          [0,0,20,0,0,-55,0,0,20],
+	  350, 550, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,20,0,0,-55,0,0,20],
+          [0,0,25,0,0,0,0,0,-25],
+          550, 750, period)
+    a.rotate_array_callback(paw.rotate,
+          [0,0,25,0,0,0,0,0,-25],
+          [0,0,0,0,0,0,0,0,0],
+          750, 1000, period)
+    }
+    one(flpaw)
+    one(brpaw)
+    two(frpaw)
+    two(blpaw)
+    let tile_start = 300
+    let tile_period = 417.68
+    thrown_bone_max_x = tile_x_size
+    a.rotate_array_callback(move_tiles, [0], [tile_x_size], tile_start, tile_start + tile_period, tile_period)
+    a.rotate_array_callback(dog_updown, [0], [-0.4], 0, 250, 500)
+    a.rotate_array_callback(dog_updown, [-0.4], [0], 250, 500, 500)
+    a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+                                         [0,8,0,-9,0,-25,0,-20,0,-45,0,-35,0,-20],
+                                         0, 100, 500)
+    a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-35,0,-20],
+                                         [0,8,0,-9,0,-25,0,-20,0,-45,0,-55,0,-40],
+                                         100, 300, 500)
+    a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-55,0,-40],
+                                         [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
+                                         300, 500, 500)
+    a.start()
+    return a
+}
+
 window.stop = function(a, fincb) {
     a.exit_now = true
     tile_delta_x = tiles[0].m.position.x - tiles[0].x
@@ -2792,6 +2863,10 @@ window.bridge1 = function(tm) {
     a.rotate_array_callback(move_tiles, [0], [tile_x_size/tile_period*1000], 0, 1000)
     a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*1000], [tile_x_size/tile_period*1500], 1000, 2000)
     a.rotate_array_callback(move_tiles, [tile_x_size/tile_period*1500], [tile_x_size/tile_period*500*(step-1)], 2000, 500*step)
+    a.finish(function() {
+        go_animate = go2(window.animate_speed)
+        show_buttons()
+    })
     a.start()
     return a
 }
