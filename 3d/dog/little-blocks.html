@@ -2858,7 +2858,7 @@ window.bridge_button_click = function() {
     let td = go_animate.last_draw_time - go_animate.started
     if(window.animate_speed < 1) {
 	let cur_tile_delta_x = tiles[0].m.position.x - tiles[0].x
-	bridge_mesh.position.set(20 - tile_delta_x +
+	bridge_mesh.position.set(20 +
 				 3.42/417.68 * (0 + delta), -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 		start_x: bridge_mesh.position.x - cur_tile_delta_x})
@@ -2866,7 +2866,7 @@ window.bridge_button_click = function() {
     }
     else {
 	let cur_tile_delta_x = tiles[0].m.position.x - tiles[0].x
-	bridge_mesh.position.set(20 - tile_delta_x +
+	bridge_mesh.position.set(20 +
 				 3.42/417.68 * (5000 + delta), -7, 1.5)
 	thrown_bone.push({bone: bridge_mesh,
 		start_x: bridge_mesh.position.x - cur_tile_delta_x})
