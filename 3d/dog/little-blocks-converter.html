@@ -103,6 +103,7 @@ function correct_jaw(g) {
 function add_body_points(coord, index) {
     // 459..466
     let old_count = coord.length / 3
+    console.log("old_count", old_count)
     // pos.count += 16
     let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
     let body_back_circle = [82, 84, 87, 90, 129, 130, 131, 132]
@@ -139,15 +140,20 @@ function add_body_points(coord, index) {
 	if(bp(index[t]) && bp(index[t+1]) && bp(index[t+2])) {
 	    for(let p = 0; p < 3; ++p)
 		if(body_front_circle.includes(index[t+p])) {
-	// 	    console.log('t',t,'p',p,'ind[t+p]',ind[t+p],
-	// 		'old_count',old_count,
-	// 		'indexOf',body_front_circle.indexOf(ind[t+p]),
-	// 'new', old_count + 8 + body_front_circle.indexOf(ind[t+p]))
 		    index[t+p] = old_count + 8 +
 			body_front_circle.indexOf(index[t+p])
 		}
 	}
-    // dog.computeVertexNormals()
+    for(let p = 0; p < 8; ++p) {
+	index.push(old_count + 8 + p, old_count + p,
+		   old_count + 8 + (p == 7 ? 0 : p + 1))
+	index.push(old_count + p, old_count + 8 + p,
+		   old_count + (p ? p - 1 : 7))
+	index.push(old_count + p, body_front_circle[p],
+		   old_count + (p == 7 ? 0 : p + 1))
+	index.push(body_front_circle[p], old_count + p,
+		   body_front_circle[p ? p - 1 : 7])
+    }
 }
 
 let loader = new GLTFLoader()

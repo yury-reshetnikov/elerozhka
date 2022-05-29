@@ -390,7 +390,8 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     mesh.geometry.addGroup(2691, 3, 3) // нос
     mesh.geometry.addGroup(2694, 3, 0)
     mesh.geometry.addGroup(2697, 6, 3) // нос
-    mesh.geometry.addGroup(2703, 45, 0)
+    mesh.geometry.addGroup(2703, 39, 0)
+    mesh.geometry.addGroup(2742, 96, 0) // новые треугольники цилиндра тела (после добавления дополнительных кругов)
     scene.add(mesh)
     window.dog = mesh.geometry
     window.dog_mesh = mesh
@@ -588,6 +589,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     if(0) { // ищем шею и голову
 	let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
 	let body_back_circle = [82, 84, 87, 90, 129, 130, 131, 132]
+	// новые дополнительные body_*_circle 459 - 474, сперва передний
 	let l1 = lp(g, body_front_circle,
 		    body_back_circle.concat(frpaw.get_points()[6]).concat(flpaw.get_points()[6]))
 	console.log(l1)
