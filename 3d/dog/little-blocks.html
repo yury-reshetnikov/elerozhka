@@ -354,7 +354,7 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     let material_almostblack = new THREE.MeshStandardMaterial({ color: 0x190707 })
     mesh.material = [material, material_red, material_black, material_almostblack]
     mesh.castShadow = true
-    add_body_points(mesh.geometry)
+    // add_body_points(mesh.geometry)
     mesh.geometry.addGroup(0, 48, 0)
     mesh.geometry.addGroup(48, 12, 3) // левый глаз
     mesh.geometry.addGroup(60, 30, 0)
