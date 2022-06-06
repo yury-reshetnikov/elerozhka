@@ -642,6 +642,30 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     }
 })
 
+function DogRotator(centre, points) {
+    let bases
+    let g = window.dog
+    this.get_points = function() { return points }
+    this.calc_bases = function() {
+	bases = []
+	points.forEach(function(p) {
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), centre)
+            bases.push(v.x, v.y, v.z)
+	})
+    }
+    this.calc_bases()
+    this.rotate_quaternion = function(angle) {
+        this.current_angle_quaternion = angle
+	points.forEach(function(p,i) {
+	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
+	    let d = (new THREE.Vector3()).addVectors(centre, v)
+	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
+	})
+        g.attributes.position.needsUpdate = true
+    }
+    this.get_centre = function() { return centre }
+}
+
 function Rare() {
     this.rare_points = [242, 243, 244, 246, 247, 248, 249, 250, 252, 267, 270, 271, 272, 273, 245, 266]
     let centre = new THREE.Vector3(-4, -0.3, 0) // -5.5, -0.4, 0
@@ -649,6 +673,7 @@ function Rare() {
     this.current_angle = 0
     let g = window.dog
     this.points = this.rare_points.concat(tail.points.flat()).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat())
+    this.get_points = function() { return this.points }
     this.calc_bases = function() {
 	bases = []
 	this.points.forEach(function(p) {
@@ -765,6 +790,7 @@ function HeadNeck() {
     // console.log('lower', calc_centre(lower_neck_circle), 'upper', calc_centre(upper_neck_circle))
     let head = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 64, 65, 66, 115, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458]
     this.points = head.concat(upper_neck_circle).concat(lower_neck_circle).concat(chest)
+    this.get_points = function() { return this.points }
     let centre = new THREE.Vector3(1.9, 0, 0)
     let bases
     this.current_angle = 0
@@ -864,7 +890,13 @@ function LowerJaw() {
 function DogFront() {
     let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
     let new_front_circle = [459, 460, 461, 462, 463, 464, 465, 466]
-    this.points = head_neck.get_points().concat(body_front_circle).concat(frpaw.get_points()).concat(flpaw.get_points()).concat(new_front_circle)
+    this.__proto__ = new DogRotator(new THREE.Vector3(0, -1.2, 0),
+	head_neck.get_points().concat(body_front_circle).concat(frpaw.get_points().flat()).concat(flpaw.get_points().flat()).concat(new_front_circle).concat([104,106,107,110,128,105,108,109]))
+    this.current_angle = 0
+    this.rotate = function(angle_y) {
+        this.current_angle = angle_y
+        this.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,THREE.MathUtils.degToRad(angle_y),0,'XYZ')))
+    }
 }
 
 function DogBack() {
