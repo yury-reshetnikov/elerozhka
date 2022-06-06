@@ -890,8 +890,8 @@ function LowerJaw() {
 function DogFront() {
     let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
     let new_front_circle = [459, 460, 461, 462, 463, 464, 465, 466]
-    this.__proto__ = new DogRotator(new THREE.Vector3(0, -1.2, 0),
-	head_neck.get_points().concat(body_front_circle).concat(frpaw.get_points().flat()).concat(flpaw.get_points().flat()).concat(new_front_circle).concat([104,106,107,110,128,105,108,109]))
+    this.__proto__ = new DogRotator(new THREE.Vector3(-1.5, -1.2, 0),
+	head_neck.get_points().concat(body_front_circle).concat(frpaw.get_points().flat()).concat(flpaw.get_points().flat()).concat(new_front_circle).concat([/*104,106,107,*/110,128,105,108,109]))
     this.current_angle = 0
     this.rotate = function(angle_y) {
         this.current_angle = angle_y
@@ -902,7 +902,13 @@ function DogFront() {
 function DogBack() {
     let body_back_circle = [82, 84, 87, 90, 129, 130, 131, 132]
     let new_back_circle = [467, 468, 469, 470, 471, 472, 473, 474]
-    this.points = rare.get_points().concat(body_back_circle).concat(new_back_circle)
+    this.__proto__ = new DogRotator(new THREE.Vector3(0, -1.2, 0),
+	rare.get_points().concat(body_back_circle).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat()).concat(new_back_circle))
+    this.current_angle = 0
+    this.rotate = function(angle_y) {
+        this.current_angle = angle_y
+        this.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,THREE.MathUtils.degToRad(angle_y),0,'XYZ')))
+    }
 }
 
 let loadManager = new THREE.LoadingManager()
@@ -1557,7 +1563,7 @@ function show_buttons() {
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
      'liedown_par', 'paw_button', 'run_button', 'standup_button',
-     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'bridge_button', 'turn2tail_button'].forEach(function(id) {
+     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'bridge_button', 'catching_tail_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -2957,20 +2963,18 @@ window.bridge_button_click = function() {
     })
 }
 
-function turn2tail(tm) {
+function catching_tail(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    function dogfront_rotation(y) { dogfront.rotation.y = y }
-    a.rotate_array_callback(dogfront_rotation, [0], [-Math.PI/2], 0, 500)
-    function dogback_rotation(y) { dogback.rotation.y = y }
-    a.rotate_array_callback(dogback_rotation, [0], [Math.PI/2], 0, 500)
+    a.rotate_array_callback(dogfront.rotate, [0], [-30], 0, 500)
+    a.rotate_array_callback(dogback.rotate, [0], [30], 0, 500)
     a.start()
     return a
 }
 
-window.turn2tail_button_click = function() {
+window.catching_tail_button_click = function() {
     hide_all_buttons()
-    turn2tail(window.animate_speed)
+    catching_tail(window.animate_speed)
 }
 
   </script>
@@ -2989,7 +2993,7 @@ window.turn2tail_button_click = function() {
     <p><button id="stretch_button" onclick="stretch_button_click()">Потягушки</button></p>
     <p><button id="barrier_button" style="display:none" onclick="barrier_button_click()">Барьер</button></p>
     <p><button id="bridge_button" style="display:none" onclick="bridge_button_click()">Мостик</button></p>
-    <p><button id="turn2tail_button" onclick="turn2tail_button_click()">Лови хвост</button></p>
+    <p><button id="catching_tail_button" onclick="catching_tail_button_click()">Поймай хвост</button></p>
   </div>
 </body>
 </html>
