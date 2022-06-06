@@ -407,6 +407,8 @@ loader.load('little-blocks-conv.glb', function(gltf) {
     window.head_neck = new HeadNeck()
     window.head = new Head()
     window.jaw = new LowerJaw()
+    window.dogfront = new DogFront()
+    window.dogback = new DogBack()
     let g = window.dog
     let ind = g.index.array
     let pos = g.attributes.position.array
@@ -1523,7 +1525,7 @@ function show_buttons() {
 function hide_buttons() {
     ['sit_stand_button', 'go_stop_button', 'tail_wag_button',
      'liedown_par', 'paw_button', 'run_button', 'standup_button',
-     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'bridge_button'].forEach(function(id) {
+     'turn_button', 'bone_button', 'throw_bone_button', 'stretch_button', 'barrier_button', 'bridge_button', 'turn2tail_button'].forEach(function(id) {
 	document.getElementById(id).style.display = 'none'
     })
 }
@@ -2923,6 +2925,22 @@ window.bridge_button_click = function() {
     })
 }
 
+function turn2tail(tm) {
+    let a = new Animate4
+    if(tm) a.time_modifier = tm
+    function dogfront_rotation(y) { dogfront.rotation.y = y }
+    a.rotate_array_callback(dogfront_rotation, [0], [-Math.PI/2], 0, 500)
+    function dogback_rotation(y) { dogback.rotation.y = y }
+    a.rotate_array_callback(dogback_rotation, [0], [Math.PI/2], 0, 500)
+    a.start()
+    return a
+}
+
+window.turn2tail_button_click = function() {
+    hide_all_buttons()
+    turn2tail(window.animate_speed)
+}
+
   </script>
   <div align="centre" style="position:absolute;right:10px">
     <p><button id="go_stop_button" onclick="go_stop_button_click()">Пойдём</button></p>
@@ -2939,6 +2957,7 @@ window.bridge_button_click = function() {
     <p><button id="stretch_button" onclick="stretch_button_click()">Потягушки</button></p>
     <p><button id="barrier_button" style="display:none" onclick="barrier_button_click()">Барьер</button></p>
     <p><button id="bridge_button" style="display:none" onclick="bridge_button_click()">Мостик</button></p>
+    <p><button id="turn2tail_button" onclick="turn2tail_button_click()">Лови хвост</button></p>
   </div>
 </body>
 </html>
