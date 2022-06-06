@@ -890,7 +890,7 @@ function LowerJaw() {
 function DogFront() {
     let body_front_circle = [80, 81, 83, 85, 86, 88, 89, 91]
     let new_front_circle = [459, 460, 461, 462, 463, 464, 465, 466]
-    this.__proto__ = new DogRotator(new THREE.Vector3(-1.5, -1.2, 0),
+    this.__proto__ = new DogRotator(new THREE.Vector3(-1, -1.2, 0),
 	head_neck.get_points().concat(body_front_circle).concat(frpaw.get_points().flat()).concat(flpaw.get_points().flat()).concat(new_front_circle).concat([/*104,106,107,*/110,128,105,108,109]))
     this.current_angle = 0
     this.rotate = function(angle_y) {
@@ -902,7 +902,7 @@ function DogFront() {
 function DogBack() {
     let body_back_circle = [82, 84, 87, 90, 129, 130, 131, 132]
     let new_back_circle = [467, 468, 469, 470, 471, 472, 473, 474]
-    this.__proto__ = new DogRotator(new THREE.Vector3(0, -1.2, 0),
+    this.__proto__ = new DogRotator(new THREE.Vector3(-1, -1.2, 0),
 	rare.get_points().concat(body_back_circle).concat(brpaw.get_points().flat()).concat(blpaw.get_points().flat()).concat(new_back_circle))
     this.current_angle = 0
     this.rotate = function(angle_y) {
@@ -2966,8 +2966,21 @@ window.bridge_button_click = function() {
 function catching_tail(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    a.rotate_array_callback(dogfront.rotate, [0], [-30], 0, 500)
-    a.rotate_array_callback(dogback.rotate, [0], [30], 0, 500)
+    a.rotate_array_callback(dogfront.rotate.bind(dogfront), [0], [-30], 0, 1000)
+    a.rotate_array_callback(dogback.rotate.bind(dogback), [0], [30], 0, 1000)
+    let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
+    let flps = new AnimateStep(a, flpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
+    let brps = new AnimateStep(a, brpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
+    let blps = new AnimateStep(a, blpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
+    /*frps.step([0,0,0,0,0,-55,0,0,20], 100)
+    frps.step([0,0,20,0,0,-55,0,0,20], 300)
+    frps.step([0,0,25,0,0,0,0,0,-25], 500)
+    flps.step([0,0,-25,0,0,0,0,0,15], 500)
+    flps.step([0,0,0,0,0,-55,0,0,20], 600)
+    flps.step([0,0,20,0,0,-55,0,0,20], 800)
+    flps.step([0,-30,0,0,0,0,0,0,0], 1000)
+    frps.step([0,-30,0,0,0,0,0,0,0], 1000)*/
+    // шея с calc_bases и хвост
     a.start()
     return a
 }
