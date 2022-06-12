@@ -2980,7 +2980,7 @@ function catching_tail(tm) {
 	dogfront.rotate(-a)
 	dogback.rotate(a)
 	head_neck.calc_bases()
-	head_neck.rotate(-2.5*a)
+	head_neck.rotate(-a)
     }
     a.rotate_array_callback(rotate, [0], [30], 0, 1000)
     let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
@@ -2995,7 +2995,6 @@ function catching_tail(tm) {
     flps.step([0,0,20,0,0,-55,0,0,20], 800)
     flps.step([0,-30,0,0,0,0,0,0,0], 1000)
     frps.step([0,-30,0,0,0,0,0,0,0], 1000)*/
-    head_neck.calc_bases()
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
                                          [-10,20,-30,-9,-30,-5,-30,-10,-20,-15,-10,-15,-20,0],
                                          0, 1000)
