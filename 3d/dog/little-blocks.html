@@ -800,6 +800,10 @@ function HeadNeck() {
         this.current_angle = angle_y
 	this.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(0,THREE.MathUtils.degToRad(angle_y),0,'XYZ')))
     }
+    this.rotate_x = function(angle_x) {
+        this.current_angle = angle_x
+	this.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(angle_x),0,0,'XYZ')))
+    }
 }
 
 function HeadNeck2() {
@@ -2965,11 +2969,13 @@ function catching_tail(tm) {
 	dogfront.rotate(-a)
 	dogback.rotate(a)
 	head_neck.calc_bases()
+	head_neck.rotate_x(a/2)
+	head_neck.rotate_y(-3*a)
 	head_neck.rotate(-a)
 	head_neck_2.calc_bases()
 	head_neck_2.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(x2),THREE.MathUtils.degToRad(y2),THREE.MathUtils.degToRad(z2),'XYZ')))
     }
-    a.rotate_array_callback(rotate, [0,0,0,0], [30,0,-30,-20], 0, 1000)
+    a.rotate_array_callback(rotate, [0,0,0,0], [30,-20,-50,-50], 0, 1000)
     let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
     let flps = new AnimateStep(a, flpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
     let brps = new AnimateStep(a, brpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
