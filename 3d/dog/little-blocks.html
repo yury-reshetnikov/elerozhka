@@ -2976,8 +2976,13 @@ window.bridge_button_click = function() {
 function catching_tail(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    a.rotate_array_callback(dogfront.rotate.bind(dogfront), [0], [-30], 0, 1000)
-    a.rotate_array_callback(dogback.rotate.bind(dogback), [0], [30], 0, 1000)
+    function rotate(a) {
+	dogfront.rotate(-a)
+	dogback.rotate(a)
+	head_neck.calc_bases()
+	head_neck.rotate(-2.5*a)
+    }
+    a.rotate_array_callback(rotate, [0], [30], 0, 1000)
     let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
     let flps = new AnimateStep(a, flpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
     let brps = new AnimateStep(a, brpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
@@ -2991,7 +2996,6 @@ function catching_tail(tm) {
     flps.step([0,-30,0,0,0,0,0,0,0], 1000)
     frps.step([0,-30,0,0,0,0,0,0,0], 1000)*/
     head_neck.calc_bases()
-    a.rotate_array_callback(head_neck.rotate_y.bind(head_neck), [0], [-75], 0, 1000)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
                                          [-10,20,-30,-9,-30,-5,-30,-10,-20,-15,-10,-15,-20,0],
                                          0, 1000)
