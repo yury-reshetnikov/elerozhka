@@ -647,24 +647,30 @@ function DogRotator(centre, points) {
     let bases
     let g = window.dog
     this.get_points = function() { return points }
-    this.calc_bases = function() {
+    this.get_centre = function() { return centre }
+    this.calc_bases = function(centre) {
 	bases = []
+	if(centre) this.centre = centre
+	let b_centre = this.centre
 	points.forEach(function(p) {
-            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), centre)
+            let v = (new THREE.Vector3()).subVectors((new THREE.Vector3()).fromBufferAttribute(g.attributes.position, p), b_centre)
             bases.push(v.x, v.y, v.z)
 	})
     }
-    this.calc_bases()
+    this.calc_bases(centre)
     this.rotate_quaternion = function(angle) {
         this.current_angle_quaternion = angle
+	let b_centre = this.centre
 	points.forEach(function(p,i) {
 	    let v = (new THREE.Vector3()).fromArray(bases, i*3).applyQuaternion(angle)
-	    let d = (new THREE.Vector3()).addVectors(centre, v)
+	    let d = (new THREE.Vector3()).addVectors(b_centre, v)
 	    g.attributes.position.setXYZ(p, d.x, d.y, d.z)
 	})
         g.attributes.position.needsUpdate = true
     }
-    this.get_centre = function() { return centre }
+    this.rotate_xyz = function(x,y,z) {
+	this.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(x),THREE.MathUtils.degToRad(y),THREE.MathUtils.degToRad(z),'XYZ')))
+    }
 }
 
 function Rare() {
@@ -790,7 +796,21 @@ function HeadNeck() {
     let upper_neck_circle = [62, 71, 72, 73, 75, 63, 69, 79]
     // console.log('lower', calc_centre(lower_neck_circle), 'upper', calc_centre(upper_neck_circle))
     let head = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 64, 65, 66, 115, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458]
-    this.__proto__ = new DogRotator(new THREE.Vector3(1.9, 0, 0),
+    this.get_centre = function() {
+	let a = (new THREE.Vector3()).fromBufferAttribute(
+	    window.dog.attributes.position, 105) // между ног
+	let b = (new THREE.Vector3()).fromBufferAttribute(
+	    window.dog.attributes.position, 104) // над 105-й
+	let c = (new THREE.Vector3()).fromBufferAttribute(
+	    window.dog.attributes.position, 89) // верх переднего ободка тела
+	// let d = new THREE.Vector3((a.x+b.x)/2, (a.y+b.y)/2, (a.z+b.z)/2)
+	// let e = new THREE.Vector3((c.x+d.x)/2, (c.y+d.y)/2, (c.z+d.z)/2)
+	let f = new THREE.Vector3((c.x+b.x)/2, (c.y+b.y)/2, (c.z+b.z)/2)
+	// console.log(f)
+	return f
+    }
+    this.__proto__ = new DogRotator(this.get_centre(),
+    // this.__proto__ = new DogRotator(new THREE.Vector3(1.9, 0, 0),
       head.concat(upper_neck_circle).concat(lower_neck_circle).concat(chest))
     this.rotate = function(angle_z) {
         this.current_angle = angle_z
@@ -811,8 +831,25 @@ function HeadNeck2() {
     let lower_neck_circle = [70, 74, 76, 77, 78, 61, 67, 68]
     let upper_neck_circle = [62, 71, 72, 73, 75, 63, 69, 79]
     let head = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 64, 65, 66, 115, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458]
-    this.__proto__ = new DogRotator(new THREE.Vector3(2.92, 2.13, 0),
-      head.concat(upper_neck_circle).concat(chest))
+    this.get_centre = function() {
+	/*
+	lower_neck_circle.forEach(function(p) {
+	    console.log('l',p,(new THREE.Vector3()).fromBufferAttribute(window.dog.attributes.position, p))
+	})
+	upper_neck_circle.forEach(function(p) {
+	    console.log('u',p,(new THREE.Vector3()).fromBufferAttribute(window.dog.attributes.position, p))
+	})
+	*/
+	// 68, 71
+	// return new THREE.Vector3(2.92, 2.13, 0)
+	let a = (new THREE.Vector3()).fromBufferAttribute(
+	    window.dog.attributes.position, 68)
+	let b = (new THREE.Vector3()).fromBufferAttribute(
+	    window.dog.attributes.position, 71)
+	return new THREE.Vector3((a.x+b.x)/2, (a.y+b.y)/2, (a.z+b.z)/2)
+    }
+    this.__proto__ = new DogRotator(this.get_centre(),
+      head.concat(upper_neck_circle))
 }
 
 function Head() {
@@ -2968,12 +3005,10 @@ function catching_tail(tm) {
     function rotate(a,x2,y2,z2) {
 	dogfront.rotate(-a)
 	dogback.rotate(a)
-	head_neck.calc_bases()
-	head_neck.rotate_x(a/2)
-	head_neck.rotate_y(-a)
-	head_neck.rotate(-a)
-	head_neck_2.calc_bases()
-	head_neck_2.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(x2),THREE.MathUtils.degToRad(y2),THREE.MathUtils.degToRad(z2),'XYZ')))
+	head_neck.calc_bases(head_neck.get_centre())
+	head_neck.rotate_xyz(0,-a*2,-a)
+	head_neck_2.calc_bases(head_neck_2.get_centre())
+	head_neck_2.rotate_xyz(x2,y2,z2)
         frpaw.calc_bases()
         flpaw.calc_bases()
         brpaw.calc_bases()
@@ -2991,8 +3026,7 @@ function catching_tail(tm) {
         flps.step([0,-30,0,0,0,0,0,0,0], 1000)
         frps.step([0,-30,0,0,0,0,0,0,0], 1000)*/
     }
-    a.rotate_array_callback(rotate, [0,0,0,0], [30,-10,0,-10], 0, 1000)
-    //a.rotate_array_callback(rotate, [0,0,0,0], [30,-20,-50,-50], 0, 1000)
+    a.rotate_array_callback(rotate, [0,0,0,0], [30,0,-60,-30], 0, 1000)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
                                          [-10,20,-30,-9,-30,-5,-30,-10,-20,-15,-10,-15,-20,0],
                                          0, 1000)
