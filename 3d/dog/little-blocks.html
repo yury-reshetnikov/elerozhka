@@ -3006,7 +3006,7 @@ function catching_tail(tm) {
 	dogfront.rotate(-a)
 	dogback.rotate(a)
 	head_neck.calc_bases(head_neck.get_centre())
-	head_neck.rotate_xyz(0,-a*2,-a)
+	head_neck.rotate_xyz(0,-a*1.5,-a)
 	head_neck_2.calc_bases(head_neck_2.get_centre())
 	head_neck_2.rotate_xyz(x2,y2,z2)
         frpaw.calc_bases()
@@ -3028,7 +3028,7 @@ function catching_tail(tm) {
     }
     a.rotate_array_callback(rotate, [0,0,0,0], [30,0,-60,-30], 0, 1000)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
-                                         [-10,20,-30,-9,-30,-5,-30,-10,-20,-15,-10,-15,-20,0],
+                                         [-10,40,-20,-9,-20,-5,-30,-10,-20,-10,-10,-5,-20,0],
                                          0, 1000)
     a.start()
     return a
