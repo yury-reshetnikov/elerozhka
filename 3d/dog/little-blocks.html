@@ -3002,7 +3002,7 @@ window.bridge_button_click = function() {
 function catching_tail(tm) {
     let a = new Animate4
     if(tm) a.time_modifier = tm
-    function rotate(a) {
+    function rotate(a,t) {
 	dogfront.rotate(-a)
 	dogback.rotate(a)
 	head_neck.calc_bases(head_neck.get_centre())
@@ -3013,6 +3013,22 @@ function catching_tail(tm) {
         flpaw.calc_bases()
         brpaw.calc_bases()
         blpaw.calc_bases()
+	if(t < 100) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, t / 10, 0,0, t * -0.35, 0,0, t / 5)
+	    });
+	}
+	else if(t < 200) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, t / 10, 0,0, -35-(t/5), 0,0,20)
+	    });
+	}
+	else {
+	    // только отладка
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, 20, 0,0, -55, 0,0,20)
+	    });
+	}
         /*let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
         let flps = new AnimateStep(a, flpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
         let brps = new AnimateStep(a, brpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
@@ -3026,7 +3042,7 @@ function catching_tail(tm) {
         flps.step([0,-30,0,0,0,0,0,0,0], 1000)
         frps.step([0,-30,0,0,0,0,0,0,0], 1000)*/
     }
-    a.rotate_array_callback(rotate, [0], [30], 0, 1000)
+    a.rotate_array_callback(rotate, [0,0], [30,1000], 0, 1000)
     a.rotate_array_callback(tail.rotate, [0,8,0,-9,0,-25,0,-20,0,-45,0,-45,0,-30],
                                          [-10,40,-20,-9,-20,-5,-30,-10,-20,-10,-10,-5,-20,0],
                                          0, 1000)
