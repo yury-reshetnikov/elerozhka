@@ -2974,13 +2974,11 @@ function catching_tail(tm) {
 	head_neck.rotate(-a)
 	head_neck_2.calc_bases()
 	head_neck_2.rotate_quaternion((new THREE.Quaternion()).setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(x2),THREE.MathUtils.degToRad(y2),THREE.MathUtils.degToRad(z2),'XYZ')))
-        dogback.calc_bases()
-        //paw.calc_bases()
-        /*frpaw.calc_bases()
+        frpaw.calc_bases()
         flpaw.calc_bases()
         brpaw.calc_bases()
-        blpaw.calc_bases()*/
-        let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
+        blpaw.calc_bases()
+        /*let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
         let flps = new AnimateStep(a, flpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
         let brps = new AnimateStep(a, brpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
         let blps = new AnimateStep(a, blpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
@@ -2991,7 +2989,7 @@ function catching_tail(tm) {
         flps.step([0,0,0,0,0,-55,0,0,20], 600)
         flps.step([0,0,20,0,0,-55,0,0,20], 800)
         flps.step([0,-30,0,0,0,0,0,0,0], 1000)
-        frps.step([0,-30,0,0,0,0,0,0,0], 1000)
+        frps.step([0,-30,0,0,0,0,0,0,0], 1000)*/
     }
     a.rotate_array_callback(rotate, [0,0,0,0], [30,-10,0,-10], 0, 1000)
     //a.rotate_array_callback(rotate, [0,0,0,0], [30,-20,-50,-50], 0, 1000)
