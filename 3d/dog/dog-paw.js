@@ -7,7 +7,7 @@ function Paw(g, foot_points) {
 	{pl:[3,4]},
 	{pl:[5,6]},
     ]
-    let bases = []
+    let bases
     let ind = g.index.array
     let pos = g.attributes.position.array
     function lp(base, prev) { // linked points
@@ -30,6 +30,8 @@ function Paw(g, foot_points) {
 	points.push(lp(points[points.length-1],
 		       points[points.length-2]))
     // считаем bases
+    this.calc_bases = function() {
+	bases = []
     let centres = points.map(function(list) {
 	if(list.length == 0) return
 	else if(list.length == 1) {
@@ -67,6 +69,8 @@ function Paw(g, foot_points) {
 	bases.push(bases_points)
 	prev_rc = rc
     }
+    }
+    this.calc_bases()
     let current_angles = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     this.current_angles = function() { return current_angles }
     this.get_points = function() { return points }
