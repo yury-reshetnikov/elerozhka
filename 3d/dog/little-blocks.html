@@ -704,7 +704,7 @@ function Rare() {
 
 function Body() {
     // были удалены точки 81 и 82
-    this.points = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 129, 130, 131, 132] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
+    this.points = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 129, 130, 131, 132, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474] // обратить внимание, что передний и задний ободки здесь перемешаны - смотри body_front_circle и body_back_circle выше
     let centre = new THREE.Vector3(2, -1.2, 0)
     this.get_centre = function(){return centre}
     let centre_rare = new THREE.Vector3(-3, -0.34, 0)
@@ -3020,13 +3020,69 @@ function catching_tail(tm) {
 	}
 	else if(t < 200) {
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, t / 10, 0,0, -35-(t/5), 0,0,20)
+		p.rotate(0,0, t / 10, 0,0, -35-(t/5), 0,0, 100 / 5)
+	    });
+	}
+	else if(t < 400) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, t / 4, 0,0, 0, 0,0, -t / 4)
+	    });
+	}
+	else if(t < 650) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, 0, 0,0, 0, 0,0, 0)
+	    });
+	}
+	else if(t < 900) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, -t / 4, 0,0, 0, 0,0, t * 0.15)
+	    });
+	}
+	else if(t < 1000) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, 0, 0,0, t * -0.55, 0,0, t / 5)
+	    });
+	}
+	else if(t < 1200) {
+	    [frpaw,blpaw].forEach(function(p) {
+		p.rotate(0,0, t / 5, 0,0, t * -0.55, 0,0, t / 5)
 	    });
 	}
 	else {
 	    // только отладка
 	    [frpaw,blpaw].forEach(function(p) {
 		p.rotate(0,0, 20, 0,0, -55, 0,0,20)
+	    });
+	}
+	if(t < 450) {
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, -t / 4, 0,0, 0, 0,0, t * 0.15)
+	    });
+	}
+	else if(t < 550) {
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, 0, 0,0, t * -0.55, 0,0, t / 5)
+	    });
+	}
+	else if(t < 750) {
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, t / 5, 0,0, t * -0.55, 0,0, t / 5)
+	    });
+	}
+	else if(t < 950) {
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, t / 4, 0,0, 0, 0,0, t / -4)
+	    });
+	}
+	else if(t < 1200) {
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, 0, 0,0, 0, 0,0, 0)
+	    });
+	}
+	else {
+	    // только отладка
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, 0, 0,0, 0, 0,0,0)
 	    });
 	}
         /*let frps = new AnimateStep(a, frpaw.rotate, [0,0,0,0,0,0,0,0,0], 0)
