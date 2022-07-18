@@ -3014,18 +3014,22 @@ function catching_tail(tm) {
         brpaw.calc_bases()
         blpaw.calc_bases()
 	if(t < 100) {
+	    // console.log(100, t, t / 10, t * -0.35, t / 5);
 	    [frpaw,blpaw].forEach(function(p) {
 		p.rotate(0,0, t / 10, 0,0, t * -0.35, 0,0, t / 5)
 	    });
 	}
 	else if(t < 200) {
+	    // console.log(200, t, t / 10, -35-(t/5));
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, t / 10, 0,0, -35-(t/5), 0,0, 100 / 5)
+		p.rotate(0,0, t / 10, 0,0, -35-(t/5), 0,0, 20)
 	    });
 	}
 	else if(t < 400) {
+	    // console.log(400, t, t / 4, -t / 4);
+	    let t0 = t - 200;
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, t / 4, 0,0, 0, 0,0, -t / 4)
+		p.rotate(0,0, 20 + t0 / 40, 0,0, -55 + t0 * 0.275, 0,0, 20 - t0 * 0.275)
 	    });
 	}
 	else if(t < 650) {
