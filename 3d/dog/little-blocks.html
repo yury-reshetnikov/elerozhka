@@ -3021,8 +3021,9 @@ function catching_tail(tm) {
 	}
 	else if(t < 200) {
 	    // console.log(200, t, t / 10, -35-(t/5));
+	    let t0 = t - 100;
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, t / 10, 0,0, -35-(t/5), 0,0, 20)
+		p.rotate(0,0, t / 10, 0,0, -35-(t0/5), 0,0, 20)
 	    });
 	}
 	else if(t < 400) {
@@ -3033,23 +3034,27 @@ function catching_tail(tm) {
 	    });
 	}
 	else if(t < 650) {
+	    let t0 = t - 400;
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, 0, 0,0, 0, 0,0, 0)
+		p.rotate(0,0, 25 - t0 / 10, 0,0, 0, 0,0, -25 + t0 / 10)
 	    });
 	}
 	else if(t < 900) {
+	    let t0 = t - 650;
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, -t / 4, 0,0, 0, 0,0, t * 0.15)
+		p.rotate(0,0, 0 - t0 / 10, 0,0, 0, 0,0, 0 + t0 / 250 * 15)
 	    });
 	}
 	else if(t < 1000) {
+	    let t0 = t - 900;
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, 0, 0,0, t * -0.55, 0,0, t / 5)
+		p.rotate(0,0, -25 + t * 0.25, 0,0, 0 - t * 0.55, 0,0, 15 + t / 20)
 	    });
 	}
 	else if(t < 1200) {
+	    let t0 = t - 1000;
 	    [frpaw,blpaw].forEach(function(p) {
-		p.rotate(0,0, t / 5, 0,0, t * -0.55, 0,0, t / 5)
+		p.rotate(0,0, 0 + t0 / 10, 0,0, -55, 0,0, 20)
 	    });
 	}
 	else {
@@ -3058,29 +3063,39 @@ function catching_tail(tm) {
 		p.rotate(0,0, 20, 0,0, -55, 0,0,20)
 	    });
 	}
-	if(t < 450) {
+	if(t < 200) {
 	    [flpaw,brpaw].forEach(function(p) {
-		p.rotate(0,0, -t / 4, 0,0, 0, 0,0, t * 0.15)
+		p.rotate(0,0, 0, 0,0, 0, 0,0, 0)
+	    });
+	}
+	else if(t < 450) {
+	    let t0 = t - 200;
+	    [flpaw,brpaw].forEach(function(p) {
+		p.rotate(0,0, -t0/10, 0,0, 0, 0,0, t0 / 250 * 15)
 	    });
 	}
 	else if(t < 550) {
+	    let t0 = t - 450;
 	    [flpaw,brpaw].forEach(function(p) {
-		p.rotate(0,0, 0, 0,0, t * -0.55, 0,0, t / 5)
+		p.rotate(0,0, -25 + t0 * 0.25, 0,0, -t0 * 0.55, 0,0, 15 + t0 / 20)
 	    });
 	}
 	else if(t < 750) {
+	    let t0 = t - 550;
 	    [flpaw,brpaw].forEach(function(p) {
-		p.rotate(0,0, t / 5, 0,0, t * -0.55, 0,0, t / 5)
+		p.rotate(0,0, t0 / 10, 0,0, -55, 0,0, 20)
 	    });
 	}
 	else if(t < 950) {
+	    let t0 = t - 750;
 	    [flpaw,brpaw].forEach(function(p) {
-		p.rotate(0,0, t / 4, 0,0, 0, 0,0, t / -4)
+		p.rotate(0,0, 20 + t0 / 40, 0,0, -55 + t0 / 2 * 0.55, 0,0, 20 - t0 / 200 * 45)
 	    });
 	}
 	else if(t < 1200) {
+	    let t0 = t - 950;
 	    [flpaw,brpaw].forEach(function(p) {
-		p.rotate(0,0, 0, 0,0, 0, 0,0, 0)
+		p.rotate(0,0, 25 - t0 / 10, 0,0, 0, 0,0, -25 + t0 / 10)
 	    });
 	}
 	else {
