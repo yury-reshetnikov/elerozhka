@@ -34,8 +34,9 @@ point_light.castShadow = true
 point_light.shadow.camera.far = 5000
 scene.add(point_light)
 
-let mark_material_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
-let mark_material_yellow = new THREE.MeshStandardMaterial({ color: 0xffff00 })
+let m_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
+let m_yellow = new THREE.MeshStandardMaterial({ color: 0xffff00 })
+let m_black = new THREE.MeshStandardMaterial({ color: 0x000000 })
 class Brick extends THREE.BufferGeometry {
     constructor() {
 	super()
@@ -58,13 +59,97 @@ class Brick extends THREE.BufferGeometry {
 	this.computeVertexNormals()
     }
 }
-let b01_y01_111 = new THREE.Mesh(new Brick(), mark_material_yellow)
+class Cube extends THREE.BufferGeometry {
+    constructor(x,y,z) {
+	super()
+	this.type = 'Cube'
+	this.setAttribute('position', new THREE.BufferAttribute(
+	    new Float32Array([
+		0,0,0, x,y,0, x,0,0,
+		0,0,0, 0,y,0, x,y,0,
+		0,0,z, x,0,z, x,y,z,
+		0,0,z, x,y,z, 0,y,z,
+		0,0,0, x,0,0, x,0,z,
+		0,0,0, x,0,z, 0,0,z,
+		0,y,0, x,y,z, x,y,0,
+		0,y,0, 0,y,z, x,y,z,
+		0,0,0, 0,y,z, 0,y,0,
+		0,0,0, 0,0,z, 0,y,z,
+		x,0,0, x,y,0, x,y,z,
+		x,0,0, x,y,z, x,0,z,
+	    ]), 3))
+	this.computeVertexNormals()
+    }
+}
+let b01_y01_111 = new THREE.Mesh(new Brick(), m_yellow)
 scene.add(b01_y01_111)
-let b02_y02_112 = new THREE.Mesh(new Brick(), mark_material_yellow)
-b02_y02_112.position.x = 252;
+    { let seam = new THREE.Mesh(new Cube(2,65,125), m_black)
+      seam.position.x = 250
+      scene.add(seam)
+    }
+let b02_y02_112 = new THREE.Mesh(new Brick(), m_yellow)
+b02_y02_112.position.x = 252
 scene.add(b02_y02_112)
+    { let seam = new THREE.Mesh(new Cube(2,65,125), m_black)
+      seam.position.x = 502
+      scene.add(seam)
+    }
+let b03_y03_113 = new THREE.Mesh(new Brick(), m_yellow)
+b03_y03_113.position.x = 504
+scene.add(b03_y03_113)
+    { let seam = new THREE.Mesh(new Cube(2,65,756), m_black)
+      seam.position.x = 754
+      scene.add(seam)
+    }
+let b04_y04_114 = new THREE.Mesh(new Cube(125,65,250), m_yellow)
+b04_y04_114.position.x = 756
+scene.add(b04_y04_114)
+    { let seam = new THREE.Mesh(new Cube(756,65,2), m_black)
+      seam.position.z = 125
+      scene.add(seam)
+    }
+let b05_y05_121 = new THREE.Mesh(new Cube(125,65,250), m_yellow)
+b05_y05_121.position.z = 127
+scene.add(b05_y05_121)
+    { let seam = new THREE.Mesh(new Cube(2,65,756), m_black)
+      seam.position.x = 127
+      seam.position.z = 127
+      scene.add(seam)
+    }
+let b06_r01_122 = new THREE.Mesh(new Brick(), m_red)
+b06_r01_122.position.set(127,0,127)
+scene.add(b06_r01_122)
+    { let seam = new THREE.Mesh(new Cube(2,65,125), m_black)
+      seam.position.set(377,0,127)
+      scene.add(seam)
+    }
+let b07_r02_123 = new THREE.Mesh(new Brick(), m_red)
+b07_r02_123.position.set(379,0,127)
+scene.add(b07_r02_123)
+    { let seam = new THREE.Mesh(new Cube(2,65,504), m_black)
+      seam.position.set(629,0,127)
+      scene.add(seam)
+    }
+let b08_r03_124 = new THREE.Mesh(new Cube(125,65,250), m_red)
+b08_r03_124.position.set(631,0,127)
+scene.add(b08_r03_124)
+    { let seam = new THREE.Mesh(new Cube(504,65,2), m_black)
+      seam.position.set(127,0,252)
+      scene.add(seam)
+    }
+function brick(x1,y1,z1,m,x2,y2,z2) {
+    let b = new THREE.Mesh(new Cube(x1,y1,z1), m)
+    b.position.set(x2,y2,z2)
+    scene.add(b)
+    return b
+}
+let b09_r04_131 = brick(125,65,250, m_red, 127,0,254)
+brick(2,65,504, m_black, 252,0,254)
+    let b10_r05_132 = brick(250,65,125, m_red, 254,0,254)
+    brick(2,65,125, m_black, 504,0,254)
+    let b11_r06_133 = brick(125,65,250, m_red, 506,0,254)
 
-camera.position.set(-100, 600, 600)
+camera.position.set(-100, 1000, 1200)
 let controls = new OrbitControls( camera, renderer.domElement )
 scene.add( new THREE.CameraHelper( point_light.shadow.camera ) )
 scene.add( new THREE.AxesHelper( 500 ) )
