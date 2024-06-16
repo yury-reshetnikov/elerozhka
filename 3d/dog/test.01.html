@@ -3,11 +3,23 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Рисуем собакена. Первый опыт</title>
-  <script src="https://threejs.org/build/three.js"></script>
-  <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+  <!-- <script src="https://threejs.org/build/three.js"></script> -->
+  <!-- <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script> -->
 </head>
 <body>
-  <script>
+  <script type="importmap">
+    {
+	"imports": {
+	    "three":
+	    "http://buildr/~reshu/three.js/build/three.module.min.js",
+	    "three/addons/":
+	    "http://buildr/~reshu/three.js/examples/jsm/"
+	}
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 // https://threejsfundamentals.org/threejs/lessons/ru/threejs-custom-buffergeometry.html
 // https://github.com/mrdoob/three.js/blob/master/src/geometries/BoxBufferGeometry.js
 let scene = new THREE.Scene()
@@ -26,7 +38,7 @@ point_light.castShadow = true
 point_light.shadow.camera.far = 5000
 scene.add(point_light)
 
-let planeGeometry = new THREE.PlaneBufferGeometry(1200,800);
+let planeGeometry = new THREE.PlaneGeometry(1200,800);
 let planeMaterial = new THREE.MeshStandardMaterial(
 	{color: 0xcccccc, side: THREE.DoubleSide});
 let plane = new THREE.Mesh(planeGeometry,planeMaterial);
@@ -98,7 +110,7 @@ tri02.computeVertexNormals()
 scene.add(new THREE.Mesh(tri02, material))
 
 camera.position.set(0, 600, 600)
-let controls = new THREE.OrbitControls( camera, renderer.domElement )
+let controls = new OrbitControls( camera, renderer.domElement )
 scene.add( new THREE.CameraHelper( point_light.shadow.camera ) )
 scene.add( new THREE.AxesHelper( 500 ) )
 function animate() {

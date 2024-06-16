@@ -1,0 +1,16 @@
+!2024-06-16 05:19:52
+
+ssh reshu@build2
+cd ~/src
+mkdir threejs.org && cd threejs.org
+git clone https://github.com/mrdoob/three.js
+cd ~/public_html
+mkdir three.js && cd three.js
+ln -s ../../src/threejs.org/three.js/build
+ln -s ../../src/threejs.org/three.js/examples
+echo 'Header add Access-Control-Allow-Origin "*"' > .htaccess
+
+ssh root@build2 a2enmod headers
+ssh root@build2 systemctl restart apache2
+
+file:///home/reshu/project/elerozhka/3d/dog/test.01.html
