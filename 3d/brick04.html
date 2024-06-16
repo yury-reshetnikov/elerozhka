@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Схема раскладки кирпичей</title>
+</head>
+<body>
+  <script type="importmap">
+    {
+	"imports": {
+	    "three":
+	    "http://buildr/~reshu/three.js/build/three.module.min.js",
+	    "three/addons/":
+	    "http://buildr/~reshu/three.js/examples/jsm/"
+	}
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+let scene = new THREE.Scene()
+let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 )
+
+let renderer = new THREE.WebGLRenderer()
+renderer.setSize( window.innerWidth * 0.9, window.innerHeight * 0.9 )
+renderer.setClearColor( 0xffffff, 1 )
+document.body.appendChild( renderer.domElement )
+renderer.shadowMap.enabled = true
+scene.add(new THREE.AmbientLight(0xffffff, 0.6))
+let point_light = new THREE.PointLight(0xffffff, 0.5)
+point_light.position.set( -500, 700, 300 )
+point_light.castShadow = true
+point_light.shadow.camera.far = 5000
+scene.add(point_light)
+
+let m_red = new THREE.MeshStandardMaterial({ color: 0xff0000 })
+let m_yellow = new THREE.MeshStandardMaterial({ color: 0xffff00 })
+let m_black = new THREE.MeshStandardMaterial({ color: 0x000000 })
+class Box extends THREE.BufferGeometry {
+    constructor(x,y,z) {
+	super()
+	this.type = 'Box'
+	this.setAttribute('position', new THREE.BufferAttribute(
+	    new Float32Array([
+		0,0,0, x,y,0, x,0,0,
+		0,0,0, 0,y,0, x,y,0,
+		0,0,z, x,0,z, x,y,z,
+		0,0,z, x,y,z, 0,y,z,
+		0,0,0, x,0,0, x,0,z,
+		0,0,0, x,0,z, 0,0,z,
+		0,y,0, x,y,z, x,y,0,
+		0,y,0, 0,y,z, x,y,z,
+		0,0,0, 0,y,z, 0,y,0,
+		0,0,0, 0,0,z, 0,y,z,
+		x,0,0, x,y,0, x,y,z,
+		x,0,0, x,y,z, x,0,z,
+	    ]), 3))
+	this.computeVertexNormals()
+    }
+}
+function brick(x1,y1,z1,m,x2,y2,z2) {
+    let b = new THREE.Mesh(new Box(x1,y1,z1), m)
+    b.position.set(x2,y2,z2)
+    scene.add(b)
+    return b
+}
+    let b01_y01_111 = brick(250,65,120, m_yellow, 0,0,0)
+    brick(2,65,120, m_black, 250,0,0)
+    let b02_y02_113 = brick(250,65,120, m_yellow, 252,0,0)
+    brick(2,65,120, m_black, 502,0,0)
+    let b03_y03_115 = brick(250,65,120, m_yellow, 504,0,0)
+    brick(2,65,120, m_black, 754,0,0)
+    brick(5,65,629, m_black, 751,0,125)
+    let b04_y04_117 = brick(120,65,250, m_yellow, 756,0,0)
+    // echo $((250+2+250+2+250+2+120)) 876
+    brick(120,65,2, m_black, 0,0,120)
+    let b05_y05_121 = brick(120,65,250, m_yellow, 0,0,122)
+    brick(5,65,120, m_black, 120,0,125)
+    brick(509,65,5, m_black, 120,0,120)
+    let b06_r01_122 = brick(250,65,120, m_red, 125,0,125)
+    brick(4,65,120, m_black, 375,0,125)
+    let b07_r02_124 = brick(250,65,120, m_red, 379,0,125)
+    brick(5,65,125, m_black, 629,0,120)
+    let b08_r03_126 = brick(120,65,250, m_red, 634,0,122)
+    // echo $((120+5+250+4+250+5+120+5+120)) 879
+    brick(510,65,5, m_black, 120,0,245)
+    let b09_r04_132 = brick(120,65,250, m_red, 125,0,250)
+    brick(5,65,120, m_black, 245,0,250)
+    let b10_r05_133 = brick(250,65,120, m_red, 250,0,250)
+    brick(5,65,245, m_black, 500,0,250)
+    let b11_r06_135 = brick(120,65,250, m_red, 505,0,250)
+    brick(120,65,5, m_black, 765,0,250)
+    let b12_y06_137 = brick(120,65,250, m_yellow, 756,0,255)
+
+camera.position.set(400, 1000, 1200)
+let controls = new OrbitControls( camera, renderer.domElement )
+scene.add( new THREE.CameraHelper( point_light.shadow.camera ) )
+scene.add( new THREE.AxesHelper( 500 ) )
+function animate() {
+    requestAnimationFrame( animate )
+    renderer.render( scene, camera )
+}
+animate()
+  </script>
+</body>
+</html>
