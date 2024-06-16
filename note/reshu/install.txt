@@ -14,3 +14,5 @@ ssh root@build2 a2enmod headers
 ssh root@build2 systemctl restart apache2
 
 file:///home/reshu/project/elerozhka/3d/dog/test.01.html
+
+file:///home/reshu/project/elerozhka/3d/dog/little-blocks.html

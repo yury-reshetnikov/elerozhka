@@ -3,8 +3,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Рисуем собакена</title>
-  <script src="https://threejs.org/build/three.js"></script>
-  <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
   <script src="three-animate.js"></script>
   <script src="dog-paw.js"></script>
 </head>
@@ -12,12 +10,16 @@
   <script type="importmap">
     {
 	"imports": {
-	    "three": "https://threejs.org/build/three.module.js"
+	    "three":
+		"http://buildr/~reshu/three.js/build/three.module.min.js",
+	    "three/addons/": "http://buildr/~reshu/three.js/examples/jsm/"
 	}
     }
   </script>
   <script type="module">
-    import { GLTFLoader } from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js'
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 let sitting = false
 let lying = false
@@ -1037,7 +1039,7 @@ loader.load('bridge.glb', function(gltf) {
 })
 
 camera.position.set(-4, 0, 14)
-let controls = new THREE.OrbitControls( camera, renderer.domElement )
+let controls = new OrbitControls( camera, renderer.domElement )
 
 function animate() {
     requestAnimationFrame( animate )
