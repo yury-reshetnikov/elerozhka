@@ -71,7 +71,7 @@ function brick(x1,y1,z1,m,x2,y2,z2) {
     let b02_y02_113 = brick(250,65,123, m_yellow, 254,0,0)
     brick(4,65,123, m_black, 504,0,0)
     let b03_y03_115 = brick(250,65,123, m_yellow, 508,0,0)
-    brick(4,65,762, m_black, 758,0,0)
+    brick(4,65,758, m_black, 758,0,0)
     let b04_y04_117 = brick(123,65,250, m_yellow, 762,0,0)
     brick(762,65,4, m_black, 0,0,123)
 
@@ -100,9 +100,31 @@ function brick(x1,y1,z1,m,x2,y2,z2) {
     let b15_r08_144 = brick(123,65,250, m_red, 381,0,381)
     brick(123,65,4, m_black, 635,0,377)
     let b16_r09_146 = brick(123,65,250, m_red, 635,0,381)
+    brick(123,65,4, m_black, 127,0,504)
 
+    let b17_r10_152 = brick(123,65,250, m_red, 127,0,508)
+    brick(123,65,4, m_black, 508,0,504)
+    let b18_r11_155 = brick(123,65,250, m_red, 508,0,508)
+    brick(123,65,4, m_black, 762,0,504)
+    let b19_y08_157 = brick(123,65,250, m_yellow, 762,0,508)
     brick(123,65,4, m_black, 0,0,631)
-    let b_y_161 = brick(123,65,250, m_yellow, 0,0,635)
+
+    let b20_y09_161 = brick(123,65,250, m_yellow, 0,0,635)
+    brick(250,65,4, m_black, 254,0,631)
+    let b21_r12_163 = brick(250,65,123, m_red, 254,0,635)
+    brick(123,65,4, m_black, 635,0,631)
+    let b22_r13_166 = brick(123,65,123, m_red, 635,0,635)
+    brick(758,65,4, m_black, 127,0,758)
+
+    let b23_y10_172 = brick(250,65,123, m_yellow, 127,0,762)
+    brick(4,65,123, m_black, 377,0,762)
+    let b24_y11_174 = brick(250,65,123, m_yellow, 381,0,762)
+    brick(4,65,123, m_black, 631,0,762)
+    let b25_y12_176 = brick(250,65,123, m_yellow, 635,0,762)
+
+    let seam12 = brick(827,4,827, m_black, 0,65,58)
+
+// половинки b22_r13_166
 
 camera.position.set(400, 1000, 1200)
 let controls = new OrbitControls( camera, renderer.domElement )
